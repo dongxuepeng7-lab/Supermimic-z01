@@ -1,0 +1,23 @@
+# DI-2026-0099 v15 parameter manifest
+# Units follow the revised manuscript. Fill in proprietary platform-specific fields before public release.
+actuator_conversion:
+  current_offset_A: "calibrated within +/-0.05 A over walking logs"
+  provenance: "k_t, N, current limits, and nominal armature are manufacturer/URDF or driver quantities; eta_g and i0 are calibrated from hardware logs."
+  joint_groups:
+    hip_yaw_roll: {k_t_Nm_per_A: 0.090, N: 101, eta_g: 0.82, K_tau_Nm_per_A: 7.45, i_cont_A: 8.0, i_peak_A: 20.0, tau_cont_Nm: 59.6, tau_peak_Nm: 149.1, current_loop_bandwidth_Hz: 85}
+    hip_pitch: {k_t_Nm_per_A: 0.095, N: 121, eta_g: 0.82, K_tau_Nm_per_A: 9.43, i_cont_A: 10.0, i_peak_A: 25.0, tau_cont_Nm: 94.3, tau_peak_Nm: 235.8, current_loop_bandwidth_Hz: 80}
+    knee_pitch: {k_t_Nm_per_A: 0.095, N: 121, eta_g: 0.82, K_tau_Nm_per_A: 9.43, i_cont_A: 10.0, i_peak_A: 25.0, tau_cont_Nm: 94.3, tau_peak_Nm: 235.8, current_loop_bandwidth_Hz: 80}
+    ankle_pitch: {k_t_Nm_per_A: 0.085, N: 81, eta_g: 0.78, K_tau_Nm_per_A: 5.37, i_cont_A: 7.0, i_peak_A: 18.0, tau_cont_Nm: 37.6, tau_peak_Nm: 96.7, current_loop_bandwidth_Hz: 90}
+control:
+  hardware_current_loop_Hz: 500
+  policy_PD_update_Hz: 200
+  dt_s: 0.005
+  PD_gains: "fixed controller settings copied to MuJoCo and IsaacGym; not fitted by the friction/damping identification objective"
+simulator_synchronization:
+  mujoco_role: "identification and closed-loop command replay"
+  isaacgym_role: "massively parallel PPO training and simulation ablations"
+  synchronized_quantities: [URDF kinematic tree, joint limits, inertial parameters, identified actuator-loss table, torque/current limits, PD gains, latency model, action scaling]
+RTI_bound:
+  formula: "sigma_lim_j = min(Q0.95(|r_tau,j|), 0.05*tau_peak_j, 0.25*tau_c_j + 0.05*tau_cont_j, 5.0 N m)"
+  deployment: "RTI generator removed; no deployment-time compensation module"
+  interpretation: "residual-statistics-bounded matched torque perturbation, not a calibrated harmonic-drive emulator"

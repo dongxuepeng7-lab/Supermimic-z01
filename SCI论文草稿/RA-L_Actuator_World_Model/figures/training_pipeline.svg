@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="530pt" height="157pt" viewBox="0 0 530 157" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-21T16:04:39.523888</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 157 
+L 530 157 
+L 530 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 3 17 
+L 122 17 
+L 122 71 
+L 3 71 
+z
+" clip-path="url(#pa9f72ba43f)" style="fill: #eaf4f1; stroke: #00685e; stroke-width: 0.75; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 137 17 
+L 254 17 
+L 254 71 
+L 137 71 
+z
+" clip-path="url(#pa9f72ba43f)" style="fill: #f2f6f8; stroke: #73909b; stroke-width: 0.75; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 269 17 
+L 387 17 
+L 387 71 
+L 269 71 
+z
+" clip-path="url(#pa9f72ba43f)" style="fill: #f2f6f8; stroke: #73909b; stroke-width: 0.75; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 402 17 
+L 527 17 
+L 527 71 
+L 402 71 
+z
+" clip-path="url(#pa9f72ba43f)" style="fill: #f2f6f8; stroke: #73909b; stroke-width: 0.75; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 3 112 
+L 253 112 
+L 253 152 
+L 3 152 
+z
+" clip-path="url(#pa9f72ba43f)" style="fill: #ffffff; stroke: #83969e; stroke-width: 0.75; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 269 112 
+L 527 112 
+L 527 152 
+L 269 152 
+z
+" clip-path="url(#pa9f72ba43f)" style="fill: #ffffff; stroke: #83969e; stroke-width: 0.75; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 434 71 
+L 434 86 
+L 192 86 
+" clip-path="url(#pa9f72ba43f)" style="fill: none; stroke: #425963; stroke-width: 0.95; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 7.1px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #00685e" x="3" y="8.844336" transform="rotate(-0 3 8.844336)">OFFLINE IDENTIFICATION</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 7.1px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #00685e" x="137" y="8.844336" transform="rotate(-0 137 8.844336)">SIMULATION AND POLICY TRAINING</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 8.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="9" y="29.286281" transform="rotate(-0 9 29.286281)">Joint identification</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="9" y="42.026477" transform="rotate(-0 9 42.026477)">Recorded joint commands</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="9" y="52.526477" transform="rotate(-0 9 52.526477)">and feedback events</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="9" y="63.026477" transform="rotate(-0 9 63.026477)">Fit actuator parameters</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 8.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="143" y="29.286281" transform="rotate(-0 143 29.286281)">Physics simulator</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="143" y="42.026477" transform="rotate(-0 143 42.026477)">Nominal or identified</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="143" y="52.526477" transform="rotate(-0 143 52.526477)">actuators; collect states</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="143" y="63.026477" transform="rotate(-0 143 63.026477)">and paired perturbations</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 8.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="275" y="29.286281" transform="rotate(-0 275 29.286281)">World-model fit</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="275" y="42.026477" transform="rotate(-0 275 42.026477)">Actuator + body dynamics</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="275" y="52.526477" transform="rotate(-0 275 52.526477)">Trajectory loss; optional</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="275" y="63.026477" transform="rotate(-0 275 63.026477)">multi-step response loss</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 8.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="408" y="29.286281" transform="rotate(-0 408 29.286281)">Policy update</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="408" y="42.026477" transform="rotate(-0 408 42.026477)">Roll out the world model</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="408" y="52.526477" transform="rotate(-0 408 52.526477)">Backpropagate return</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="408" y="63.026477" transform="rotate(-0 408 63.026477)">to the actor</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 122 42 
+Q 129 42 134.937868 42 
+" style="fill: none; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+    <path d="M 132.537868 40.8 
+L 134.937868 42 
+L 132.537868 43.2 
+z
+" style="fill: #425963; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 254 42 
+Q 261 42 266.937868 42 
+" style="fill: none; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+    <path d="M 264.537868 40.8 
+L 266.937868 42 
+L 264.537868 43.2 
+z
+" style="fill: #425963; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 387 42 
+Q 394 42 399.937868 42 
+" style="fill: none; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+    <path d="M 397.537868 40.8 
+L 399.937868 42 
+L 397.537868 43.2 
+z
+" style="fill: #425963; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 192 86 
+Q 192 79 192 73.062132 
+" style="fill: none; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+    <path d="M 190.8 75.462132 
+L 192 73.062132 
+L 193.2 75.462132 
+z
+" style="fill: #425963; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 7.4px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #425963" x="219" y="81.922555" transform="rotate(-0 219 81.922555)">Updated actor collects new transitions</text>
+   </g>
+   <g id="patch_12">
+    <path d="M 47 71 
+Q 47 91 47 109.937868 
+" style="fill: none; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+    <path d="M 48.2 107.537868 
+L 47 109.937868 
+L 45.8 107.537868 
+z
+" style="fill: #425963; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 500 71 
+Q 500 91 500 109.937868 
+" style="fill: none; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+    <path d="M 501.2 107.537868 
+L 500 109.937868 
+L 498.8 107.537868 
+z
+" style="fill: #425963; stroke: #425963; stroke-width: 0.95; stroke-linecap: round"/>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 7.4px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #425963" x="53" y="98.922555" transform="rotate(-0 53 98.922555)">Held-out sessions</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 7.4px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #425963" x="439" y="98.922266" transform="rotate(-0 439 98.922266)">Frozen actor</text>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 8.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="9" y="124.286281" transform="rotate(-0 9 124.286281)">Offline replay on hardware records</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="9" y="137.026477" transform="rotate(-0 9 137.026477)">Replay identical commands from the recorded initial state.</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="9" y="147.526477" transform="rotate(-0 9 147.526477)">Score joint position, velocity and feedback torque.</text>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 8.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="275" y="124.286281" transform="rotate(-0 275 124.286281)">Closed-loop evaluation in physics simulation</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="275" y="137.026477" transform="rotate(-0 275 137.026477)">Use shared reference and held-out actuator settings.</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 7.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172d3a" x="275" y="147.526477" transform="rotate(-0 275 147.526477)">Score task completion, tracking and early termination.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pa9f72ba43f">
+   <rect x="0" y="0" width="530" height="157"/>
+  </clipPath>
+ </defs>
+</svg>

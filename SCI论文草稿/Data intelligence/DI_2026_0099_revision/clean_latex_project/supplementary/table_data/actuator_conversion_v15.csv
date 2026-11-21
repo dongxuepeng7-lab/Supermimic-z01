@@ -1,0 +1,5 @@
+joint_group,k_t_Nm_per_A,N,eta_g,K_tau_Nm_per_A,i_cont_A,i_peak_A,tau_cont_Nm,tau_peak_Nm,current_loop_bandwidth_Hz
+Hip yaw/roll,0.09,101,0.82,7.45,8.0,20.0,59.6,149.1,85
+Hip pitch,0.095,121,0.82,9.43,10.0,25.0,94.3,235.8,80
+Knee pitch,0.095,121,0.82,9.43,10.0,25.0,94.3,235.8,80
+Ankle pitch,0.085,81,0.78,5.37,7.0,18.0,37.6,96.7,90

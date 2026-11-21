@@ -1,0 +1,32 @@
+{
+  "verified_at": "2026-11-21T17:46:39.166333+08:00",
+  "unit_tests_passed": 17,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "seven_group_synthetic_smoke_passed": true,
+  "compiled_C_collection_and_policy_cuda_graphs_passed": true,
+  "compiled_C_iterations": 6,
+  "original_A0_cpu_max_difference": 0.0,
+  "enabled_identified_parameters": 21,
+  "identified_source_joint_count": 12,
+  "parameter_manifest_entries": 130,
+  "physics_pair_generator_test_passed": true,
+  "final_window_branches_equal_initialization_starts_and_budget": true,
+  "formal_training_run": false,
+  "formal_motion_files_available": 0,
+  "missing_motion_symlink_targets": 163,
+  "raw_hardware_sessions_available": false,
+  "supported_plant_terms": [
+    "armature",
+    "damping",
+    "frictionloss"
+  ],
+  "excluded_terms": [
+    "fixture_load_offset",
+    "asynchronous_command_delay"
+  ],
+  "test_commands": [
+    "uv run python -m unittest discover -s tests -v",
+    "uv run python tests/ral_smoke.py /tmp/ral-seven-smoke-02"
+  ],
+  "notes": "Synthetic fixtures are engineering tests only. All seven groups are implemented for the instantaneous actuator variant; asynchronous actuator state and timing-identification comparisons require separate implementation and raw-log evidence."
+}

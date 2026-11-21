@@ -19,6 +19,15 @@ parser.add_argument("--robot", type=str, default="z01", choices=("z01",), help="
 parser.add_argument("--motion_dir", type=str, default=None, help="defaults to the robot's motion directory")
 parser.add_argument("--log_dir", type=str, default=os.path.join(REPO, "logs", "run"))
 parser.add_argument("--seed", type=int, default=0)
+parser.add_argument("--experiment_group", choices=("A0", "A", "A+", "B", "C"), default=None,
+                    help="RA-L group; C-perm/D use tools/ral.py window-train with a frozen C checkpoint")
+parser.add_argument("--parameter_manifest", default=None)
+parser.add_argument("--response_manifest", default=None)
+parser.add_argument("--protocol", default=None)
+parser.add_argument("--response_weight", type=float, default=1.)
+parser.add_argument("--friction_speed", type=float, default=.01)
+parser.add_argument("--synthetic_test", action="store_true", help="explicitly allow synthetic fixtures; never paper results")
+parser.add_argument("--eager", action="store_true", help="disable compilation/capture for small integration checks")
 parser.add_argument("--resume", type=str, default=None, help="last.pt of a run to continue")
 parser.add_argument("--init", type=str, default=None,
                     help="last.pt whose world model, policy and critic start this run (fine-tuning, e.g. on a few clips); "
@@ -129,6 +138,27 @@ parser.add_argument("--lr_decay_by", type=int, default=1400,
                     help="with --lr_decay_ret: start the decay at this iteration at the latest, also if the training return "
                          "has not reached --lr_decay_ret (0 = no deadline)")
 args = parser.parse_args()
+args.experiment_model = "base"
+if args.experiment_group:
+    from partymimic.experiments import GROUPS
+    group = GROUPS[args.experiment_group]
+    args.experiment_model = group["model"]
+    if not args.parameter_manifest:
+        parser.error("experiment groups require --parameter_manifest")
+    if args.resume or args.init or args.pipeline:
+        parser.error("controlled experiments require fresh paired attempts; resume/init/pipeline are not supported here")
+    if os.path.exists(os.path.join(args.log_dir, "args.json")):
+        parser.error("experiment output already exists; use a new attempt directory")
+    if args.wm_mirror != 0:
+        parser.error("identified left/right dynamics are asymmetric: set --wm_mirror 0 for ALL experiment groups")
+    if args.lr_decay_ret != 0 or args.lr_decay_by != 0:
+        parser.error("paired groups require a fixed LR schedule: --lr_decay_ret 0 --lr_decay_by 0")
+    if group["model"] != "base" and not args.response_manifest:
+        parser.error("A+/B/C require the same frozen --response_manifest (fit split)")
+    if args.response_weight <= 0:
+        parser.error("--response_weight must be positive")
+    if args.warmup_steps < max(args.wm_window, args.horizon + 1) or args.buffer_steps < args.warmup_steps:
+        parser.error("warmup must cover wm_window and horizon+1; buffer must hold warmup")
 if args.kp_skip is None:
     args.kp_skip = args.interface == "sparse5"
 if args.kp_aux is None:
@@ -138,6 +168,7 @@ assert not (args.resume and args.init), "--resume or --init"
 
 import torch
 import torch.nn as nn
+compile_fn = (lambda f: f) if args.eager else torch.compile
 
 from partymimic.buffer import ReplayBuffer
 from partymimic.dr import XiLayout
@@ -164,6 +195,15 @@ os.makedirs(args.log_dir, exist_ok=True)
 json.dump(vars(args), open(os.path.join(args.log_dir, "args.json"), "w"), indent=2)
 
 robot = get_robot(args.robot)
+if args.experiment_group:
+    from partymimic.experiments.parameters import parameterized_robot, sha256
+    args.parameter_manifest_sha256 = sha256(args.parameter_manifest)
+    args.response_manifest_sha256 = sha256(args.response_manifest) if args.response_manifest else None
+    robot = parameterized_robot(robot, args.parameter_manifest, group["plant"])
+    if args.protocol:
+        from partymimic.experiments.protocol import verify
+        verify(args.protocol, args)
+    json.dump(vars(args), open(os.path.join(args.log_dir, "args.json"), "w"), indent=2)
 if args.joint_velocity_penalty < 0 or not 0 < args.joint_velocity_margin <= 1:
     raise ValueError("Expected --joint_velocity_penalty >= 0 and --joint_velocity_margin in (0, 1]")
 if args.joint_velocity_penalty > 0 and robot.joint_velocity_limits is None:
@@ -195,8 +235,15 @@ widths = lambda s: tuple(int(x) for x in s.split(","))  # noqa: E731
 networks.RunningNorm.no_sync = True
 rotations.ELEMENTWISE = True
 
-wm = WorldModel(J, layout.dim, use_prev_action=robot.has_action_delay, hidden=widths(args.wm_hidden),
-                structured=args.wm_structured, dt=CONTROL_DT).to(dev)  # fmt: skip
+from partymimic.experiments.models import make_world_model
+wm = make_world_model(robot, layout, vars(args)).to(dev)
+response_data = None
+if args.experiment_model != "base":
+    from partymimic.experiments.response import ResponseData, paired_losses
+    response_data = ResponseData(args.response_manifest, "fit", robot, layout, sha256(args.parameter_manifest), dev)
+    if response_data.meta["source_type"] == "synthetic_test" and not args.synthetic_test:
+        raise ValueError("Synthetic response fixtures require --synthetic_test")
+    response_generator = torch.Generator(device=dev).manual_seed(args.seed + 7301)
 pi = Policy(mdp.obs_dim, GOAL_DIM, J, hist=Hh, enc_hidden=widths(args.enc_hidden), dec_hidden=widths(args.dec_hidden),
             **policy_kwargs(vars(args), robot)).to(dev)
 Q0 = torch.tensor(robot.default_joint_pos_list(), device=dev)
@@ -237,6 +284,12 @@ if args.kp_skip:
     fit_kp2q(pi.kp2q)
 pi_l = copy.deepcopy(pi).to(ldev) if args.pipeline else pi  # --pipeline: the trained policy; pi acts with its copy
 critic = Critic(CRITIC_IN).to(ldev)
+ledger = None
+if args.experiment_group:
+    from partymimic.experiments.runtime import RunLedger
+    ledger = RunLedger(args, robot, {"wm": wm, "pi": pi, "critic": critic})
+    torch.save({"wm": wm.state_dict(), "pi": pi.state_dict(), "critic": critic.state_dict(),
+                "args": vars(args), "iteration": 0, "sim_steps": 0}, os.path.join(args.log_dir, "initial.pt"))
 assert not args.lr_decay_by or args.lr_decay_ret > 0, "--lr_decay_by needs --lr_decay_ret"
 # the learning rate is a device tensor (filled every iteration) and Adam keeps its step on the GPU, so the captured
 # optimizer steps follow the schedule
@@ -411,14 +464,14 @@ def _critic_input(S, f, xi_n, g):
     return torch.cat((mdp.critic_features(S, f, xi_n), g), -1)
 
 
-wm_rollout = torch.compile(_wm_rollout)
-wm_err = torch.compile(_wm_err)
-imag_step = torch.compile(_imag_step)
-reward_term = torch.compile(_reward_term)
-critic_input_c = torch.compile(_critic_input)
-wm_norm_data_c = torch.compile(_wm_norm_data)
-gae_targets_c = torch.compile(_gae_targets)
-critic_loss_c = torch.compile(_critic_loss)
+wm_rollout = compile_fn(_wm_rollout)
+wm_err = compile_fn(_wm_err)
+imag_step = compile_fn(_imag_step)
+reward_term = compile_fn(_reward_term)
+critic_input_c = compile_fn(_critic_input)
+wm_norm_data_c = compile_fn(_wm_norm_data)
+gae_targets_c = compile_fn(_gae_targets)
+critic_loss_c = compile_fn(_critic_loss)
 
 
 def lr_at(it: int) -> float:
@@ -446,6 +499,18 @@ def _mirror_windows(w: dict, n: int) -> dict:
 
 
 def wm_update():
+    if response_data is not None:
+        # A+/B/C fit exactly the same frozen data stream, independent of each policy's
+        # online collection. Normalizers are also initialized from this dataset only.
+        batch = response_data.sample(args.wm_batch, response_generator)
+        forward, response, _ = paired_losses(wm, batch, normalize_xi, response_data.q_scale, response_data.v_scale)
+        loss = forward + (args.response_weight * response if args.experiment_group == "C" else 0.)
+        opt_wm.zero_grad(set_to_none=True)
+        loss.backward()
+        nn.utils.clip_grad_norm_(wm.parameters(), 1.)
+        opt_wm.step()
+        RESPONSE_DIAG.copy_(response.detach())
+        return loss.detach(), forward.detach()
     w = buffer.sample_windows(args.wm_batch, args.wm_window)
     if mirror is not None:
         w = _mirror_windows(w, int(args.wm_batch * args.wm_mirror))
@@ -495,6 +560,8 @@ class Graphed:
         self.fn, self.ready, self.warmup, self.calls, self.graph, self.out = fn, ready, warmup, 0, None, None
 
     def __call__(self):
+        if args.eager or (response_data is not None and self.fn is wm_update):
+            return self.fn()
         if self.graph is None and not self.ready():
             return self.fn()
         self.calls += 1
@@ -732,8 +799,8 @@ def policy_update():
 # ------------------------------------------------------------------------------------------------
 sim_cfg = make_sim(robot)
 # the simulator wrapper calls these once per control step in eager mode otherwise (FK + rotations: thousands of kernels)
-mdp.reward, mdp.termination, mdp.obs = torch.compile(mdp.reward), torch.compile(mdp.termination), torch.compile(mdp.obs)
-motion.goal = torch.compile(motion.goal)
+mdp.reward, mdp.termination, mdp.obs = compile_fn(mdp.reward), compile_fn(mdp.termination), compile_fn(mdp.obs)
+motion.goal = compile_fn(motion.goal)
 env = TrackingSim(sim_cfg, args.num_envs, robot, motion, mdp, dev, gamma=args.gamma, fail_reset=args.fail_reset,
                   div_k=args.div_k, div_tau=args.div_tau)
 PROFILE = os.environ.get("PM_PROFILE") == "1"  # time the physics substep and the phases of an iteration
@@ -775,9 +842,10 @@ def _collect_core():
     buffer.add_device(out)
     S0, S1 = unflatten_state(out["s"]), unflatten_state(out["s1"])
     wm_in, wm_out, wm_inc = wm_norm_data_c(S0, S1, out["a"], out["a_prev"], out["xi"])
-    wm.in_norm.update(wm_in)
-    wm.out_norm.update(wm_out)
-    wm.inc_norm.update(wm_inc)
+    if response_data is None:
+        wm.in_norm.update(wm_in)
+        wm.out_norm.update(wm_out)
+        wm.inc_norm.update(wm_inc)
     oh.copy_(oh_new)
     # the simulator wrapper rebinds these per step: copy them back into the static tensors the graph reads
     CG["f"].copy_(env.f), CG["ep_step"].copy_(env.ep_step), CG["a_prev"].copy_(env.a_prev)
@@ -808,7 +876,7 @@ def collect_graphed_step():
         CG.update(obs_hist=obs_hist.clone(), f=env.f.clone(), ep_step=env.ep_step.clone(), a_prev=env.a_prev.clone())
         env.f, env.ep_step, env.a_prev = CG["f"], CG["ep_step"], CG["a_prev"]
     CG["calls"] += 1
-    if CG["calls"] <= 3:  # warmup on the default stream (Warp's own stream orders with it implicitly)
+    if args.eager or CG["calls"] <= 3:  # warmup on the default stream
         out = _collect_core()
     elif "graph" not in CG:
         torch.cuda.synchronize()
@@ -958,7 +1026,7 @@ def learner_namespace():
     motion_l = _to_device(motion, ldev)
     motion_l.__dict__.pop("goal", None)  # the compiled method of the actor's copy
     motion_l.device = ldev
-    motion_l.goal = torch.compile(motion_l.goal)
+    motion_l.goal = compile_fn(motion_l.goal)
     mdp_l = _to_device(mdp, ldev)
     for k in ("reward", "termination", "obs"):
         mdp_l.__dict__.pop(k, None)
@@ -975,7 +1043,7 @@ def learner_namespace():
         g = types.FunctionType(g.__code__, L, name, g.__defaults__, g.__closure__)
         L[name] = torch.no_grad()(g) if inner is not None else g
     for name in ("imag_step", "reward_term", "critic_input_c", "gae_targets_c", "critic_loss_c"):
-        L[name] = torch.compile(L[{"critic_input_c": "_critic_input", "gae_targets_c": "_gae_targets",
+        L[name] = compile_fn(L[{"critic_input_c": "_critic_input", "gae_targets_c": "_gae_targets",
                                    "critic_loss_c": "_critic_loss"}.get(name, "_" + name)])  # fmt: skip
     return L
 
@@ -1039,6 +1107,19 @@ class Pipe:
         self.to_a.recv(lambda b, _: unpack(b, self.p_dst, self.p_wire))
 
 
+RESPONSE_DIAG = torch.zeros((), device=dev)
+if response_data is not None:
+    with torch.no_grad():
+        for side in ("plus", "minus"):
+            d = response_data.data
+            current = torch.cat((d["s0"][:, None], d["s_" + side][:, :-1]), 1)
+            previous = torch.cat((d["a_prev"][:, None], d["a_" + side][:, :-1]), 1)
+            xi = d["xi"][:, None].expand(-1, response_data.horizon, -1)
+            for start in range(0, response_data.count, 256):
+                sl = slice(start, start + 256)
+                x, y, inc = _wm_norm_data(unflatten_state(current[sl]), unflatten_state(d["s_" + side][sl]),
+                                         d["a_" + side][sl], previous[sl], xi[sl])
+                wm.in_norm.update(x); wm.out_norm.update(y); wm.inc_norm.update(inc)
 wm_update_g = Graphed(wm_update, lambda: True)
 _ready = lambda: int(pi_avg.n_averaged if pi_avg is not None else 1) > 0  # noqa: E731
 if args.pipeline:
@@ -1181,6 +1262,12 @@ for it in range(start_it, args.iterations):
         stats = {k: [] for k in stats}
         agg = {k: [] for k in agg}
     wall = time.time() - t_start
+    if ledger:
+        p_updates = max(0, it + 1 - args.wm_only_iters)
+        ledger.record(it + 1, sim_steps, (it + 1) * args.wm_batches, p_updates,
+                      p_updates * args.horizon * args.pi_batch, float(l),
+                      float(RESPONSE_DIAG) if response_data is not None else None,
+                      float(pl) if p_updates else None)
     out_of_time = args.max_hours is not None and wall >= args.max_hours * 3600
     timed = args.ckpt_minutes > 0 and wall >= next_ckpt_s
     if timed:
@@ -1191,6 +1278,10 @@ for it in range(start_it, args.iterations):
         small = {"pi": {k: v.detach().to("cpu", copy=True) for k, v in sd.items()}, "iteration": it + 1,
                  "wall_time": time.time() - t_start, "sim_steps": sim_steps, "args": vars(args),
                  "saved_at": time.strftime("%Y-%m-%d %H:%M:%S")}  # fmt: skip
+        if ledger:
+            small.update(wm={k: v.detach().to("cpu", copy=True) for k, v in wm.state_dict().items()},
+                         critic={k: v.detach().to("cpu", copy=True) for k, v in critic.state_dict().items()},
+                         pi_live={k: v.detach().to("cpu", copy=True) for k, v in pi_l.state_dict().items()})
         path = os.path.join(args.log_dir, f"ckpt_{it + 1:06d}.pt")
         ckpt_wait()
         CKPT_PENDING.append(CKPT_POOL.submit(_save_atomic, small, path))
@@ -1205,7 +1296,7 @@ for it in range(start_it, args.iterations):
         last = os.path.join(args.log_dir, "last.pt")
         torch.save(ck, last + ".tmp")
         os.replace(last + ".tmp", last)
-        small = {k: ck[k] for k in ("pi", "pi_live", "wm", "iteration", "wall_time", "sim_steps", "args", "saved_at")}
+        small = {k: ck[k] for k in ("pi", "pi_live", "wm", "critic", "iteration", "wall_time", "sim_steps", "args", "saved_at")}
         path = os.path.join(args.log_dir, f"ckpt_{it + 1:06d}.pt")
         torch.save(small, path + ".tmp")
         os.replace(path + ".tmp", path)
@@ -1214,3 +1305,5 @@ for it in range(start_it, args.iterations):
         break
 ckpt_wait(drain=True)  # every background checkpoint written (a failed write raises here: non-zero exit)
 CKPT_POOL.shutdown()
+if ledger:
+    ledger.finish(completed=it + 1 == args.iterations)

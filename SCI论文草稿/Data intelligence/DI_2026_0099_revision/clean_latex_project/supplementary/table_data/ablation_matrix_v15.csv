@@ -1,0 +1,8 @@
+method,SysID,DR,residual,scope,return_mean_SD,sim_RMSE_rad,hardware_note
+URDF-only PPO,No,No,No,sim,92 +/- 18,0.091,not deployed
+SysID only,Yes,No,No,sim+tether,118 +/- 14,0.062,limited tethered check
+SysID+DR (DR-only hardware baseline),Yes,Yes,No,sim+hardware,133 +/- 11,0.038,7/10 success; 1 fall; 2 interventions
+DR+RTI without SysID,No,Yes,RTI,sim,108 +/- 19,0.073,not deployed: uncentered actuator model unsafe
+SysID+DR+random torque,Yes,Yes,random,sim+tether,141 +/- 10,0.031,stable tethered check; more chattering than RTI
+SysID+DR+prior torque-space perturbation,Yes,Yes,torque perturb.,sim+tether,145 +/- 9,0.029,stable tethered check
+SysID+DR+RTI (ours),Yes,Yes,state-dependent RTI,sim+hardware,152 +/- 8,0.021,10/10 success; 0 falls; 0 interventions

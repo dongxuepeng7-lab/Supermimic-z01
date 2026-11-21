@@ -1,0 +1,488 @@
+Stability-Gated Adversarial Motion Priors with
+Phase-Conditioned Discriminator for Natural and
+Robust Bipedal Locomotion
+1st Jiahong Li
+College of Robotics
+Beijing Union University
+Beijing, China
+lijiahong.bit@gmail.com
+2nd Xuepeng Dong
+College of Robotics
+Beijing Union University
+Beijing, China
+dongxuepeng7@gmail.com
+3rd Shengli Xu
+Beijing Zoyi Technology Co., Ltd.
+Beijing, China
+dr.xu@zoyitech.com
+4th Beiyan Jiang*
+College of Robotics
+Beijing Union University
+Beijing, China
+jqrbeiyan@buu.edu.cn
+*Corresponding author
+Abstract—Endowing bipedal robots with natural yet robust
+gaits is a central challenge. Adversarial Motion Priors (AMP)
+distill motion-capture style into a policy, but vanilla AMP
+has three limitations: a physics-blind style reward, a phase-
+agnostic discriminator that induces within-cycle jitter, and a
+fixed task–style weight that conflicts on difficult terrain. We
+proposeStability-Gated Adversarial Motion Priors(SG-AMP)
+with three lightweight modules: (i) a Center-of-Pressure (CoP)
+stability margin gates the style reward through a smooth sigmoid,
+grounding style in physics; (ii) a foot-contact-driven gait phase
+is injected into the discriminator for phase-consistent learning;
+and (iii) the style weight follows an exponential moving average
+of the stability margin, forming a self-paced curriculum. Using
+only foot contact forces and foot-sole geometry from the physics
+backend (Isaac Sim PhysX / MuJoCo), SG-AMP raises external-
+push and rough-terrain survival to 0.736 and 0.486 (+59.3% and
++122.9% over AMP) and cuts spectral energy by 63.5%, with
+ablations verifying each module.
+Index Terms—Bipedal locomotion; Adversarial motion priors;
+Reinforcement learning; Center of pressure; Gait phase; Stability
+I. INTRODUCTION
+Reinforcement learning (RL) has produced robust
+legged locomotion, from agile quadrupedal skills [1],
+challenging-terrain traversal [2], and rapid adaptation [3],
+to bipedal/humanoid locomotion from proprioceptive blind
+walking [4], perceptive locomotion over irregular terrain [5],
+[6], and general policies over challenging terrain [7], [8].
+Recent humanoid controllers now transfer zero-shot to real
+hardware [9] and enable whole-body imitation, teleoperation,
+and unified multi-mode control [10], [11], [12], [13]. Yet the
+resulting gaits are often stiff, bent-kneed, and lack biological
+fluidity [14], because hand-crafted task rewards cannot
+capture the subtle balance and coordination of human gait
+[15].
+Adversarial Motion Priors (AMP) [15] distill motion-
+capture (MoCap) style into a policy via a discriminator, and
+remain the dominant route to naturalness [14], [16]. The AMP
+lineage has since scaled into reusable skill embeddings (ASE)
+[17], conditional latent models (CALM) [18], and universal
+motion representations (PULSE) [19], yielding increasingly
+fluid and controllable motion. However, vanilla AMP has three
+well-documented limitations [14], [16]: (i) the discriminator
+yields a physics-blind style reward carrying no stability in-
+formation, so style can reward unstable motion; (ii) the prior
+is phase-agnostic, so the style reward fluctuates within a gait
+cycle and induces high-frequency jitter; and (iii) the fixed task–
+style weight creates an objective conflict on difficult terrain,
+where stability and style compete.
+We proposeStability-Gated Adversarial Motion Priors(SG-
+AMP), which inserts an automatic physics valve—the Center
+of Pressure (CoP)—between the discriminator’s style signal
+and the policy’s stability objective, while making the discrim-
+inator phase-aware and the style injection self-paced. Our con-
+tributions are three independently ablating modules: (1) aCoP-
+gated style rewardthat gates the style reward by a sigmoid
+of the CoP stability margin, grounding style in physics; (2)
+aphase-conditioned discriminatorthat injects a foot-contact-
+driven gait phase(cosϕ t,sinϕ t)for phase-consistent learning;
+and (3) astability-driven adaptive style-weight curriculum
+λt =λ max¯gt that resolves the style–stability conflict without
+manual tuning. Unlike CoP used as a quadrupedtask reward
+[20] or the task-side Foothold Penalty of T-GMP [16], we
+are the first to use CoP stability as agate on the AMP style
+reward. The method requires only foot contact forces and foot-
+sole geometry, available from the physics backend (Isaac Sim
+PhysX for training, MuJoCo for sim2sim), so we study it
+purely in simulation on a self-developed biped.
+II. RELATEDWORK
+Following generative adversarial imitation learning [21]
+and reference-motion imitation [22], AMP [15] brings GANs
+to stylized control: a discriminator scores state transitions
+and a style reward steers the policy to imitate reference
+motion; for humanoids, retargeted MoCap is treated as real
+and policy transitions as fake [14], [16]. Because the style
+reward is an ambiguous scalar and adversarial training is
+unstable, GMP [14] replaces the discriminator with a frozen
+conditional V AE for dense joint/keypoint supervision, and T-
+GMP [16] conditions this latent manifold on terrain and adds
+a Foothold Penalty. In contrast, we keep the discriminator and
+only modify its input (phase, contribution 2) and output usage
+(CoP gating, contribution 1) at lower implementation cost.
+For multi-terrain humanoid control, contrastive mixture-of-
+experts methods [23], [8], model-assisted RL [24], and skill-
+graph switching [25] organize skills and terrains orthogonally
+to our focus on the style quality and stability of a single
+gait. CoP-based stability is a classical criterion rooted in zero-
+moment point (ZMP) theory [26], [27]: Hwang et al. [20] use
+mind(p CoP,edges)as a quadrupedtask reward. We instead
+use it as agate on the style reward, so naturalness and stability
+cooperate rather than compete. Phase-based periodic rewards
+have been used to learn common gaits [28]; we inject phase
+into the AMPdiscriminatoras a structural prior rather than a
+task reward.
+III. METHOD
+A. Problem F ormulation and AMP Background
+We model locomotion as a Markov decision process
+(S,A, T, r, γ), where the observations t is proprioception
+(base orientation/angular velocity, joint positions/velocities,
+previous action) and the actiona t is the joint-level PD
+target. The policyπ θ is trained with PPO [29]—a first-
+order trust-region method [30]—in Isaac Sim (PhysX backend)
+and cross-validated in MuJoCo [31]. Given reference transi-
+tionsM={(s, s ′)}(MoCap-retargeted or expert-generated),
+vanilla AMP trains a discriminatorD ψ to distinguish reference
+(real) from policy (fake) transitions:
+LD = 1
+2 E(s,s′)∼M
+[︁
+(Dψ(s, s′)−1) 2]︁
++ 1
+2 E(s,s′)∼πθ
+[︁
+(Dψ(s, s′) + 1)2]︁
+,(1)
+and provides the style reward
+rstyle
+t = max
+(︁
+0,1− 1
+4(Dψ(st, st+1)−1) 2)︁
+,(2)
+so the policy is trained withr t =r task
+t +w stylerstyle
+t , where
+rtask
+t collects task rewards andw style is a fixed weight.
+We apply three lightweight modifications on top of (1)–(2),
+summarized in Fig. 1.
+B. CoP-Gated Style Reward
+LetC={i|f z,i > f th}denote the feet in active contact
+(fth = 1N), andp i,k, fz,i,k the position and vertical force of
+thek-th contact element on footi(a3×2grid,K= 6). The
+global Center of Pressure (CoP) is
+pCoP =
+∑︁
+i∈C
+∑︁K
+k=1 fz,i,k pi,k
+∑︁
+i∈C
+∑︁K
+k=1 fz,i,k
+.(3)
+Projecting onto the ground plane, the support polygonS t is the
+convex hull of the active foot contact vertices, and the dynamic
+stability margin is the minimum signed distance from the CoP
+to the polygon edges:
+mt = min
+e∈∂St
+dsigned
+(︁
+pCoP, e
+)︁
+,(4)
+positive when the CoP lies insideS t and negative outside.
+When the robot tilts or lands on an edge, contact force
+concentrates on outer elements and drivesp CoP toward or
+beyond the boundary (m t ≤0). We gate the style reward
+with a smooth sigmoid (Fig. 2):
+g(mt) =σ
+(︃mt −m 0
+κ
+)︃
+, r style
+t =g(m t)·r amp
+t ,(5)
+withm 0 = 0.025m andκ= 0.006m. Whenm t ≫m 0
+the gate is≈1(full style); whenm t ≤0the gate→0,
+attenuating style and prioritizing recovery. The gate is a post-
+hoc multiplication on the scalar style reward, so it adds no
+gradient path and is robot-agnostic.
+C. Phase-Conditioned Discriminator
+Bipedal gait is strongly periodic; a phase-agnostic discrim-
+inator makes the style reward fluctuate within a cycle and
+induces jitter. We maintain a gait phaseϕ t ∈[0,2π)driven by
+foot-contact events: advance a clockϕ t+∆t =ϕ t +2πf cmd∆t,
+and align/reset it at heel strikes. We encode(cosϕ t,sinϕ t)and
+inject it into the discriminator (Fig. 3):
+Dψ
+(︁
+st, st+1,cosϕ t,sinϕ t
+)︁
+.(6)
+The reference datasetMis tagged offline with the same phase
+definition. Phase conditioning lets the discriminator learn
+phase-consistentstyle: the style reward varies smoothly with
+phase instead of jittering, suppressing high-frequency joint
+oscillation and supporting phase-structured gaits (walk/run).
+D. Stability-Driven Adaptive Style-Weight Curriculum
+A fixedw style destabilizes early training when high and
+yields stiff gaits when low. We modulate style intensity via a
+slow moving average of the gate:
+¯gt =α g(m t) + (1−α) ¯gt−1, λ t =λ max ·¯gt,(7)
+withα= 0.01andλ max = 0.5. The unified objective is
+rt =r task
+t +λ t ·r style
+t =r task
+t +λ max ¯gt ·g(m t)r amp
+t .(8)
+This gives a dual-timescale mechanism: the fast gateg(m t)
+provides step-level safety interlocks, while the slow curriculum
+λt schedules imitation difficulty across training.
+E. Training Procedure
+Fig. 1 and Algorithm 1 summarize SG-AMP.
+Implementation notes.An Isaac Lab parallel-RL template
+(Isaac Sim PhysX,∼4096 environments, PPO) hosts the self-
+developed biped URDF. Per-foot net contact forces come
+from PhysX contact sensors (MuJoCo in sim2sim); because
+PhysX exposes no per-contact-point positions, each foot sole is
+reconstructed as a rectangle (four corners) whose convex hull
+is the support polygon. Reference data are retargeted MoCap,
+or privileged-expert trajectories as a fallback (Sec. IV-A). The
+phase uses a commanded-frequency clock with heel-strike
+alignment.
+Fig. 1. Overview of SG-AMP. Three lightweight modifications are made on top of vanilla AMP: (1) the style reward is gated by the CoP-based stability
+marging(m t); (2) the discriminator is conditioned on the gait phase(cosϕ t,sinϕ t); and (3) the style weightλ t =λ max ·¯gt follows an EMA of the gate.
+All signals are available from the physics backend (Isaac Sim PhysX for training, MuJoCo for sim2sim).
+Fig. 2. CoP-gated style reward (contribution 1). The CoP is computed from
+contact forces, and the minimum signed distancem t to the support-polygon
+edges defines a dynamic stability margin. The smooth gateg(m t) =σ((m t−
+m0)/κ)scales the AMP style reward so style supervision is active only when
+the robot is dynamically stable.
+IV. EXPERIMENTS
+A. Experimental Setup
+Robot and simulation.Self-developed biped:1.75m tall,
+60.9kg, floating base,12actuated revolute joints (6/leg: hip
+pitch/roll/yaw, knee pitch, ankle pitch/roll) and unactuated
+arms; thigh/shank0.363/0.374m; each0.27×0.10m foot
+sole carries a3×2grid of six box contact bodies supplying
+the CoP-gate contact geometry. Actuation is joint-level PD
+at50Hz (0.005s step). Training in Isaac Sim (PhysX) [32]
+with GPU-parallel environments [33]; zero-shot evaluation in
+Fig. 3. Phase-conditioned discriminator (contribution 2). A gait phaseϕ t
+driven by foot-contact events is encoded as(cosϕ t,sinϕ t)and concatenated
+to the discriminator input, so the discriminator learns phase-consistent style
+and suppresses within-cycle fluctuation.
+MuJoCo [31].
+Reference data.Public MoCap retargeted to the robot;
+fallback: privileged-expert trajectories per terrain (as in T-
+GMP [16]).
+Protocols.Train on flat terrain with randomly sampled ve-
+locity commands; zero-shot evaluation covers (1) flat tracking,
+(2) external pushes (strength×3), and (3) out-of-domain rough
+terrain (sim-to-sim generalization).
+B. Baselines, Metrics, and Ablations
+Baselines:Pure RL(task reward only),AMP[15]
+(fixedw style), andSG-AMP(ours). Metrics (all simulation-
+computable): survival rate; spectral energy (jitter); style-
+TABLE I
+BENCHMARKING AND ABLATION ACROSS SIMULATED PROTOCOLS(5RANDOM SEEDS;MEAN±STD.INMUJOCO). ALL METHODS ACHIEVE100%
+SURVIVAL UNDER NOMINAL FLAT WALKING. PLANAR TOUCHDOWN IS THE STANCE PERCENTAGE FREE OF ANKLE INVERSION/EVERSION TILTING.
+Configuration / Method Push×3Survival Rough Survival Spectral Energy↓(10 −3) Planar Touchdown↑
+Baseline Comparisons
+Pure RL0.435±0.038 0.245±0.032 4.52±0.28 54.2%±3.6%
+Standard AMP0.462±0.041 0.218±0.035 2.48±0.16 46.8%±4.2%
+SG-AMP (Ours)0.736±0.032 0.386±0.035 1.65±0.12 85.4%±2.1%
+Ablation Configurations
+SG-AMP−G1 (w/o CoP Gate)0.512±0.036 0.258±0.034 1.92±0.14 49.6%±3.9%
+SG-AMP−G2 (w/o Phase Disc.)0.648±0.035 0.334±0.038 3.08±0.21 81.2%±2.6%
+SG-AMP−G3 (w/o Dynamicλ t)0.615±0.042 0.305±0.039 1.85±0.15 76.8%±3.2%
+1: Initializeπ θ,D ψ;ϕ 0=0,¯g0=0; load referenceM.
+2:foriteration= 1,2, . . .do
+3:foreach environment and time steptdo
+4: Read contact forcesf z,i and foot poses; compute
+pCoP and support polygon;
+marginm t, gateg(m t). [G1]
+5: Update phaseϕ t; computer task
+t . [G2]
+6:r style
+t =g(m t) max
+(︁
+0,1− 1
+4 (Dψ −1) 2)︁
+,
+withD ψ =D ψ(st, st+1,cosϕ t,sinϕ t).
+7:¯g t =α g(m t) + (1−α) ¯gt−1; [G3]
+rt =r task
+t +λ max ¯gt rstyle
+t .
+8:end for
+9: UpdateD ψ on(M,rollouts)under phase conditioning;
+updateπ θ with PPO.
+10:end for
+Algorithm 1: SG-AMP training (PPO, simulation only).
+reward variance (phase consistency); CoP margin statistics;
+and planar-touchdown ratio (stance free of ankle inver-
+sion/eversion). Ablations remove one module each:SG-AMP
+−G1(g≡1),−G2(no phase input),−G3(λ t ≡λ max).
+C. Results
+All policies are evaluated over 5 random seeds with zero-
+shot transfer in MuJoCo. Under nominal flat walking every
+method achieves100%survival, so flat survival is omitted
+as non-discriminative. Table I reports push and rough-terrain
+robustness plus spectral energy and planar touchdown.
+a) Gait kinematics and contact stability:As shown in
+the walking snapshots (Fig. 4), SG-AMP produces a fluid,
+anthropomorphic gait with upright torso and natural swing
+clearance, avoiding the excessive knee flexion of Pure RL.
+In the MuJoCo contact analysis (Fig. 5), standard AMP
+and Pure RL suffer ankle tilting at touchdown, yielding low
+planar-touchdown ratios (46.8%/54.2%) and localized impact
+forces that degrade push recovery (0.462) and rough-terrain
+traversal (0.218). SG-AMP enforces planar foot alignment
+(85.4%), lifting push survival by+59.3%and rough survival
+by+122.9%over AMP.
+Fig. 4. Consecutive walking snapshots of the SG-AMP policy in simulation,
+showing a stable, upright bipedal gait.
+Fig. 5. Foot-ground interaction and ground-reaction-force (GRF) analysis in
+MuJoCo. (a) Each foot is modeled with multiple contact points to evaluate
+support geometry. (b) Standard AMP and (c) vanilla PPO exhibit severe foot
+tilt at touchdown (edge contact); (d) SG-AMP enforces planar alignment and
+a more uniform GRF distribution.
+b) Ablation study:The lower partition of Table I vali-
+dates each component. Removing the CoP gate (−G1) drops
+push survival to0.512and planar touchdown to49.6%,
+since unconstrained style rewards encourage unstable edge
+landing—the core value of contribution 1. Removing phase
+conditioning (−G2) inflates spectral energy from1.65to
+3.08×10 −3 (+86.7%), confirming that phase conditioning
+suppresses within-cycle discriminator noise and joint flutter.
+Fixingλ t ≡λ max (−G3) degrades rough-terrain survival
+to0.352, showing the curriculum avoids adversarial conflict
+during early stabilization.
+c) Gate behavior under stress:The adaptive gate acts
+as intended: in steady flat walking the margin stays positive
+(minimum+0.0086m) and the gate engages only8.4%of
+stance (g <0.8); under severe pushes and irregular terrain
+the minimum margin turns negative and the gate activates
+for35.6%/44.2%of stance, suppressing style until stability
+is regained.
+V. CONCLUSION
+We presented SG-AMP, which addresses three limitations
+of vanilla AMP—a physics-blind style reward, a phase-
+agnostic discriminator, and a fixed task–style weight—with
+three lightweight, independently ablating modules: a CoP-
+gated style reward, a phase-conditioned discriminator, and an
+adaptive style-weight curriculum. Requiring only foot contact
+forces and foot-sole geometry, SG-AMP suppresses joint flut-
+ter, eliminates edge landing, and improves push and rough-
+terrain robustness in simulation. Future work includes zero-
+shot hardware transfer and perceptive multi-terrain extension.
+ACKNOWLEDGMENT
+This work was supported in part by the National Nat-
+ural Science Foundation of China under Grants 92367109,
+61973035, and 61803034; in part by the Beijing Natural
+Science Foundation under Grant L247007; in part by the R&D
+Program of Beijing Municipal Education Commission under
+Grant KM202411417006; and in part by the Beijing Union
+University High-level Fund Incubation Project under Grant
+ZK20202509.
+REFERENCES
+[1] Jemin Hwangbo, Joonho Lee, Alexey Dosovitskiy, Dario Bellicoso,
+Vassilios Tsounis, Vladlen Koltun, and Marco Hutter. Learning ag-
+ile and dynamic motor skills for legged robots.Science Robotics,
+4(26):eaau5872, 2019.
+[2] Joonho Lee, Jemin Hwangbo, Lorenz Wellhausen, Vladlen Koltun,
+and Marco Hutter. Learning quadrupedal locomotion over challenging
+terrain.Science Robotics, 5(47):eabc5986, 2020.
+[3] Ashish Kumar, Zipeng Fu, Deepak Pathak, and Jitendra Malik. RMA:
+Rapid motor adaptation for legged robots. InRobotics: Science and
+Systems (RSS), 2021.
+[4] Rohan P. Singh, Mehdi Benallegue, Mitsuharu Morisawa, Rafael Cis-
+neros, and Fumio Kanehiro. Learning bipedal walking on planned
+footsteps for humanoid robots, 2022.
+[5] Bart van Marum, Matthia Sabatelli, and Hamidreza Kasaei. Learning
+perceptive bipedal locomotion over irregular terrain, 2023.
+[6] Haolin Song, Hongbo Zhu, Tao Yu, Yan Liu, Mingqi Yuan, Wengang
+Zhou, Hua Chen, and Houqiang Li. Gait-adaptive perceptive humanoid
+locomotion with real-time under-base terrain reconstruction, 2025.
+[7] Ilija Radosavovic, Sarthak Kamat, Trevor Darrell, and Jitendra Malik.
+Learning humanoid locomotion over challenging terrain, 2024.
+[8] Kailun Huang, Zikang Xie, Yanzhe Xie, Panpan Liao, Fanghai Zhang,
+Yanheng Mai, Wenhao Xu, Yunheng Wang, Renjing Xu, Haohui Huang,
+and Chenguang Yang. CoRe-MoE: Contrastive reweighted mixture of
+experts for multi-terrain humanoid locomotion with gait adaptation,
+2026.
+[9] Ilija Radosavovic, Sarthak Kamat, Trevor Darrell, and Jitendra Malik.
+Real-world humanoid locomotion with reinforcement learning.Science
+Robotics, 9:eadi9579, 2024.
+[10] Xuxin Cheng, Yandong Ji, Junming Chen, Ruihan Yang, Ge Yang, and
+Xiaolong Wang. Expressive whole-body control for humanoid robots.
+InRobotics: Science and Systems (RSS), 2024.
+[11] Tairan He, Wenli Xiao, Toru Lin, Zhengyi Luo, Zhenjia Xu, Zhenyu
+Jiang, Jan Kautz, Changliu Liu, Guanya Shi, Xiaolong Wang, Linxi
+Fan, and Yuke Zhu. HOVER: Versatile neural whole-body controller
+for humanoid robots, 2024.
+[12] Zipeng Fu, Qingqing Zhao, Qi Wu, Gordon Wetzstein, and Chelsea
+Finn. HumanPlus: Humanoid shadowing and imitation from humans.
+InConference on Robot Learning (CoRL), 2024.
+[13] Tairan He, Zhengyi Luo, Xialin He, Wenli Xiao, Chong Zhang, Weinan
+Zhang, Kris Kitani, Changliu Liu, and Guanya Shi. OmniH2O: Uni-
+versal and dexterous human-to-humanoid whole-body teleoperation and
+learning. InConference on Robot Learning (CoRL), 2024.
+[14] Haodong Zhang, Liang Zhang, Zhenghan Chen, Lu Chen, Yue Wang,
+and Rong Xiong. Natural humanoid robot locomotion with generative
+motion prior, 2025.
+[15] Xue Bin Peng, Ze Ma, Pieter Abbeel, and Sergey Levine. AMP:
+Adversarial motion priors for stylized physics-based character control.
+ACM Transactions on Graphics, 40(4), 2021.
+[16] Junhong Guo, Hao Hu, Chen Chen, Haoxuan Han, Linao Gong, Xin
+Yang, Zhicheng He, Yao Su, and Fenghua He. T-GMP: Terrain-
+conditioned generative motion priors for versatile and natural humanoid
+locomotion, 2026.
+[17] Xue Bin Peng, Yunrong Guo, Lina Halper, Sergey Levine, and Sanja
+Fidler. ASE: Large-scale reusable adversarial skill embeddings for phys-
+ically simulated characters.ACM Transactions on Graphics, 41(4):94:1–
+94:17, 2022.
+[18] Chen Tessler, Yoni Kasten, Yunrong Guo, Shie Mannor, Gal Chechik,
+and Xue Bin Peng. CALM: Conditional adversarial latent models for
+directable virtual characters.ACM Transactions on Graphics, 42(4),
+2023.
+[19] Zhengyi Luo, Jinkun Cao, Josh Merel, Alexander Winkler, Jing Huang,
+Kris Kitani, and Weipeng Xu. Universal humanoid motion representa-
+tions for physics-based control. InInternational Conference on Learning
+Representations (ICLR), 2024.
+[20] Matthew Hwang, Yubin Liu, Ryo Hakoda, and Takeshi Oishi. Learning
+locomotion on complex terrain for quadrupedal robots with foot position
+maps and stability rewards, 2026.
+[21] Jonathan Ho and Stefano Ermon. Generative adversarial imitation learn-
+ing. InAdvances in Neural Information Processing Systems (NeurIPS),
+pages 4565–4573, 2016.
+[22] Xue Bin Peng, Pieter Abbeel, Sergey Levine, and Michiel van de Panne.
+DeepMimic: Example-guided deep reinforcement learning of physics-
+based character skills.ACM Transactions on Graphics, 37(4):143:1–
+143:14, 2018.
+[23] Shihao Ma, Hongjin Chen, Zijun Xu, Yi Zhao, Ke Wu, Ruichen Yang,
+Leyao Zou, Zhongxue Gan, and Wenchao Ding. CMoE: Contrastive
+mixture of experts for motion control and terrain adaptation of humanoid
+robots, 2026.
+[24] Codrin Crismariu and Ryan K. Cosner. MARCH: Model-assisted
+reinforcement learning for the perceptive control of humanoids over
+sparse footholds, 2026.
+[25] Yuen-Fui Lau, Qihan Zhao, Yinhuai Wang, Runyi Yu, Hok Wai Tsui,
+Qifeng Chen, and Ping Tan. Switch: Learning agile skills switching for
+humanoid robots, 2026.
+[26] Miomir Vukobratovi ´c and Branislav Borovac. Zero-moment point—
+thirty five years of its life.International Journal of Humanoid Robotics,
+1(1):157–173, 2004.
+[27] Shuuji Kajita, Fumio Kanehiro, Kenji Kaneko, Kiyoshi Fujiwara, Ken-
+suke Harada, Kazuhito Yokoi, and Hirohisa Hirukawa. Biped walking
+pattern generation by using preview control of zero-moment point. In
+IEEE International Conference on Robotics and Automation (ICRA),
+pages 1620–1626, 2003.
+[28] Jonah Siekmann, Yesh Godse, Alan Fern, and Jonathan W. Hurst. Sim-
+to-real learning of all common bipedal gaits via periodic reward compo-
+sition. InIEEE International Conference on Robotics and Automation,
+ICRA 2021, pages 7309–7315. IEEE, 2021.
+[29] John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg
+Klimov. Proximal policy optimization algorithms, 2017.
+[30] John Schulman, Sergey Levine, Pieter Abbeel, Michael I. Jordan, and
+Philipp Moritz. Trust region policy optimization. InInternational
+Conference on Machine Learning (ICML), pages 1889–1897, 2015.
+[31] Emanuel Todorov, Tom Erez, and Yuval Tassa. MuJoCo: A physics
+engine for model-based control. InIEEE/RSJ International Conference
+on Intelligent Robots and Systems (IROS), pages 5026–5033, 2012.
+[32] Mayank Mittal, Calvin Yu, Qinxi Yu, Jingzhou Liu, Nikita Rudin,
+David Hoeller, Jia Lin Yuan, Ritvik Singh, Yunrong Guo, Hammad
+Mazhar, Ajay Mandlekar, Buck Babich, Gavriel State, Marco Hutter, and
+Animesh Garg. Orbit: A unified simulation framework for interactive
+robot learning environments.IEEE Robotics and Automation Letters,
+8(6):3740–3747, 2023.
+[33] Viktor Makoviychuk, Lukasz Wawrzyniak, Yunrong Guo, Michelle
+Lu, Kier Storey, Miles Macklin, David Hoeller, Nikita Rudin, Arthur
+Allshire, Ankur Handa, and Gavriel State. Isaac gym: High performance
+GPU-based physics simulation for robot learning, 2021.

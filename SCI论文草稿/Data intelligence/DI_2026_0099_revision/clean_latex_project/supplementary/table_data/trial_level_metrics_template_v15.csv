@@ -1,0 +1,1 @@
+trial_id,method,seed,start_time,battery_soc_percent,floor_condition,duration_s,analysis_window_s,success,fall,human_intervention,peak_current_A,pitch_RMS_deg,pitch_variance_deg2,pitch_peak_deg,joint_position_RMSE_rad,current_chattering_index_A_per_s,notes
