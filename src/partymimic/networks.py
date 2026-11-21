@@ -99,10 +99,14 @@ class RunningNorm(nn.Module):
 AMP_DTYPE: torch.dtype | None = None
 
 
-def run_mlp(net: nn.Module, x: torch.Tensor) -> torch.Tensor:
-    if AMP_DTYPE is None:
+def run_mlp(net: nn.Module, x: torch.Tensor, amp: str = "inherit") -> torch.Tensor:
+    dtype = AMP_DTYPE if amp == "inherit" else (torch.bfloat16 if amp == "bf16" else None)
+    if amp == "none" and x.device.type == "cuda":
+        with torch.autocast("cuda", enabled=False):
+            return net(x.float())
+    if dtype is None or x.device.type != "cuda":
         return net(x)
-    with torch.autocast("cuda", dtype=AMP_DTYPE):
+    with torch.autocast("cuda", dtype=dtype):
         return net(x).float()
 
 
@@ -121,6 +125,8 @@ class WorldModel(nn.Module):
         its mode instead of one MLP smoothing across touch-down and lift-off."""
         super().__init__()
         self.num_j = num_j
+        # Per-model override; policy/critic may retain their global mixed precision.
+        self.mlp_amp = "inherit"
         self.use_prev_action = use_prev_action
         self.contact_modes = contact_modes
         # ``structured`` = semi-implicit integration (positions follow the predicted velocities,
@@ -194,7 +200,7 @@ class WorldModel(nn.Module):
     def step_c(self, S, a, a_prev, xi_n):
         """Next state and next-step foot-contact logits (B, 2), or None without ``contact_modes``."""
         p, R, v, w, q, qd = S
-        y = run_mlp(self.net, self.in_norm(self.inputs(S, a, a_prev, xi_n)))
+        y = run_mlp(self.net, self.in_norm(self.inputs(S, a, a_prev, xi_n)), self.mlp_amp)
         logits = None
         if self.contact_modes:
             logits = y[..., -2:]

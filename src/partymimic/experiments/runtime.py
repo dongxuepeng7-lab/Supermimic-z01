@@ -146,6 +146,9 @@ class RunLedger:
                 "wm_loss",
                 "response_loss",
                 "policy_loss",
+                "forward_loss",
+                "weighted_response_loss",
+                "response_raw_mse",
             ),
         )
         self.writer.writeheader()
@@ -166,6 +169,9 @@ class RunLedger:
         wm_loss=None,
         response_loss=None,
         policy_loss=None,
+        forward_loss=None,
+        weighted_response_loss=None,
+        response_raw_mse=None,
     ):
         self.data.update(
             env_steps=steps, wm_updates=wm_updates, policy_updates=policy_updates
@@ -181,6 +187,9 @@ class RunLedger:
                 wm_loss=wm_loss,
                 response_loss=response_loss,
                 policy_loss=policy_loss,
+                forward_loss=forward_loss,
+                weighted_response_loss=weighted_response_loss,
+                response_raw_mse=response_raw_mse,
             )
         )
         self.metrics.flush()

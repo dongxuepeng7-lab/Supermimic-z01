@@ -25,6 +25,13 @@ parser.add_argument("--parameter_manifest", default=None)
 parser.add_argument("--response_manifest", default=None)
 parser.add_argument("--protocol", default=None)
 parser.add_argument("--response_weight", type=float, default=1.)
+parser.add_argument("--response_horizon", type=int, default=0,
+                    help="response-supervision prefix; 0 uses all recorded steps; forward labels remain full-span")
+parser.add_argument("--response_loss", choices=("mse", "huber"), default="mse")
+parser.add_argument("--response_huber_delta", type=float, default=1.,
+                    help="Huber transition in normalized response-error units; raw diagnostics stay unmodified")
+parser.add_argument("--wm_amp", choices=("inherit", "none", "bf16"), default="inherit",
+                    help="world-model precision for both fitting and imagination; independent of policy/critic --amp")
 parser.add_argument("--friction_speed", type=float, default=.01)
 parser.add_argument("--synthetic_test", action="store_true", help="explicitly allow synthetic fixtures; never paper results")
 parser.add_argument("--eager", action="store_true", help="disable compilation/capture for small integration checks")
@@ -155,8 +162,8 @@ if args.experiment_group:
         parser.error("paired groups require a fixed LR schedule: --lr_decay_ret 0 --lr_decay_by 0")
     if group["model"] != "base" and not args.response_manifest:
         parser.error("A+/B/C require the same frozen --response_manifest (fit split)")
-    if args.response_weight <= 0:
-        parser.error("--response_weight must be positive")
+    if not math.isfinite(args.response_weight) or args.response_weight < 0:
+        parser.error("--response_weight must be finite and nonnegative (0 is a diagnostic control)")
     if args.warmup_steps < max(args.wm_window, args.horizon + 1) or args.buffer_steps < args.warmup_steps:
         parser.error("warmup must cover wm_window and horizon+1; buffer must hold warmup")
 if args.kp_skip is None:
@@ -185,7 +192,7 @@ from partymimic.mdp import flatten_state
 from partymimic.robot import get_robot
 from partymimic.sensing import ObsPipeline
 
-torch.backends.cuda.matmul.allow_tf32 = True
+torch.backends.cuda.matmul.allow_tf32 = args.wm_amp != "none"
 torch.backends.cudnn.allow_tf32 = True
 torch.manual_seed(args.seed)
 networks.AMP_DTYPE = torch.bfloat16 if args.amp == "bf16" else None
@@ -239,8 +246,12 @@ from partymimic.experiments.models import make_world_model
 wm = make_world_model(robot, layout, vars(args)).to(dev)
 response_data = None
 if args.experiment_model != "base":
-    from partymimic.experiments.response import ResponseData, paired_losses
+    from partymimic.experiments.response import (
+        ResponseData, paired_losses, initialize_pair_normalizers, validate_response_objective,
+    )
     response_data = ResponseData(args.response_manifest, "fit", robot, layout, sha256(args.parameter_manifest), dev)
+    validate_response_objective(args.response_horizon, args.response_loss,
+                                args.response_huber_delta, response_data.horizon)
     if response_data.meta["source_type"] == "synthetic_test" and not args.synthetic_test:
         raise ValueError("Synthetic response fixtures require --synthetic_test")
     response_generator = torch.Generator(device=dev).manual_seed(args.seed + 7301)
@@ -503,13 +514,17 @@ def wm_update():
         # A+/B/C fit exactly the same frozen data stream, independent of each policy's
         # online collection. Normalizers are also initialized from this dataset only.
         batch = response_data.sample(args.wm_batch, response_generator)
-        forward, response, _ = paired_losses(wm, batch, normalize_xi, response_data.q_scale, response_data.v_scale)
+        forward, response, errors = paired_losses(
+            wm, batch, normalize_xi, response_data.q_scale, response_data.v_scale,
+            response_horizon=args.response_horizon, response_loss=args.response_loss,
+            response_huber_delta=args.response_huber_delta)
         loss = forward + (args.response_weight * response if args.experiment_group == "C" else 0.)
         opt_wm.zero_grad(set_to_none=True)
         loss.backward()
         nn.utils.clip_grad_norm_(wm.parameters(), 1.)
         opt_wm.step()
         RESPONSE_DIAG.copy_(response.detach())
+        RESPONSE_RAW_MSE.copy_(errors[:, :args.response_horizon or response_data.horizon].square().mean().detach())
         return loss.detach(), forward.detach()
     w = buffer.sample_windows(args.wm_batch, args.wm_window)
     if mirror is not None:
@@ -1108,18 +1123,9 @@ class Pipe:
 
 
 RESPONSE_DIAG = torch.zeros((), device=dev)
+RESPONSE_RAW_MSE = torch.zeros((), device=dev)
 if response_data is not None:
-    with torch.no_grad():
-        for side in ("plus", "minus"):
-            d = response_data.data
-            current = torch.cat((d["s0"][:, None], d["s_" + side][:, :-1]), 1)
-            previous = torch.cat((d["a_prev"][:, None], d["a_" + side][:, :-1]), 1)
-            xi = d["xi"][:, None].expand(-1, response_data.horizon, -1)
-            for start in range(0, response_data.count, 256):
-                sl = slice(start, start + 256)
-                x, y, inc = _wm_norm_data(unflatten_state(current[sl]), unflatten_state(d["s_" + side][sl]),
-                                         d["a_" + side][sl], previous[sl], xi[sl])
-                wm.in_norm.update(x); wm.out_norm.update(y); wm.inc_norm.update(inc)
+    initialize_pair_normalizers(wm, response_data, normalize_xi)
 wm_update_g = Graphed(wm_update, lambda: True)
 _ready = lambda: int(pi_avg.n_averaged if pi_avg is not None else 1) > 0  # noqa: E731
 if args.pipeline:
@@ -1267,7 +1273,11 @@ for it in range(start_it, args.iterations):
         ledger.record(it + 1, sim_steps, (it + 1) * args.wm_batches, p_updates,
                       p_updates * args.horizon * args.pi_batch, float(l),
                       float(RESPONSE_DIAG) if response_data is not None else None,
-                      float(pl) if p_updates else None)
+                      float(pl) if p_updates else None,
+                      forward_loss=float(e8) if response_data is not None else None,
+                      weighted_response_loss=(args.response_weight * float(RESPONSE_DIAG)
+                                              if args.experiment_group == "C" else 0.) if response_data is not None else None,
+                      response_raw_mse=float(RESPONSE_RAW_MSE) if response_data is not None else None)
     out_of_time = args.max_hours is not None and wall >= args.max_hours * 3600
     timed = args.ckpt_minutes > 0 and wall >= next_ckpt_s
     if timed:

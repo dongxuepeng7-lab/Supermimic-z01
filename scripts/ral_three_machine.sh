@@ -7,15 +7,16 @@ export OMP_NUM_THREADS="${OMP_NUM_THREADS:-4}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 motion_dir="${RAL_MOTION_DIR:-data/motions/z01_lafan_v2_clean}"
 params="release/ral/params.csv"
-config="configs/ral/common.json"
+config="${RAL_CONFIG:-configs/ral/pilot02.json}"
 responses="${RAL_RESPONSES:-data/ral_pairs_v1/manifest.json}"
-protocol="${RAL_PROTOCOL:-release/ral/protocol_v1.json}"
-attempt="${RAL_ATTEMPT:-pilot01}"
+protocol="${RAL_PROTOCOL:-release/ral/protocol_v2.json}"
+attempt="${RAL_ATTEMPT:-pilot02}"
 
 usage() {
   cat <<'EOF'
 Run from a checkout containing the same code, assets and actual motion data:
   bash scripts/ral_three_machine.sh prepare             # 3090: pairs + protocol, once
+  bash scripts/ral_three_machine.sh freeze              # freeze a NEW protocol using existing pairs
   bash scripts/ral_three_machine.sh train4090           # seed 1: A0, A, A+, B, C
   bash scripts/ral_three_machine.sh train5080           # seed 2: A, A0, A+, B, C
   bash scripts/ral_three_machine.sh windows SEED TOLERANCE  # 3090: D and C-perm
@@ -25,9 +26,10 @@ Copy the SAME pairs directory and frozen protocol to all machines after prepare.
 Copy all five training run directories per seed to the 3090 before evaluate.
 Before windows, copy that seed's complete C run directory to the 3090.
 TOLERANCE must be a positive, prespecified calibration error threshold.
-Current common.json is a 200-iteration PILOT; window branches use 100 updates.
-Fresh attempts: RAL_ATTEMPT=pilot02 (no resume; never overwrite existing runs).
-Alternative inputs: RAL_MOTION_DIR, RAL_RESPONSES, RAL_PROTOCOL.
+Defaults: pilot02.json, protocol_v2.json, attempt pilot02; still a 200-iteration PILOT.
+Window candidates come from the selected config; calibration tolerance is not supplied automatically.
+Fresh attempts: RAL_ATTEMPT=pilot03 (no resume; never overwrite existing runs).
+Alternative inputs: RAL_CONFIG, RAL_MOTION_DIR, RAL_RESPONSES, RAL_PROTOCOL.
 EOF
 }
 
@@ -75,6 +77,13 @@ train_sequence() {
 
 case "${1:---help}" in
   -h|--help|help) usage ;;
+  freeze)
+    require_file "$responses"
+    require_file "$config"
+    mkdir -p "$(dirname "$protocol")"
+    ral freeze --params "$params" --config "$config" --motion_dir "$motion_dir" \
+      --responses "$responses" --out "$protocol"
+    ;;
   prepare)
     if [[ "${responses##*/}" != manifest.json ]]; then
       printf 'RAL_RESPONSES must end in manifest.json.\n' >&2
@@ -104,6 +113,8 @@ case "${1:---help}" in
     cal="release/ral/window_calibration_s${seed}_${attempt}.json"
     starts="data/ral_starts_s${seed}_${attempt}"
     require_file "$ckpt"
+    read -r short_window long_window < <(uv run python -c \
+      'import json,sys; w=json.load(open(sys.argv[1])).get("window_candidates", {"short":8,"long":32}); print(w["short"], w["long"])' "$config")
     for target in "$cal" "$starts" "$(run_dir D "$seed")" "$(run_dir C-perm "$seed")"; do
       if [[ -e "$target" ]]; then
         printf 'Window attempt already exists: %s\n' "$target" >&2
@@ -111,10 +122,10 @@ case "${1:---help}" in
       fi
     done
     ral calibrate --checkpoint "$ckpt" --params "$params" --responses "$responses" \
-      --short 8 --long 32 --edges 0.5,1,2 --min-blocks 10 \
+      --short "$short_window" --long "$long_window" --edges 0.5,1,2 --min-blocks 10 \
       --tolerance "$tolerance" --out "$cal"
     ral capture-starts --checkpoint "$ckpt" --params "$params" --responses "$responses" \
-      --motion_dir "$motion_dir" --horizon 32 --steps 200 --out "$starts"
+      --motion_dir "$motion_dir" --horizon "$long_window" --steps 200 --out "$starts"
     mkdir -p logs/ral_console
     # Counterbalance order, while keeping each seed's two branches on the same GPU.
     groups=(D C-perm)

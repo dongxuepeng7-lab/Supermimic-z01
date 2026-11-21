@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "status": "pilot02_conservative_response_candidate_not_formal_results",
+  "implementation": "PartyMimic Z01 local fork",
+  "training": {
+    "iterations": 200,
+    "num_envs": 1024,
+    "buffer_steps": 500,
+    "warmup_steps": 64,
+    "pi_batch": 512,
+    "wm_batch": 256,
+    "wm_batches": 5,
+    "horizon": 32,
+    "wm_window": 8,
+    "wm_mirror": 0,
+    "lr_decay_ret": 0,
+    "lr_decay_by": 0,
+    "joint_velocity_penalty": 0.5,
+    "joint_velocity_margin": 0.9,
+    "v_gcons_n": 1024,
+    "ckpt_every": 50,
+    "log_every": 10,
+    "interface": "joint",
+    "response_weight": 0.0001,
+    "friction_speed": 0.01,
+    "response_horizon": 8,
+    "response_loss": "mse",
+    "response_huber_delta": 1.0,
+    "wm_amp": "none",
+    "amp": "bf16"
+  },
+  "window_candidates": {
+    "short": 4,
+    "long": 8
+  },
+  "selection_record": "release/ral/pilot02_review.json"
+}

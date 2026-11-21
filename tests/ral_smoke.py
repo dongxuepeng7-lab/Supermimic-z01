@@ -135,7 +135,9 @@ def main():
             str(root / group),
         ]
         if group in ("A+", "B", "C"):
-            args += ["--response_manifest", str(responses)]
+            args += ["--response_manifest", str(responses), "--wm_amp", "none",
+                     "--response_horizon", "2", "--response_weight", "0.001",
+                     "--response_loss", "huber", "--response_huber_delta", "1"]
         run(args, f"{group}.log")
     a0 = json.loads((root / "A0/run.json").read_text())
     a = json.loads((root / "A/run.json").read_text())

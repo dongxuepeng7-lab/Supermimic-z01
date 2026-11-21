@@ -55,6 +55,7 @@ def freeze(config, params, motion_dir, responses, output):
         groups=groups,
         training_seeds=[1, 2],
         training=config_data["training"],
+        window_candidates=config_data.get("window_candidates", dict(short=8, long=32)),
         code_sha256=code_hash(),
         asset_sha256=asset_hash(),
         config_sha256=sha256(config),

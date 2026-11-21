@@ -28,6 +28,11 @@ def load_context(checkpoint, params, motion_dir=None, device="cpu"):
 
     ck = torch.load(checkpoint, map_location=device, weights_only=False)
     a = ck["args"]
+    import partymimic.networks as networks
+
+    networks.AMP_DTYPE = torch.bfloat16 if a.get("amp") == "bf16" else None
+    if a.get("wm_amp") == "none":
+        torch.backends.cuda.matmul.allow_tf32 = False
     expected_hash = a.get("parameter_manifest_sha256") or sha256(
         a["parameter_manifest"]
     )
@@ -166,7 +171,7 @@ def main():
     s.add_argument("--params", default="release/ral/params.csv")
     s.add_argument("--motion_dir", required=True)
     s.add_argument("--responses")
-    s.add_argument("--config", default="configs/ral/common.json")
+    s.add_argument("--config", default="configs/ral/pilot02.json")
     s.add_argument("--out", required=True)
     for name in ("preflight", "train"):
         s = subs.add_parser(name)
@@ -175,7 +180,7 @@ def main():
         s.add_argument("--group", choices=GROUPS, required=True)
         s.add_argument("--responses")
         if name == "train":
-            s.add_argument("--config", default="configs/ral/common.json")
+            s.add_argument("--config", default="configs/ral/pilot02.json")
             s.add_argument("--seed", type=int, required=True)
             s.add_argument("--out", required=True)
             s.add_argument("--dry-run", action="store_true")

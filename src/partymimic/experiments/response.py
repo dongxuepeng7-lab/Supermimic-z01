@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import json
+import math
 
 import numpy as np
 import torch
@@ -135,7 +136,41 @@ def paired_predictions(wm, batch, normalize):
     return predictions
 
 
-def paired_losses(wm, batch, normalize, q_scale, v_scale):
+def validate_response_objective(horizon, loss, huber_delta, available_horizon):
+    if not isinstance(horizon, int) or not 0 <= horizon <= available_horizon:
+        raise ValueError("response_horizon must be 0 (all) or within the recorded horizon")
+    if loss not in ("mse", "huber"):
+        raise ValueError("response_loss must be mse or huber")
+    if not math.isfinite(huber_delta) or huber_delta <= 0:
+        raise ValueError("response_huber_delta must be finite and positive")
+
+
+@torch.no_grad()
+def initialize_pair_normalizers(wm, dataset, normalize):
+    """Common fit-only statistics for A+/B/C, independent of response horizon/loss."""
+    d = dataset.data
+    for side in ("plus", "minus"):
+        current = torch.cat((d["s0"][:, None], d["s_" + side][:, :-1]), 1)
+        previous = torch.cat((d["a_prev"][:, None], d["a_" + side][:, :-1]), 1)
+        xi = d["xi"][:, None].expand(-1, dataset.horizon, -1)
+        for start in range(0, dataset.count, 256):
+            sl = slice(start, start + 256)
+            S0, S1 = unflatten_state(current[sl]), unflatten_state(d["s_" + side][sl])
+            wm.in_norm.update(wm.inputs(S0, d["a_" + side][sl], previous[sl], normalize(xi[sl])))
+            wm.out_norm.update(wm.targets(S0, S1))
+            wm.inc_norm.update(wm.increments(S0, S1))
+
+
+def paired_losses(wm, batch, normalize, q_scale, v_scale, *,
+                  response_horizon=0, response_loss="mse", response_huber_delta=1.0):
+    """Full-span common forward loss, configurable response prefix, raw full-span errors.
+
+    The diagnostic errors are never clipped/robustified. A shorter response prefix
+    does not remove later forward labels or change the normalization statistics.
+    Defaults exactly retain the pilot01 objective.
+    """
+    validate_response_objective(response_horizon, response_loss, response_huber_delta,
+                                batch["a_plus"].shape[1])
     plus, minus = paired_predictions(wm, batch, normalize)
     target_plus, target_minus = (
         unflatten_state(batch["s_plus"]),
@@ -158,4 +193,10 @@ def paired_losses(wm, batch, normalize, q_scale, v_scale):
         ),
         -1,
     )
-    return forward, errors.square().mean(), errors.square().mean(-1).sqrt()
+    supervised = errors[:, :response_horizon] if response_horizon else errors
+    if response_loss == "huber":
+        objective = torch.nn.functional.huber_loss(
+            supervised, torch.zeros_like(supervised), delta=response_huber_delta)
+    else:
+        objective = supervised.square().mean()
+    return forward, objective, errors.square().mean(-1).sqrt()

@@ -16,7 +16,7 @@ from partymimic.experiments.parameters import (
     sha256,
 )
 from partymimic.experiments.models import make_world_model
-from partymimic.experiments.response import ResponseData, paired_losses
+from partymimic.experiments.response import ResponseData, paired_losses, validate_response_objective
 from partymimic.experiments.windows import variable_objective
 from partymimic.experiments.data import (
     inspect_motion_zip,
@@ -173,6 +173,53 @@ class Responses(unittest.TestCase):
             p.write_text(json.dumps(m))
             with self.assertRaises(ValueError):
                 ResponseData(p, "fit", self.robot, self.layout, sha256(PARAMS))
+
+    def test_response_prefix_keeps_later_forward_labels_and_raw_errors(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = response_fixture(d, self.robot, self.layout, PARAMS)
+            ds = ResponseData(path, "fit", self.robot, self.layout, sha256(PARAMS))
+            wm = make_world_model(self.robot, self.layout,
+                                  dict(wm_hidden="16,16", experiment_model="actuator"))
+            original = paired_losses(wm, ds.data, self.layout.normalize, .01, .1, response_horizon=1)
+            changed = {k:v.clone() for k,v in ds.data.items()}
+            changed['s_plus'][:, 2, 13] += 10.
+            later = paired_losses(wm, changed, self.layout.normalize, .01, .1, response_horizon=1)
+            torch.testing.assert_close(original[1], later[1])
+            self.assertGreater(float(later[0]), float(original[0]))
+            self.assertGreater(float(later[2][:,2].mean()), float(original[2][:,2].mean()))
+            mse = paired_losses(wm, changed, self.layout.normalize, .01, .1)
+            huber = paired_losses(wm, changed, self.layout.normalize, .01, .1, response_loss="huber")
+            torch.testing.assert_close(mse[0], huber[0])
+            torch.testing.assert_close(mse[2], huber[2])
+            self.assertLess(float(huber[1]), float(mse[1]))
+            huber[1].backward()
+            self.assertTrue(all(p.grad is None or torch.isfinite(p.grad).all() for p in wm.parameters()))
+
+    def test_response_settings_reject_invalid_values(self):
+        for h, loss, delta in [(-1,'mse',1.), (4,'mse',1.), (1,'bad',1.),
+                               (1,'huber',0.), (1,'huber',float('nan'))]:
+            with self.assertRaises(ValueError):
+                validate_response_objective(h,loss,delta,3)
+
+    @unittest.skipUnless(torch.cuda.is_available(), 'CUDA precision control')
+    def test_world_model_precision_override_does_not_change_policy_default(self):
+        import partymimic.networks as networks
+        old = networks.AMP_DTYPE
+        try:
+            networks.AMP_DTYPE = torch.bfloat16
+            net = torch.nn.Linear(16,16).cuda()
+            x = torch.randn(4,16,device='cuda')
+            torch.testing.assert_close(networks.run_mlp(net,x,"none"), net(x), rtol=0, atol=0)
+            with torch.autocast('cuda', dtype=torch.bfloat16):
+                explicit_fp32 = networks.run_mlp(net,x,"none")
+            self.assertEqual(explicit_fp32.dtype, torch.float32)
+            torch.testing.assert_close(explicit_fp32, net(x), rtol=0, atol=0)
+            self.assertIs(networks.AMP_DTYPE, torch.bfloat16)
+            wm = make_world_model(self.robot, self.layout,
+                                  dict(wm_hidden="16,16", experiment_model="actuator",wm_amp="none"))
+            self.assertEqual(wm.mlp_amp,"none")
+        finally:
+            networks.AMP_DTYPE = old
 
     def test_terminal_bootstrap_and_gradient_at_selected_horizon(self):
         r = torch.ones(3, 2, requires_grad=True)

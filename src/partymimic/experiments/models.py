@@ -85,8 +85,11 @@ class ActuatorWorldModel(WorldModel):
 def make_world_model(robot, layout, args):
     widths = tuple(int(x) for x in args.get("wm_hidden", "1024,1024,1024").split(","))
     mode = args.get("experiment_model", "base")
+    precision = args.get("wm_amp", "inherit")
+    if precision not in ("inherit", "none", "bf16"):
+        raise ValueError("wm_amp must be inherit, none or bf16")
     if mode == "base":
-        return WorldModel(
+        model = WorldModel(
             robot.num_joints,
             layout.dim,
             use_prev_action=robot.has_action_delay,
@@ -94,11 +97,10 @@ def make_world_model(robot, layout, args):
             structured=args.get("wm_structured", True),
             dt=0.02,
         )
-    return ActuatorWorldModel(
-        robot,
-        layout,
-        mode,
-        widths,
-        args.get("wm_structured", True),
-        friction_speed=args.get("friction_speed", 0.01),
-    )
+    else:
+        model = ActuatorWorldModel(
+            robot, layout, mode, widths, args.get("wm_structured", True),
+            friction_speed=args.get("friction_speed", 0.01),
+        )
+    model.mlp_amp = precision
+    return model
