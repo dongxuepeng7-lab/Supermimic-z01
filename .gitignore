@@ -4,18 +4,24 @@ __pycache__/
 *.pyc
 build_*.log
 
-# third-party data (downloaded by tools/download_data.sh) and generated assets
+# downloaded source data and generated motion libraries
 /data
 # training runs: checkpoints, logs
 logs/
 *.pt
-!checkpoints/*.pt
 # rendered videos and recorded trajectories (derived from CC BY-NC-ND LAFAN1 motions)
 *.mp4
-!docs/static/videos/*.mp4
 *.npz
 results/
 # third-party paper
 *.pdf
 # virtual environment
 .venv/
+
+# MuJoCo diagnostics and exported policies
+MUJOCO_LOG.TXT
+*.onnx
+*.onnx.data
+build/
+dist/
+*.egg-info/

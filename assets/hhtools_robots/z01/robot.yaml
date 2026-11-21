@@ -1,0 +1,100 @@
+# Z01 v1.6 whole-body; generated URDF comes from tools/data/z01_data.py prepare.
+# R2R calibration aligns the arm segment directions to G1's zero pose.
+name: z01
+display_name: Z01 v1.6
+urdf: z01.urdf
+mesh_search_paths: [meshes]
+length_scale: 1.0
+up_axis: Z
+forward_axis: X
+dof_order:
+  - left_hip_pitch
+  - left_hip_roll
+  - left_hip_yaw
+  - left_knee_pitch
+  - left_ankle_pitch
+  - left_ankle_roll
+  - right_hip_pitch
+  - right_hip_roll
+  - right_hip_yaw
+  - right_knee_pitch
+  - right_ankle_pitch
+  - right_ankle_roll
+  - waist_yaw
+  - waist_pitch
+  - left_shoulder_pitch
+  - left_shoulder_roll
+  - left_elbow_yaw
+  - left_elbow_pitch
+  - left_wrist_yaw
+  - right_shoulder_pitch
+  - right_shoulder_roll
+  - right_elbow_yaw
+  - right_elbow_pitch
+  - right_wrist_yaw
+  - head_yaw
+  - head_pitch
+ik_map:
+  hips: base_link
+  spine: waist_yaw_link
+  chest: waist_pitch_link
+  head: head_pitch_link
+  left_shoulder: left_shoulder_pitch_link
+  left_elbow: left_elbow_pitch_link
+  left_wrist: left_wrist_yaw_link
+  right_shoulder: right_shoulder_pitch_link
+  right_elbow: right_elbow_pitch_link
+  right_wrist: right_wrist_yaw_link
+  left_hip: left_hip_roll_link
+  left_knee: left_knee_pitch_link
+  left_ankle: left_ankle_roll_link
+  right_hip: right_hip_roll_link
+  right_knee: right_knee_pitch_link
+  right_ankle: right_ankle_roll_link
+weights:
+  t_weight:
+    hips: 10.0
+    chest: 0.5
+    head: 0.5
+    left_shoulder: 0.5
+    left_elbow: 1.0
+    left_wrist: 1.0
+    right_shoulder: 0.5
+    right_elbow: 1.0
+    right_wrist: 1.0
+    left_hip: 0.5
+    left_knee: 1.0
+    left_ankle: 2.0
+    right_hip: 0.5
+    right_knee: 1.0
+    right_ankle: 2.0
+  r_weight:
+    hips: 2.0
+    chest: 0.5
+    head: 0.5
+    left_shoulder: 0.1
+    left_elbow: 0.5
+    left_wrist: 0.5
+    right_shoulder: 0.1
+    right_elbow: 0.5
+    right_wrist: 0.5
+    left_hip: 0.2
+    left_knee: 0.5
+    left_ankle: 1.0
+    right_hip: 0.2
+    right_knee: 0.5
+    right_ankle: 1.0
+feet:
+  left_contact_link: left_ankle_roll_link
+  right_contact_link: right_ankle_roll_link
+  ground_z: 0.0
+  foot_height: 0.04400047
+rest_offsets: {}
+retarget:
+  num_initialization_frames: 10
+  num_stabilization_frames: 5
+  apply_feet_stabilizer: true
+  feet_stabilizer:
+    ground_contact_z: 0.0
+    min_foot_clearance: 0.04400047
+  foot_clamp_max_lift_rate: 0.02

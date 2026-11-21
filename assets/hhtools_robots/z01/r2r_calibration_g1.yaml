@@ -1,0 +1,36 @@
+kind: robot_to_robot
+source_robot: g1
+target_robot: z01
+calibrated_joint_q:
+  left_hip_pitch: 0.0
+  left_hip_roll: 0.0
+  left_hip_yaw: 0.0
+  left_knee_pitch: 0.0
+  left_ankle_pitch: 0.0
+  left_ankle_roll: 0.0
+  right_hip_pitch: 0.0
+  right_hip_roll: 0.0
+  right_hip_yaw: 0.0
+  right_knee_pitch: 0.0
+  right_ankle_pitch: 0.0
+  right_ankle_roll: 0.0
+  waist_yaw: 0.0
+  waist_pitch: 0.0
+  left_shoulder_pitch: -0.084402132
+  left_shoulder_roll: -0.1
+  left_elbow_yaw: 0.000272237
+  left_elbow_pitch: -1.431684294
+  left_wrist_yaw: 0.0
+  right_shoulder_pitch: 0.084402132
+  right_shoulder_roll: 0.1
+  right_elbow_yaw: -0.000272237
+  right_elbow_pitch: 1.431684294
+  right_wrist_yaw: 0.0
+  head_yaw: 0.0
+  head_pitch: 0.0
+notes: >-
+  Match G1 zero-pose shoulder-to-elbow and elbow-to-wrist unit vectors using
+  bounded least squares on Z01 shoulder pitch/roll and elbow yaw/pitch.
+  Forearm residual is below 1e-5; upper-arm angular residual is about 1.5 deg
+  because shoulder roll reaches its inward limit. This is geometric alignment,
+  not hardware calibration. Z01 has five arm DOFs versus G1's seven.

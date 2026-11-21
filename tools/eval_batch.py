@@ -15,7 +15,7 @@ import time
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--run_dir", type=str, required=True)
-parser.add_argument("--robot", type=str, default=None, help="default: the run's own robot (args.json), else g1")
+parser.add_argument("--robot", type=str, default=None, choices=("z01",), help="default: the run's own robot (args.json), else z01")
 parser.add_argument("--group", type=int, default=13, help="checkpoints evaluated together")
 parser.add_argument("--reps", type=int, default=1,
                     help="independent replicas of every clip per checkpoint (the simulator is not bitwise "
@@ -36,7 +36,7 @@ from partymimic.robot import get_robot
 torch.backends.cuda.matmul.allow_tf32 = True
 dev = "cuda:0"
 _run_args = json.load(open(os.path.join(args.run_dir, "args.json"))) if os.path.exists(os.path.join(args.run_dir, "args.json")) else {}
-robot = get_robot(args.robot or _run_args.get("robot", "g1"))
+robot = get_robot(args.robot or _run_args.get("robot", "z01"))
 kin = Kinematics(robot, dev)
 motion = MotionLib.from_dir(_run_args.get("motion_dir") or robot.motion_dir, robot, kin, dev)  # the run's own motion set
 motion.set_interface(_run_args.get("interface", "joint"), robot.tracked_bodies)

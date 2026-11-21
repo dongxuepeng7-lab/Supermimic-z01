@@ -6,7 +6,6 @@ Each robot lives in its own package ``partymimic/<name>/`` whose ``<name>_consta
 
 from __future__ import annotations
 
-import importlib
 import re
 from dataclasses import dataclass
 from dataclasses import field
@@ -43,14 +42,16 @@ class RobotSpec:
     motion_glob: str
     load_motion: Callable[[str], MotionArrays]
     dr: DomainRandCfg = field(default_factory=DomainRandCfg)
-    """Simulator randomization (default: the paper's G1 setup)."""
+    """Simulator randomization (default: inherited PartyMimic simulation settings)."""
     sensing: SensingCfg = field(default_factory=SensingCfg)
     """How the policy observation is sensed (default: true state plus Table A.1 noise)."""
     njmax: int = 500
     nconmax: int = 128
     """MuJoCo-Warp constraint / contact capacity per world."""
     mirror_sign: tuple[float, ...] | None = None
-    """Sign of each joint under the left-right mirror (joint_names order); None: flip roll and yaw joints (G1 axes)."""
+    """Sign of each joint under the left-right mirror (joint_names order); None: infer signs from roll/yaw names."""
+    joint_velocity_limits: tuple[float, ...] | None = None
+    """Declared joint speeds in rad/s, in joint_names order; not a hard simulator clamp."""
 
     @property
     def num_joints(self) -> int:
@@ -77,5 +78,9 @@ class RobotSpec:
 
 
 def get_robot(name: str) -> RobotSpec:
-    """Load ``partymimic.<name>.<name>_constants.SPEC``."""
-    return importlib.import_module(f"partymimic.{name}.{name}_constants").SPEC
+    """Load the Z01 v1.6 robot supported by this project."""
+    if name != "z01":
+        raise ValueError(f"Unsupported robot {name!r}; this project supports only 'z01'.")
+    from .z01.z01_constants import SPEC
+
+    return SPEC

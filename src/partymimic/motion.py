@@ -31,9 +31,9 @@ SPARSE5_ERR = 4 * 3 + 4 * 3 + 3
 
 
 def sparse5_bodies(tracked: tuple[str, ...]) -> list[int]:
-    """Tracked-body indices of pelvis, head, left / right wrist, left / right ankle. Neither robot has a head link: the
-    head is rigid on the torso (G1 torso_link, RP1 waist_yaw_link, whose mesh carries the head)."""
-    head = next(n for n in ("waist_yaw_link", "torso_link") if n in tracked)
+    """Tracked-body indices of pelvis, head, left/right wrist and ankle. Prefer Z01's moving head;
+    G1/RP1 use their tracked torso proxy because their head is rigidly attached."""
+    head = next(n for n in ("head_pitch_link", "waist_yaw_link", "torso_link") if n in tracked)
     wrist = [n for n in tracked if "_wrist_" in n]
     names = [tracked[0], head, *(next(n for n in wrist if n.startswith(s)) for s in ("left", "right")),
              "left_ankle_roll_link", "right_ankle_roll_link"]  # fmt: skip
@@ -42,6 +42,8 @@ def sparse5_bodies(tracked: tuple[str, ...]) -> list[int]:
 
 class MotionLib:
     def __init__(self, files: list[str], kin: Kinematics, device: str, load_motion: Callable[[str], MotionArrays]):
+        if not files:
+            raise ValueError("MotionLib needs at least one motion file; prepare the motion data before loading it.")
         self.device = device
         self.names = [os.path.splitext(os.path.basename(f))[0] for f in files]
         ps, qs, js = [], [], []
@@ -51,14 +53,19 @@ class MotionLib:
             p, quat, j = (torch.tensor(x, dtype=torch.float32) for x in (p, quat, j))
             # resample to 50 Hz
             T_src = p.shape[0]
-            dur = (T_src - 1) / src_fps
-            n = int(np.floor(dur / CONTROL_DT)) + 1
-            t = torch.arange(n, dtype=torch.float32) * CONTROL_DT * src_fps
-            i0 = torch.clamp(t.floor().long(), max=T_src - 2)
-            a = (t - i0.float()).clamp(0, 1)
-            p = p[i0] * (1 - a[:, None]) + p[i0 + 1] * a[:, None]
-            j = j[i0] * (1 - a[:, None]) + j[i0 + 1] * a[:, None]
-            quat = quat_slerp(quat[i0], quat[i0 + 1], a)
+            if abs(src_fps - 1. / CONTROL_DT) < 1e-8:
+                # Keep already-50-Hz trajectories exact. Rebuilding float32 timestamps
+                # perturbs long clips and can inflate a constrained joint's speed.
+                n = T_src
+            else:
+                dur = (T_src - 1) / src_fps
+                n = int(np.floor(dur / CONTROL_DT)) + 1
+                t = torch.arange(n, dtype=torch.float32) * CONTROL_DT * src_fps
+                i0 = torch.clamp(t.floor().long(), max=T_src - 2)
+                a = (t - i0.float()).clamp(0, 1)
+                p = p[i0] * (1 - a[:, None]) + p[i0 + 1] * a[:, None]
+                j = j[i0] * (1 - a[:, None]) + j[i0 + 1] * a[:, None]
+                quat = quat_slerp(quat[i0], quat[i0 + 1], a)
             ps.append(p), qs.append(quat), js.append(j)
             lens.append(n)
         self.clip_len = torch.tensor(lens, device=device)
@@ -138,9 +145,18 @@ class MotionLib:
 
     @staticmethod
     def from_dir(path: str, robot: RobotSpec, kin: Kinematics, device: str) -> MotionLib:
+        if not os.path.isdir(path):
+            raise FileNotFoundError(f"Motion directory does not exist: {os.path.abspath(path)}. "
+                                    f"Prepare {robot.name} motion data first, or correct --motion_dir.")
         files = sorted(glob.glob(os.path.join(path, robot.motion_glob)))
         if not files:  # humanoid_s0 motion library: npz clips of world body states, pelvis first
-            return MotionLib(sorted(glob.glob(os.path.join(path, "*.npz"))), kin, device, load_npz)
+            files = sorted(glob.glob(os.path.join(path, "*.npz")))
+            if not files:
+                patterns = ", ".join(dict.fromkeys((robot.motion_glob, "*.npz")))
+                raise FileNotFoundError(f"No motion files found in {os.path.abspath(path)} for {robot.name} "
+                                        f"(expected {patterns} directly in this directory). "
+                                        "Prepare robot-specific motion data first, or correct --motion_dir.")
+            return MotionLib(files, kin, device, load_npz)
         return MotionLib(files, kin, device, robot.load_motion)
 
     def set_ref_contact(self, feet: list[int], margin: float = 0.015, vmax: float = 0.5, q: float = 0.05) -> None:

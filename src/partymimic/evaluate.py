@@ -21,7 +21,7 @@ import sys
 import time
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--robot", type=str, default="g1", help="robot package under partymimic/ (g1)")
+parser.add_argument("--robot", type=str, default="z01", choices=("z01",), help="robot package under partymimic/ (z01)")
 parser.add_argument("--run_dir", type=str, required=True)
 parser.add_argument("--watch", action="store_true")
 parser.add_argument("--ckpt", type=str, default=None, help="evaluate one checkpoint")

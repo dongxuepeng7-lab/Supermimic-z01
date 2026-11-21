@@ -60,8 +60,16 @@ SOFTWARE.
 
 ## Dependencies and data
 
-The Python dependencies (mjlab, MuJoCo, MuJoCo Warp, NVIDIA Warp, PyTorch, matplotlib, Pillow) are installed from
-their own distributions under their own licenses (Apache-2.0, BSD-3-Clause and others) and are not redistributed here.
-Motion data are not redistributed. The LAFAN1 motions (Ubisoft La Forge, CC BY-NC-ND 4.0) and the Unitree G1
-description (BSD-3-Clause) are downloaded by `tools/download_data.sh`; files derived from motion data (the videos in
-`docs/static/videos`, checkpoints) are not covered by this repository's MIT License.
+The Python dependencies (mjlab, MuJoCo, MuJoCo Warp, NVIDIA Warp, PyTorch, NumPy, SciPy, OSQP,
+matplotlib, Pillow, and optional ONNX/ONNX Runtime) are installed from their own distributions under
+their own licenses and are not redistributed here. The external human-humanoid-tools checkout is
+used for G1 -> Z01 retargeting and remains subject to its own license.
+
+Motion data are not redistributed through Git. The LAFAN1 motions (Ubisoft La Forge,
+CC BY-NC-ND 4.0) and the Unitree G1 description (BSD-3-Clause) are downloaded by
+`tools/download_data.sh` solely as Z01 retargeting inputs. Retargeted motions, rendered videos,
+and trained checkpoints derived from these data are not covered by this repository's MIT License.
+
+`Z01_v1.6_whole_body/` is the locally supplied robot model bundle. Its source and modeling
+assumptions are documented in its README. No separate model license was supplied in that bundle;
+the code's MIT License does not establish redistribution rights for those assets.

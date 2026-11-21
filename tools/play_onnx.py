@@ -6,8 +6,8 @@ code), which is the loop a deployment controller implements. A robot with a sens
 stands in for the robot's own estimator. The motion plays once from its first frame with no
 randomization or noise, as in partymimic.evaluate.
 
-Usage: python tools/play_onnx.py logs/<run>/dance1_subject2.onnx --robot g1 \
-           --motion data/lafan1_g1/dance1_subject2.csv
+Usage: python tools/play_onnx.py logs/<run>/dance1_subject2.onnx --robot z01 \
+           --motion data/motions/z01_lafan_v2_clean/walk2_subject3__seg000.npz
 """
 
 import argparse
@@ -36,7 +36,7 @@ def quat_to_mat(q: np.ndarray) -> np.ndarray:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("onnx")
-    ap.add_argument("--robot", type=str, default="g1")
+    ap.add_argument("--robot", type=str, default="z01", choices=("z01",))
     ap.add_argument("--motion", type=str, required=True, help="the motion baked into the ONNX")
     a = ap.parse_args()
 

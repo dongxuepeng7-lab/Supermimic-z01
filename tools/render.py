@@ -1,7 +1,7 @@
 """Render recorded evaluation trajectories (python -m partymimic.evaluate --record) with MuJoCo (EGL).
 
 The simulated robot is drawn solid; the reference motion is a translucent ghost.
-Usage: MUJOCO_GL=egl python tools/render.py traj.npz out.mp4 --robot g1 --clips dance1_subject1 jumps1_subject1 --seconds 12
+Usage: MUJOCO_GL=egl python tools/render.py traj.npz out.mp4 --robot z01 --clips dance1_subject1 jumps1_subject1 --seconds 12
 """
 
 import argparse
@@ -19,6 +19,9 @@ from partymimic.robot import RobotSpec, get_robot
 
 def two_robot_xml(robot: RobotSpec, clean: bool = False, ghost_alpha: float = 0.25, white: bool = False) -> str:
     xml = open(robot.mjcf_path).read()
+    # Adding the reference robot doubles nq/nu; source keyframes have the original dimensions.
+    # Recorded trajectories supply both poses, so their initialization keyframes are unnecessary.
+    xml = re.sub(r"<keyframe\b[^>]*>.*?</keyframe>", "", xml, flags=re.S)
     mjcf_dir = os.path.dirname(os.path.abspath(robot.mjcf_path))
     xml = re.sub(r'meshdir="([^"]*)"', lambda m: 'meshdir="' + os.path.join(mjcf_dir, m.group(1)) + '/"', xml)
     body = xml[xml.index(f'<body name="{robot.tracked_bodies[0]}"') : xml.index("</worldbody>")]
@@ -57,7 +60,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("traj")
     ap.add_argument("out")
-    ap.add_argument("--robot", type=str, default="g1")
+    ap.add_argument("--robot", type=str, default="z01", choices=("z01",))
     ap.add_argument("--clips", nargs="*", default=None)
     ap.add_argument("--seconds", type=float, default=10.0)
     ap.add_argument("--start", type=float, default=0.0)
@@ -86,6 +89,8 @@ def main():
     if a.white:  # no haze band at the horizon
         model.vis.map.haze = 0.0
     data = mujoco.MjData(model)
+    model.vis.global_.offwidth = max(model.vis.global_.offwidth, a.width)
+    model.vis.global_.offheight = max(model.vis.global_.offheight, a.height)
     renderer = mujoco.Renderer(model, a.height, a.width)
     cam = mujoco.MjvCamera()
     cam.distance, cam.azimuth, cam.elevation = a.distance, a.azimuth, a.elevation

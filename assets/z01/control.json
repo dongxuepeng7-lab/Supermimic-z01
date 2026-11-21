@@ -1,0 +1,108 @@
+{
+  "parameter_status": "Simulation initialization only; PD gains, armatures and passive losses are not hardware calibrated. Source masses/inertias are preserved, including the approximate pelvis inertia.",
+  "root_height": 0.97,
+  "passive_damping": 0.05,
+  "frictionloss": 0.05,
+  "action_fraction_of_effort": 0.25,
+  "collision_excludes": [
+    [
+      "base_link",
+      "waist_pitch_link"
+    ],
+    [
+      "waist_pitch_link",
+      "head_pitch_link"
+    ]
+  ],
+  "actuators": [
+    {
+      "pattern": ".*_hip_(pitch|roll)",
+      "kp": 800.0,
+      "kd": 21.213203,
+      "armature": 0.02
+    },
+    {
+      "pattern": ".*_hip_yaw",
+      "kp": 300.0,
+      "kd": 11.313708,
+      "armature": 0.01
+    },
+    {
+      "pattern": ".*_knee_pitch",
+      "kp": 1000.0,
+      "kd": 28.284271,
+      "armature": 0.02
+    },
+    {
+      "pattern": ".*_ankle_pitch",
+      "kp": 600.0,
+      "kd": 14.142136,
+      "armature": 0.01
+    },
+    {
+      "pattern": ".*_ankle_roll",
+      "kp": 400.0,
+      "kd": 11.313708,
+      "armature": 0.01
+    },
+    {
+      "pattern": "waist_(yaw|pitch)",
+      "kp": 400.0,
+      "kd": 14.142136,
+      "armature": 0.01
+    },
+    {
+      "pattern": ".*_shoulder_(pitch|roll)",
+      "kp": 200.0,
+      "kd": 7.071068,
+      "armature": 0.005
+    },
+    {
+      "pattern": ".*_elbow_(yaw|pitch)",
+      "kp": 120.0,
+      "kd": 4.242641,
+      "armature": 0.003
+    },
+    {
+      "pattern": ".*_wrist_yaw|head_yaw",
+      "kp": 40.0,
+      "kd": 1.414214,
+      "armature": 0.001
+    },
+    {
+      "pattern": "head_pitch",
+      "kp": 16.0,
+      "kd": 0.707107,
+      "armature": 0.001
+    }
+  ],
+  "default_joint_pos": {
+    "left_hip_pitch": 0.172216,
+    "left_hip_roll": -0.007282,
+    "left_hip_yaw": 0.08566,
+    "left_knee_pitch": -0.32079,
+    "left_ankle_pitch": -0.171206,
+    "left_ankle_roll": 0.000859,
+    "right_hip_pitch": 0.172216,
+    "right_hip_roll": 0.007282,
+    "right_hip_yaw": -0.08566,
+    "right_knee_pitch": 0.32079,
+    "right_ankle_pitch": 0.171206,
+    "right_ankle_roll": -0.000859,
+    "waist_yaw": 0.0,
+    "waist_pitch": 0.0,
+    "left_shoulder_pitch": 0.0,
+    "left_shoulder_roll": 0.0,
+    "left_elbow_yaw": 0.0,
+    "left_elbow_pitch": -0.4,
+    "left_wrist_yaw": 0.0,
+    "right_shoulder_pitch": 0.0,
+    "right_shoulder_roll": 0.0,
+    "right_elbow_yaw": 0.0,
+    "right_elbow_pitch": 0.4,
+    "right_wrist_yaw": 0.0,
+    "head_yaw": 0.0,
+    "head_pitch": 0.0
+  },
+  "tuning_note": "PD initialization selected by a 5-second unassisted CPU MuJoCo standing check at 5 ms. This is a simulation sanity check, not hardware identification."
+}

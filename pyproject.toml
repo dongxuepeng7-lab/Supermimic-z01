@@ -5,7 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "partymimic"
 version = "1.0.0"
-description = "PartyMimic: one whole-body humanoid tracking policy for a 41 h motion library in 26 minutes on one GPU, with a differentiable world model."
+description = "Z01 v1.6 whole-body motion retargeting, training and playback with PartyMimic."
 license = "MIT"
 license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
 readme = "README.md"
@@ -16,7 +16,14 @@ dependencies = [
   "torch>=2.7.0",
   "matplotlib",
   "pillow",
+  "numpy",
+  "scipy",
+  "mujoco",
+  "osqp>=1.0",
 ]
+
+[project.optional-dependencies]
+onnx = ["onnx", "onnxruntime"]
 
 [tool.uv]
 required-environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]

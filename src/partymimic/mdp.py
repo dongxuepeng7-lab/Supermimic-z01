@@ -37,7 +37,7 @@ def obs_scale(J: int, interface: str = "joint") -> torch.Tensor:
     )
 
 
-CONTACT_Z = 0.045  # ankle-roll link origin height below which a foot counts as in contact (as in tools/eval_metrics.py)
+CONTACT_Z = 0.045  # ankle-roll link origin height below which a foot counts as in contact (training contact heuristic)
 MAX_STEP_REWARD = (4 * 1.0 + 2 * 0.5) * CONTROL_DT
 
 
@@ -136,12 +136,15 @@ class MDP:
         return o + (2 * torch.rand_like(o) - 1) * self.obs_noise
 
     # ---------------- reward / termination ----------------
-    def reward(self, S, f, a, a_prev, terms: bool = False, w_contact: float = 0.0):
+    def reward(self, S, f, a, a_prev, terms: bool = False, w_contact: float = 0.0,
+               w_joint_velocity: float = 0.0, velocity_margin: float = 0.9):
         """Per-step reward (already multiplied by dt) comparing S with reference frame f.
 
         ``w_contact`` > 0 adds the InstantTrack contact term: a smooth foot-contact indicator (ankle-roll
         origin below 4.5 cm) matched to the reference's contact state, plus low horizontal foot speed while
-        the reference foot is down. Evaluation keeps ``w_contact = 0``, i.e. the paper's reward."""
+        the reference foot is down. ``w_joint_velocity`` penalizes squared normalized speed
+        above ``velocity_margin`` of the robot's declared limits. Evaluation defaults both
+        optional weights to zero, retaining the paper's reward."""
         c, m = self.cfg, self.motion
         p, R, v, w, q, qd = S
         bp, bR, bv, bw = self.kin.forward(p, R, v, w, q, qd)
@@ -171,6 +174,11 @@ class MDP:
         r_rate = ((a - a_prev) ** 2).sum(-1)
         r_lim = (torch.relu(q - self.soft_hi) + torch.relu(self.soft_lo - q)).sum(-1)
         r = (r_track + c.w_action_rate * r_rate + c.w_joint_limit * r_lim) * CONTROL_DT
+        if w_joint_velocity > 0:
+            if self.kin.qd_max is None:
+                raise ValueError("Joint velocity penalty requires the robot's declared velocity limits")
+            excess = torch.relu(qd.abs() / self.kin.qd_max - velocity_margin)
+            r = r - w_joint_velocity * excess.square().sum(-1) * CONTROL_DT
         if w_contact > 0:
             fz, rz = bp[..., self.feet, 2], m.body_p[f][..., self.feet, 2]
             c_sim = torch.sigmoid((CONTACT_Z - fz) / 0.005)

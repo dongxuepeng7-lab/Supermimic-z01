@@ -15,7 +15,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 ON = argparse.BooleanOptionalAction
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--robot", type=str, default="g1mj", help="robot package under partymimic/ (g1mj, rp1, g1)")
+parser.add_argument("--robot", type=str, default="z01", choices=("z01",), help="robot package under partymimic/ (z01)")
 parser.add_argument("--motion_dir", type=str, default=None, help="defaults to the robot's motion directory")
 parser.add_argument("--log_dir", type=str, default=os.path.join(REPO, "logs", "run"))
 parser.add_argument("--seed", type=int, default=0)
@@ -61,6 +61,10 @@ parser.add_argument("--std_scale", type=float, default=0.35,
                          "(evaluation keeps SuperMimic's reward)")
 parser.add_argument("--contact_reward", type=float, default=0.25,
                     help="weight of the contact-matching / anti-slip reward term in imagination (evaluation reward unchanged)")
+parser.add_argument("--joint_velocity_penalty", type=float, default=0.,
+                    help="training-only squared normalized joint-speed excess penalty; requires robot speed limits")
+parser.add_argument("--joint_velocity_margin", type=float, default=.9,
+                    help="fraction of declared joint speed at which the training penalty starts")
 parser.add_argument("--fail_reset", type=float, default=0.3,
                     help="share of resets sampled one bin before recent termination points (anti-forgetting of hard clips)")
 parser.add_argument("--div_k", type=int, default=24,
@@ -160,9 +164,19 @@ os.makedirs(args.log_dir, exist_ok=True)
 json.dump(vars(args), open(os.path.join(args.log_dir, "args.json"), "w"), indent=2)
 
 robot = get_robot(args.robot)
+if args.joint_velocity_penalty < 0 or not 0 < args.joint_velocity_margin <= 1:
+    raise ValueError("Expected --joint_velocity_penalty >= 0 and --joint_velocity_margin in (0, 1]")
+if args.joint_velocity_penalty > 0 and robot.joint_velocity_limits is None:
+    raise ValueError(f"{args.robot} has no declared joint velocity limits")
 J = robot.num_joints
 kin = Kinematics(robot, dev)
 motion = MotionLib.from_dir(args.motion_dir or robot.motion_dir, robot, kin, dev)
+if args.joint_velocity_penalty > 0:
+    ref_speed_ratio = float((motion.qd.abs() / kin.qd_max).max())
+    if ref_speed_ratio > args.joint_velocity_margin + 1e-3:
+        raise ValueError(f"Reference joint speeds reach {ref_speed_ratio:.3f}x URDF limits, above "
+                         f"--joint_velocity_margin={args.joint_velocity_margin}. Condition the motion library first.")
+    print(f"Reference joint speed: max {ref_speed_ratio:.4f}x declared limits", flush=True)
 motion.set_interface(args.interface, robot.tracked_bodies)
 layout = XiLayout(robot, dev)
 normalize_xi = layout.normalize
@@ -319,7 +333,7 @@ def _wm_rollout(s, a, a_prev, xi):
 _FEET = ("left_ankle_roll_link", "right_ankle_roll_link")
 FEET = [robot.tracked_bodies.index(b) for b in _FEET] if all(b in robot.tracked_bodies for b in _FEET) else []
 mdp.feet = FEET
-assert args.contact_reward == 0 or FEET, "--contact_reward needs foot bodies (g1)"
+assert args.contact_reward == 0 or FEET, "--contact_reward needs foot bodies (z01)"
 motion.set_ref_contact(FEET)
 
 
@@ -351,7 +365,9 @@ def _imag_goals(f):
 
 
 def _reward_term(S, f, a, a_prev):
-    return mdp.reward(S, f, a, a_prev, w_contact=args.contact_reward), mdp.soft_termination(S, f)
+    return mdp.reward(S, f, a, a_prev, w_contact=args.contact_reward,
+                      w_joint_velocity=args.joint_velocity_penalty,
+                      velocity_margin=args.joint_velocity_margin), mdp.soft_termination(S, f)
 
 
 def _gae_targets(V, rews, dones):
@@ -767,6 +783,12 @@ def _collect_core():
     CG["f"].copy_(env.f), CG["ep_step"].copy_(env.ep_step), CG["a_prev"].copy_(env.a_prev)
     env.f, env.ep_step, env.a_prev = CG["f"], CG["ep_step"], CG["a_prev"]
     core = {"done": out["done"], "term": out["term"], "f": out["f"], "r_mean": out["r"].mean() / 0.1}
+    if kin.qd_max is not None:
+        speed_ratio = S1[-1].abs() / kin.qd_max
+        core["velocity_over_frac"] = (speed_ratio > 1.).any(-1).float().mean()
+        core["velocity_ratio_max"] = speed_ratio.max()
+    else:
+        core["velocity_over_frac"] = core["velocity_ratio_max"] = torch.full((), float("nan"), device=dev)
     out = env.step_tail_masked(out)  # writes f, ep_step, a_prev in place
     n = out["n_done"]
     nan = torch.full((), float("nan"), device=dev)
@@ -827,6 +849,8 @@ def collect(n_steps: int, stats: dict):
         core = collect_graphed_step()
         sim_steps += args.num_envs
         stats["r"].append(core["r_mean"].clone())
+        stats["velocity_over_frac"].append(core["velocity_over_frac"].clone())
+        stats["velocity_ratio_max"].append(core["velocity_ratio_max"].clone())
         # every step appends; steps without an ended episode carry NaN means (skipped in the log)
         for k_s, k_c in (("ep_len", "ep_len"), ("ep_ret", "ep_ret"), ("term", "term_sum"), ("done", "done_sum")):
             stats[k_s].append(core[k_c].clone())
@@ -1027,7 +1051,7 @@ else:
     policy_update_g = Graphed(policy_update, _ready)
 
 
-stats = {"r": [], "ep_len": [], "ep_ret": [], "term": [], "done": []}
+stats = {"r": [], "ep_len": [], "ep_ret": [], "term": [], "done": [], "velocity_over_frac": [], "velocity_ratio_max": []}
 collect(args.warmup_steps, stats)  # the replay buffer is not checkpointed, so a resumed run refills it too
 if args.pipeline:
     PIPE.sync_actor(args.warmup_steps)
@@ -1035,9 +1059,10 @@ log_path = os.path.join(args.log_dir, "train_log.csv")
 log_f = open(log_path, "a")
 if start_it == 0:
     log_f.write("iteration,wall_h,sim_steps,wm_loss,wm_err8,pi_loss,v_loss,imag_rew,pi_gradnorm,imag_survival,sim_rew,ep_len,ep_ret_norm,term_frac,it_per_s,lr"
-                ",pi_lr,pi_mult,nonfinite\n")  # fmt: skip
+                ",pi_lr,pi_mult,nonfinite,velocity_over_frac,velocity_ratio_max\n")  # fmt: skip
     log_f.flush()
 LOG_EXTRA = "pi_lr" in open(log_path).readline()  # lr = base LR; pi_lr = policy LR (x pi_mult)
+LOG_VELOCITY = "velocity_over_frac" in open(log_path).readline()
 # periodic checkpoints hold only the deployed policy (what the evaluators read) and are written by one background writer
 # (a failed write is re-raised in the training loop or at the end, at most 2 queued); last.pt is written at the end
 CKPT_POOL, CKPT_PENDING = ThreadPoolExecutor(max_workers=1), []
@@ -1139,6 +1164,8 @@ for it in range(start_it, args.iterations):
         row = [it + 1, wall_h, sim_steps, mean(agg["wm"]), mean(agg["wm8"]), mean(agg["pi"]), mean(agg["v"]), mean(agg["ir"]),
                mean(agg["gn"]), mean(agg["surv"]), mean(stats["r"]), mean_nn(stats["ep_len"]), mean_nn(stats["ep_ret"]), term_frac, ips, lr]  # fmt: skip
         extra = [lr * pi_mult, float(pi_mult), int(NONFINITE)] if LOG_EXTRA else []
+        if LOG_VELOCITY:
+            extra += [mean(stats["velocity_over_frac"]), max((float(v) for v in stats["velocity_ratio_max"]), default=0.)]
         log_f.write(",".join(f"{x:.6g}" if isinstance(x, float) else str(x) for x in row + extra) + "\n")
         deadline = args.lr_decay_by > 0 and it + 1 >= args.lr_decay_by
         if args.lr_decay_ret > 0 and DECAY_AT[0] is None and (row[12] >= args.lr_decay_ret or deadline):

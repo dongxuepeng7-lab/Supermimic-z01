@@ -1,8 +1,8 @@
 #!/bin/bash
-# Train PartyMimic (the defaults of partymimic.train are the recipe).
-# Usage: bash scripts/train.sh <log_dir> --robot g1mj --motion_dir <npz clips> [more train.py flags, e.g. --seed 1]
-# About 31 min on one RTX 4090 for the default 12000 iterations. Python: $PYTHON, default "uv run python".
-set -eu
+# Train Z01 v1.6 with PartyMimic. See README.md for the 16 GB GPU recipe.
+# Usage: bash scripts/train.sh <log_dir> --robot z01 --motion_dir <npz clips> [more train.py flags, e.g. --seed 1]
+# Python: $PYTHON, default "uv run python". Extra flags are forwarded to train.py.
+set -euo pipefail
 cd "$(dirname "$0")/.."
 LOG_DIR=${1:?usage: bash scripts/train.sh <log_dir> [train.py flags]}; shift
 mkdir -p "$LOG_DIR"

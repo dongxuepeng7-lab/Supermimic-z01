@@ -1,259 +1,157 @@
-# PartyMimic
+# Z01 v1.6 · PartyMimic
 
-**General humanoid motion tracking in minutes on one GPU.** PartyMimic trains one whole-body tracking policy for a
-41 h motion library on a single RTX 4090 and tracks motions it has never seen, on two humanoids (Unitree G1 and
-RoboParty RP1). This repository is the method: the training code, the data recipe built only from public datasets,
-the RP1 retargeting, the diversity analysis and the evaluation. Two trained checkpoints are included.
+基于 PartyMimic 的 **Z01 v1.6 全身动作跟踪项目**：包含机器人模型、G1 → Z01 动作重定向、轨迹约束与筛选、策略训练、仿真评估和播放。机器人名称统一为 `z01`，包含 **26 个转动关节、27 个连杆**，支持 `joint` 和 `sparse5` 参考接口。
 
-- **Fast:** 26 min of training on 1× RTX 4090 (24 GB).
-- **Diverse data:** 41 h from LAFAN1, a diversity-selected 10k subset of BONES-SEED and KungfuAthlete.
-- **Generalizes:** zero-shot on five held-out test sets (Loco, Mani, Dance, Ground, Extreme martial arts).
-- **Precise:** 20.5 mm on the held-out manipulation clips (G1), the lowest error of every method we compared.
-- **Two architectures:** an MLP reference encoder (default) or a cross-attention encoder (`--ref_enc xattn`).
-- **Two modalities:** joint-angle references (default) or the pelvis and five keypoints (`--interface sparse5`).
+本项目仅保留 Z01 运行链路。G1 模型与 LAFAN1 数据作为重定向输入和动作对照保留；训练和播放入口仅支持 Z01。
 
-PartyMimic is a model-based learner in the SuperMimic family. It fits an online MLP world model, trains the policy
-by backpropagating through 32 imagined steps of that model, and uses a critic beyond the horizon. Project page:
-[roboparty.github.io/PartyMimic](https://roboparty.github.io/PartyMimic/) ([`docs/index.html`](docs/index.html)),
-with videos, the data-diversity analysis, the recipe ablation and the SuperMimic full-factor ablation.
+## 目录
 
-![Mean held-out error against training compute](docs/static/hero.png)
-
-## Results on held-out motions
-
-Body position error (mm, lower is better), scored by the
-[sim2real leaderboard](https://egalahad.github.io/sim2real/leaderboard/) sim2sim evaluator (MuJoCo, every clip from
-its first frame). Loco, Mani, Dance and Ground are the MotionDecode splits; Extreme is the held-out 30% of
-KungfuAthlete (whole source videos held out). Mean is the mean of the five.
-
-| G1 | Training | Loco | Mani | Dance | Ground | Extreme | Mean |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| SONIC (official) | 21,000 GPU-h | 28.7 | 45.5 | 48.7 | 80.3 | 88.7 | 58.4 |
-| Mimic Lite v1.1 (official) | 50 GPU-h | 25.0 | 28.2 | 43.3 | 145.2 | 95.7 | 67.5 |
-| SuperMimic | 52 min | 34.9 | 34.3 | 55.5 | 119.2 | 95.5 | 67.9 |
-| NablaMimic | 120 min | 32.9 | 30.3 | 46.9 | 107.8 | 81.6 | 59.9 |
-| BlinkMimic | 59 min | 32.9 | 30.9 | 54.1 | 100.1 | 81.4 | 59.9 |
-| XMimic | 50 min | 32.3 | 30.6 | 53.5 | 101.3 | 83.1 | 60.2 |
-| **PartyMimic** (MLP) | **26 min** | 25.7 | **20.5** | 36.8 | 80.6 | 62.0 | 45.1 |
-| **PartyMimic** (attention) | 41 min | 25.1 | 21.1 | **35.0** | **76.2** | **60.3** | **43.5** |
-
-| RP1 | Training | Loco | Mani | Dance | Ground | Extreme | Mean |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| SuperMimic | 149 min | 34.8 | 29.1 | 53.4 | 162.5 | 90.2 | 74.0 |
-| BlinkMimic | 68 min | 33.7 | 27.3 | 50.3 | 110.5 | 80.3 | 60.4 |
-| XMimic | 59 min | 33.8 | 29.1 | 49.7 | 121.3 | 79.5 | 62.7 |
-| **PartyMimic** (MLP) | **26 min** | 23.4 | 16.5 | 35.3 | 105.1 | 58.9 | 47.8 |
-| **PartyMimic** (attention) | 42 min | **22.9** | **16.1** | **33.4** | **94.3** | **56.2** | **44.6** |
-| PartyMimic (sparse5, MLP) | 29 min | 24.7 | 19.1 | 38.3 | 100.9 | 60.7 | 48.7 |
-
-<sub>SuperMimic (paper hyperparameters), NablaMimic (official config), BlinkMimic (main preset), XMimic (its defaults)
-and PartyMimic were all trained by us on the same library (G1: LAFAN1 + BONES-SEED subset + KungfuAthlete train
-split; RP1: the same clips retargeted to RP1), each run on one RTX 4090; 2-seed means. Time is training wall-clock.
-SONIC and Mimic Lite are official leaderboard checkpoints with other data and hardware. Completion rates and the
-full protocol are on the [project page](docs/index.html#results).</sub>
-
-## Checkpoints
-
-Two checkpoints, the default recipe (MLP encoder, joint references), seed 0, 12,000 iterations:
-
-| File | Robot | Training | Loco | Mani | Dance | Ground | Extreme | Mean |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
-| [`checkpoints/g1_mlp.pt`](checkpoints/g1_mlp.pt) | G1 (`--robot g1mj`) | 27 min | 25.5 | 20.6 | 36.7 | 82.6 | 61.9 | 45.5 |
-| [`checkpoints/rp1_mlp.pt`](checkpoints/rp1_mlp.pt) | RP1 (`--robot rp1`) | 29 min | 23.3 | 16.5 | 35.5 | 102.3 | 59.2 | 47.4 |
-
-Each holds the policy, world model and critic (no optimizer state). Export for the sim2real controller (sim2sim
-and real robot), score, or fine-tune:
-
-```bash
-mkdir -p deploy && uv run python tools/export_deploy_onnx.py checkpoints/g1_mlp.pt deploy/g1_mlp.onnx  # + .yaml
-SIM2REAL=<patched sim2real checkout> bash scripts/eval.sh checkpoints/g1_mlp.pt eval/g1_mlp g1    # see Evaluate
-bash scripts/train.sh logs/g1_ft --robot g1mj --motion_dir <a few clips> --init checkpoints/g1_mlp.pt --iterations 2000
+```text
+Z01_v1.6_whole_body/         原始 Z01 v1.6 模型：MJCF、URDF、USD、STL
+assets/
+  z01/                     训练模型 robot.xml、控制参数 control.json
+  hhtools_robots/{g1,z01}/  重定向所需的源/目标机器人预设和标定
+src/partymimic/             训练、仿真、运动学、策略与世界模型
+  z01/                     Z01 关节、跟踪连杆、镜像及驱动配置
+scripts/train.sh           训练启动脚本
+tools/                    数据处理、模型检查、评估、播放和 ONNX 工具
+tests/                    轨迹约束、动作采样、速度惩罚及数据接口测试
+docs/z01.md               模型、标定、筛选阈值与已知限制
+data/                     本地下载与生成数据，不纳入 Git
+logs/                     Z01 训练权重、日志和审计产物，不纳入 Git
 ```
 
-The export checks the ONNX against the PyTorch policy on a few training clips (at least 4). Without the training
-library it uses the LAFAN1 clips for G1; for RP1 point `MOTION_DIR` at a directory of RP1 motion npz clips.
+## 环境与模型检查
 
-## Setup
+需要 Linux x86_64、Python 3.10–3.13、[uv](https://docs.astral.sh/uv/)；训练与策略仿真需要 NVIDIA GPU。锁文件使用 PyTorch 2.9.0 / CUDA 12.8 和 Warp 1.16.0，应安装兼容的 NVIDIA 驱动。交互播放需要桌面显示；离线视频需要 EGL 和 `ffmpeg`。
 
-Linux x86_64, an NVIDIA GPU with a CUDA 12.8 driver, and [uv](https://docs.astral.sh/uv/).
-
-```bash
-git clone git@github.com:Roboparty/PartyMimic.git partymimic && cd partymimic
-uv sync                    # mjlab, MuJoCo Warp, torch 2.9.0 (CUDA 12.8)
-tools/download_data.sh     # G1 description + 40 LAFAN1 G1 clips, RP1 meshes + MJCF, G1 MJCF of the diversity analysis
-```
-
-`download_data.sh` gets the RP1 meshes from [Roboparty/rp1_description](https://github.com/Roboparty/rp1_description)
-(pinned commit) and copies the capsule-collision MJCF of [`assets/rp1_28dof_mjlab`](assets/rp1_28dof_mjlab) next to
-them (`data/rp1_28dof_mjlab/`), which is the model PartyMimic and the evaluator simulate.
-
-## Data
-
-Every clip comes from a public dataset:
-
-| Dataset | Used for | Source | License |
-|---|---|---|---|
-| LAFAN1, G1 retarget | training (40 clips) | [lvhaidong/LAFAN1_Retargeting_Dataset](https://huggingface.co/datasets/lvhaidong/LAFAN1_Retargeting_Dataset) ([LAFAN1](https://github.com/ubisoft/ubisoft-laforge-animation-dataset)) | CC BY-NC-ND 4.0 |
-| BONES-SEED, G1 retarget | training (10,000 clips) | [bones-studio/seed](https://huggingface.co/datasets/bones-studio/seed) (gated) | [BONES-SEED license](https://bones.studio/info/seed-license) |
-| KungfuAthlete, G1 | training (635 clips), Extreme test (308 clips) | [LuluCao/KungfuAthleteBot](https://huggingface.co/datasets/LuluCao/KungfuAthleteBot), [NPCLEI/KungFuAthleteBot](https://github.com/NPCLEI/KungFuAthleteBot) | Apache-2.0 |
-| MotionDecode | Loco / Mani / Dance / Ground tests (228 clips) | [CMRobot/MotionDecode](https://huggingface.co/datasets/CMRobot/MotionDecode), as packaged by [sim2real](https://github.com/EGalahad/sim2real) | non-commercial access terms |
-
-**G1 library.** `tools/data/build_library.sh g1` builds it from the sources (23.5 GB BONES-SEED download; accept
-its terms on Hugging Face and log in with `hf auth login` or set `HF_TOKEN`):
-
-1. LAFAN1: the 40 csv clips of `download_data.sh` to motion npz (`tools/data/prep_motions.py --format lafan`).
-2. BONES-SEED: the 10,000 clips of [`manifests/bones_seed_div10k.txt`](manifests/bones_seed_div10k.txt), 120 Hz csv
-   to 50 Hz npz. The list was selected by `tools/data/bones_subset.py` (below).
-3. KungfuAthlete: `tools/data/kungfu.py qa` scores every smoothed G1 clip (floor offset, ground and self penetration,
-   joint limits, speeds); `write` drops the failing clips, corrects the floor and writes the train split and the
-   Extreme test set of [`manifests/kungfu_split.json`](manifests/kungfu_split.json) (a 30% test share per subset and
-   style, drawn by whole source videos, so no test clip shares a video with a training clip).
-4. All clips are linked into `data/motions/g1_mix`; the Extreme set is `data/testsets/extreme_g1`.
-
-The selection of the BONES-SEED subset can be rerun (`feat` needs BONES-SEED's `metadata/seed_metadata_v004.parquet`,
-`select` a GPU) and gives the same list:
+在项目根目录运行：
 
 ```bash
-uv run --with pyarrow python tools/data/bones_subset.py feat data/raw/bones data/raw/bones/feat.npz --meta <seed_metadata_v004.parquet>
-uv run python tools/data/bones_subset.py select data/raw/bones/feat.npz div10k.txt --n 10000
+uv sync --locked
+uv run python tools/data/z01_data.py prepare
+uv run python tools/check_z01.py
+uv run python -m unittest discover -s tests -v
 ```
 
-It clusters 1-s windows of all non-mirror clips (without clips more than 3 cm below the floor or faster than
-25 rad/s at a joint) and greedily picks clips that fill the clusters evenly, every content once before repeats.
+`prepare` 从原始模型生成训练 MJCF 和重定向 URDF，保留既有标定文件。`check_z01.py` 检查 26 关节顺序、驱动参数、正向运动学、镜像，以及 5 ms 仿真步长下的 5 秒无支撑站立。
 
-**RP1 library.** The same clips, retargeted G1 → RP1 with the robot-to-robot IK of
-[human-humanoid-tools](https://github.com/Roboparty/human-humanoid-tools) (commit `ed8b350`; `uv sync --extra all`
-in its checkout):
+修改 `assets/z01/control.json` 后，应重新执行生成和检查。控制参数是仿真初始值；模型惯量、上半身安装偏移等约束详见[技术说明](docs/z01.md)。
+
+## 动作数据
+
+若本地已有 `data/motions/z01_lafan_v2_clean/*.npz`，可直接检查参考动作并开始训练。重新构建时按以下顺序执行。
+
+### 1. 准备重定向源
 
 ```bash
-HHT=<human-humanoid-tools checkout> P=8 GPUS="0 1" tools/data/build_library.sh rp1
+bash tools/download_data.sh
+bash tools/data/prepare_source.sh
 ```
 
-It writes the G1 clips as csv (`tools/data/rp1_data.py g1csv`), retargets them (`tools/data/rp1_retarget.sh`: profile
-`mimic`, Newton backend, 24 IK iterations, 50 Hz, the zero-pose calibration and the robot presets of
-[`assets/hhtools_robots`](assets/hhtools_robots)), converts the RP1 csv to npz (`data/motions/rp1_mix`) and moves the
-KungfuAthlete clips to the G1 floor height (`tools/data/rp1_floor.py`; R2R leaves some jump clips 2–5 cm above the
-ground). The Extreme set is retargeted the same way (`data/testsets/extreme_rp1`). R2R takes about 8 s per clip per
-process; `P` processes run in parallel over the GPUs in `GPUS`. The RP1 copy of the MotionDecode tests:
-`HHT=... SIM2REAL=... tools/data/build_library.sh rp1_md` (into `$SIM2REAL/datasets/motiondecode_rp1`).
+只下载 G1 的 LAFAN1 CSV 和所需几何，生成源 MJCF 与 50 Hz NPZ：
 
-**Motion format.** `--motion_dir` takes a directory of `.npz` clips, each with `fps` (50), `joint_pos` `[T, J]` in
-the robot's joint order (`src/partymimic/<robot>/`), and the pelvis pose as the first body of `body_pos_w`
-`[T, B, 3]` and `body_quat_w` `[T, B, 4]` (wxyz). PartyMimic computes the other bodies by forward kinematics.
+- `data/lafan1_g1/`：30 Hz 原始 CSV。
+- `data/g1_description/`：源 URDF、网格和用于对照的 MJCF。
+- `data/motions/g1/lafan/`：50 Hz 源动作，仅用于 Z01 重定向和审计。
 
-## Train
+### 2. G1 → Z01 重定向与筛选
 
-The defaults of `partymimic.train` are the PartyMimic recipe:
+另行准备 [human-humanoid-tools](https://github.com/Roboparty/human-humanoid-tools)（本地流程使用提交 `ed8b350`，在其目录运行 `uv sync --extra all`）。默认在当前项目的同级目录寻找该工具，也可以指定 `HHT`：
 
 ```bash
-bash scripts/train.sh logs/g1_s0  --robot g1mj --motion_dir data/motions/g1_mix  --seed 0   # 12k iterations, ~26 min
-bash scripts/train.sh logs/rp1_s0 --robot rp1  --motion_dir data/motions/rp1_mix --seed 0
-# two GPUs: collection + world model on cuda:0, policy + critic on cuda:1, overlapped (1.6x the iterations per second)
-bash scripts/train.sh logs/g1_p0  --robot g1mj --motion_dir data/motions/g1_mix --seed 0 --pipeline
+HHT=/path/to/human-humanoid-tools P=4 bash tools/data/build_z01.sh
 ```
 
-The MLP recipe fits a standard 24 GB RTX 4090: with only 24.1 GB free, G1 and RP1 runs kept their speed and peaked
-at 22.6 and 23.4 GB. Checkpoints are written every 2,000 iterations (`ckpt_002000.pt`, ...) and `last.pt`.
+流程为：G1 NPZ → HHT 输入 CSV → Newton IK → Z01 NPZ → 关节角度/速度约束、地面修正 → 逐帧筛选。输出目录：
 
-**Options.**
+| 路径 | 用途 |
+|---|---|
+| `data/raw/z01_v2/` | 输入 CSV、重定向 CSV、工作进程日志、输入哈希清单 |
+| `data/motions/z01_lafan_v2_ik/` | 尚未约束速度和地面的 IK 结果 |
+| `data/motions/z01_lafan_v2/` | 修正后的完整动作、分段与 `conditioning.json` |
+| `data/motions/z01_lafan_v2_clean/` | 筛选后的相对链接，以及 `selection.json` |
 
-- `--ref_enc xattn`: the cross-attention reference encoder. Lower error on Dance, Ground and Extreme (tables above)
-  for 1.6x the training time. It needs more than 24 GB; on a 24 GB card add `--pi_batch 1024` (G1: 29 min).
-- `--interface sparse5`: the policy gets only the pelvis, head, wrist and ankle poses of the reference, no joint
-  angles (one command format for a person, a VR tracker set or another robot). A keypoint-to-joint network is fit to
-  the library before training and restores the reference-action skip (`--kp_skip`), with an auxiliary joint-angle
-  loss (`--kp_aux 1.0`). Export with `tools/export_deploy_onnx.py` (input `ref_kp`).
-- `--init <ckpt>`: fine-tune a trained policy on a few clips, e.g. one hard clip before it is deployed. Three
-  held-out G1 ground transitions went from 120–415 mm to 24–36 mm in 2k iterations. It does not help on short,
-  highly dynamic clips.
+现有本地筛选报告记录：40 个源动作、441,140 帧；保留来自 37 个源动作的 163 段，共 233,935 帧，约 1.299 小时。具体样本以 `selection.json` 为准，重新构建后应重新审计。
 
-`uv run python -m partymimic.train -h` lists the remaining options.
-
-## Evaluate, export, visualize
+短流程检查应使用独立目录：
 
 ```bash
-# sim2real leaderboard protocol (ONNX + deploy YAML, MuJoCo CPU sim2sim on the four MotionDecode splits)
-SIM2REAL=<checkout of github.com/EGalahad/sim2real> bash scripts/eval.sh logs/g1_s0/ckpt_012000.pt eval/g1_s0 g1
-# the Extreme set (any any4hdmi dataset directory)
-SET=data/testsets/extreme_g1 SIM2REAL=... bash scripts/eval.sh logs/g1_s0/ckpt_012000.pt eval/g1_s0 g1
-# side-by-side videos of the median clip per split: robot solid, reference ghost, both at global poses
-MUJOCO_GL=egl python tools/sim2sim_video.py eval/g1_s0 g1 <robot MJCF> videos --sim2real <sim2real checkout>
+HHT=/path/to/human-humanoid-tools P=1 \
+  Z01_RAW=data/raw/z01_check Z01_OUT=data/motions/z01_check \
+  bash tools/data/build_z01.sh --clip walk2_subject3 --limit-frames 1000
 ```
 
-Apply [`tools/sim2real.patch`](tools/sim2real.patch) to the sim2real checkout first (`git apply`, tested on its
-commits `287ac15` and `4a777c8`). It adds the observation terms the PartyMimic deploy YAML reads
-(`supermimic.*`: proprioceptive history, reference joints and root, root orientation history) and, for RP1, the
-robot config (limits, armatures, standing pose, joint friction) and RP1's tracked bodies in the metrics; G1 scoring
-is unchanged. `scripts/eval.sh ... rp1` points it at `data/rp1_28dof_mjlab` and the RP1 test sets.
+脚本仅在输入文件、标定、HHT 提交和参数匹配时复用 CSV。输入改变时使用新的 `Z01_RAW` / `Z01_OUT`，保留原实验记录。对复制项目，动作链接使用相对路径；历史 JSON 报告中的绝对路径保留为当时的来源记录。
 
-Also included: `tools/eval_batch.py` and `tools/eval_metrics.py` for fast in-simulator evaluation on the training
-clips, and `tools/export_onnx.py` / `tools/play_onnx.py` for a single-motion ONNX in the BeyondMimic layout.
-
-## Diversity analysis
-
-`tools/diversity` measures how much of a library is distinct motion and how new each test set is
-([page](docs/index.html#data)). Each 1-s window is described by heading-invariant root, joint and hand / foot
-kinematics, z-scored and projected to 32 PCA dimensions, and the library is clustered into 2,000 motion clusters
-(`datacard/`). Per source it reports clips, hours and the effective number of motion types (exponential of the
-cluster entropy); for the cumulative mixes, the share of each test set's windows that lie within the median
-cross-source distance of a training window.
+### 3. 审计与参考播放
 
 ```bash
-uv run --with scikit-learn python tools/diversity/analyze.py work/div out/div \
-  --source lafan:LAFAN1=data/motions/g1/lafan --source bones:BONES-SEED=data/motions/g1/bones \
-  --source kungfu:KungfuAthlete=data/motions/g1/kungfu \
-  --md <sim2real>/datasets/motiondecode --test Extreme=data/testsets/extreme_g1
-uv run --with scikit-learn python tools/diversity/figure.py work/div out/div out/div/data.png
+uv run python tools/audit_z01_motions.py \
+  --motions data/motions/z01_lafan_v2 \
+  --source data/motions/g1/lafan --out logs/z01_audit
+
+uv run python tools/play_reference.py \
+  --motion data/motions/z01_lafan_v2_clean/walk2_subject3__seg000.npz \
+  --speed 0.5 --loop
 ```
 
-## Speed on LAFAN (XMimic's benchmark)
+参考播放直接设置姿态，不运行策略或物理积分。空格暂停，R 重播，鼠标控制视角。离线视频示例：
 
-[XMimic](https://github.com/nico-bohlinger/xmimic)'s protocol on our RTX 4090s: all runs train on its 40 LAFAN1 clips
-(SHA-256 checked) and are scored on the same clips, 4 replicas every 100 iterations, 3 seeds. Minutes to
-BlinkMimic's target; compilation excluded by XMimic's rule, added back in the start-up column.
+```bash
+uv run python tools/play_reference.py \
+  --motion data/motions/z01_lafan_v2_clean/walk2_subject3__seg000.npz \
+  --seconds 10 --video logs/z01_reference.mp4
+```
 
-| Method | GPUs | it/s | Return ≥ 0.82 | + 0 failed, held ×3 | Held, with start-up | Return at 3,500 it |
-|---|---:|---:|---:|---:|---:|---:|
-| BlinkMimic (main) | 1 | 7.8 | 2.93 | 3.45 | 3.62 | 0.865 |
-| XMimic | 1 | 9.3 | 2.32 | 3.71 | 3.96 | 0.860 |
-| **PartyMimic** | 1 | 8.2 | 2.45 | 5.17 | 5.57 | **0.883** |
-| XMimic (actor \| learner) | 2 | 13.2 | 1.71 | **2.89** | **3.17** | 0.863 |
-| **PartyMimic** (`--pipeline`) | 2 | 12.7 | **1.66** | 3.41 | 3.82 | **0.883** |
+## 训练
 
-PartyMimic reaches return 0.82 in the fewest iterations and ends highest. It is slower to zero failures: one or two
-hard training clips keep failing for a while; BlinkMimic and XMimic search for those clips with evaluation probes,
-which PartyMimic dropped because they did not improve held-out tracking.
+所有入口默认使用 `z01`；默认动作目录为 `data/motions/z01_lafan_v2_clean`。以下是 16 GB 显存的起始配置，建议先完成 200 次迭代检查，确认显存、数值和速度指标后再进行完整训练：
 
-## The recipe
+```bash
+bash scripts/train.sh logs/z01_check \
+  --num_envs 1024 --buffer_steps 500 --pi_batch 512 --wm_batch 1024 \
+  --v_gcons_n 1024 --joint_velocity_penalty 0.5 --joint_velocity_margin 0.9 \
+  --iterations 200
 
-What matters most, measured by the change in G1 held-out Loc/Man error when a factor is removed (ablations on an
-earlier 9,173-clip library; the [page](docs/index.html#recipe) explains each factor):
+bash scripts/train.sh logs/z01_train \
+  --num_envs 1024 --buffer_steps 500 --pi_batch 512 --wm_batch 1024 \
+  --v_gcons_n 1024 --joint_velocity_penalty 0.5 --joint_velocity_margin 0.9 \
+  --iterations 12000 --seed 0
+```
 
-| Factor | Setting | Effect when removed |
-|---|---|---|
-| Muon for policy and world model | `--pi_opt muon --wm_opt muon` | Adam instead: +10.7 mm |
-| Narrow tracking-reward kernels | `--std_scale 0.35` | +6.5 mm |
-| 32-step imagination | `--horizon 32` | 16 steps: +5.9 mm |
-| Reference-action skip | `--pi_ref_skip` | +5.6 mm |
-| Policy EMA | `--pi_ema 0.995` | +3.4 mm |
-| Evaluator's collision model | `--robot g1mj` | LAFAN falls 14/40 instead of 3/40 |
-| Value-gradient consistency | `--v_gcons 0.5` | +1.0 mm |
-| Diversity-balanced resets | `--div_k 24` | Ground +6–19 mm |
-| Self-imitation | `--sil 1` | +0.5 mm early in training |
+输出包括 `args.json`、`stdout.log`、`train_log.csv`、周期权重 `ckpt_*.pt` 和 `last.pt`。查看全部选项：`uv run python -m partymimic.train -h`。
 
-## Attribution and license
+- `--motion_dir <目录>`：使用另一个 Z01 NPZ 动作集。
+- `--resume <last.pt>`：继续训练；`--init <checkpoint>`：用已有 Z01 策略初始化新实验。
+- `--interface sparse5`：使用骨盆、头部、双腕和双踝参考；`--ref_enc xattn`：切换参考编码器。
+- `--joint_velocity_penalty 0.5 --joint_velocity_margin 0.9`：添加超过 URDF 声明速度 90% 的训练惩罚，**不提供硬速度限制**。该惩罚的程序默认值为 0，需显式传入。
 
-PartyMimic is derived from [BlinkMimic](https://github.com/fuyichen0725/blinkmimic), which builds on
-[supermimic_vibed](https://github.com/zita-ch/supermimic_vibed) and
-[InstantTrack](https://github.com/Huy-Quang-Dao/instantTrack). All three are MIT-licensed; their notices are in
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-Methods: SuperMimic (Liao et al., arXiv:2610.28480, 2026), SHAC (Xu et al., 2022), BeyondMimic (Liao et al., 2025)
-and Muon (Jordan et al., 2024).
-Simulation: [mjlab](https://github.com/mujocolab/mjlab) and [MuJoCo Warp](https://github.com/google-deepmind/mujoco_warp).
-Retargeting: [human-humanoid-tools](https://github.com/Roboparty/human-humanoid-tools) (Apache-2.0).
-Robots: Unitree G1 ([unitree_mujoco](https://github.com/unitreerobotics/unitree_mujoco), BSD-3-Clause) and RoboParty RP1
-([rp1_description](https://github.com/Roboparty/rp1_description)).
+`train_log.csv` 中 `velocity_over_frac` 表示采样状态中任一关节超过 URDF 速度的比例，`velocity_ratio_max` 表示该记录区间的最大速度比。
 
-Code: MIT ([LICENSE](LICENSE)). The checkpoints, videos and built motion libraries are derived from the motion
-datasets above and follow their licenses (LAFAN1: CC BY-NC-ND 4.0; BONES-SEED: its own license; MotionDecode:
-non-commercial terms); they are not covered by the MIT License.
+## 策略播放与评估
+
+```bash
+uv run python tools/play.py --ckpt logs/z01_train/ckpt_012000.pt \
+  --motion data/motions/z01_lafan_v2_clean/walk2_subject3__seg000.npz --loop
+
+# 无窗口的有限步数检查
+uv run python tools/play.py --ckpt logs/z01_check/last.pt \
+  --motion data/motions/z01_lafan_v2_clean/walk2_subject3__seg000.npz \
+  --headless --steps 100
+
+uv run python -m partymimic.evaluate --run_dir logs/z01_train \
+  --ckpt logs/z01_train/ckpt_012000.pt --out logs/z01_train/evaluation.json
+```
+
+策略播放使用训练仿真器运行物理和控制，机器人类型从权重读取。评估逐个动作从首帧运行，关闭随机化与观测噪声。批量评估入口为 `tools/eval_batch.py`；记录的轨迹可用 `tools/render.py` 渲染。
+
+可选的单动作 ONNX 导出与回放工具为 `tools/export_onnx.py`、`tools/play_onnx.py`，仅支持 `joint` 接口。先运行 `uv sync --locked --extra onnx`，使用 `--help` 查看参数。ONNX 导出不等于完成实机控制集成。
+
+本地 `logs/z01_*` 和旧版 Z01 动作集保留用于实验追溯。旧的 `z01_lafan` / `z01_lafan_clean` 存在手臂标定与筛选问题，新实验使用 `z01_lafan_v2_clean`。已有权重是否达到任务要求需要独立评估；短训练日志和资产检查不能证明策略收敛。
+
+## 数据格式与许可
+
+每个 Z01 `.npz` 至少包含 `fps=50`、`joint_pos [T,26]`、`body_pos_w [T,B,3]` 和 `body_quat_w [T,B,4]`。第一个 body 是骨盆，四元数顺序为 **wxyz**，角度单位为弧度；关节顺序由 `src/partymimic/z01/z01_constants.py` 定义，其他连杆状态通过正向运动学计算。
+
+代码继承 PartyMimic 及其上游的许可，见 [LICENSE](LICENSE) 和 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。[LAFAN1 G1 重定向数据](https://huggingface.co/datasets/lvhaidong/LAFAN1_Retargeting_Dataset)来自第三方；LAFAN1 标注为 CC BY-NC-ND 4.0，Unitree G1 描述为 BSD-3-Clause。动作数据及其衍生产物不因存放在本项目中而自动适用代码的 MIT 许可。Z01 原始模型保留本地提供的来源说明，分发时另行确认其授权。

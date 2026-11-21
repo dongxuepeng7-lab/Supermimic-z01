@@ -1,24 +1,16 @@
-"""Convert G1 clips to mjlab tracking motions at 50 Hz: joint_pos / joint_vel and the world pose and velocity of every
-body, taken from MuJoCo forward kinematics of mjlab's G1 so that references and simulated bodies share one definition.
-Sources: any4hdmi npz (``qpos`` [T, 36] = root xyz, root quat wxyz, 29 joints in mjlab's G1 joint order, 30 Hz),
-BONES-SEED G1 csv (120 Hz) or the LAFAN1 G1 retarget csv of tools/download_data.sh (30 Hz).
+"""Prepare the G1 LAFAN1 source clips for Z01 retargeting (30 Hz CSV -> 50 Hz npz).
 
-  python prep_motions.py --src <dir with *.npz> --out <dir> [--fps-in 30] [--fps 50]
-  python prep_motions.py --format bones --src <extracted g1/csv> --out <dir> [--list <paths>] [--workers 16]
-  python prep_motions.py --format lafan --src data/lafan1_g1 --out <dir>
+G1 body states are computed with mjlab's source model. Only root pose and joint
+angles are used by HHT; full body states remain useful for source diagnostics.
 """
 
 import argparse
-import glob
 import json
-import os
-
-from multiprocessing import Pool
+from pathlib import Path
 
 import mujoco
 import numpy as np
 from mjlab.asset_zoo.robots.unitree_g1.g1_constants import G1_XML
-from scipy.spatial.transform import Rotation
 
 
 def quat_slerp(q0: np.ndarray, q1: np.ndarray, t: np.ndarray) -> np.ndarray:
@@ -99,71 +91,34 @@ def convert(qpos: np.ndarray, model: mujoco.MjModel, fps: float) -> dict[str, np
     }
 
 
-def load_bones_csv(path: str) -> np.ndarray:
-    """BONES-SEED G1 csv: frame, root translate (cm), root rotate (deg, extrinsic xyz = Maya rotate order xyz),
-    29 joint angles (deg) in mjlab's G1 joint order."""
-    a = np.loadtxt(path, delimiter=",", skiprows=1, ndmin=2)
-    qpos = np.zeros((a.shape[0], 36))
-    qpos[:, :3] = a[:, 1:4] / 100
-    qpos[:, 3:7] = Rotation.from_euler("xyz", a[:, 4:7], degrees=True).as_quat()[:, [3, 0, 1, 2]]
-    qpos[:, 7:] = np.deg2rad(a[:, 7:36])
-    return qpos
-
-
 def load_lafan_csv(path: str) -> np.ndarray:
     """LAFAN1 G1 retarget csv (no header): root position (m), root quaternion xyzw, 29 joint angles (rad)."""
     a = np.loadtxt(path, delimiter=",", ndmin=2)
     return np.concatenate((a[:, :3], a[:, [6, 3, 4, 5]], a[:, 7:36]), -1)
 
 
-LOADERS = {"bones": load_bones_csv, "lafan": load_lafan_csv,
-           "qpos": lambda f: np.load(f)["qpos"].astype(np.float64)}
-FPS_IN = {"bones": 120.0, "lafan": 30.0, "qpos": 30.0}
-
-
-def _job(job):
-    f, out, fmt, fps_in, fps = job
-    name = os.path.splitext(os.path.basename(f))[0]
-    try:
-        raw = LOADERS[fmt](f)
-        if raw.shape[0] < 2:
-            return None
-        qpos = resample(raw, fps_in, fps)
-        if qpos.shape[0] < 2:
-            return None
-        model = mujoco.MjModel.from_xml_path(str(G1_XML))
-        np.savez(os.path.join(out, name + ".npz"), **convert(qpos, model, fps))
-    except (ValueError, OSError) as e:
-        print("skip", name, e, flush=True)
-        return None
-    return {"name": name, "frames": int(qpos.shape[0])}
-
-
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--src", required=True)
-    ap.add_argument("--out", required=True)
-    ap.add_argument("--format", choices=sorted(LOADERS), default="qpos")
-    ap.add_argument("--fps-in", type=float, default=None, help="default 30 (qpos, lafan) / 120 (bones)")
-    ap.add_argument("--fps", type=float, default=50.0)
-    ap.add_argument("--list", default=None, help="file with the source paths to convert (relative to --src)")
-    ap.add_argument("--workers", type=int, default=1)
-    args = ap.parse_args()
-    fps_in = args.fps_in or FPS_IN[args.format]
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--src", type=Path, default=Path("data/lafan1_g1"))
+    parser.add_argument("--out", type=Path, default=Path("data/motions/g1/lafan"))
+    args = parser.parse_args()
+    files = sorted(args.src.glob("*.csv"))
+    if not files:
+        parser.error(f"No LAFAN1 source CSVs in {args.src}; run tools/download_data.sh first")
     model = mujoco.MjModel.from_xml_path(str(G1_XML))
-    os.makedirs(args.out, exist_ok=True)
-    if args.list:
-        files = [os.path.join(args.src, l.strip()) for l in open(args.list) if l.strip()]
-    else:
-        pattern = {"bones": "**/*.csv", "lafan": "*.csv", "qpos": "*.npz"}[args.format]
-        files = sorted(glob.glob(os.path.join(args.src, pattern), recursive=True))
-    jobs = [(f, args.out, args.format, fps_in, args.fps) for f in files]
-    with Pool(args.workers) as pool:
-        index = [r for r in pool.imap(_job, jobs, chunksize=4) if r is not None]
-    print("converted", len(index), "of", len(files))
-    json.dump({"fps": args.fps, "body_names": [model.body(i).name for i in range(1, model.nbody)], "clips": index},
-              open(os.path.join(args.out, "index.json"), "w"), indent=1)
-    print("clips", len(index), "hours", sum(c["frames"] for c in index) / args.fps / 3600)
+    args.out.mkdir(parents=True, exist_ok=True)
+    index = []
+    for file in files:
+        raw = load_lafan_csv(str(file))
+        if raw.shape[1] != model.nq or len(raw) < 2 or not np.isfinite(raw).all():
+            raise ValueError(f"Invalid G1 LAFAN1 source: {file}")
+        qpos = resample(raw, 30., 50.)
+        np.savez(args.out / (file.stem + ".npz"), **convert(qpos, model, 50.))
+        index.append({"name": file.stem, "frames": len(qpos)})
+        print(f"[{len(index)}/{len(files)}] {file.stem}", flush=True)
+    report = {"fps": 50., "body_names": [model.body(i).name for i in range(1, model.nbody)], "clips": index}
+    (args.out / "index.json").write_text(json.dumps(report, indent=2))
+    print(f"Prepared {len(index)} source clips -> {args.out}")
 
 
 if __name__ == "__main__":

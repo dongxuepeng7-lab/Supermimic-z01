@@ -1,7 +1,7 @@
 """Export a policy checkpoint to ONNX with one reference motion baked in (BeyondMimic-style deployment layout).
 
 The motion goes through the training preprocessing (resampled to 50 Hz, finite-difference velocities,
-goal features of the next K frames), so any motion file (*.csv) the robot's loader reads can be baked in.
+goal features of the next K frames), so Z01 npz motion files can be baked in.
 
 Inputs:  obs_history (1, H, O)  raw observations, oldest first, layout of partymimic.mdp.MDP.obs:
                                 q - q0, qd, root angular velocity (root frame), projected gravity,
@@ -14,8 +14,8 @@ Outputs: actions (1, J)         joint targets are q0 + action_scale * actions
                                 observation's relative orientation is taken against
 PD gains, default pose, action scale and the observation layout are in the ONNX metadata.
 
-Usage: python tools/export_onnx.py --robot g1 --ckpt logs/<run>/ckpt_003500.pt \
-           --motion data/lafan1_g1/dance1_subject2.csv --out logs/<run>/dance1_subject2.onnx
+Usage: python tools/export_onnx.py --robot z01 --ckpt logs/<run>/ckpt_003500.pt \
+           --motion data/motions/z01_lafan_v2_clean/walk2_subject3__seg000.npz --out logs/<run>/dance1_subject2.onnx
 """
 
 import argparse
@@ -69,7 +69,7 @@ def pd_gains(robot: RobotSpec) -> tuple[list[float], list[float]]:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--robot", type=str, default="g1")
+    ap.add_argument("--robot", type=str, default="z01", choices=("z01",))
     ap.add_argument("--ckpt", type=str, required=True)
     ap.add_argument("--motion", type=str, required=True, help="one motion file in the robot's format")
     ap.add_argument("--out", type=str, required=True)
@@ -79,7 +79,7 @@ def main():
     robot = get_robot(a.robot)
     ck = torch.load(a.ckpt, map_location=dev)
     if ck["args"].get("interface", "joint") != "joint":
-        raise SystemExit("--interface sparse5: use tools/export_deploy_onnx.py (its observation needs the keypoint errors)")
+        raise SystemExit("This single-motion exporter supports only --interface joint; sparse5 ONNX export is not included.")
     K, Hh = ck["args"]["goal_frames"], ck["args"]["hist"]
     motion = MotionLib([a.motion], Kinematics(robot, dev), dev, robot.load_motion)
     networks.AMP_DTYPE = None  # fp32 graph (training ran the MLPs under bf16 autocast)

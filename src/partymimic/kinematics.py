@@ -59,6 +59,12 @@ class Kinematics:
                 lo[jname_to_idx[n]], hi[jname_to_idx[n]] = m.jnt_range[j]
         self.q_lo = torch.tensor(lo, dtype=torch.float32, device=device)
         self.q_hi = torch.tensor(hi, dtype=torch.float32, device=device)
+        self.qd_max = None
+        if robot.joint_velocity_limits is not None:
+            speed = np.asarray(robot.joint_velocity_limits)
+            if speed.shape != (robot.num_joints,) or not np.isfinite(speed).all() or np.any(speed <= 0):
+                raise ValueError(f"{robot.name}: invalid joint_velocity_limits")
+            self.qd_max = torch.tensor(speed, dtype=torch.float32, device=device)
 
     def forward(self, p, R, v, w, q, qd, all_bodies: bool = False):
         """Tracked-body world positions, rotations, linear (link-origin) and angular velocities.
