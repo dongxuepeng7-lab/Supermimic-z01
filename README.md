@@ -21,6 +21,26 @@ data/                     本地下载与生成数据，不纳入 Git
 logs/                     Z01 训练权重、日志和审计产物，不纳入 Git
 ```
 
+## 获取模型资产（Git LFS）
+
+Z01 的 `*.usd` 模型由 [Git LFS](https://git-lfs.com/) 管理，跟踪规则保存在
+[.gitattributes](.gitattributes)。Git 提交保存指针，完整模型保存在 LFS 对象中；
+四个 USD 文件均随仓库分发，其中 `Z01_v1.6_base.usd` 约 100.05 MiB。
+
+先安装 Git LFS，再克隆项目并下载模型：
+
+```bash
+git lfs install
+git clone https://github.com/dongxuepeng7-lab/Supermimic-z01.git
+cd Supermimic-z01
+git lfs pull
+git lfs fsck
+```
+
+已有本地仓库时，在项目根目录运行 `git lfs install --local` 和 `git lfs pull`。
+提交 USD 修改时继续使用普通 `git add` / `git commit`；配置好的 LFS 钩子会在
+`git push` 时上传模型对象。`data/` 和 `logs/` 仍是本地生成目录，不纳入 Git。
+
 ## 环境与模型检查
 
 需要 Linux x86_64、Python 3.10–3.13、[uv](https://docs.astral.sh/uv/)；训练与策略仿真需要 NVIDIA GPU。锁文件使用 PyTorch 2.9.0 / CUDA 12.8 和 Warp 1.16.0，应安装兼容的 NVIDIA 驱动。交互播放需要桌面显示；离线视频需要 EGL 和 `ffmpeg`。
