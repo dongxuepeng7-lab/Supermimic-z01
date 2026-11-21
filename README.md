@@ -131,7 +131,12 @@ RA-L 论文的 **A0、A、A+、B、C、C-perm、D 七组**使用独立的实验�
 入口为 `uv run python tools/ral.py --help`。当前已导入 2026-11-20 辨识快照；
 论文实验保留本仓库 PartyMimic Z01 实现名称，动作库、配对数据和校准检查通过后才启动对应组。
 当前 RA-L 入口使用 `configs/ral/pilot02.json`、`release/ral/protocol_v2.json` 和新的 `pilot02` 输出目录。
-`pilot01` 模型及 `protocol_v1.json` 保留归档；下一轮的机器分工和命令见执行说明末尾的 pilot02 段落。
+`pilot01` 模型及 `protocol_v1.json` 保留归档。pilot02 的十次训练已完成并通过完整性核验；C 的前向预测恢复，但响应收益未泛化到校准集，D/C-perm 暂未启动。复核见 [pilot02_training_review.json](release/ral/pilot02_training_review.json)，后续安排见执行说明末尾。
+
+三机 **8 小时无人值守开发实验**另有独立入口：`bash scripts/ral_3090_8h.sh --session night01`、
+`bash scripts/ral_4090_8h.sh --session night01`、`bash scripts/ral_5080_8h.sh --session night01`，在对应机器各执行一条。
+每轮自动检查并切换候选/种子，默认包含编译、训练和检查的总时限为 8 小时；输出保存在 `logs/ral_8h/`。
+分工、后台启动和三份判断脚本见 [8 小时执行说明](docs/ral_experiments.md#三台机器的-8-小时任务队列)。
 
 所有入口默认使用 `z01`；默认动作目录为 `data/motions/z01_lafan_v2_clean`。以下是 16 GB 显存的起始配置，建议先完成 200 次迭代检查，确认显存、数值和速度指标后再进行完整训练：
 

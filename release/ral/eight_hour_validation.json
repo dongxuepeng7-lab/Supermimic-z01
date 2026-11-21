@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "purpose": "Eight-hour queue implementation verification, not eight hours of training or paper results",
+  "formal_results": false,
+  "test_outcomes_inspected": false,
+  "eight_hour_training_launched": false,
+  "unit_tests": {
+    "full_suite_passed": 32,
+    "queue_tests_after_final_portability_change_passed": 11
+  },
+  "lifecycle_checks": [
+    "exclusive queue GPU lock",
+    "child process-group timeout/cancellation",
+    "corrupt/incomplete results excluded",
+    "equal-budget/init/input matching",
+    "distinct-seed confirmation",
+    "concurrent report writes",
+    "wrong-machine judgment rejection",
+    "require-gain exit status"
+  ],
+  "actual_gpu_smokes": [
+    {
+      "path": "logs/ral_8h/validation_wm_v2_3090",
+      "status": "queue_exhausted",
+      "elapsed_seconds": 59.04182171821594,
+      "jobs": [
+        {
+          "id": "amplitude_fit",
+          "status": "completed"
+        },
+        {
+          "id": "s10001_B",
+          "status": "completed"
+        },
+        {
+          "id": "s10001_C_reference",
+          "status": "completed"
+        },
+        {
+          "id": "s10001_C_huber_1e3",
+          "status": "completed"
+        }
+      ],
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "source_sha256": "9e552a2b3e9234fbb534e55733ca1b93a284053dfd406c5dc279c9dc396e44c2",
+      "tested_tool_hashes": {
+        "tools/ral_eight_hour.py": "090166307dacb4af15280d9e7651610fdafcdb3fca6290758aeb50afb01118a9",
+        "tools/ral_eight_hour_worker.py": "44e7b15d8418858340e461c57173603e0b22314bb54252e74a1640d02c5bf21d"
+      },
+      "plan_sha256": "f1573ff41b24db500ea3c5d87c520c919076936c7b7035f2f5fb8ab54bbee143",
+      "status_sha256": "2ef68961a6413537b717c047d22b6e55222884d33de843b85642e6f6a2768e11"
+    },
+    {
+      "path": "logs/ral_8h/validation_policy_v1_3090",
+      "status": "queue_exhausted",
+      "elapsed_seconds": 133.56798839569092,
+      "jobs": [
+        {
+          "id": "s91_A0",
+          "status": "completed"
+        },
+        {
+          "id": "s91_A",
+          "status": "completed"
+        },
+        {
+          "id": "s91_Aplus",
+          "status": "completed"
+        },
+        {
+          "id": "s91_B",
+          "status": "completed"
+        },
+        {
+          "id": "s91_C_reference",
+          "status": "completed"
+        }
+      ],
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "source_sha256": "9e552a2b3e9234fbb534e55733ca1b93a284053dfd406c5dc279c9dc396e44c2",
+      "tested_tool_hashes": {
+        "tools/ral_eight_hour.py": "979c0fa615f4c05eb1534cd1ab21c8bd4fdf3b91556420aca76fc0b1d3967f10",
+        "tools/ral_eight_hour_worker.py": "e5dc040e31e64993c233ffaa6505cded2ca29364d1190b0b5605a41b636bbb32"
+      },
+      "plan_sha256": "962b0166c809c26bc1133a210f3a463320947048d45b93258715505410d989ba",
+      "status_sha256": "dd032753497ed867b875b9e126efea159cb37df80bd90835b58cb8f1fb12cf9a"
+    },
+    {
+      "path": "logs/ral_8h/validation_deadline_v1_3090",
+      "status": "time_budget_reached",
+      "elapsed_seconds": 63.62637186050415,
+      "jobs": [
+        {
+          "id": "s10001_B",
+          "status": "timed_out"
+        }
+      ],
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "source_sha256": "9e552a2b3e9234fbb534e55733ca1b93a284053dfd406c5dc279c9dc396e44c2",
+      "tested_tool_hashes": {
+        "tools/ral_eight_hour.py": "9e7514968fcfb49df855fa9d4731ffa10b76d597983c663f06cf8cdb3dc1d5bc",
+        "tools/ral_eight_hour_worker.py": "44e7b15d8418858340e461c57173603e0b22314bb54252e74a1640d02c5bf21d"
+      },
+      "plan_sha256": "e689dfa81432b726682d6fcd772985a511abddda59decaa383bd6dc29fbe666c",
+      "status_sha256": "9f9572eeab264d0b135199f117f83a2510fd1d06619785baede67d277c0765d1"
+    }
+  ],
+  "actual_deadline_test": {
+    "budget_seconds": 90,
+    "elapsed_seconds": 63.62637186050415,
+    "last_checkpoint_updates": 80,
+    "incomplete_run_excluded": true,
+    "retained_weights_finite": true
+  },
+  "current_files": {
+    "tools/ral_eight_hour.py": "9e7514968fcfb49df855fa9d4731ffa10b76d597983c663f06cf8cdb3dc1d5bc",
+    "tools/ral_eight_hour_worker.py": "44e7b15d8418858340e461c57173603e0b22314bb54252e74a1640d02c5bf21d",
+    "configs/ral/eight_hour.json": "c59cfa9156b3866473583d5f81e4f4928c5335fd892b1f04c023d84c2302702e",
+    "tests/test_ral_eight_hour.py": "b479b5b57071eff4091ee1ada322cf37a70aa72801d8d6ac8def253991cf4825",
+    "scripts/ral_3090_8h.sh": "fbb5e04e802d7ef398be7a2cc6734b4e50624cd43829e2fb4053c657dfee1949",
+    "scripts/ral_3090_judge.sh": "a9e45522dd98cd5c404d4cfbe1c5db5a3ace71cc67fdca9291d18392dbaca125",
+    "scripts/ral_4090_8h.sh": "8dd9ffa8f9b84f36e69519df86eb04219878ee1b495512f02b0f919085764b61",
+    "scripts/ral_4090_judge.sh": "cc9a74a2d99a4569ef1172f85c007382d5aa5332561321b0642c6e3beb11a995",
+    "scripts/ral_5080_8h.sh": "506fcbbe4d7736365761679d676f5e3a54498200baa89777cdbcab16f80cc195",
+    "scripts/ral_5080_judge.sh": "dabd0f126f63841f53c5b07b85711ae757afff910384a7da7532d4385ac8abec"
+  },
+  "preserved_pilot02_source_sha256": "9e552a2b3e9234fbb534e55733ca1b93a284053dfd406c5dc279c9dc396e44c2",
+  "preserved_protocol_v2_sha256": "3705874901d9bcd065f9e7d2f6a2093d108f4a3911bc0cccec7dafd73ea5fabb",
+  "limitations": [
+    "Local GPU integration checks used RTX 3090 and short development budgets; remote 4090/5080 physical execution is not yet performed",
+    "GPU smoke records retain their own tested tool hashes; final changes to portable file hashing and judgment reporting were covered by the queue tests",
+    "No eight-hour soak test performed; CPU/GPU response equivalence and formal evaluation remain pending"
+  ]
+}
