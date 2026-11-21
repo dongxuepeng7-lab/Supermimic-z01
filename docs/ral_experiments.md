@@ -34,13 +34,15 @@ A+/B/C 的世界模型只拟合共同冻结的配对数据，避免不同策略�
 
 辨识左右不对称，因此所有七组共同关闭镜像增强。A0/A 共同使用固定学习率调度，关闭依赖各自训练回报的提前衰减。原随机化分布保留；同种子的初始模型哈希记录于 `run.json`。停止后使用新尝试目录；原训练器恢复会重新填充经验池，不能作为严格逐步续训或与不中断组直接配对。
 
-用户提供的 `z01_lafan_v2_clean.zip` 含 163 个失效符号链接和筛选清单，**实际 NPZ 文件数为 0**。归档检查见 `release/ral/motion_archive_status.json`。需要在持有原始数据的机器上解引用打包，例如在原工程运行：
+最初提供的 `z01_lafan_v2_clean.zip` 含 163 个失效符号链接和筛选清单，包内实际 NPZ 文件数为 0；该旧包的检查记录为 `release/ral/motion_archive_status.json`。2026-11-21 已从新包 `z01_lafan_v2_clean_data.tar.gz` 导入并验证 **163 个真实 NPZ**，当前准备状态见 `release/ral/data_readiness.json`。以后从源机器打包时仍应解引用，例如在原工程运行：
 
 ```bash
 tar -chzf z01_lafan_v2_clean_data.tar.gz -C data/motions z01_lafan_v2_clean
 ```
 
 也可复制真实 `z01_lafan_v2/segments/*.npz` 并按 `selection.json` 选择对应 163 段。不要把链接文本改名为 NPZ。正式数据补齐后先核对文件、模型/关节顺序、50 Hz、数值及筛选来源。
+
+当前已生成 `data/ral_pairs_v1/`（fit/cal/test 分别为 400/116/136 对，源动作会话分别为 23/7/7 个，窗口 32 步）和 `release/ral/protocol_v1.json`。准备日志为 `logs/ral_verification/prepare_real_data.log`；这批数据是 CPU MuJoCo 物理仿真配对数据。生成期间不要替换动作目录或重新解压旧 ZIP；生成器会检查失效链接、使用绝对路径，并在写出前验证动作和参数内容未变。现有 v1 产物可直接同步到另外两台机器，不需要重新运行 `prepare`。
 
 ## 可复现入口
 
@@ -119,3 +121,26 @@ uv run python tests/ral_smoke.py /tmp/ral_unique_synthetic_test
 ```
 
 第二条是显式合成数据的七组 GPU 接线测试，检查世界模型/策略更新、同种子初始化、冻结模型、起点与推演预算、重载和闭环入口。其数据与输出不得加入正式结果。
+
+## 三台电脑的当前先导任务
+
+使用 `bash scripts/ral_three_machine.sh --help` 查看统一入口。脚本串行启动每台机器上的任务；任一阶段失败即停止，不覆盖既有训练目录。三机同步同一版本代码、模型资产、`uv.lock`、`release/ral/params.csv` 和真实动作库，再分别运行 `uv sync --locked`。GPU 型号在这里表示机器分工，不是自动硬件检测；三台机器的完整预算显存和运行速度仍需先导运行验证。
+
+1. **3090：先准备公共数据，再运行窗口分组和统一评估。** 真实动作补齐后运行 `bash scripts/ral_three_machine.sh prepare`，生成一次 `data/ral_pairs_v1/` 和 `release/ral/protocol_v1.json`，将原样副本分发至另两台机器。配对生成使用 CPU MuJoCo；不要在三台机器分别生成并混用不同版本。
+2. **4090：种子 1 的五组完整训练。** 运行 `bash scripts/ral_three_machine.sh train4090`，顺序为 A0 → A → A+ → B → C。
+3. **5080：种子 2 的五组完整训练。** 运行 `bash scripts/ral_three_machine.sh train5080`，顺序为 A → A0 → A+ → B → C。每个种子的完整对照留在同一型号显卡，避免把跨显卡耗时差异当成方法收益。
+
+每组使用 `configs/ral/common.json` 中的 **200 次迭代先导预算**，不是已收敛策略或正式论文预算。输出目录为 `logs/ral_<组名>_s<种子>_pilot01`，其中 A+ 的目录名写作 `Aplus`，C-perm 写作 `Cperm`。控制步长为 20 ms，固定策略窗口为 32 步（640 ms）。
+
+将两台训练机的完整 C 目录分别复制到 3090 的对应位置。窗口校准误差容差尚未定值；必须依据拟合/校准数据和应用需求，在检查测试结果前明确，同一次比较采用一致规则。它是响应误差阈值，不能直接解读为关节角度弧度值。设置 `RAL_TOLERANCE` 为选定的正数后，在 3090 执行：
+
+```bash
+bash scripts/ral_three_machine.sh windows 1 "${RAL_TOLERANCE:?先设定校准容差}"
+bash scripts/ral_three_machine.sh windows 2 "${RAL_TOLERANCE:?先设定校准容差}"
+```
+
+脚本为每个种子固定同一个 C 检查点与起点池，短/长窗口为 8/32 步（160/640 ms），每个窗口分支执行 100 次策略更新、批量 64、学习率 0.0001。世界模型和价值网络保持冻结。种子 1 顺序 D → C-perm，种子 2 顺序 C-perm → D。窗口分支不继续训练完整 C 模型，不能把其 100 次更新误报成独立的完整训练预算。
+
+随后把 4090/5080 的全部十个训练目录复制到 3090，保留 `args.json`、检查点和日志。运行 `bash scripts/ral_three_machine.sh evaluate`，在同一台机器、评估种子 0 下，对七组 × 两个训练种子的最终检查点分别做 nominal/identified 评估，共 28 份结果 JSON。这是共享物理配置评估，不代表已经实现论文所需的独立 heldout 工况、实机测试或全训练过程的时间达标测量。
+
+数据缺失时脚本会明确停止，不会切换到合成测试数据。失败后的新尝试使用新的 `RAL_ATTEMPT`（例如 `pilot02`），不要覆盖既有记录。若正式训练预算或配置改变，重新冻结新协议并三机同步；两个训练种子目前只用于先导对照，正式种子数和预算仍须预先确定。三种控制保持模型的等预算重辨识、异步/有记忆执行器和额外梯度替换对照仍不在这套已实现的七组启动命令内。

@@ -18,7 +18,11 @@ from partymimic.experiments.parameters import (
 from partymimic.experiments.models import make_world_model
 from partymimic.experiments.response import ResponseData, paired_losses
 from partymimic.experiments.windows import variable_objective
-from partymimic.experiments.data import inspect_motion_zip, import_motion_zip
+from partymimic.experiments.data import (
+    inspect_motion_zip,
+    import_motion_zip,
+    build_response_pairs,
+)
 from partymimic.dr import XiLayout
 from partymimic.mdp import unflatten_state
 from partymimic.robot import get_robot
@@ -189,6 +193,19 @@ class Responses(unittest.TestCase):
 
 
 class MotionArchive(unittest.TestCase):
+    def test_pair_generator_rejects_missing_inputs_before_building_model(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            motions = root / "motions"
+            motions.mkdir()
+            (motions / "missing.npz").symlink_to(root / "absent.npz")
+            # No robot is needed: input validation must precede model construction.
+            with self.assertRaisesRegex(
+                FileNotFoundError, "missing files or broken symlinks"
+            ):
+                build_response_pairs(None, motions, PARAMS, root / "pairs")
+            self.assertFalse((root / "pairs").exists())
+
     def test_missing_symlinks_not_imported_as_arrays(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / "motions.zip"

@@ -100,7 +100,21 @@ def build_response_pairs(
 
     if min(horizon, blocks_per_clip) < 1 or epsilon <= 0:
         raise ValueError("Positive pair horizon/count/amplitude required")
-    files = sorted(Path(motion_dir).glob("*.npz"))
+    motion_dir = Path(motion_dir).resolve()
+    params_path = Path(params_path).resolve()
+    output = Path(output).resolve()
+    if output.exists():
+        raise FileExistsError(f"Response output already exists: {output}")
+    files = sorted(motion_dir.glob("*.npz"))
+    missing = [p for p in files if not p.is_file()]
+    if missing:
+        raise FileNotFoundError(
+            f"Motion input contains {len(missing)} missing files or broken symlinks; "
+            f"first: {missing[0]}. Extract the archive containing actual NPZ files "
+            "before generating response pairs."
+        )
+    motion_hashes = {p.name: sha256(p) for p in files}
+    params_hash = sha256(params_path)
     # Segment IDs from the same source recording stay together across all splits.
     sessions = sorted({p.stem.split("__seg")[0] for p in files})
     if len(sessions) < 6:
@@ -166,8 +180,19 @@ def build_response_pairs(
         return state()
 
     buckets = {s: [] for s in ("fit", "cal", "test")}
-    for path in files:
-        lib = MotionLib([str(path)], kin, "cpu", robot.load_motion)
+    print(
+        f"Generating response pairs from {len(files)} motions: {motion_dir}", flush=True
+    )
+    for index, path in enumerate(files, 1):
+        try:
+            lib = MotionLib([str(path)], kin, "cpu", robot.load_motion)
+            if sha256(path) != motion_hashes[path.name]:
+                raise RuntimeError(f"Motion input changed while reading: {path}")
+        except FileNotFoundError as exc:
+            raise FileNotFoundError(
+                f"Motion input disappeared or became a broken symlink during generation: {path}. "
+                "Keep the motion directory unchanged until preparation completes."
+            ) from exc
         if lib.num_frames < horizon + 25:
             continue
         for b in range(blocks_per_clip):
@@ -224,7 +249,16 @@ def build_response_pairs(
                 row["a_" + side] = actions
                 row["s_" + side] = np.stack([step(a) for a in actions])
             buckets[mapping[row["session_id"]]].append(row)
-    output = Path(output)
+        if index == 1 or index % 10 == 0 or index == len(files):
+            print(f"Response pairs: {index}/{len(files)} motions processed", flush=True)
+    if (
+        sorted(motion_dir.glob("*.npz")) != files
+        or any(not p.is_file() or sha256(p) != motion_hashes[p.name] for p in files)
+        or sha256(params_path) != params_hash
+    ):
+        raise RuntimeError(
+            "Motion library or parameter manifest changed during pair generation; no dataset written"
+        )
     output.mkdir(parents=True, exist_ok=False)
     manifest = dict(
         schema_version=1,
@@ -233,9 +267,9 @@ def build_response_pairs(
         joint_names=list(robot.joint_names),
         control_dt=0.02,
         physics_dt=0.005,
-        params_sha256=sha256(params_path),
+        params_sha256=params_hash,
         output_scales={"q_rad": 0.01, "qd_rad_s": 0.1},
-        motion_hashes={p.name: sha256(p) for p in files},
+        motion_hashes=motion_hashes,
         seed=seed,
         splits={},
     )

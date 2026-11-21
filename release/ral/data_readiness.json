@@ -1,0 +1,33 @@
+{
+  "verified_at": "2026-11-21T18:57:53.699496+08:00",
+  "motion_count": 163,
+  "broken_motion_links": 0,
+  "motion_archive_sha256": "71ef9e22bccf1e8305d25015c34c3cd9953813840b289a208c9f9e8207f89c66",
+  "paired_response_splits": {
+    "fit": {
+      "pairs": 400,
+      "sessions": 23,
+      "horizon": 32
+    },
+    "cal": {
+      "pairs": 116,
+      "sessions": 7,
+      "horizon": 32
+    },
+    "test": {
+      "pairs": 136,
+      "sessions": 7,
+      "horizon": 32
+    }
+  },
+  "response_manifest": "data/ral_pairs_v1/manifest.json",
+  "response_sha256": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302",
+  "protocol": "release/ral/protocol_v1.json",
+  "protocol_sha256": "42ea471e8361856704dc1c4627beedd6246a3652f714ab19c74c411831a3a195",
+  "train_group_seed_protocol_checks": 10,
+  "unit_tests_passed": 18,
+  "formal_training_run": false,
+  "stage": "pilot_inputs_ready",
+  "backend": "CPU MuJoCo; CPU/GPU response comparison pending",
+  "raw_hardware_sessions_available": false
+}
