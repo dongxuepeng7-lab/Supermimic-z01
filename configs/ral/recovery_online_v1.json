@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "status": "online_path_recovery_development_only",
+  "implementation": "PartyMimic Z01 local fork",
+  "training": {
+    "iterations": 1000,
+    "num_envs": 1024,
+    "buffer_steps": 500,
+    "warmup_steps": 64,
+    "pi_batch": 512,
+    "wm_batch": 256,
+    "wm_batches": 5,
+    "horizon": 32,
+    "wm_window": 8,
+    "wm_mirror": 0,
+    "lr_decay_ret": 0,
+    "lr_decay_by": 0,
+    "joint_velocity_penalty": 0.5,
+    "joint_velocity_margin": 0.9,
+    "v_gcons_n": 1024,
+    "ckpt_every": 250,
+    "log_every": 25,
+    "interface": "joint",
+    "response_weight": 0.0,
+    "friction_speed": 0.01,
+    "response_horizon": 8,
+    "response_loss": "mse",
+    "response_huber_delta": 1.0,
+    "wm_amp": "none",
+    "amp": "bf16",
+    "wm_fit_source": "online"
+  },
+  "window_candidates": {
+    "short": 4,
+    "long": 8
+  },
+  "purpose": "Restore online GPU forward fitting, online normalizers and the 8-step base objective for A+ before testing structure/response. This bundles training-path changes; it does not isolate their individual causes.",
+  "training_seeds": [
+    2,
+    4
+  ],
+  "groups": [
+    "A",
+    "A+"
+  ],
+  "screening": {
+    "baseline_completion_min": 0.7,
+    "matched_completion_drop_max": 0.05,
+    "matched_median_duration_ratio_min": 0.9,
+    "repeat_completion_spread_max": 0.03,
+    "note": "Operational development gates only. A and A+ differ in model width and random initialization; these gates are not significance, equivalence, or evidence of benefit. No automatic B/C/D/C-perm."
+  },
+  "baseline_configuration": "configs/ral/pilot02.json with the existing 1000-iteration policy budget"
+}

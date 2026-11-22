@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "revision": "2026-11-22 template integration",
+  "purpose": "Editable eight-page manuscript integrating supplied draft structure and verified development evidence",
+  "formal_results": false,
+  "locked_response_test_outcomes_inspected": false,
+  "sources": {
+    "release/ral/manuscript_evidence_20261122.json": "9755e51060aaf5d005596623ef0fe9d47a87b8a2485bd581585204cc4a314339",
+    "release/ral/policy_diagnostic_review_20261122.json": "369ab1f459f6957a133752fcdf9cf2de1ffadede34eaf1030e156d82cff53cd7",
+    "logs/ral_diagnostics/policy_3090_check01/summary.json": "116418b384d692401924873fd4d5a55d053a238eb16c1cbcdd40e8b2c9f3954b",
+    "/home/zoyi/Downloads/Z01_RAL_Draft_20261122.pdf": "c253295fdafd60475ea63c6cb50ae9834ad44074f4079229abc0e822b41d7876"
+  },
+  "historical_evidence_note": "The previous evidence JSON is an immutable snapshot. Its manuscript/PDF hashes match the copies in the backup directory, not the newly revised files at the original paths.",
+  "backup_directory": "logs/ral_verification/manuscript_before_template_20261122",
+  "adopted_template_elements": [
+    "Contrasting calibration outcomes as motivation",
+    "Problem and training overview before detailed components",
+    "Paired plus/minus response schematic",
+    "Explicit policy training versus physical evaluation",
+    "Separate failure analysis and limits"
+  ],
+  "implementation_corrections_retained": [
+    "PartyMimic Z01 local fork, not unmodified SuperMimic",
+    "Dense unit-norm perturbations over 32 steps and 26 joints",
+    "Instantaneous actuator path; no fitted delay, lag, load bias, or actuator memory enabled",
+    "Frozen A+/B/C response fitting labels despite online policy collection",
+    "Joint-reference tracking, not a separate velocity-command benchmark"
+  ],
+  "derived_claims": {
+    "B_calibration_q_rmse32_reduction_percent": {
+      "value": 23.409717333666645,
+      "display": 23.4,
+      "calculation": "100 * (1 - B mean / Aplus mean)",
+      "all_five_paired_seeds_favor_B": true,
+      "scope": "Calibration development data; no significance or closed-loop claim"
+    },
+    "C_reference_fit_response8_reduction_percent": {
+      "value": 79.9736052282024,
+      "display": 80.0,
+      "calculation": "100 * (1 - C_reference mean / B mean)",
+      "scope": "Fitting only; calibration does not outperform zero-response baseline"
+    }
+  },
+  "policy_diagnostic_rows": [
+    {
+      "name": "s2_B_initial_identified",
+      "variant": "initial",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 0.8999999761581421
+    },
+    {
+      "name": "s2_B_final_ema_identified",
+      "variant": "final_ema",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 1.0199999809265137
+    },
+    {
+      "name": "s2_B_final_live_identified",
+      "variant": "final_live",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 1.0399999618530273
+    },
+    {
+      "name": "s2_C_reference_initial_identified",
+      "variant": "initial",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 0.8999999761581421
+    },
+    {
+      "name": "s2_C_reference_final_ema_identified",
+      "variant": "final_ema",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 1.059999942779541
+    },
+    {
+      "name": "s2_C_reference_final_live_identified",
+      "variant": "final_live",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 1.1200000047683716
+    },
+    {
+      "name": "s2_C_huber_1e2_initial_identified",
+      "variant": "initial",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 0.8999999761581421
+    },
+    {
+      "name": "s2_C_huber_1e2_final_ema_identified",
+      "variant": "final_ema",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 1.0
+    },
+    {
+      "name": "s2_C_huber_1e2_final_live_identified",
+      "variant": "final_live",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 0.9799999594688416
+    },
+    {
+      "name": "s4_B_initial_identified",
+      "variant": "initial",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 0.8999999761581421
+    },
+    {
+      "name": "s4_B_final_ema_identified",
+      "variant": "final_ema",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 1.0199999809265137
+    },
+    {
+      "name": "s4_B_final_live_identified",
+      "variant": "final_live",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 0.9799999594688416
+    },
+    {
+      "name": "s4_C_reference_initial_identified",
+      "variant": "initial",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 0.8999999761581421
+    },
+    {
+      "name": "s4_C_reference_final_ema_identified",
+      "variant": "final_ema",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 0.9799999594688416
+    },
+    {
+      "name": "s4_C_reference_final_live_identified",
+      "variant": "final_live",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 1.0199999809265137
+    },
+    {
+      "name": "s4_C_huber_1e2_initial_identified",
+      "variant": "initial",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 0.8999999761581421
+    },
+    {
+      "name": "s4_C_huber_1e2_final_ema_identified",
+      "variant": "final_ema",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 1.059999942779541
+    },
+    {
+      "name": "s4_C_huber_1e2_final_live_identified",
+      "variant": "final_live",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 1.0799999237060547
+    },
+    {
+      "name": "reference_pd_identified",
+      "variant": "reference_pd",
+      "completed": 0,
+      "episode_count": 163,
+      "median_valid_s": 0.8999999761581421
+    }
+  ],
+  "policy_diagnostic_scope": {
+    "plant": "identified",
+    "eval_seed": 0,
+    "domain_randomization": false,
+    "start": "first frame of each of 163 training-reference clips",
+    "training_seeds": [
+      2,
+      4
+    ],
+    "variants": [
+      "B",
+      "C_reference",
+      "C_huber_1e2"
+    ],
+    "official_weights": "EMA; live is a diagnostic comparison",
+    "height_error_threshold_m": 0.25,
+    "Rzz_absolute_error_threshold": 0.8,
+    "total_evaluations": 19,
+    "all_completed_counts_zero": true,
+    "all_detected_nonfinite_counts_zero": true
+  },
+  "tables": {
+    "I": "Executed development settings",
+    "II": "Enabled training parameters",
+    "III": "Seven-group design",
+    "IV": "Reserved balanced policy and cost comparison; Pending",
+    "V": "Archived eight-record hardware replay",
+    "VI": "Five-seed calibration/fitting diagnostics",
+    "VII": "Two-seed preliminary closed-loop policy checks"
+  },
+  "validation": {
+    "old_evidence_source_hashes_matching": 42,
+    "old_evidence_source_hashes_total": 42,
+    "previous_source_and_pdf_match_backup": true,
+    "diagnostic_source_summary_hash_matches": true,
+    "tex_cross_references_resolved": true,
+    "overfull_boxes": false,
+    "source_CRLF_preserved": true,
+    "pages": 8,
+    "visual_review": "All eight pages inspected; pages 7 and 8 inspected again after final diagnostic-definition edit. No clipped text, overlapping graphics or unresolved labels.",
+    "remaining_compile_warnings": "Nonfatal underfull boxes and initial TU/ptm font fallback warnings from the existing class under Tectonic; final text uses embedded Nimbus Roman.",
+    "qa_directory": "logs/ral_verification/manuscript_template_20261122_pdf_qa"
+  },
+  "outputs": {
+    "SCI论文草稿/RA-L_Actuator_World_Model/manuscript.tex": "e621a799b449c0d677669c56fe00513ede662321b932132f8aa4c03a1574c28c",
+    "SCI论文草稿/RA-L_Actuator_World_Model/中文修改说明.txt": "41692fdd599781192656d68ed3e12b3b8c9797f60a6e43bd5a75389676ff7f38",
+    "SCI论文草稿/RA-L_Actuator_World_Model/RA-L_English_Draft.pdf": "ded1b4e3edceb53b7c6a4808a9bca51aa19556b57b0b76f8add58707aa275da1",
+    "output/pdf/Z01_RAL_Revised_20261122.pdf": "ded1b4e3edceb53b7c6a4808a9bca51aa19556b57b0b76f8add58707aa275da1",
+    "SCI论文草稿/RA-L_Actuator_World_Model/figures/replay_contrast.svg": "6c17db0bdc8d69f55488b4801c429271850828e1690ae51357acf309f7c1860a",
+    "SCI论文草稿/RA-L_Actuator_World_Model/figures/replay_contrast.pdf": "f7d820bdbbb6903f7e9deb58a61c3a8ce626df49c273dec1f731187bb2823de9",
+    "SCI论文草稿/RA-L_Actuator_World_Model/figures/paired_response.svg": "a661611e72ac8767f10ad3868cabdd091d10fe5f01b9775cbdd5f576fd4698d9",
+    "SCI论文草稿/RA-L_Actuator_World_Model/figures/paired_response.pdf": "3ea925b2cd4bc0b901709a90efbe68cdeb28f8089d56b83b153fb54de33f895c",
+    "SCI论文草稿/RA-L_Actuator_World_Model/figures/build_diagnostic_figures.py": "f18c2b3521485180ed1560094230bf2af61192c3ab9bad1053bf3a55fbc13b72"
+  },
+  "not_done": [
+    "New policy/world-model training",
+    "Full seven-group or held-out actuator evaluation",
+    "Independent timing-model refits",
+    "Matched-start fixed-horizon hardware replay",
+    "D/C-perm execution",
+    "Bibliography re-verification",
+    "Submission"
+  ]
+}

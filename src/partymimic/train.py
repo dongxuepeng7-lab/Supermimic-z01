@@ -24,6 +24,8 @@ parser.add_argument("--experiment_group", choices=("A0", "A", "A+", "B", "C"), d
 parser.add_argument("--parameter_manifest", default=None)
 parser.add_argument("--response_manifest", default=None)
 parser.add_argument("--protocol", default=None)
+parser.add_argument("--wm_fit_source", choices=("legacy", "online"), default="legacy",
+                    help="legacy preserves frozen pairs for A+/B/C; online diagnoses A+/B with the base online objective and normalizers")
 parser.add_argument("--response_weight", type=float, default=1.)
 parser.add_argument("--response_horizon", type=int, default=0,
                     help="response-supervision prefix; 0 uses all recorded steps; forward labels remain full-span")
@@ -145,6 +147,8 @@ parser.add_argument("--lr_decay_by", type=int, default=1400,
                     help="with --lr_decay_ret: start the decay at this iteration at the latest, also if the training return "
                          "has not reached --lr_decay_ret (0 = no deadline)")
 args = parser.parse_args()
+if args.wm_fit_source == "online" and args.experiment_group not in ("A0", "A", "A+", "B"):
+    parser.error("--wm_fit_source online is a new A0/A/A+/B diagnostic; C hybrid supervision is not implemented")
 args.experiment_model = "base"
 if args.experiment_group:
     from partymimic.experiments import GROUPS
@@ -245,7 +249,7 @@ rotations.ELEMENTWISE = True
 from partymimic.experiments.models import make_world_model
 wm = make_world_model(robot, layout, vars(args)).to(dev)
 response_data = None
-if args.experiment_model != "base":
+if args.experiment_model != "base" and args.wm_fit_source == "legacy":
     from partymimic.experiments.response import (
         ResponseData, paired_losses, initialize_pair_normalizers, validate_response_objective,
     )

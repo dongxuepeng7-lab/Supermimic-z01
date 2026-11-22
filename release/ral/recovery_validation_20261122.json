@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "purpose": "Implementation validation of the new two-machine recovery workflow; NOT a scientific experiment",
+  "source_code_sha256": "4aec08f18679e51339b96afb200cb1fc7622d98138d45fbad76e4ae4e1cebd48",
+  "prior_training_code_sha256": "9e552a2b3e9234fbb534e55733ca1b93a284053dfd406c5dc279c9dc396e44c2",
+  "old_source_archive": "release/ral/pre_recovery_training_src_20261122.tar.gz",
+  "unit_tests": {
+    "passed": 38,
+    "log": "logs/ral_verification/recovery_smoke_20261122/unit_tests_final.log"
+  },
+  "gpu_tests": {
+    "machine": "local NVIDIA RTX 3090",
+    "training_queue_gpu_mismatch_explicitly_allowed": true,
+    "groups": [
+      "A",
+      "A+"
+    ],
+    "seeds": [
+      2,
+      4
+    ],
+    "iterations_per_run": 6,
+    "wm_updates_per_run": 6,
+    "hidden_widths": [
+      16,
+      16
+    ],
+    "all_four_training_runs_completed": true,
+    "wm_and_policy_weights_changed": true,
+    "weights_and_training_metrics_finite": true,
+    "online_normalizer_counts": {
+      "in_norm": 316,
+      "out_norm": 316,
+      "inc_norm": 316
+    },
+    "compiled_wm_and_policy_cuda_graphs_captured_and_replayed": true,
+    "transfer_package_extracted_to_new_directory": true,
+    "independent_process_evaluations_completed": 16,
+    "final_Aplus_trajectory_diagnostics": 2,
+    "screen_thresholds_relaxed_for_workflow_test_only": true,
+    "no_claim_of_policy_recovery_from_six_iteration_tests": true,
+    "cross_gpu_consistency_validated": false,
+    "evidence_directory": "logs/ral_verification/recovery_smoke_20261122"
+  },
+  "actual_experiment": {
+    "status": "ready_not_started_remotely",
+    "seeds": [
+      2,
+      4
+    ],
+    "groups": [
+      "A",
+      "A+"
+    ],
+    "iterations_per_run": 1000,
+    "world_model_updates_per_run": 5000,
+    "wm_forward_horizon": 8,
+    "policy_horizon": 32,
+    "response_labels_consumed": false,
+    "full_budget_outcomes_available": false,
+    "diagnostic_changes": [
+      "online GPU replay",
+      "online normalizers",
+      "base 8-step forward loss"
+    ],
+    "limits": [
+      "Bundled intervention, not single-factor root-cause isolation",
+      "A/A+ model sizes and random initializations differ",
+      "Development reference-library evaluation, not heldout robustness",
+      "Gates are operational, not significance or equivalence tests",
+      "Online C hybrid objective is not implemented and is rejected",
+      "No automatic B/C/D/C-perm or locked-response-test evaluation"
+    ]
+  },
+  "files": {
+    "src/partymimic/train.py": "e6852fa9af5eafd6abc3bf35f34cb2dde4c2178d427ae0da37185b797229fe8e",
+    "tools/ral_recovery.py": "cc63c154acebb3e1cdc5e1be4f68a2822cb208da7db736da40a5fb6bc70892ba",
+    "scripts/ral_5080_recover.sh": "372cb6126d499bc5e57b03c6dfa03c1f3a341d170f5fa4204990cb1200e24428",
+    "scripts/ral_3090_recover_eval.sh": "ed130f0aebdafd2b42905ce6ec96b3fd22cd2447a47a152ea5397819d241cfb7",
+    "configs/ral/recovery_online_v1.json": "d1e00e5663a0c00ae25298965bb6e36f8f645c8da29ceed57b71600ef6a1e81c",
+    "configs/ral/tasks.json": "dfc017aba5752d62293a5bb49619683476770956033e776162e15ceabe22b221",
+    "docs/ral_experiments.md": "a3c6daf8d7a34dcb0a46da1bf2bcf3802a7b05aabdbe73dc3b0feb011f09f818",
+    "tests/test_ral_recovery.py": "27e2baed1e93161e8f3f48612d7bbcd0522616672e1135b66965941dda810958"
+  },
+  "initial_test_attempt_retained": "logs/ral_verification/recovery_smoke_20261122/train",
+  "initial_attempt_issue": "Evaluation IDs use stems while the input inventory uses NPZ filenames; validation fixed and regression-covered."
+}
