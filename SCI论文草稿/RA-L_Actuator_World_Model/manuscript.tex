@@ -26,7 +26,7 @@
 \maketitle
 
 \begin{abstract}
-Differentiable world models train bipedal controllers using short imagined trajectories. At an ankle whose feedback and command streams update asynchronously, a periodic replay can attribute timing errors to mechanical parameters. We propose joint-level identification using recorded control events, a calibrated actuator transition, and multi-step supervision of the response to command perturbations. On eight held-out joint recordings, archived identified parameter sets reduced position, velocity and joint-side torque RMSE on seven recordings. All three errors increased for left ankle roll. This comparison measures the effect of parameter choice within each replay. Separate experiments are planned to isolate the timing model and evaluate policy tracking in closed-loop simulation.
+Differentiable world models train bipedal controllers using short imagined trajectories. At an ankle whose feedback and command streams update asynchronously, a periodic replay can attribute timing errors to mechanical parameters. We propose joint-level identification using recorded control events, a calibrated actuator transition, and multi-step supervision of the response to command perturbations. On eight held-out joint recordings, archived identified parameter sets reduced position, velocity and joint-side torque RMSE on seven recordings. All three errors increased for left ankle roll. This comparison measures the effect of parameter choice within each replay. Five-seed simulation diagnostics show improved response fitting without outperforming a zero-response baseline on calibration data. Separate experiments are planned to isolate the timing model and evaluate policy tracking in closed-loop simulation.
 \end{abstract}
 
 \noindent\textbf{Index Terms---}Humanoid and Bipedal Locomotion, Machine Learning for Robot Control, Motion Control.
@@ -47,7 +47,7 @@ This letter asks whether actuator calibration can inform both the forward predic
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figures/training_pipeline.pdf}
-\caption{Proposed training and evaluation workflow. A0 and A use the original SuperMimic transition with nominal and identified simulator parameters, respectively. The structured transition and paired response loss enter in B and C. The optional window ablation selects the actor's rollout length on a separate calibration split. Offline joint replay and frozen-policy simulation answer distinct evaluation questions.}
+\caption{Proposed training and evaluation workflow. A0 and A use the base transition in the PartyMimic Z01 local fork with nominal and identified simulator parameters, respectively. The diagram includes proposed components beyond the completed development runs. The structured transition and paired response loss enter in B and C. The optional window ablation selects the actor's rollout length on a separate calibration split. Offline joint replay and frozen-policy simulation answer distinct evaluation questions.}
 \label{fig:pipeline}
 \end{figure*}
 
@@ -70,7 +70,7 @@ Candidate ankle parameters are added inertia, viscous damping, Coulomb friction,
 We compare continuous PD, fixed-period sampled PD with feedback and torque holds, and recorded-event PD with the same holds. Each model is independently refitted on the same sessions with the same parameter bounds, loss and budget. Parameters are frozen before replay on held-out sessions. We report per-session angle and velocity errors, terminal error and transient failures, with torque error where observable. Parameter recovery and cross-rate extrapolation require a separate known-parameter simulation test. \pending{joint coverage and parameter provenance, command/feedback timestamp sources, train/test sessions and refitted timing-baseline results.}
 
 \subsection{Policy Interface and Calibrated Plant}
-Let $x_t$ denote training state, including base pose and velocity, joint positions $q_t$, and joint velocities $\dot q_t$. The actor $a_t=\pi_\theta(o_t,c_t)$ receives a proprioceptive observation history $o_t$ and goal $c_t$, which specifies forward velocity during walking. A fixed affine map converts its normalized action to position targets, $\target_t=q_0+Sa_t$, where $q_0$ and $S$ specify the neutral configuration and joint action scales. The same joint interface, control rate, reference and reward are used for all variants.
+Let $x_t$ denote training state, including base pose and velocity, joint positions $q_t$, and joint velocities $\dot q_t$. The actor $a_t=\pi_\theta(o_t,c_t)$ receives a proprioceptive observation history $o_t$ and goal $c_t$, which supplies reference joint targets in the implemented motion-tracking task. A separate velocity-command evaluation remains planned. A fixed affine map converts its normalized action to position targets, $\target_t=q_0+Sa_t$, where $q_0$ and $S$ specify the neutral configuration and joint action scales. The same joint interface, control rate, reference and reward are used for all variants.
 
 Let $\phi_{\mathrm{nom}}$ be the original simulator parameters and $\phi_{\mathrm{id}}$ the corresponding values estimated from time-aligned command and encoder logs. The two settings use the same actuator implementation. The primary calibration comparison changes only the shared, identifiable parameter entries. Any additional actuator state or altered training randomization is a separate intervention. A residual torque uncertainty model can provide additional variation \cite{rti}. When enabled, its settings and the domain-randomization offset distribution are shared across the calibration comparison. Predefined combinations are reserved for simulation testing. The actuator is represented once in the physics simulator. The following block describes that channel on the world-model side.
 
@@ -88,8 +88,10 @@ The update is applied elementwise for the modeled joints. Here $d$ denotes delay
 
 The learned transition receives the structured effort signal instead of the raw action in its dynamics branch. For policy interval $t$, let $\bar\tau_t$ be the mean of the effort predictions at its driver substeps. The model predicts generalized velocity increments from the current state, context $\xi$, and $\bar\tau_t$. Positions and orientations are then advanced through the same integration used in the base model \cite{supermimic}. This factorization allows the body model to represent joint coupling and contact effects while routing the action dependence of the learned transition through the modeled actuator. When actual driver substeps are approximated at the policy rate, this approximation is checked against substep replay. Replay windows retain the applied commands and enough prehistory to reconstruct $m_t$ and the delay buffer. Imagined rollouts advance this memory using their own actions.
 
+The completed development implementation is the instantaneous special case, $d=0$ and $\alpha=1$, evaluated once per 20-ms policy step. It uses saturated PD effort minus viscous damping and a smooth Coulomb term $f_c\tanh(\dot q/0.01)$, with speed in rad/s. Armature is supplied as context. No fitted delay, lag, load bias, or actuator memory is enabled in these runs. The smooth friction approximation and policy-rate effort do not establish equivalence to recorded-event hardware replay.
+
 \subsection{Multi-Step Directional Response Supervision}
-Each matched block starts from a common state, recent command history, and contact or fixture regime. Let $U$ be a nominal joint-target sequence and $D$ a sparse perturbation direction over the same sequence, normalized in joint-target coordinates. Two repeats use $U^+=U+\epsilon D$ and $U^-=U-\epsilon D$, with amplitude $\epsilon$ and applied commands recorded. A matched block uses a common pre-roll. Trial order is alternated or randomized to reduce drift. Simulator pairs are generated by cloning the same state and randomization parameters. Hardware pairs require matching the fixture or contact context used in the corresponding model replay. Blocks that cannot be aligned are recorded separately for diagnosis.
+Each matched block starts from a common state, recent command history, and contact or fixture regime. Let $U$ be a nominal joint-target sequence and $D$ a perturbation direction over the same sequence, normalized in joint-target coordinates. The development dataset uses dense Gaussian directions with unit Euclidean norm over all 32 steps and 26 joints. Two repeats use $U^+=U+\epsilon D$ and $U^-=U-\epsilon D$, with amplitude $\epsilon$ and applied commands recorded. A matched block uses a common pre-roll. Trial order is alternated or randomized to reduce drift. Simulator pairs are generated by cloning the same state and randomization parameters. Hardware pairs require matching the fixture or contact context used in the corresponding model replay. Blocks that cannot be aligned are recorded separately for diagnosis.
 
 For a response source $b$ and control step $h$, let $y_h^b(U)$ project the resulting state onto synchronized joint angles and velocities. An observable finite-amplitude directional response is
 \begin{equation}\label{eq:response}
@@ -105,7 +107,7 @@ Let $\mathcal L_{\mathrm{traj}}$ denote the ordinary multi-step trajectory loss 
  \sum_{h\in\mathcal H}w_h\,\rho\!\left(W_y(R_h^\wm-R_h^{\mathrm{ref}})\right).
 \end{aligned}
 \end{equation}
-The same-data control uses the identical paired branches, weights, and optimizer budget in $\mathcal L_{\mathrm{traj}}$ and sets $\lambda_R=0$. The primary protocol uses simulated pairs for response supervision and window calibration. If suitable hardware pairs exist, a separate experiment may use hardware fitting and calibration pairs with a locked hardware test set. Unpaired hardware logs support nominal identification and ordinary trajectory replay. A logged current is analyzed in its measured units.
+In the completed development runs, A+, B and C fit the same frozen paired branches, using their full 32-step state predictions for the forward objective. Their online policy collection does not replace these world-model fitting labels. Response losses use a mean over blocks, supervised steps and channels; both MSE and Huber candidates are reported. The same-data control uses the identical paired branches, weights, and optimizer budget in $\mathcal L_{\mathrm{traj}}$ and sets $\lambda_R=0$. The primary protocol uses simulated pairs for response supervision and window calibration. If suitable hardware pairs exist, a separate experiment may use hardware fitting and calibration pairs with a locked hardware test set. Unpaired hardware logs support nominal identification and ordinary trajectory replay. A logged current is analyzed in its measured units.
 
 \subsection{Response-Calibrated Backpropagation}
 The window selector uses a calibration split $\mathcal D_{\mathrm{cal}}$ disjoint from model fitting and final evaluation. At a rollout start, a regime $z$ is determined from available actuator quantities such as speed magnitude and whether the command direction has recently reversed. Regime definitions are kept coarse so each supported bin can be estimated from repeat measurements. Define the scaled absolute response error on a held-out block as $e_h=\|W_y(R_h^\wm-R_h^{\mathrm{ref}})\|_2$. For each bin and prediction step, let $Q_{z,h}$ be a prescribed empirical quantile of $e_h$ across independent blocks.
@@ -120,36 +122,86 @@ The parameters of the world model and critic are held fixed during the actor upd
 
 \section{Experimental Protocol}
 \subsection{Platform, Task, and Data Splits}
-The target is a full-size humanoid with harmonic-drive joints. The task is level-ground locomotion. All methods share reference motions and tracking rewards. If the task uses an independent velocity-command interface, its evaluation profile includes start, steady walking, and stop. The evaluation uses the same episode starts, reference segments or velocity commands, and random seeds for all policies.
+The implementation uses the 26-joint Z01 model in a local PartyMimic fork and a joint-reference tracking interface. The frozen library contains 163 real retargeted motion clips at 50~Hz, including locomotion and other motions. This development task does not establish performance on a separate velocity-command walking benchmark. Table~\ref{tab:settings} gives the executed settings.
 
-Identification logs initialize the simulator and the actuator prior. Group complete pairs, runs, or sessions before assigning splits. The fitting split supplies $\mathcal D_{\mathrm{fit}}$, the calibration split supplies $\mathcal D_{\mathrm{cal}}$, and test data stay locked until the study settings are fixed. Split hardware logs by session before identifying parameters. For the primary protocol, the hardware test is offline command replay on the held-out sessions. Use the same reference-derived goals and reward across methods if the original motion task is retained. Report an independent velocity command profile only when that interface is used. \pending{available log fields, partitions, simulator and goal implementation, actuator terms, control rates, amplitudes, and repeat counts.}
+Paired responses were generated in CPU MuJoCo with a 20-step shared pre-roll and four 5-ms physics steps per control interval. Each pair clones the same integration state and randomization context before applying its two command sequences. The perturbation has $\epsilon=0.01$~rad as the norm over the complete joint-target sequence, not as a per-joint amplitude. Output scales are 0.01~rad for joint angle and 0.1~rad/s for joint speed. Source motion sessions, identified by the clip name before segment suffixes, are disjoint across fit/cal/test. Blocks from one session are not independent hardware repeats. Calibration data are used for development screening; the 136 test pairs remain locked. These partitions apply to the paired-response dataset; online policy training uses the full motion library, so they do not define unseen-motion policy tests. CPU/GPU response equivalence and independent hardware pair acquisition remain pending.
 
-\subsection{Baselines and Controlled Comparisons}
-Table~\ref{tab:variants} lists the ablations. A0 and A use the original SuperMimic transition, fitting objective, and actor update. A0 collects training experience with $\phi_{\mathrm{nom}}$ and A with $\phi_{\mathrm{id}}$. Initialization, training budgets, rewards, and domain-randomization offsets are paired by seed. We log the realized parameters and any clipping. Both policies are tested on one shared simulator configuration for each test case.
-
-A+ receives the actuator context, memory and target history available to B, with comparable capacity. A+ and B use the same replay and forward fitting objective. B imposes the structured actuator path. C adds the response loss. For the window test, D and C-perm share the frozen C model and critic, starting actor, rollout-start batches and update count. C-perm shuffles D's window labels across the shared starts at each update, preserving the exact window histogram and assigned imagined-step count. We also log computed steps because padding and masks affect runtime.
+Only the 21 enabled armature, damping and friction entries in Table~\ref{tab:params} replace nominal values in identified-plant training. Other entries retain nominal settings. These values come from the frozen identification summary; they are not re-estimated from the training logs. The archived replay candidates in Sec.~V-A have a different scope: the right ankle pitch candidate and failed left ankle roll fit are not enabled in this training manifest. Original identification trial logs are not bundled locally, so the current import does not independently validate their fitting/test partitions.
 
 \begin{table}[t]
 \centering
-\caption{Main variants. A0 trains with original nominal settings. The other variants train with identified settings. All policies share test scenarios.}
+\caption{Executed development settings. Counts are training budgets, not transitions or time to a performance target.}
+\label{tab:settings}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Item & Value \\
+\midrule
+Joints / reference clips & 26 / 163 \\
+Control / physics interval & 20 / 5 ms \\
+Fit pairs / source sessions & 400 / 23 \\
+Calibration pairs / sessions & 116 / 7 \\
+Locked test pairs / sessions & 136 / 7 \\
+Pair horizon / duration & 32 steps / 640 ms \\
+Parallel environments & 1,024 \\
+World-model / policy updates & 5,000 / 1,000 \\
+World-model batch size & 256 \\
+Environment transitions & 2,625,536 \\
+Actor BPTT horizon & 32 steps \\
+World-model / policy precision & FP32 / BF16 \\
+Training GPU & NVIDIA RTX 5080 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Enabled identified joint parameters in the training plant. Values are shown to six decimal places. L/R denote left/right.}
+\label{tab:params}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Joint & \shortstack{Armature\\(kg\,m$^2$)} & \shortstack{Damping\\(N\,m\,s/rad)} & \shortstack{Friction\\(N\,m)} \\
+\midrule
+L hip pitch & 0.000000 & 4.840868 & 1.388000 \\
+L hip roll & 0.000000 & 13.492700 & 1.477300 \\
+L knee & 0.292000 & 0.416000 & 2.505000 \\
+L ankle pitch & 0.104700 & 0.000000 & 0.638200 \\
+R hip pitch & 0.000000 & 4.293868 & 1.330309 \\
+R hip yaw & 0.010100 & 0.634100 & 0.248000 \\
+R knee & 0.205700 & 0.000790 & 3.706800 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Baselines and Controlled Comparisons}
+Table~\ref{tab:variants} lists the ablations. A0 and A use the base transition, fitting objective, and actor update in the PartyMimic Z01 local fork; these runs are not an unmodified SuperMimic reproduction. A0 collects training experience with $\phi_{\mathrm{nom}}$ and A with $\phi_{\mathrm{id}}$. Initialization, training budgets, rewards, and domain-randomization offsets are paired by seed. We log the realized parameters and any clipping. Both policies are tested on one shared simulator configuration for each test case.
+
+A+ receives the same state and actuator parameter context as B, with equal input width and parameter count. Both use the supported instantaneous plant, without delay memory. A+ and B use the same replay and forward fitting objective. B imposes the structured actuator path. C adds the response loss. For the window test, D and C-perm share the frozen C model and critic, starting actor, rollout-start batches and update count. C-perm shuffles D's window labels across the shared starts at each update, preserving the exact window histogram and assigned imagined-step count. We also log computed steps because padding and masks affect runtime.
+
+\begin{table}[t]
+\centering
+\caption{Main variants. A0 uses nominal settings; the others use identified settings. Fixed windows in completed runs span 32 steps. C-perm and D are planned extensions; common policy testing is pending.}
 \label{tab:variants}
 \small
 \begin{tabular}{@{}llcc@{}}
 \toprule
 ID & Transition & Response loss & BPTT window \\
 \midrule
-A0 & SuperMimic & $-$ & Fixed \\
-A & SuperMimic & $-$ & Fixed \\
-A+ & Matched inputs & $-$ & Fixed \\
-B & Structured actuator & $-$ & Fixed \\
-C & Structured actuator & $\checkmark$ & Fixed \\
+A0 & Base fork & $-$ & 32 steps \\
+A & Base fork & $-$ & 32 steps \\
+A+ & Matched inputs & $-$ & 32 steps \\
+B & Structured actuator & $-$ & 32 steps \\
+C & Structured actuator & $\checkmark$ & 32 steps \\
 C-perm & Structured actuator & $\checkmark$ & Shuffled \\
 D & Structured actuator & $\checkmark$ & Calibrated \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-To isolate a gradient mechanism, an additional comparison keeps the forward transition fixed and substitutes a nominal PD-based derivative for the calibrated actuator response during backpropagation. Let $g_\phi$ return the fitted actuator's effort and updated internal state, and let $g_0$ be a same-interface nominal surrogate. Then $g_0+\operatorname{sg}(g_\phi-g_0)$ has forward value $g_\phi$ and backward derivative from $g_0$, where $\operatorname{sg}$ denotes stop-gradient. The swap uses fixed windows, identical replay initialization and a shared downstream model. Forward equality and nonzero action sensitivity are checked numerically before running the ablation. A matched PPO baseline can be added if the claim extends to efficiency relative to model-free training. \pending{final baseline set, seed count, interaction budget and implementation revision.}
+To isolate a gradient mechanism, an additional comparison keeps the forward transition fixed and substitutes a nominal PD-based derivative for the calibrated actuator response during backpropagation. Let $g_\phi$ return the fitted actuator's effort and updated internal state, and let $g_0$ be a same-interface nominal surrogate. Then $g_0+\operatorname{sg}(g_\phi-g_0)$ has forward value $g_\phi$ and backward derivative from $g_0$, where $\operatorname{sg}$ denotes stop-gradient. The swap uses fixed windows, identical replay initialization and a shared downstream model. Forward equality and nonzero action sensitivity are checked numerically before running the ablation. A matched PPO baseline can be added if the claim extends to efficiency relative to model-free training. The completed 5080 session contains 50 full-budget runs and one deadline-truncated run. Balanced summaries use seeds 2, 4, 6, 8 and 10 shared by all reported candidates; extra completed seed-12 runs are retained in the audit but are not pooled into this five-seed table. Each complete run uses the budget in Table~\ref{tab:settings}. The frozen Python-source inventory has SHA-256 prefix \texttt{9e552a2b3e9234fb}, with PyTorch 2.9.0+cu128. The derivative swap, PPO, D and C-perm comparisons have not been executed.
 
 \begin{figure*}[!t]
 \centering
@@ -167,11 +219,11 @@ To isolate a gradient mechanism, an additional comparison keeps the forward tran
 
 \emph{Training cost.} Prespecify a joint threshold on completion and tracking error. For each run, report environment transitions and end-to-end time to the first qualifying checkpoint under the same evaluation schedule. Report runs that do not qualify as censored at the common budget. Wall-clock comparisons are paired by GPU model and include simulator collection, world-model fitting, and policy updates. For the frozen window comparison, count the shared model fit once per alternative and report its cost separately from the policy phase. Report assigned and executed imagined steps and optimizer updates.
 
-\emph{Offline hardware replay.} Use the same recorded initial state, commands, and causal prehistory for the nominal and identified physics configurations. Compute paired replay errors by held-out session. Compare the learned transition on the same records when available state and contact measurements support initialization. For isolated joint logs, use the corresponding constrained joint replay. Report directional response error for matched hardware pairs. \pending{session counts, observable channels, alignment, and held-out replay results.}
+\emph{Offline hardware replay.} Use the same recorded initial state, commands, and causal prehistory for the nominal and identified physics configurations. Compute paired replay errors by held-out session. Compare the learned transition on the same records when available state and contact measurements support initialization. For isolated joint logs, use the corresponding constrained joint replay. Report directional response error for matched hardware pairs. Eight archived full-record replay summaries are available in Table~\ref{tab:archived}; each joint/condition has one record with angle, speed and feedback-derived torque. These summaries do not supply matched-start, fixed-horizon errors for learned models.
 
 \begin{table*}[t]
 \centering
-\caption{Reserved policy results in physics simulation. The reference uses the shared identified setting. Held-out completion and tracking use the same reserved actuator conditions for every method.}
+\caption{Reserved policy results in physics simulation. No independent frozen-policy evaluation is available yet. Training returns and imagined survival do not fill these cells; the executed budget is not a time-to-target measurement.}
 \label{tab:outcomes}
 \small
 \begin{tabular}{@{}lccccc@{}}
@@ -199,11 +251,71 @@ For left ankle roll, position RMSE rose from 7.76 to 9.12~mrad. Recorded positio
 
 
 
+\begin{table*}[t]
+\centering
+\caption{Archived full-record hardware replay, one record per joint/condition. O: original parameters; I: archived identified parameters. Lower is better. These are existing replay summaries, not newly recomputed raw-log results or fixed-horizon world-model tests.}
+\label{tab:archived}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}llrrrrrr@{}}
+\toprule
+Joint & Scale / period (s) & \multicolumn{2}{c}{Angle RMSE (mrad)} & \multicolumn{2}{c}{Speed RMSE (rad/s)} & \multicolumn{2}{c}{Torque RMSE (N\,m)} \\
+ & & O & I & O & I & O & I \\
+\midrule
+L knee & 0.3 / 2 & 7.400 & 3.680 & 0.0886 & 0.0781 & 1.823 & 0.806 \\
+R knee & 0.3 / 2 & 7.196 & 5.498 & 0.0757 & 0.0670 & 1.715 & 0.892 \\
+L hip pitch & 0.3 / 2 & 10.217 & 7.205 & 0.1136 & 0.0956 & 3.356 & 1.764 \\
+R hip pitch & 0.3 / 2 & 8.733 & 6.694 & 0.0747 & 0.0602 & 2.738 & 1.743 \\
+L hip roll & 0.3 / 3 & 13.861 & 3.192 & 0.0307 & 0.0253 & 2.844 & 0.751 \\
+R hip yaw$^{\dagger}$ & 0.1 / 2 & 1.363 & 1.112 & 0.0331 & 0.0322 & 0.445 & 0.424 \\
+R ankle pitch$^{\dagger}$ & 0.3 / 3 & 4.415 & 2.141 & 0.0582 & 0.0564 & 0.486 & 0.462 \\
+L ankle roll & 0.3 / 2 & 7.764 & 9.116 & 0.1586 & 0.1729 & 0.587 & 0.686 \\
+\bottomrule
+\end{tabular}
+
+\vspace{3pt}
+\parbox{0.97\textwidth}{\footnotesize $^{\dagger}$Frozen joint-specific candidate; the other six comparisons use archived rounded sets. All post-warm-up transients are included. Maximum integration step: 0.5~ms; scoring interval: 2~ms. Left ankle roll worsens on all three channels and is retained. No between-record confidence intervals are available.}
+\end{table*}
+
 \subsection{Prediction Stability and Response Robustness}
-Report horizon-wise RMSE and divergence for held-out replay, followed by B versus C on the locked perturbation set. Summarize directional response error by joint, horizon and operating regime. \pending{error-growth and response curves, trial coverage, and divergent rollouts.}
+\begin{table*}[t]
+\centering
+\caption{Development diagnostics from the 5080 session; mean $\pm$ sample SD over seeds 2, 4, 6, 8, 10. Lower is better. $E_R$ is the scaled response RMSE defined in the text. Calibration data were used for screening; these are not final test results.}
+\label{tab:development}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Variant & $\lambda_R$ & $H_R$ & \shortstack{Cal. angle RMSE\\32 steps (rad)} & \shortstack{Fit $E_R(8)$} & \shortstack{Cal. $E_R(8)$} & \shortstack{Cal. $E_R(32)$} \\
+\midrule
+A+ & 0 & $-$ & $0.07037\pm0.00092$ & $71.039\pm0.159$ & $73.929\pm0.064$ & $118.817\pm1.058$ \\
+B & 0 & $-$ & $0.05389\pm0.00038$ & $69.978\pm0.263$ & $75.323\pm0.568$ & $140.833\pm7.978$ \\
+C, MSE & $10^{-4}$ & 8 & $0.05549\pm0.00047$ & $14.014\pm3.990$ & $76.136\pm0.703$ & $164.607\pm5.048$ \\
+C, MSE small & $10^{-5}$ & 8 & $0.05449\pm0.00036$ & $23.862\pm14.219$ & $75.252\pm0.306$ & $148.780\pm10.961$ \\
+C, MSE short & $10^{-4}$ & 4 & $0.05597\pm0.00088$ & $34.871\pm1.428$ & $77.970\pm2.191$ & $213.660\pm58.869$ \\
+C, Huber & $10^{-3}$ & 8 & $0.05417\pm0.00026$ & $66.576\pm0.653$ & $74.476\pm0.292$ & $133.432\pm2.574$ \\
+C, Huber & $10^{-2}$ & 8 & $0.05405\pm0.00060$ & $48.621\pm7.147$ & $74.368\pm0.186$ & $133.169\pm2.746$ \\
+Zero response & $-$ & $-$ & $-$ & $-$ & 73.893 & 112.905 \\
+\bottomrule
+\end{tabular}
+
+\vspace{3pt}
+\parbox{0.98\textwidth}{\footnotesize The table retains the original 5080 metrics. Initial/final checkpoints for B, C (MSE, $10^{-4}$) and C (Huber, $10^{-2}$), seeds 2 and 4, were independently verified and their fit/cal metrics recomputed on a 3090. All table metrics met a relative tolerance of $10^{-4}$ or absolute tolerance of $10^{-5}$. Two individual horizon-curve points differed by at most 0.015\%; these differences are retained in the audit. Checkpoints for the remaining rows/seeds have not been independently recomputed. The zero-response row is a deterministic baseline on the same pairs.}
+\end{table*}
+
+The available learned-model results are development diagnostics on frozen CPU-physics pairs, not locked-test response robustness. For a prefix of $H$ steps, we report
+\begin{equation}
+ E_R(H)=\sqrt{\frac{1}{52NH}\sum_{n=1}^{N}\sum_{h=1}^{H}
+ \left\|W_y\bigl(R_{n,h}^{\wm}-R_{n,h}^{\mathrm{ref}}\bigr)\right\|_2^2}.
+\end{equation}
+Here $N$ is the number of pairs and 52 counts angle and speed channels for 26 joints. The scales are fixed in Sec.~IV-A. The reported angle RMSE pools both branches, all 26 joints and all 32 steps. Each model is evaluated on 400 fitting pairs and 116 calibration pairs. Table~\ref{tab:development} gives means and sample standard deviations across five common training seeds, not confidence intervals over independent hardware trials. $H_R$ controls only the response-loss prefix; the actor BPTT horizon remains 32 steps. Huber candidates use threshold 1 in scaled error coordinates; all reported errors use unmodified squared errors.
+
+
+
+The reference C candidate reduces fitting response error substantially relative to B, but its calibration $E_R(8)$ is higher (76.136 versus 75.323). Huber with $\lambda_R=10^{-2}$ lowers calibration $E_R(8)$ to 74.368, yet remains above the zero-response baseline of 73.893. Every reported candidate also exceeds the zero-response baseline at 32 steps. These results show that fitting improvement has not established useful response generalization. They do not demonstrate a policy-gradient or closed-loop control benefit. Locked-test horizon curves, divergence thresholds, amplitude/parameter holdouts and regime-specific robustness remain pending.
 
 \subsection{Do the Methods Change Policy Performance and Cost?}
-Table~\ref{tab:outcomes} is reserved for simulation results. A0 versus A measures the contribution of identified parameters under the original training method. Compare A+ with B for structure, B with C for response supervision, and C-perm with D for window allocation. Show each method's completion and tracking over physical simulation transitions and elapsed time. \pending{seed-paired calibration gain, robustness drop, learning curves, and timing logs.}
+Table~\ref{tab:outcomes} is reserved for simulation results. A0 versus A will measure the contribution of identified parameters under the base training implementation. Compare A+ with B for structure, B with C for response supervision, and C-perm with D for window allocation. Show each method's completion and tracking over physical simulation transitions and elapsed time. Independent frozen-policy completion and velocity-tracking measurements have not been collected. Training returns, imagined survival, total transitions and job duration are not substituted for those measurements or for time to a performance target. C-perm and D remain unexecuted.
 
 
 
@@ -228,9 +340,13 @@ Response loss (C) & \tbd & \tbd & \tbd \\
 \end{tabular}
 \end{table}
 
+% Keep the conclusion together after the results tables.
+\newpage
 \section{Conclusion}
-This letter links identification under recorded controller timing to a structured actuator transition and multi-step response supervision. Independent session replay tests the identification model. Matched policy comparisons in physics simulation test how calibration and response supervision affect tracking under actuator variations. \pending{report measured effects and uncertainty at each evaluation scope.}
+This study links actuator identification to a structured transition and multi-step response supervision. Archived full-record replay summaries improve all three measured errors on seven of eight joint recordings, while the left ankle roll failure remains unresolved. Five-seed development diagnostics show that response fitting gains do not yet establish improvement over a zero-response calibration baseline. Matched frozen-policy evaluation, independently refitted timing baselines, and fixed-horizon hardware replay are still required before drawing claims about controller robustness or training efficiency.
 
+% Balance the final reference columns for this draft.
+\IEEEtriggeratref{7}
 \begin{thebibliography}{99}
 
 \bibitem{supermimic}

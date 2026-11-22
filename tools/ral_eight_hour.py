@@ -452,11 +452,27 @@ def main():
             parser.error("--max-jobs must be positive")
         return run_queue(a)
     sessions = [Path(p).resolve() for p in a.sessions]
-    if a.machine and any(read(p / "status.json")["machine"] != a.machine for p in sessions):
-        parser.error("Judgment wrapper does not match session machine")
+    for session in sessions:
+        missing = [session / name for name in ("status.json", "plan.json") if not (session / name).is_file()]
+        if missing:
+            pattern = f"*_{a.machine}/status.json" if a.machine else "*/status.json"
+            available = sorted(p.parent for p in session.parent.glob(pattern))[:8]
+            hint = "\n同级已有状态记录的目录（请核对任务名，不会自动切换）：\n" + "\n".join(map(str, available)) if available else ""
+            parser.error("无法判断：缺少 " + ", ".join(map(str, missing))
+                         + "\n判断命令只读取结果，不会启动训练。请核对启动时的 --session（目录会追加 _显卡型号）和 --output。"
+                         + "\n若刚启动可稍后重试；持续缺失时先检查后台启动控制台日志，任务可能尚未启动或在写入状态前退出。" + hint)
+        try:
+            machine = read(session / "status.json")["machine"]
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            parser.error(f"无法读取状态记录 {session / 'status.json'}：{exc}")
+        if a.machine and machine != a.machine:
+            parser.error("Judgment wrapper does not match session machine")
     if len(sessions) > 1 and not a.out:
         parser.error("Supply --out for a combined report")
-    result = judge_sessions(sessions)
+    try:
+        result = judge_sessions(sessions)
+    except (OSError, ValueError, KeyError) as exc:
+        parser.error(f"无法核验会话记录：{exc}；请检查 --sessions 路径及原始文件是否完整。")
     out = Path(a.out).resolve() if a.out else sessions[0] / "judgment.json"
     if a.out and out.exists():
         parser.error("Choose a new combined report path; refusing overwrite")

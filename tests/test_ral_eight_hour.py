@@ -141,6 +141,60 @@ class QueueRules(unittest.TestCase):
             self.assertIn("旧记录未保存", report["next_action"])
             self.assertIn("--output", report["next_action"])
 
+    def judge_cli(self, session):
+        return subprocess.run([sys.executable, str(night.ROOT / "tools/ral_eight_hour.py"),
+                               "judge", "--machine", "4090", "--sessions", str(session)],
+                              capture_output=True, text=True, timeout=10)
+
+    def test_missing_session_cli_suggests_existing_path_without_switching(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            existing = self.make_session(root / "night01_4090")
+            missing = root / "night01_retry_4090"
+            process = self.judge_cli(missing)
+            self.assertEqual(process.returncode, 2)
+            self.assertIn(str(missing / "status.json"), process.stderr)
+            self.assertIn(str(existing), process.stderr)
+            self.assertIn("不会启动训练", process.stderr)
+            self.assertIn("--output", process.stderr)
+            self.assertNotIn("Traceback", process.stderr)
+            self.assertFalse(missing.exists())
+            self.assertFalse((existing / "judgment.json").exists())
+
+    def test_existing_session_without_status_is_not_reported_as_completed(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            night.atomic_json(root / "plan.json", self.plan)
+            process = self.judge_cli(root)
+            self.assertEqual(process.returncode, 2)
+            self.assertIn("刚启动可稍后重试", process.stderr)
+            self.assertNotIn("Traceback", process.stderr)
+            self.assertFalse((root / "status.json").exists())
+            self.assertFalse((root / "judgment.json").exists())
+
+    def test_preparing_session_can_be_judged_before_first_model(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            night.atomic_json(root / "plan.json", self.plan)
+            night.atomic_json(root / "status.json", dict(machine="4090", status="preparing",
+                                                         deadline_unix=time.time()+3600, jobs=[]))
+            process = self.judge_cli(root)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            report = night.read(root / "judgment.json")
+            self.assertEqual(report["completed_training_runs"], 0)
+            self.assertIn("仍在运行", report["next_action"])
+
+    def test_invalid_status_cli_reports_input_error_without_traceback(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            night.atomic_json(root / "plan.json", self.plan)
+            (root / "status.json").write_text("invalid json")
+            process = self.judge_cli(root)
+            self.assertEqual(process.returncode, 2)
+            self.assertIn("无法读取状态记录", process.stderr)
+            self.assertNotIn("Traceback", process.stderr)
+            self.assertFalse((root / "judgment.json").exists())
+
 
 class DiskStops(unittest.TestCase):
     def run_with_disk(self, root, free_values, used=0):

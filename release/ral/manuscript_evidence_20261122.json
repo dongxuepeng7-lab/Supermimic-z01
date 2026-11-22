@@ -1,0 +1,970 @@
+{
+  "schema_version": 1,
+  "paper": "SCI论文草稿/RA-L_Actuator_World_Model/manuscript.tex",
+  "formal_results": false,
+  "locked_test_outcomes_inspected": false,
+  "source_files": {
+    "release/ral/params.csv": "c9c808a17b24fe5f47a2fa6ed4b4f22a71a9ce1808885c71e817c1ce60998c43",
+    "release/ral/data_readiness.json": "1105a36309dac5d2e5da26c3e0bd60ade1265d13a3908ff3610e5581dcd5c7e6",
+    "data/ral_pairs_v1/manifest.json": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302",
+    "SCI论文草稿/paper_figures_20261121/paper_figures_20261121/figure_metrics.csv": "6b753b1f2137e60787aa48373685f5def8cd5db7d09838125ffc7dec59da68e1",
+    "logs/ral_verification/night01_5080_log_review.json": "fcc0d7ef38687024de57fe9b3fc06638bbcba143f25d5fffd5a8e8531a2bda19",
+    "logs/ral_verification/night01_5080_selected_model_review.json": "3473b6a351e697e0879cbb438c7b9246e1bfb23f32321aa4b7330170362d3b3a",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s2_Aplus/analysis.json": "d41508e0601e4ae6932541552aabc57cac950cf864da792af779eb1102c4219b",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s4_Aplus/analysis.json": "6f36732ad2b70d1a384bccd6dce259b0049e1432202258499bd37752e0a37408",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s6_Aplus/analysis.json": "0f8cd5884ffcea6ef69c877487caa3373b1ad9a9cad40e3204d8ee2019521490",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s8_Aplus/analysis.json": "63960777636a9c81fc80d464836f8355047db565d4ee7b0baeec0fc65842f249",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s10_Aplus/analysis.json": "d7ba372dbbe2518c379a1654256592911f0a39c99c0672154c137965d0abfdff",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s2_B/analysis.json": "69d2b1bdc1ed1b7bb530b8eea757d098ccac0b60b0b9a58eafb8fabdc8b81918",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s4_B/analysis.json": "960ddcde7e49ecd4e839be0865825038ad2cfc3baec438e0565f0f4b8f017279",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s6_B/analysis.json": "8fa8c0a15f23c44ea7b33636ec93c498aff64cf74670e29a217c6b0d6974203c",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s8_B/analysis.json": "470d1b1f4936032d01d375b52a846c171a2933ce07c8a221abdbf571b638b26d",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s10_B/analysis.json": "2a3f63194dd05ae8b3123ca7839e5673a954ec9eae08bb2f657d8dc4428d6857",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s2_C_reference/analysis.json": "1f88ff9222f8fc67759391329f7306853a612890a6870383213c5d102ab713d7",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s4_C_reference/analysis.json": "f4f21b20b1c24a693333b69d0c4b870339858f1ed272bb9fa98f78cd347a2811",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s6_C_reference/analysis.json": "75acad899f1eb72ec90b95e101eae62619d8a00ef30f9bf9b18839fd95471803",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s8_C_reference/analysis.json": "cb00455e512dfedadd92aecba2fdee966a71d71d3e117ecf163306552df5b1f7",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s10_C_reference/analysis.json": "ad7e319afe9e3e440825b12f332348340f94230d7bc33c19e7249c7d0b7e34df",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s2_C_small_weight/analysis.json": "10c8687a7e7d823eb08627b18a96c1f16dd032e45ed30fcbd524b6fde5067c42",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s4_C_small_weight/analysis.json": "cd5ed22645f6b8905cc8ca727e4912d04aff68f1b778797ab442d26700df7bff",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s6_C_small_weight/analysis.json": "8c94033cb474bd05e63f8ed22c4fe97cf815fd0544247986d889082e90fabf74",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s8_C_small_weight/analysis.json": "97b40b81ef3ba414fdb5d94576aa41a5da095b4777cfef144a268f5c2e8be79b",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s10_C_small_weight/analysis.json": "d1f0ad302772aa16420cdfbc3bc39a5f76c706c591c9cb703ac676f8c8771e5c",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s2_C_short/analysis.json": "a1fa76a4ea14635db6c142c941c7b032d0332eadd28ed9b002536e4929a98ccb",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s4_C_short/analysis.json": "0f05d04d6894af589e4526b820ca134264256bab6ce0a6f9021fcd9b61b63471",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s6_C_short/analysis.json": "b680ad6bdff0d3119ee1094d116a3501bad704231f5806f4e8220e16880820e8",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s8_C_short/analysis.json": "8667def1b9aadd1e536209c69fd435c91ec43068b6d567f9e85ee48b233a13f8",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s10_C_short/analysis.json": "3dbf90a08a70f16925232a1864516581472e363f47d36f621ffcad9ecc3a4d9b",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s2_C_huber_1e3/analysis.json": "968543e22dfc0d9915c000d58594c4dbdb941ee5b5e62eba418bae65b3b2f35e",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s4_C_huber_1e3/analysis.json": "5b3439769edd5d49d0993de7158318165efb6440bfdaf5c38c543d369b3326f1",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s6_C_huber_1e3/analysis.json": "09aa8f7b1fb8a1768468cdf8224c9d8464b6489a09e77be65c0e279755d05289",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s8_C_huber_1e3/analysis.json": "353475771f37da3176139e3cada5743fb99febf2be3078faea3620b40e201eb2",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s10_C_huber_1e3/analysis.json": "7d0ac9e928457f72764d494017eb24881ee1a218152b12060a6cc47a03da5196",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s2_C_huber_1e2/analysis.json": "5c182107651c2297ff0c91b70c09e0706b10a9f2897eef2b3e88269560b1b5f9",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s4_C_huber_1e2/analysis.json": "36229915d2dd70dcce99fcf23ac4f7e3dd206411fe5219c1da0e693b1c958002",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s6_C_huber_1e2/analysis.json": "d403cf7c165b462b6d2672789cebc32f4532aaa139108913bb2f11b956818ab2",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s8_C_huber_1e2/analysis.json": "ab6bf2a09847ac5299b3ecee3dd6f09beb0b679f80731bcf27d4a536e0978046",
+    "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s10_C_huber_1e2/analysis.json": "38702bf1f6ffd8527bf474231047a25de99ce62574cd9aa95d912c478667255e",
+    "release/ral/night01_5080_checkpoint_review.json": "3473b6a351e697e0879cbb438c7b9246e1bfb23f32321aa4b7330170362d3b3a"
+  },
+  "common_seeds": [
+    2,
+    4,
+    6,
+    8,
+    10
+  ],
+  "uncertainty": "sample standard deviation across seeds, ddof=1",
+  "checkpoint_verified_jobs": [
+    "s2_B",
+    "s2_C_reference",
+    "s2_C_huber_1e2",
+    "s4_B",
+    "s4_C_reference",
+    "s4_C_huber_1e2"
+  ],
+  "hardware_scope": "archived full-record summaries, one record per joint/condition; raw recordings unavailable locally",
+  "development_scope": "frozen simulation fit/cal pairs; original 5080 metrics, selected six runs recomputed on 3090",
+  "pending": [
+    "closed-loop policy performance",
+    "time/transitions to target",
+    "matched-start fixed-horizon hardware replay",
+    "D and C-perm",
+    "timing-model refits"
+  ],
+  "enabled_parameters": [
+    {
+      "joint_id": "left_hip_pitch",
+      "param_id": "armature",
+      "repo_key": "dof_armature",
+      "source_side": "joint_output",
+      "unit": "kg*m^2",
+      "nominal_value": "0.02",
+      "identified_value": "0.0",
+      "effective_A0": "0.02",
+      "effective_A": "0.0",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "left_hip_pitch",
+      "param_id": "damping",
+      "repo_key": "dof_damping",
+      "source_side": "joint_output",
+      "unit": "N*m*s/rad",
+      "nominal_value": "0.05",
+      "identified_value": "4.840868",
+      "effective_A0": "0.05",
+      "effective_A": "4.840868",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "left_hip_pitch",
+      "param_id": "frictionloss",
+      "repo_key": "dof_frictionloss",
+      "source_side": "joint_output",
+      "unit": "N*m",
+      "nominal_value": "0.05",
+      "identified_value": "1.388",
+      "effective_A0": "0.05",
+      "effective_A": "1.388",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "left_hip_roll",
+      "param_id": "armature",
+      "repo_key": "dof_armature",
+      "source_side": "joint_output",
+      "unit": "kg*m^2",
+      "nominal_value": "0.02",
+      "identified_value": "0.0",
+      "effective_A0": "0.02",
+      "effective_A": "0.0",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "新幅值/周期验证通过"
+    },
+    {
+      "joint_id": "left_hip_roll",
+      "param_id": "damping",
+      "repo_key": "dof_damping",
+      "source_side": "joint_output",
+      "unit": "N*m*s/rad",
+      "nominal_value": "0.05",
+      "identified_value": "13.4927",
+      "effective_A0": "0.05",
+      "effective_A": "13.4927",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "新幅值/周期验证通过"
+    },
+    {
+      "joint_id": "left_hip_roll",
+      "param_id": "frictionloss",
+      "repo_key": "dof_frictionloss",
+      "source_side": "joint_output",
+      "unit": "N*m",
+      "nominal_value": "0.05",
+      "identified_value": "1.4773",
+      "effective_A0": "0.05",
+      "effective_A": "1.4773",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "新幅值/周期验证通过"
+    },
+    {
+      "joint_id": "left_knee_pitch",
+      "param_id": "armature",
+      "repo_key": "dof_armature",
+      "source_side": "joint_output",
+      "unit": "kg*m^2",
+      "nominal_value": "0.02",
+      "identified_value": "0.292",
+      "effective_A0": "0.02",
+      "effective_A": "0.292",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "left_knee_pitch",
+      "param_id": "damping",
+      "repo_key": "dof_damping",
+      "source_side": "joint_output",
+      "unit": "N*m*s/rad",
+      "nominal_value": "0.05",
+      "identified_value": "0.416",
+      "effective_A0": "0.05",
+      "effective_A": "0.416",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "left_knee_pitch",
+      "param_id": "frictionloss",
+      "repo_key": "dof_frictionloss",
+      "source_side": "joint_output",
+      "unit": "N*m",
+      "nominal_value": "0.05",
+      "identified_value": "2.505",
+      "effective_A0": "0.05",
+      "effective_A": "2.505",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "left_ankle_pitch",
+      "param_id": "armature",
+      "repo_key": "dof_armature",
+      "source_side": "joint_output",
+      "unit": "kg*m^2",
+      "nominal_value": "0.01",
+      "identified_value": "0.1047",
+      "effective_A0": "0.01",
+      "effective_A": "0.1047",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "两幅值T2留出通过；力矩收益较小"
+    },
+    {
+      "joint_id": "left_ankle_pitch",
+      "param_id": "damping",
+      "repo_key": "dof_damping",
+      "source_side": "joint_output",
+      "unit": "N*m*s/rad",
+      "nominal_value": "0.05",
+      "identified_value": "0.0",
+      "effective_A0": "0.05",
+      "effective_A": "0.0",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "两幅值T2留出通过；力矩收益较小"
+    },
+    {
+      "joint_id": "left_ankle_pitch",
+      "param_id": "frictionloss",
+      "repo_key": "dof_frictionloss",
+      "source_side": "joint_output",
+      "unit": "N*m",
+      "nominal_value": "0.05",
+      "identified_value": "0.6382",
+      "effective_A0": "0.05",
+      "effective_A": "0.6382",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "两幅值T2留出通过；力矩收益较小"
+    },
+    {
+      "joint_id": "right_hip_pitch",
+      "param_id": "armature",
+      "repo_key": "dof_armature",
+      "source_side": "joint_output",
+      "unit": "kg*m^2",
+      "nominal_value": "0.02",
+      "identified_value": "0.0",
+      "effective_A0": "0.02",
+      "effective_A": "0.0",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "right_hip_pitch",
+      "param_id": "damping",
+      "repo_key": "dof_damping",
+      "source_side": "joint_output",
+      "unit": "N*m*s/rad",
+      "nominal_value": "0.05",
+      "identified_value": "4.293868",
+      "effective_A0": "0.05",
+      "effective_A": "4.293868",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "right_hip_pitch",
+      "param_id": "frictionloss",
+      "repo_key": "dof_frictionloss",
+      "source_side": "joint_output",
+      "unit": "N*m",
+      "nominal_value": "0.05",
+      "identified_value": "1.330309",
+      "effective_A0": "0.05",
+      "effective_A": "1.330309",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "right_hip_yaw",
+      "param_id": "armature",
+      "repo_key": "dof_armature",
+      "source_side": "joint_output",
+      "unit": "kg*m^2",
+      "nominal_value": "0.01",
+      "identified_value": "0.0101",
+      "effective_A0": "0.01",
+      "effective_A": "0.0101",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "新小幅值验证通过；大幅值位置优势有限"
+    },
+    {
+      "joint_id": "right_hip_yaw",
+      "param_id": "damping",
+      "repo_key": "dof_damping",
+      "source_side": "joint_output",
+      "unit": "N*m*s/rad",
+      "nominal_value": "0.05",
+      "identified_value": "0.6341",
+      "effective_A0": "0.05",
+      "effective_A": "0.6341",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "新小幅值验证通过；大幅值位置优势有限"
+    },
+    {
+      "joint_id": "right_hip_yaw",
+      "param_id": "frictionloss",
+      "repo_key": "dof_frictionloss",
+      "source_side": "joint_output",
+      "unit": "N*m",
+      "nominal_value": "0.05",
+      "identified_value": "0.248",
+      "effective_A0": "0.05",
+      "effective_A": "0.248",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "新小幅值验证通过；大幅值位置优势有限"
+    },
+    {
+      "joint_id": "right_knee_pitch",
+      "param_id": "armature",
+      "repo_key": "dof_armature",
+      "source_side": "joint_output",
+      "unit": "kg*m^2",
+      "nominal_value": "0.02",
+      "identified_value": "0.2057",
+      "effective_A0": "0.02",
+      "effective_A": "0.2057",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "right_knee_pitch",
+      "param_id": "damping",
+      "repo_key": "dof_damping",
+      "source_side": "joint_output",
+      "unit": "N*m*s/rad",
+      "nominal_value": "0.05",
+      "identified_value": "0.00079",
+      "effective_A0": "0.05",
+      "effective_A": "0.00079",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "right_knee_pitch",
+      "param_id": "frictionloss",
+      "repo_key": "dof_frictionloss",
+      "source_side": "joint_output",
+      "unit": "N*m",
+      "nominal_value": "0.05",
+      "identified_value": "3.7068",
+      "effective_A0": "0.05",
+      "effective_A": "3.7068",
+      "enabled": "1",
+      "source_ref": "release/ral/sources/joint_parameter_summary_20261120.json",
+      "source_sha256": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+      "conversion": "identity",
+      "reason": "validated runtime snapshot; original trial logs not bundled",
+      "validation_status": "跨幅值验证通过"
+    }
+  ],
+  "archived_hardware_rows": [
+    {
+      "joint": "L knee",
+      "run_scale_period": "0.3 / 2 s",
+      "parameter_set": "original_model",
+      "source_directory": "left_knee_scale03_T2_validation_20261120",
+      "q": "0.007399750576105268",
+      "v": "0.08860949371007983",
+      "tau": "1.8230528586074588"
+    },
+    {
+      "joint": "L knee",
+      "run_scale_period": "0.3 / 2 s",
+      "parameter_set": "current_rounded",
+      "source_directory": "left_knee_scale03_T2_validation_20261120",
+      "q": "0.003679926764886396",
+      "v": "0.07814193973943763",
+      "tau": "0.8060945812599596"
+    },
+    {
+      "joint": "R knee",
+      "run_scale_period": "0.3 / 2 s",
+      "parameter_set": "original_model",
+      "source_directory": "right_knee_scale03_T2_validation_20261120",
+      "q": "0.007196108594516263",
+      "v": "0.07570699928624483",
+      "tau": "1.7153034863193914"
+    },
+    {
+      "joint": "R knee",
+      "run_scale_period": "0.3 / 2 s",
+      "parameter_set": "current_rounded",
+      "source_directory": "right_knee_scale03_T2_validation_20261120",
+      "q": "0.005498272449577219",
+      "v": "0.06700159008664677",
+      "tau": "0.8918990768182526"
+    },
+    {
+      "joint": "L hip pitch",
+      "run_scale_period": "0.3 / 2 s",
+      "parameter_set": "original_model",
+      "source_directory": "left_hip_pitch_scale03_T2_validation_20261120",
+      "q": "0.010217306055531616",
+      "v": "0.11361286512931004",
+      "tau": "3.356073467722152"
+    },
+    {
+      "joint": "L hip pitch",
+      "run_scale_period": "0.3 / 2 s",
+      "parameter_set": "current_rounded",
+      "source_directory": "left_hip_pitch_scale03_T2_validation_20261120",
+      "q": "0.007205300026324416",
+      "v": "0.09563823676146774",
+      "tau": "1.7638845568556272"
+    },
+    {
+      "joint": "R hip pitch",
+      "run_scale_period": "0.3 / 2 s",
+      "parameter_set": "original_model",
+      "source_directory": "right_hip_pitch_scale03_T2_validation_20261120",
+      "q": "0.008732774479189125",
+      "v": "0.07465942565933442",
+      "tau": "2.7375398728129245"
+    },
+    {
+      "joint": "R hip pitch",
+      "run_scale_period": "0.3 / 2 s",
+      "parameter_set": "current_rounded",
+      "source_directory": "right_hip_pitch_scale03_T2_validation_20261120",
+      "q": "0.006693559889491279",
+      "v": "0.06023428133532438",
+      "tau": "1.7427144331030058"
+    },
+    {
+      "joint": "L hip roll",
+      "run_scale_period": "0.3 / 3 s",
+      "parameter_set": "original_model",
+      "source_directory": "left_hip_roll_scale03_T3_validation_20261120",
+      "q": "0.013860503177057093",
+      "v": "0.030704719268334422",
+      "tau": "2.8442188222035942"
+    },
+    {
+      "joint": "L hip roll",
+      "run_scale_period": "0.3 / 3 s",
+      "parameter_set": "current_rounded",
+      "source_directory": "left_hip_roll_scale03_T3_validation_20261120",
+      "q": "0.0031917626446299305",
+      "v": "0.02531740371062881",
+      "tau": "0.7506725947254439"
+    },
+    {
+      "joint": "R hip yaw",
+      "run_scale_period": "0.1 / 2 s",
+      "parameter_set": "original_model",
+      "source_directory": "right_hip_yaw_scale01_T2_validation_20261120",
+      "q": "0.0013632221514114319",
+      "v": "0.033054264247023096",
+      "tau": "0.4446949643863323"
+    },
+    {
+      "joint": "R hip yaw",
+      "run_scale_period": "0.1 / 2 s",
+      "parameter_set": "right_candidate",
+      "source_directory": "right_hip_yaw_scale01_T2_validation_20261120",
+      "q": "0.0011122063814026143",
+      "v": "0.0321555634678107",
+      "tau": "0.4237932938842103"
+    },
+    {
+      "joint": "R ankle pitch",
+      "run_scale_period": "0.3 / 3 s",
+      "parameter_set": "original_model",
+      "source_directory": "right_ankle_pitch_scale03_T3_validation_20261120",
+      "q": "0.0044148724480777",
+      "v": "0.05822890343116893",
+      "tau": "0.4856617223254762"
+    },
+    {
+      "joint": "R ankle pitch",
+      "run_scale_period": "0.3 / 3 s",
+      "parameter_set": "right_candidate",
+      "source_directory": "right_ankle_pitch_scale03_T3_validation_20261120",
+      "q": "0.0021406951141270374",
+      "v": "0.056441221254214455",
+      "tau": "0.4616079315486427"
+    },
+    {
+      "joint": "L ankle roll",
+      "run_scale_period": "0.3 / 2 s",
+      "parameter_set": "original_model",
+      "source_directory": "left_ankle_roll_scale03_T2_validation_20261120",
+      "q": "0.007763880732330281",
+      "v": "0.15860365659679337",
+      "tau": "0.5869774595372828"
+    },
+    {
+      "joint": "L ankle roll",
+      "run_scale_period": "0.3 / 2 s",
+      "parameter_set": "current_rounded",
+      "source_directory": "left_ankle_roll_scale03_T2_validation_20261120",
+      "q": "0.0091155716296129",
+      "v": "0.17287531424605448",
+      "tau": "0.6864709234178357"
+    }
+  ],
+  "development_summary": [
+    {
+      "candidate": "Aplus",
+      "response_weight": 0,
+      "response_horizon": 0,
+      "n": 5,
+      "metrics": {
+        "cal.q_rmse32_rad": {
+          "values": [
+            0.07102049795051983,
+            0.07003238560202707,
+            0.06891228476843095,
+            0.07111484500832418,
+            0.07075866512462756
+          ],
+          "mean": 0.07036773569078592,
+          "sample_sd": 0.0009175911115174971
+        },
+        "fit.response_rmse8": {
+          "values": [
+            71.22613458609146,
+            71.03980335687352,
+            70.78968276058352,
+            71.10465149891276,
+            71.03229347633115
+          ],
+          "mean": 71.03851313575848,
+          "sample_sd": 0.15932121339404967
+        },
+        "cal.response_rmse8": {
+          "values": [
+            73.82252763869973,
+            73.9269019220537,
+            73.99444929350558,
+            73.94228930519692,
+            73.95669698418125
+          ],
+          "mean": 73.92857302872744,
+          "sample_sd": 0.06435680367164023
+        },
+        "cal.response_rmse32": {
+          "values": [
+            118.41927879002982,
+            120.18689885775291,
+            117.77627218042211,
+            119.67597681548199,
+            118.02767385436147
+          ],
+          "mean": 118.81722009960966,
+          "sample_sd": 1.058158320772603
+        }
+      }
+    },
+    {
+      "candidate": "B",
+      "response_weight": 0,
+      "response_horizon": 0,
+      "n": 5,
+      "metrics": {
+        "cal.q_rmse32_rad": {
+          "values": [
+            0.05367089894850512,
+            0.053423307434791484,
+            0.053873042961974274,
+            0.054385378582285086,
+            0.054121610429800404
+          ],
+          "mean": 0.05389484767147128,
+          "sample_sd": 0.0003758392587634089
+        },
+        "fit.response_rmse8": {
+          "values": [
+            69.60308708164725,
+            70.28278367692191,
+            70.12335155015846,
+            69.84481720408984,
+            70.03785228649026
+          ],
+          "mean": 69.97837835986154,
+          "sample_sd": 0.2626304898250211
+        },
+        "cal.response_rmse8": {
+          "values": [
+            75.31078147225392,
+            74.52920917301456,
+            76.12052504076375,
+            75.22036656287334,
+            75.43622005332826
+          ],
+          "mean": 75.32342046044677,
+          "sample_sd": 0.5678139834111339
+        },
+        "cal.response_rmse32": {
+          "values": [
+            132.91030798523514,
+            151.4304892229198,
+            145.5360799181314,
+            141.02911225014222,
+            133.25933674241475
+          ],
+          "mean": 140.83306522376867,
+          "sample_sd": 7.9779950871088685
+        }
+      }
+    },
+    {
+      "candidate": "C_reference",
+      "response_weight": 0.0001,
+      "response_horizon": 8,
+      "n": 5,
+      "metrics": {
+        "cal.q_rmse32_rad": {
+          "values": [
+            0.05511911447685387,
+            0.05525278967226822,
+            0.05618845518760396,
+            0.05577763109855355,
+            0.055135853891438616
+          ],
+          "mean": 0.055494768865343644,
+          "sample_sd": 0.00047162004427129715
+        },
+        "fit.response_rmse8": {
+          "values": [
+            7.80091173964478,
+            16.990841184705243,
+            14.788125920420836,
+            17.75500511197916,
+            12.735847569490241
+          ],
+          "mean": 14.014146305248051,
+          "sample_sd": 3.990366928210821
+        },
+        "cal.response_rmse8": {
+          "values": [
+            76.99386709548688,
+            75.56501341805728,
+            75.28813857499068,
+            76.55016305293233,
+            76.2841870991501
+          ],
+          "mean": 76.13627384812345,
+          "sample_sd": 0.7025526140619888
+        },
+        "cal.response_rmse32": {
+          "values": [
+            166.5709799448959,
+            167.98691725864387,
+            169.51576571890266,
+            161.7193535198912,
+            157.24399348176712
+          ],
+          "mean": 164.60740198482014,
+          "sample_sd": 5.048004683931354
+        }
+      }
+    },
+    {
+      "candidate": "C_small_weight",
+      "response_weight": 1e-05,
+      "response_horizon": 8,
+      "n": 5,
+      "metrics": {
+        "cal.q_rmse32_rad": {
+          "values": [
+            0.05443325459712001,
+            0.05442448499703726,
+            0.05498459909399592,
+            0.05462321194384358,
+            0.053994717118176806
+          ],
+          "mean": 0.05449205355003471,
+          "sample_sd": 0.0003588767162319637
+        },
+        "fit.response_rmse8": {
+          "values": [
+            16.32378217513858,
+            47.89959138290828,
+            25.65156924292441,
+            13.358794355558029,
+            16.076072564755076
+          ],
+          "mean": 23.861961944256873,
+          "sample_sd": 14.219450414582148
+        },
+        "cal.response_rmse8": {
+          "values": [
+            75.46702685845484,
+            75.68436770187989,
+            75.00790224852126,
+            75.05947195902822,
+            75.04055792903762
+          ],
+          "mean": 75.25186533938437,
+          "sample_sd": 0.3059970575956255
+        },
+        "cal.response_rmse32": {
+          "values": [
+            144.98937758764717,
+            145.89359628711398,
+            167.26720609686035,
+            147.68735402210314,
+            138.06175280414243
+          ],
+          "mean": 148.7798573595734,
+          "sample_sd": 10.960743953050994
+        }
+      }
+    },
+    {
+      "candidate": "C_short",
+      "response_weight": 0.0001,
+      "response_horizon": 4,
+      "n": 5,
+      "metrics": {
+        "cal.q_rmse32_rad": {
+          "values": [
+            0.05589593924033416,
+            0.0558558839669048,
+            0.05670428501482089,
+            0.05677282307896845,
+            0.05459791700813724
+          ],
+          "mean": 0.05596536966183311,
+          "sample_sd": 0.0008781673218481675
+        },
+        "fit.response_rmse8": {
+          "values": [
+            35.864220575685174,
+            36.81983483856223,
+            33.392437419462155,
+            34.38696964895466,
+            33.893802496500186
+          ],
+          "mean": 34.87145299583288,
+          "sample_sd": 1.4282673909389492
+        },
+        "cal.response_rmse8": {
+          "values": [
+            78.19296649032573,
+            77.55310523862973,
+            81.56384920441504,
+            76.65228957295336,
+            75.88891334213776
+          ],
+          "mean": 77.97022476969232,
+          "sample_sd": 2.1912638816681422
+        },
+        "cal.response_rmse32": {
+          "values": [
+            175.72547296870803,
+            209.24997098375022,
+            196.46216270880345,
+            315.3175083972758,
+            171.54525805940662
+          ],
+          "mean": 213.66007462358883,
+          "sample_sd": 58.86880074951329
+        }
+      }
+    },
+    {
+      "candidate": "C_huber_1e3",
+      "response_weight": 0.001,
+      "response_horizon": 8,
+      "n": 5,
+      "metrics": {
+        "cal.q_rmse32_rad": {
+          "values": [
+            0.05386456287753629,
+            0.05417539684800302,
+            0.054316342941851184,
+            0.054514084013960844,
+            0.05397247533587526
+          ],
+          "mean": 0.05416857240344532,
+          "sample_sd": 0.00026083367776148135
+        },
+        "fit.response_rmse8": {
+          "values": [
+            66.06417221991781,
+            66.00204372900753,
+            67.50217456847254,
+            66.30629146753064,
+            67.00508045934376
+          ],
+          "mean": 66.57595248885445,
+          "sample_sd": 0.6530783893514679
+        },
+        "cal.response_rmse8": {
+          "values": [
+            74.31603894465262,
+            74.21528200855234,
+            74.93425525017761,
+            74.31945905800293,
+            74.5943636326661
+          ],
+          "mean": 74.47587977881032,
+          "sample_sd": 0.29243556059466863
+        },
+        "cal.response_rmse32": {
+          "values": [
+            131.46984998815816,
+            136.1515470253998,
+            131.3676354828129,
+            136.33650327178665,
+            131.83386291967608
+          ],
+          "mean": 133.4318797375667,
+          "sample_sd": 2.573798305188431
+        }
+      }
+    },
+    {
+      "candidate": "C_huber_1e2",
+      "response_weight": 0.01,
+      "response_horizon": 8,
+      "n": 5,
+      "metrics": {
+        "cal.q_rmse32_rad": {
+          "values": [
+            0.053390507612127665,
+            0.05446299468166337,
+            0.05370499453267247,
+            0.05486967611101802,
+            0.053830611467560914
+          ],
+          "mean": 0.05405175688100849,
+          "sample_sd": 0.0006009385183225247
+        },
+        "fit.response_rmse8": {
+          "values": [
+            46.65825266726219,
+            52.20604291911542,
+            53.83028735359404,
+            36.92393924070001,
+            53.48705532782086
+          ],
+          "mean": 48.621115501698505,
+          "sample_sd": 7.1474000403966835
+        },
+        "cal.response_rmse8": {
+          "values": [
+            74.51017774109083,
+            74.05738287278922,
+            74.43650572402969,
+            74.34051293764094,
+            74.49459902869293
+          ],
+          "mean": 74.36783566084873,
+          "sample_sd": 0.18585832079136386
+        },
+        "cal.response_rmse32": {
+          "values": [
+            129.24283419010035,
+            132.79428754341123,
+            136.78121574864792,
+            134.3270861809946,
+            132.69738593612632
+          ],
+          "mean": 133.16856191985607,
+          "sample_sd": 2.746218876701694
+        }
+      }
+    }
+  ],
+  "zero_response_baseline": {
+    "zero_response_rmse8": 73.8933037932721,
+    "zero_response_rmse32": 112.90487777260988
+  },
+  "manuscript_before_sha256": "a2b04c75ffd56472a58633dce08a33554a39b050068235305664712f9ffd5e5f",
+  "manuscript_after_sha256": "07721bd3fd212a800a6d7c16c17dafa643ff9383fdf08bfe79c2f85b6c7b8d26",
+  "verification_report": "release/ral/night01_5080_checkpoint_review.json",
+  "pdf": {
+    "path": "SCI论文草稿/RA-L_Actuator_World_Model/RA-L_English_Draft.pdf",
+    "sha256": "385e4b0a3715bf30ab627d1f1f2f3fbd025b6b0fd9aa70a14c3bdffbd55527aa",
+    "pages": 8,
+    "visual_review": "all pages inspected; added tables and final-page layout checked; no overflow or unresolved references"
+  },
+  "filled_tables": {
+    "I": "executed development settings",
+    "II": "21 enabled joint parameters on 7 joints",
+    "III": "seven-group design and implementation scope",
+    "V": "eight archived full-record hardware replays",
+    "VI": "five-seed development fit/cal diagnostics"
+  },
+  "pending_tables": {
+    "IV": "independent closed-loop policy outcomes and time/transitions to target",
+    "VII": "matched-start fixed-horizon hardware replay"
+  }
+}

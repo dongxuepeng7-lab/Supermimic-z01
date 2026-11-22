@@ -1,0 +1,1653 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "started_unix": 1795322112.9978309,
+  "archive": "/home/zoyi/Downloads/night01_5080_selected_models.tar.gz",
+  "archive_sha256": "9c75f03c7feee6c50a3b145c85029f491e7f659f176b11379b03ba23eb2c405e",
+  "scope": "12 selected files from 6 runs; fit/cal recomputation only",
+  "formal_results": false,
+  "test_outcomes_inspected": false,
+  "closed_loop_evaluation_performed": false,
+  "files": [
+    {
+      "path": "jobs/s2_B/run/initial.pt",
+      "bytes": 46203537,
+      "sha256": "e2d00d8d6430edac31d9f08b034b549083efe412e1d7adc204e6229fb797203c",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s2_B/run/last.pt",
+      "bytes": 130258221,
+      "sha256": "2704795ae4e99959111bd95db9bdac8bf0cc278584a80e5f766c964169cc5dd7",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s2_C_reference/run/initial.pt",
+      "bytes": 46203601,
+      "sha256": "205ee38f0bb612acccc164cf3df389d476f4e7226c9df913cc83146bec0bdc10",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s2_C_reference/run/last.pt",
+      "bytes": 130258221,
+      "sha256": "ac355ab15075c70235573ea65a6e3a875163e084dddc1b92d08b3cf6086f963a",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s2_C_huber_1e2/run/initial.pt",
+      "bytes": 46203601,
+      "sha256": "2d5664231fa0dae1f81012803ffd8a00bef19e02947e53f3b37743e13476742b",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s2_C_huber_1e2/run/last.pt",
+      "bytes": 130258221,
+      "sha256": "19d74a3323530303e2024e9acd6d4b7d0d06e6500ee7176b9bcfc56012c24923",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s4_B/run/initial.pt",
+      "bytes": 46203537,
+      "sha256": "36de2e0e66ca8ab4c69c2bb3264aa050a5f6909a5fde5ac9452515c448261887",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s4_B/run/last.pt",
+      "bytes": 130258221,
+      "sha256": "63aa52df8f47a226f9278ad0e959da49b98d7614ed63a6070a74d2c6686ef791",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s4_C_reference/run/initial.pt",
+      "bytes": 46203601,
+      "sha256": "dd2f9122a8e814b87b6cc46637fb61b7a8f45926854ba6b9840d5d66fe41b8e0",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s4_C_reference/run/last.pt",
+      "bytes": 130258221,
+      "sha256": "bba942dbcc3222538e016d660a82b05c5f17d414bff00e6a4a4c985967a97d01",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s4_C_huber_1e2/run/initial.pt",
+      "bytes": 46203601,
+      "sha256": "cf910d63693f546fbdbd19b6e94f1f9bd53cb356a7ef4283fa3f827f92a50966",
+      "index_match": true
+    },
+    {
+      "path": "jobs/s4_C_huber_1e2/run/last.pt",
+      "bytes": 130258221,
+      "sha256": "4eda3185d38e2d7db22c3e0e9e627de131f2ecfe2edf99c9368fc04213e23003",
+      "index_match": true
+    }
+  ],
+  "runs": [
+    {
+      "job": "s2_B",
+      "seed": 2,
+      "candidate": "B",
+      "init_sha256": "3cd8431ba7218d5e7f5504ce1061bcb9d47fe8d5d044e2c12a182a5a2570cc2e",
+      "finite_weights": true,
+      "world_model_and_policy_updated": true,
+      "budget": {
+        "iterations": 1000,
+        "wm_updates": 5000,
+        "policy_updates": 1000,
+        "env_steps": 2625536,
+        "wm_batch": 256
+      },
+      "checkpoint_sha256": "2704795ae4e99959111bd95db9bdac8bf0cc278584a80e5f766c964169cc5dd7",
+      "splits": {
+        "fit": {
+          "recomputed": {
+            "blocks": 400,
+            "horizon": 32,
+            "forward_mse": 0.047687965004929535,
+            "q_rmse32_rad": 0.0038666155887703128,
+            "response_rmse4": 88.79196248256703,
+            "response_rmse8": 69.60307391861309,
+            "response_rmse32": 93.9769611699951,
+            "zero_response_rmse8": 71.15465545308139,
+            "zero_response_rmse32": 151.57913011324086,
+            "sessions": {
+              "dance1_subject2": {
+                "blocks": 4,
+                "response_rmse8": 28.246788893132766
+              },
+              "dance1_subject3": {
+                "blocks": 24,
+                "response_rmse8": 163.35999531769522
+              },
+              "dance2_subject2": {
+                "blocks": 12,
+                "response_rmse8": 21.98505095547741
+              },
+              "dance2_subject4": {
+                "blocks": 4,
+                "response_rmse8": 10.952145637447222
+              },
+              "dance2_subject5": {
+                "blocks": 8,
+                "response_rmse8": 16.63112035984481
+              },
+              "fallAndGetUp1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 10.256740550375177
+              },
+              "fallAndGetUp2_subject2": {
+                "blocks": 4,
+                "response_rmse8": 30.815222765439827
+              },
+              "fight1_subject3": {
+                "blocks": 20,
+                "response_rmse8": 23.945543742906864
+              },
+              "fight1_subject5": {
+                "blocks": 24,
+                "response_rmse8": 30.845294640914666
+              },
+              "fightAndSports1_subject1": {
+                "blocks": 20,
+                "response_rmse8": 35.68414880144445
+              },
+              "jumps1_subject5": {
+                "blocks": 32,
+                "response_rmse8": 27.926992602281274
+              },
+              "run1_subject2": {
+                "blocks": 16,
+                "response_rmse8": 9.637521144813443
+              },
+              "run2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 17.385248336951808
+              },
+              "run2_subject4": {
+                "blocks": 24,
+                "response_rmse8": 25.31260924502138
+              },
+              "sprint1_subject2": {
+                "blocks": 44,
+                "response_rmse8": 45.688803279932735
+              },
+              "walk1_subject1": {
+                "blocks": 12,
+                "response_rmse8": 33.046069973075106
+              },
+              "walk1_subject5": {
+                "blocks": 28,
+                "response_rmse8": 148.59489200784827
+              },
+              "walk2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 24.14206472223916
+              },
+              "walk2_subject3": {
+                "blocks": 16,
+                "response_rmse8": 27.79532796245312
+              },
+              "walk3_subject1": {
+                "blocks": 32,
+                "response_rmse8": 19.411823009865273
+              },
+              "walk3_subject2": {
+                "blocks": 20,
+                "response_rmse8": 143.73806639407317
+              },
+              "walk3_subject3": {
+                "blocks": 8,
+                "response_rmse8": 11.787042151435614
+              },
+              "walk4_subject1": {
+                "blocks": 4,
+                "response_rmse8": 7.334017199101247
+              }
+            },
+            "response_rmse_by_horizon": [
+              23.62696678515671,
+              21.811261500090417,
+              142.61251547081756,
+              100.8154559054115,
+              39.22882585948597,
+              39.787382369821835,
+              45.87494423853788,
+              44.65653034318415,
+              57.46457893817775,
+              95.57723923878736,
+              69.01232357608899,
+              98.80659862160975,
+              76.98756728109748,
+              72.2712594971381,
+              72.86858672532641,
+              120.92603403264081,
+              74.77190334722731,
+              129.16970295917466,
+              113.75466617791365,
+              134.4042757793627,
+              79.22056488504319,
+              88.3348410531843,
+              125.11683648125522,
+              88.8673396020011,
+              102.54368443259415,
+              114.48656042310918,
+              112.85975723962382,
+              110.59955235730408,
+              104.11036486202471,
+              110.1412303639613,
+              114.48071897865366,
+              101.15440001402612
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.00018692353840776832,
+          "max_relative_delta": 1.0175849154488805e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        },
+        "cal": {
+          "recomputed": {
+            "blocks": 116,
+            "horizon": 32,
+            "forward_mse": 8.214768593898544,
+            "q_rmse32_rad": 0.05367089837085843,
+            "response_rmse4": 17.35495514024484,
+            "response_rmse8": 75.31078588956449,
+            "response_rmse32": 132.91038319913892,
+            "zero_response_rmse8": 73.8933037932721,
+            "zero_response_rmse32": 112.90487777260988,
+            "sessions": {
+              "dance2_subject1": {
+                "blocks": 8,
+                "response_rmse8": 263.9583573307848
+              },
+              "fightAndSports1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 64.17902456778192
+              },
+              "jumps1_subject1": {
+                "blocks": 4,
+                "response_rmse8": 50.624342873217344
+              },
+              "jumps1_subject2": {
+                "blocks": 32,
+                "response_rmse8": 23.79164665164666
+              },
+              "sprint1_subject4": {
+                "blocks": 44,
+                "response_rmse8": 23.40478880298868
+              },
+              "walk3_subject4": {
+                "blocks": 20,
+                "response_rmse8": 39.17133693165751
+              },
+              "walk3_subject5": {
+                "blocks": 4,
+                "response_rmse8": 14.96617039132569
+              }
+            },
+            "response_rmse_by_horizon": [
+              7.262949194097948,
+              10.595419686668295,
+              25.811804350146833,
+              19.326543367521722,
+              30.26351567238131,
+              197.0565846322139,
+              41.94784839711972,
+              51.595910553433114,
+              41.82038337476766,
+              56.84944228378073,
+              56.86629402669566,
+              62.54594217296669,
+              71.86369143077873,
+              201.85762924388035,
+              77.62244415354368,
+              88.18403560948863,
+              212.49694854510798,
+              109.51165428595849,
+              102.402520743009,
+              87.61341369966371,
+              171.07832056954547,
+              135.38903082488523,
+              134.29418143929956,
+              142.01424145496324,
+              147.72735887379477,
+              142.46902868143772,
+              264.06491447492175,
+              145.21244518094437,
+              146.02858169626427,
+              266.13042847506165,
+              182.40567642857033,
+              169.12179253645348
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.0026672076689067126,
+          "max_relative_delta": 1.57711770547618e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        }
+      }
+    },
+    {
+      "job": "s2_C_reference",
+      "seed": 2,
+      "candidate": "C_reference",
+      "init_sha256": "3cd8431ba7218d5e7f5504ce1061bcb9d47fe8d5d044e2c12a182a5a2570cc2e",
+      "finite_weights": true,
+      "world_model_and_policy_updated": true,
+      "budget": {
+        "iterations": 1000,
+        "wm_updates": 5000,
+        "policy_updates": 1000,
+        "env_steps": 2625536,
+        "wm_batch": 256
+      },
+      "checkpoint_sha256": "ac355ab15075c70235573ea65a6e3a875163e084dddc1b92d08b3cf6086f963a",
+      "splits": {
+        "fit": {
+          "recomputed": {
+            "blocks": 400,
+            "horizon": 32,
+            "forward_mse": 0.07148580075607242,
+            "q_rmse32_rad": 0.005010933393292532,
+            "response_rmse4": 7.192742973871372,
+            "response_rmse8": 7.800902411463585,
+            "response_rmse32": 96.56170379660017,
+            "zero_response_rmse8": 71.15465545308139,
+            "zero_response_rmse32": 151.57913011324086,
+            "sessions": {
+              "dance1_subject2": {
+                "blocks": 4,
+                "response_rmse8": 7.461782666714337
+              },
+              "dance1_subject3": {
+                "blocks": 24,
+                "response_rmse8": 9.273467887104472
+              },
+              "dance2_subject2": {
+                "blocks": 12,
+                "response_rmse8": 6.191402116206541
+              },
+              "dance2_subject4": {
+                "blocks": 4,
+                "response_rmse8": 3.6730080347828156
+              },
+              "dance2_subject5": {
+                "blocks": 8,
+                "response_rmse8": 4.742886732498505
+              },
+              "fallAndGetUp1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 4.828971874165768
+              },
+              "fallAndGetUp2_subject2": {
+                "blocks": 4,
+                "response_rmse8": 7.286948896761053
+              },
+              "fight1_subject3": {
+                "blocks": 20,
+                "response_rmse8": 5.441740010576232
+              },
+              "fight1_subject5": {
+                "blocks": 24,
+                "response_rmse8": 5.662135715627309
+              },
+              "fightAndSports1_subject1": {
+                "blocks": 20,
+                "response_rmse8": 4.69677555105213
+              },
+              "jumps1_subject5": {
+                "blocks": 32,
+                "response_rmse8": 6.105786679647322
+              },
+              "run1_subject2": {
+                "blocks": 16,
+                "response_rmse8": 3.071850487622403
+              },
+              "run2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 5.916297318636854
+              },
+              "run2_subject4": {
+                "blocks": 24,
+                "response_rmse8": 5.202653905564765
+              },
+              "sprint1_subject2": {
+                "blocks": 44,
+                "response_rmse8": 7.6718519441692195
+              },
+              "walk1_subject1": {
+                "blocks": 12,
+                "response_rmse8": 6.022157032730211
+              },
+              "walk1_subject5": {
+                "blocks": 28,
+                "response_rmse8": 18.716640882626358
+              },
+              "walk2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 4.907148398009322
+              },
+              "walk2_subject3": {
+                "blocks": 16,
+                "response_rmse8": 5.864638252527679
+              },
+              "walk3_subject1": {
+                "blocks": 32,
+                "response_rmse8": 4.836623878408112
+              },
+              "walk3_subject2": {
+                "blocks": 20,
+                "response_rmse8": 9.197647486252961
+              },
+              "walk3_subject3": {
+                "blocks": 8,
+                "response_rmse8": 5.233557679646672
+              },
+              "walk4_subject1": {
+                "blocks": 4,
+                "response_rmse8": 2.90106484960622
+              }
+            },
+            "response_rmse_by_horizon": [
+              7.9070730271190754,
+              6.698758625077284,
+              7.59017231625152,
+              6.475825753451961,
+              10.826181570671924,
+              7.216210572746086,
+              7.571671780690282,
+              7.299335964788345,
+              51.78023739746111,
+              136.01085776127383,
+              68.11717768553882,
+              121.01640473694665,
+              132.89801184393832,
+              99.86937071124323,
+              79.51003786596436,
+              159.08359785924046,
+              98.51005616666673,
+              100.95614382177902,
+              112.58969906660172,
+              106.64873175502963,
+              96.6037258992695,
+              98.78815041431353,
+              104.14928642017966,
+              105.363103421174,
+              99.77955204855583,
+              117.3046488543233,
+              114.40555355661327,
+              130.28062799828186,
+              113.1454485941015,
+              114.53241400552112,
+              128.08525678742626,
+              130.63721203650456
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.0003233282564281126,
+          "max_relative_delta": 2.2618073292278407e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        },
+        "cal": {
+          "recomputed": {
+            "blocks": 116,
+            "horizon": 32,
+            "forward_mse": 8.481386144026303,
+            "q_rmse32_rad": 0.055119121028122484,
+            "response_rmse4": 19.318555264467935,
+            "response_rmse8": 76.9938218634576,
+            "response_rmse32": 166.5712159568814,
+            "zero_response_rmse8": 73.8933037932721,
+            "zero_response_rmse32": 112.90487777260988,
+            "sessions": {
+              "dance2_subject1": {
+                "blocks": 8,
+                "response_rmse8": 264.5788117923872
+              },
+              "fightAndSports1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 64.67290747626059
+              },
+              "jumps1_subject1": {
+                "blocks": 4,
+                "response_rmse8": 50.49209285168259
+              },
+              "jumps1_subject2": {
+                "blocks": 32,
+                "response_rmse8": 34.40530273478697
+              },
+              "sprint1_subject4": {
+                "blocks": 44,
+                "response_rmse8": 24.511642688092987
+              },
+              "walk3_subject4": {
+                "blocks": 20,
+                "response_rmse8": 40.97637224595056
+              },
+              "walk3_subject5": {
+                "blocks": 4,
+                "response_rmse8": 26.520495581080635
+              }
+            },
+            "response_rmse_by_horizon": [
+              7.7202114080183275,
+              12.675514427957388,
+              26.944734620466747,
+              23.378136282860005,
+              34.218771647964665,
+              198.55791241494018,
+              46.39686736555831,
+              56.41563891420268,
+              55.640524735455664,
+              69.76602111950241,
+              66.51331399892754,
+              69.93756880064278,
+              89.77023054068961,
+              221.46603563861996,
+              108.47269979256772,
+              128.3563733735912,
+              222.96251987408715,
+              125.15445330229821,
+              121.94765129513709,
+              134.62258728611465,
+              188.77805104131141,
+              139.4546196438061,
+              154.3636389289172,
+              174.78426375311108,
+              160.53800377097556,
+              169.9934097950962,
+              287.71340834542906,
+              203.92168097676426,
+              258.0981953576996,
+              345.6709426748796,
+              288.9325585964848,
+              285.2532871019128
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.0020235990334072085,
+          "max_relative_delta": 1.1965087462898711e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        }
+      }
+    },
+    {
+      "job": "s2_C_huber_1e2",
+      "seed": 2,
+      "candidate": "C_huber_1e2",
+      "init_sha256": "3cd8431ba7218d5e7f5504ce1061bcb9d47fe8d5d044e2c12a182a5a2570cc2e",
+      "finite_weights": true,
+      "world_model_and_policy_updated": true,
+      "budget": {
+        "iterations": 1000,
+        "wm_updates": 5000,
+        "policy_updates": 1000,
+        "env_steps": 2625536,
+        "wm_batch": 256
+      },
+      "checkpoint_sha256": "19d74a3323530303e2024e9acd6d4b7d0d06e6500ee7176b9bcfc56012c24923",
+      "splits": {
+        "fit": {
+          "recomputed": {
+            "blocks": 400,
+            "horizon": 32,
+            "forward_mse": 0.05532159900579245,
+            "q_rmse32_rad": 0.004280823967883503,
+            "response_rmse4": 64.61307088811655,
+            "response_rmse8": 46.6582741789657,
+            "response_rmse32": 108.43718748463907,
+            "zero_response_rmse8": 71.15465545308139,
+            "zero_response_rmse32": 151.57913011324086,
+            "sessions": {
+              "dance1_subject2": {
+                "blocks": 4,
+                "response_rmse8": 15.00837003509035
+              },
+              "dance1_subject3": {
+                "blocks": 24,
+                "response_rmse8": 124.65855708705496
+              },
+              "dance2_subject2": {
+                "blocks": 12,
+                "response_rmse8": 7.297319265479383
+              },
+              "dance2_subject4": {
+                "blocks": 4,
+                "response_rmse8": 1.3235403218608686
+              },
+              "dance2_subject5": {
+                "blocks": 8,
+                "response_rmse8": 6.439797332389118
+              },
+              "fallAndGetUp1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 4.016971765437899
+              },
+              "fallAndGetUp2_subject2": {
+                "blocks": 4,
+                "response_rmse8": 15.234808963026412
+              },
+              "fight1_subject3": {
+                "blocks": 20,
+                "response_rmse8": 11.234185728038401
+              },
+              "fight1_subject5": {
+                "blocks": 24,
+                "response_rmse8": 10.322101787448394
+              },
+              "fightAndSports1_subject1": {
+                "blocks": 20,
+                "response_rmse8": 4.761003395891315
+              },
+              "jumps1_subject5": {
+                "blocks": 32,
+                "response_rmse8": 10.931195191093396
+              },
+              "run1_subject2": {
+                "blocks": 16,
+                "response_rmse8": 1.1540878303978297
+              },
+              "run2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 8.069266569542751
+              },
+              "run2_subject4": {
+                "blocks": 24,
+                "response_rmse8": 7.387493896769498
+              },
+              "sprint1_subject2": {
+                "blocks": 44,
+                "response_rmse8": 14.203215666678327
+              },
+              "walk1_subject1": {
+                "blocks": 12,
+                "response_rmse8": 22.537648520436132
+              },
+              "walk1_subject5": {
+                "blocks": 28,
+                "response_rmse8": 95.28200142473987
+              },
+              "walk2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 7.29073775177647
+              },
+              "walk2_subject3": {
+                "blocks": 16,
+                "response_rmse8": 13.629800358130867
+              },
+              "walk3_subject1": {
+                "blocks": 32,
+                "response_rmse8": 7.889910687355342
+              },
+              "walk3_subject2": {
+                "blocks": 20,
+                "response_rmse8": 101.82999949379676
+              },
+              "walk3_subject3": {
+                "blocks": 8,
+                "response_rmse8": 6.984592263634949
+              },
+              "walk4_subject1": {
+                "blocks": 4,
+                "response_rmse8": 0.6255762107651522
+              }
+            },
+            "response_rmse_by_horizon": [
+              22.168796249528906,
+              13.45656664139511,
+              107.71929112753,
+              66.50876126064976,
+              12.353986929832866,
+              15.698146806497755,
+              12.257160983547003,
+              12.933285541878725,
+              49.16314514106884,
+              167.72032621890048,
+              102.81161573235572,
+              118.18329593943828,
+              127.87622629732222,
+              112.29995295163437,
+              121.98284912932658,
+              156.78514096225663,
+              81.4140656739042,
+              116.40417574276388,
+              112.82552243701767,
+              150.88575778056799,
+              134.12206332824272,
+              109.78981736624748,
+              111.76640755886984,
+              98.40590091080104,
+              102.49575557577208,
+              126.09237695863926,
+              147.52939216782096,
+              127.13704803053785,
+              120.2848443631285,
+              135.6765781392343,
+              133.7893148628294,
+              111.1238077244128
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.0004979402667686372,
+          "max_relative_delta": 2.4875765997496916e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        },
+        "cal": {
+          "recomputed": {
+            "blocks": 116,
+            "horizon": 32,
+            "forward_mse": 8.205191830940874,
+            "q_rmse32_rad": 0.05339050716752582,
+            "response_rmse4": 16.46491325288225,
+            "response_rmse8": 74.51016852234153,
+            "response_rmse32": 129.24256895134266,
+            "zero_response_rmse8": 73.8933037932721,
+            "zero_response_rmse32": 112.90487777260988,
+            "sessions": {
+              "dance2_subject1": {
+                "blocks": 8,
+                "response_rmse8": 263.94619483235016
+              },
+              "fightAndSports1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 61.60279437310788
+              },
+              "jumps1_subject1": {
+                "blocks": 4,
+                "response_rmse8": 50.00503545528656
+              },
+              "jumps1_subject2": {
+                "blocks": 32,
+                "response_rmse8": 20.335896501832295
+              },
+              "sprint1_subject4": {
+                "blocks": 44,
+                "response_rmse8": 21.475755380016157
+              },
+              "walk3_subject4": {
+                "blocks": 20,
+                "response_rmse8": 37.21301223161597
+              },
+              "walk3_subject5": {
+                "blocks": 4,
+                "response_rmse8": 8.054573583213598
+              }
+            },
+            "response_rmse_by_horizon": [
+              6.668473792229683,
+              9.128000500598057,
+              25.219227303956867,
+              17.904611473990006,
+              27.952830908168274,
+              196.80939042544543,
+              38.14014649307574,
+              48.57757241971636,
+              38.32245850253344,
+              52.52295878990957,
+              49.96346874396263,
+              55.22303408463041,
+              60.165702783970225,
+              200.62391120888938,
+              70.1547026595779,
+              83.93340399563851,
+              213.85419726778915,
+              114.27808039029664,
+              109.07451775565505,
+              91.69889269002697,
+              169.94667440299548,
+              129.9773900491515,
+              128.79890723716986,
+              143.4826364027304,
+              131.0699221180033,
+              122.43436078668316,
+              261.95935307813545,
+              132.35103852035394,
+              132.18213386394075,
+              258.2211164354359,
+              177.34665272455283,
+              168.90913051181283
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.006009636955212727,
+          "max_relative_delta": 3.5577846662648954e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        }
+      }
+    },
+    {
+      "job": "s4_B",
+      "seed": 4,
+      "candidate": "B",
+      "init_sha256": "4cf44009f22f441d4bc2f5d1f4de064ec2cb78453d878e01369d7e1bfd940e70",
+      "finite_weights": true,
+      "world_model_and_policy_updated": true,
+      "budget": {
+        "iterations": 1000,
+        "wm_updates": 5000,
+        "policy_updates": 1000,
+        "env_steps": 2625536,
+        "wm_batch": 256
+      },
+      "checkpoint_sha256": "63aa52df8f47a226f9278ad0e959da49b98d7614ed63a6070a74d2c6686ef791",
+      "splits": {
+        "fit": {
+          "recomputed": {
+            "blocks": 400,
+            "horizon": 32,
+            "forward_mse": 0.052878100156412984,
+            "q_rmse32_rad": 0.0038500875280378633,
+            "response_rmse4": 89.22346505936726,
+            "response_rmse8": 70.28278608845913,
+            "response_rmse32": 97.02429988943683,
+            "zero_response_rmse8": 71.15465545308139,
+            "zero_response_rmse32": 151.57913011324086,
+            "sessions": {
+              "dance1_subject2": {
+                "blocks": 4,
+                "response_rmse8": 27.986354884307165
+              },
+              "dance1_subject3": {
+                "blocks": 24,
+                "response_rmse8": 165.53398159303703
+              },
+              "dance2_subject2": {
+                "blocks": 12,
+                "response_rmse8": 21.148374369096892
+              },
+              "dance2_subject4": {
+                "blocks": 4,
+                "response_rmse8": 14.697379697439375
+              },
+              "dance2_subject5": {
+                "blocks": 8,
+                "response_rmse8": 17.011326548284963
+              },
+              "fallAndGetUp1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 11.321949557093903
+              },
+              "fallAndGetUp2_subject2": {
+                "blocks": 4,
+                "response_rmse8": 30.309365133033577
+              },
+              "fight1_subject3": {
+                "blocks": 20,
+                "response_rmse8": 24.254890171023337
+              },
+              "fight1_subject5": {
+                "blocks": 24,
+                "response_rmse8": 31.414194694710655
+              },
+              "fightAndSports1_subject1": {
+                "blocks": 20,
+                "response_rmse8": 31.285675528702672
+              },
+              "jumps1_subject5": {
+                "blocks": 32,
+                "response_rmse8": 29.035276651694133
+              },
+              "run1_subject2": {
+                "blocks": 16,
+                "response_rmse8": 8.249612024583097
+              },
+              "run2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 17.74363129518299
+              },
+              "run2_subject4": {
+                "blocks": 24,
+                "response_rmse8": 24.91908924929637
+              },
+              "sprint1_subject2": {
+                "blocks": 44,
+                "response_rmse8": 45.49045534562028
+              },
+              "walk1_subject1": {
+                "blocks": 12,
+                "response_rmse8": 32.53957235178048
+              },
+              "walk1_subject5": {
+                "blocks": 28,
+                "response_rmse8": 149.9753075161524
+              },
+              "walk2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 22.037211564562526
+              },
+              "walk2_subject3": {
+                "blocks": 16,
+                "response_rmse8": 28.80096589009464
+              },
+              "walk3_subject1": {
+                "blocks": 32,
+                "response_rmse8": 19.566050421528804
+              },
+              "walk3_subject2": {
+                "blocks": 20,
+                "response_rmse8": 146.2712174486056
+              },
+              "walk3_subject3": {
+                "blocks": 8,
+                "response_rmse8": 11.990764399593823
+              },
+              "walk4_subject1": {
+                "blocks": 4,
+                "response_rmse8": 7.597177863566633
+              }
+            },
+            "response_rmse_by_horizon": [
+              23.503717348297922,
+              21.672423953286938,
+              144.60064731378364,
+              99.55822907241568,
+              38.572594407830366,
+              40.998697340830354,
+              48.89520177861869,
+              45.98450080277567,
+              59.97186293000325,
+              80.35946087798696,
+              67.08190497509831,
+              121.07464796644653,
+              81.97318564409862,
+              69.59534527302162,
+              92.72911526140274,
+              113.24151511076325,
+              87.69882411808699,
+              120.35921137365189,
+              92.5234081075065,
+              144.9624253596658,
+              108.22526562782166,
+              89.97291564817891,
+              95.57677074221911,
+              89.50716236958176,
+              113.58777338307594,
+              112.00304368002502,
+              123.63574002306913,
+              122.9999522273816,
+              113.15323264324881,
+              125.25222011789505,
+              119.49235967280893,
+              110.38346129970908
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.0004980687287456931,
+          "max_relative_delta": 1.1997257928361365e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        },
+        "cal": {
+          "recomputed": {
+            "blocks": 116,
+            "horizon": 32,
+            "forward_mse": 8.274027289309869,
+            "q_rmse32_rad": 0.05342330535771611,
+            "response_rmse4": 17.387455200293374,
+            "response_rmse8": 74.52921778735733,
+            "response_rmse32": 151.42961322944254,
+            "zero_response_rmse8": 73.8933037932721,
+            "zero_response_rmse32": 112.90487777260988,
+            "sessions": {
+              "dance2_subject1": {
+                "blocks": 8,
+                "response_rmse8": 261.3693723618768
+              },
+              "fightAndSports1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 61.504114961436585
+              },
+              "jumps1_subject1": {
+                "blocks": 4,
+                "response_rmse8": 50.68539277560763
+              },
+              "jumps1_subject2": {
+                "blocks": 32,
+                "response_rmse8": 23.237637723595046
+              },
+              "sprint1_subject4": {
+                "blocks": 44,
+                "response_rmse8": 23.623006147362222
+              },
+              "walk3_subject4": {
+                "blocks": 20,
+                "response_rmse8": 38.82321856431191
+              },
+              "walk3_subject5": {
+                "blocks": 4,
+                "response_rmse8": 10.451671259053711
+              }
+            },
+            "response_rmse_by_horizon": [
+              6.942841958668024,
+              10.625410634553399,
+              26.121202498122983,
+              19.12785319383668,
+              29.829425122281563,
+              195.18472859894956,
+              40.3181229688167,
+              51.138206044931415,
+              42.25361750026639,
+              57.804115273555105,
+              53.06136146387755,
+              59.658740572200124,
+              69.77825309682055,
+              208.2473615511278,
+              93.53246046188129,
+              114.36828666767737,
+              230.44950697544007,
+              126.37280616949515,
+              116.40094367238021,
+              111.31102260999253,
+              192.2460508610628,
+              149.43627044587157,
+              148.13576048298202,
+              170.9339167548498,
+              163.0266875527838,
+              162.30015475898153,
+              280.16512895185446,
+              183.13886788303944,
+              204.4542667376891,
+              296.1989699854956,
+              238.8140990980519,
+              225.38729017838764
+            ]
+          },
+          "all_metrics_match": false,
+          "primary_metrics_match": true,
+          "discrepancies": [
+            {
+              "field": ".response_rmse_by_horizon[14]",
+              "recomputed": 93.53246046188129,
+              "logged": 93.54341942672576
+            },
+            {
+              "field": ".response_rmse_by_horizon[19]",
+              "recomputed": 111.31102260999253,
+              "logged": 111.32745081853996
+            }
+          ],
+          "same_device_repeat_identical": true,
+          "max_abs_delta": 0.016428208547424106,
+          "max_relative_delta": 0.0001475665563761227,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        }
+      }
+    },
+    {
+      "job": "s4_C_reference",
+      "seed": 4,
+      "candidate": "C_reference",
+      "init_sha256": "4cf44009f22f441d4bc2f5d1f4de064ec2cb78453d878e01369d7e1bfd940e70",
+      "finite_weights": true,
+      "world_model_and_policy_updated": true,
+      "budget": {
+        "iterations": 1000,
+        "wm_updates": 5000,
+        "policy_updates": 1000,
+        "env_steps": 2625536,
+        "wm_batch": 256
+      },
+      "checkpoint_sha256": "bba942dbcc3222538e016d660a82b05c5f17d414bff00e6a4a4c985967a97d01",
+      "splits": {
+        "fit": {
+          "recomputed": {
+            "blocks": 400,
+            "horizon": 32,
+            "forward_mse": 0.08444075982473805,
+            "q_rmse32_rad": 0.006207234973320821,
+            "response_rmse4": 13.22409007544574,
+            "response_rmse8": 16.99091254915898,
+            "response_rmse32": 108.68552342177826,
+            "zero_response_rmse8": 71.15465545308139,
+            "zero_response_rmse32": 151.57913011324086,
+            "sessions": {
+              "dance1_subject2": {
+                "blocks": 4,
+                "response_rmse8": 8.295591147728134
+              },
+              "dance1_subject3": {
+                "blocks": 24,
+                "response_rmse8": 28.96070044512427
+              },
+              "dance2_subject2": {
+                "blocks": 12,
+                "response_rmse8": 6.450911573443617
+              },
+              "dance2_subject4": {
+                "blocks": 4,
+                "response_rmse8": 3.699328160103007
+              },
+              "dance2_subject5": {
+                "blocks": 8,
+                "response_rmse8": 4.8051778399689145
+              },
+              "fallAndGetUp1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 5.089555187638084
+              },
+              "fallAndGetUp2_subject2": {
+                "blocks": 4,
+                "response_rmse8": 9.822130499285981
+              },
+              "fight1_subject3": {
+                "blocks": 20,
+                "response_rmse8": 5.746391612306371
+              },
+              "fight1_subject5": {
+                "blocks": 24,
+                "response_rmse8": 6.781187862651384
+              },
+              "fightAndSports1_subject1": {
+                "blocks": 20,
+                "response_rmse8": 4.9492805925704095
+              },
+              "jumps1_subject5": {
+                "blocks": 32,
+                "response_rmse8": 6.684124616096715
+              },
+              "run1_subject2": {
+                "blocks": 16,
+                "response_rmse8": 3.3628020917187946
+              },
+              "run2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 6.564376887872176
+              },
+              "run2_subject4": {
+                "blocks": 24,
+                "response_rmse8": 5.749002155635861
+              },
+              "sprint1_subject2": {
+                "blocks": 44,
+                "response_rmse8": 39.09527009729902
+              },
+              "walk1_subject1": {
+                "blocks": 12,
+                "response_rmse8": 6.553841536290293
+              },
+              "walk1_subject5": {
+                "blocks": 28,
+                "response_rmse8": 23.443441345400792
+              },
+              "walk2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 5.5071284468601265
+              },
+              "walk2_subject3": {
+                "blocks": 16,
+                "response_rmse8": 6.651317119059893
+              },
+              "walk3_subject1": {
+                "blocks": 32,
+                "response_rmse8": 6.520390897865046
+              },
+              "walk3_subject2": {
+                "blocks": 20,
+                "response_rmse8": 10.317985809946359
+              },
+              "walk3_subject3": {
+                "blocks": 8,
+                "response_rmse8": 6.420249555457463
+              },
+              "walk4_subject1": {
+                "blocks": 4,
+                "response_rmse8": 2.938913011830611
+              }
+            },
+            "response_rmse_by_horizon": [
+              7.583326736375713,
+              6.717276324625234,
+              21.267753558942147,
+              12.023320932176453,
+              19.376104893974382,
+              22.864069356886674,
+              11.793724762298758,
+              23.93181122572325,
+              54.26387272995218,
+              138.64341716590553,
+              83.09435632975834,
+              123.12143159121949,
+              138.10302623386332,
+              79.63190634436555,
+              92.57861636980572,
+              162.09699251609308,
+              89.93111489203825,
+              122.19752566408707,
+              129.02368153916788,
+              134.02746938817128,
+              144.89294414538875,
+              116.23614450896687,
+              123.59691662860148,
+              117.89243448443946,
+              122.32921339805272,
+              142.2615945217751,
+              134.0984030490162,
+              158.50243486206904,
+              123.71180223001461,
+              136.79641797380773,
+              132.9619200473907,
+              141.0209703455007
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.0006661512839087891,
+          "max_relative_delta": 1.6676889595981e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        },
+        "cal": {
+          "recomputed": {
+            "blocks": 116,
+            "horizon": 32,
+            "forward_mse": 8.412086868436369,
+            "q_rmse32_rad": 0.05525279563400913,
+            "response_rmse4": 18.67767502351366,
+            "response_rmse8": 75.56505998186589,
+            "response_rmse32": 167.98505062074406,
+            "zero_response_rmse8": 73.8933037932721,
+            "zero_response_rmse32": 112.90487777260988,
+            "sessions": {
+              "dance2_subject1": {
+                "blocks": 8,
+                "response_rmse8": 262.23814797414735
+              },
+              "fightAndSports1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 64.18752454724256
+              },
+              "jumps1_subject1": {
+                "blocks": 4,
+                "response_rmse8": 50.9486709169853
+              },
+              "jumps1_subject2": {
+                "blocks": 32,
+                "response_rmse8": 27.028337097138635
+              },
+              "sprint1_subject4": {
+                "blocks": 44,
+                "response_rmse8": 24.033675272816797
+              },
+              "walk3_subject4": {
+                "blocks": 20,
+                "response_rmse8": 42.13435988368998
+              },
+              "walk3_subject5": {
+                "blocks": 4,
+                "response_rmse8": 16.25453930598122
+              }
+            },
+            "response_rmse_by_horizon": [
+              7.265182859739362,
+              12.129820909125568,
+              27.25249351134047,
+              21.279293627312434,
+              29.569822609923083,
+              196.45986771148213,
+              42.71776904390117,
+              54.67670729739042,
+              48.43827015757773,
+              59.81976253608905,
+              62.88621384553925,
+              68.66509676153863,
+              87.06054981685033,
+              202.04840311967484,
+              77.48505626489082,
+              86.52050953182358,
+              213.2984954826852,
+              140.83307073166898,
+              141.9764956775616,
+              117.84217684377373,
+              201.97286736560014,
+              167.99200827968426,
+              164.3024964903659,
+              179.47217079473802,
+              171.9976161937478,
+              227.70884722491311,
+              316.6241710026792,
+              220.11701902542458,
+              258.82486144736987,
+              347.72999212941886,
+              257.65248618081154,
+              262.33035942090567
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.007847525772405106,
+          "max_relative_delta": 4.776038793780587e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        }
+      }
+    },
+    {
+      "job": "s4_C_huber_1e2",
+      "seed": 4,
+      "candidate": "C_huber_1e2",
+      "init_sha256": "4cf44009f22f441d4bc2f5d1f4de064ec2cb78453d878e01369d7e1bfd940e70",
+      "finite_weights": true,
+      "world_model_and_policy_updated": true,
+      "budget": {
+        "iterations": 1000,
+        "wm_updates": 5000,
+        "policy_updates": 1000,
+        "env_steps": 2625536,
+        "wm_batch": 256
+      },
+      "checkpoint_sha256": "4eda3185d38e2d7db22c3e0e9e627de131f2ecfe2edf99c9368fc04213e23003",
+      "splits": {
+        "fit": {
+          "recomputed": {
+            "blocks": 400,
+            "horizon": 32,
+            "forward_mse": 0.06095071940742855,
+            "q_rmse32_rad": 0.004380452433594747,
+            "response_rmse4": 72.43831813198462,
+            "response_rmse8": 52.20604046436871,
+            "response_rmse32": 102.91029730145584,
+            "zero_response_rmse8": 71.15465545308139,
+            "zero_response_rmse32": 151.57913011324086,
+            "sessions": {
+              "dance1_subject2": {
+                "blocks": 4,
+                "response_rmse8": 15.93098061012719
+              },
+              "dance1_subject3": {
+                "blocks": 24,
+                "response_rmse8": 159.53313728273136
+              },
+              "dance2_subject2": {
+                "blocks": 12,
+                "response_rmse8": 6.70441459480388
+              },
+              "dance2_subject4": {
+                "blocks": 4,
+                "response_rmse8": 1.7635111062226831
+              },
+              "dance2_subject5": {
+                "blocks": 8,
+                "response_rmse8": 6.8045228540173825
+              },
+              "fallAndGetUp1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 4.044427183298835
+              },
+              "fallAndGetUp2_subject2": {
+                "blocks": 4,
+                "response_rmse8": 17.48431548881566
+              },
+              "fight1_subject3": {
+                "blocks": 20,
+                "response_rmse8": 9.815113025101603
+              },
+              "fight1_subject5": {
+                "blocks": 24,
+                "response_rmse8": 9.577004732925559
+              },
+              "fightAndSports1_subject1": {
+                "blocks": 20,
+                "response_rmse8": 3.9418141468252994
+              },
+              "jumps1_subject5": {
+                "blocks": 32,
+                "response_rmse8": 10.9198976413234
+              },
+              "run1_subject2": {
+                "blocks": 16,
+                "response_rmse8": 1.0601624447734526
+              },
+              "run2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 7.43114846698049
+              },
+              "run2_subject4": {
+                "blocks": 24,
+                "response_rmse8": 7.9781979093516435
+              },
+              "sprint1_subject2": {
+                "blocks": 44,
+                "response_rmse8": 15.916681725298327
+              },
+              "walk1_subject1": {
+                "blocks": 12,
+                "response_rmse8": 22.688568875795763
+              },
+              "walk1_subject5": {
+                "blocks": 28,
+                "response_rmse8": 36.00015326660478
+              },
+              "walk2_subject1": {
+                "blocks": 20,
+                "response_rmse8": 7.49447950888022
+              },
+              "walk2_subject3": {
+                "blocks": 16,
+                "response_rmse8": 13.736250869395787
+              },
+              "walk3_subject1": {
+                "blocks": 32,
+                "response_rmse8": 9.7049563439248
+              },
+              "walk3_subject2": {
+                "blocks": 20,
+                "response_rmse8": 142.143211747942
+              },
+              "walk3_subject3": {
+                "blocks": 8,
+                "response_rmse8": 6.840516669923949
+              },
+              "walk4_subject1": {
+                "blocks": 4,
+                "response_rmse8": 0.5596886654463092
+              }
+            },
+            "response_rmse_by_horizon": [
+              22.367192012809394,
+              12.626963475100679,
+              141.79102412673362,
+              14.993789618207801,
+              16.014045814739628,
+              15.48395364016756,
+              12.163356658094271,
+              13.052809034707245,
+              49.14162026200735,
+              164.25025244985193,
+              107.30414012809042,
+              117.54475953918599,
+              125.61521778666076,
+              69.12786720952606,
+              96.16522039243978,
+              137.57707873975215,
+              81.61026119777179,
+              131.45298328562055,
+              132.2184201625108,
+              143.0682590447532,
+              93.37481225448077,
+              106.84573233364031,
+              101.98737074429671,
+              98.10692516722058,
+              104.58147008821763,
+              119.12263923073031,
+              130.62084736117833,
+              125.15982021155357,
+              118.5054839705121,
+              122.22682848875631,
+              114.43769354361685,
+              107.94122272194647
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.0005759601551460491,
+          "max_relative_delta": 3.207472876335138e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        },
+        "cal": {
+          "recomputed": {
+            "blocks": 116,
+            "horizon": 32,
+            "forward_mse": 8.201947485244279,
+            "q_rmse32_rad": 0.05446299503580626,
+            "response_rmse4": 16.357194112639952,
+            "response_rmse8": 74.05738350640704,
+            "response_rmse32": 132.79409883402678,
+            "zero_response_rmse8": 73.8933037932721,
+            "zero_response_rmse32": 112.90487777260988,
+            "sessions": {
+              "dance2_subject1": {
+                "blocks": 8,
+                "response_rmse8": 262.65353814612314
+              },
+              "fightAndSports1_subject4": {
+                "blocks": 4,
+                "response_rmse8": 61.629260412082175
+              },
+              "jumps1_subject1": {
+                "blocks": 4,
+                "response_rmse8": 50.16806390088414
+              },
+              "jumps1_subject2": {
+                "blocks": 32,
+                "response_rmse8": 19.306387279345593
+              },
+              "sprint1_subject4": {
+                "blocks": 44,
+                "response_rmse8": 20.324042173982978
+              },
+              "walk3_subject4": {
+                "blocks": 20,
+                "response_rmse8": 37.90534639737981
+              },
+              "walk3_subject5": {
+                "blocks": 4,
+                "response_rmse8": 7.205566447093137
+              }
+            },
+            "response_rmse_by_horizon": [
+              6.595832566586645,
+              9.379450377505016,
+              24.826585889210012,
+              17.955298198846126,
+              24.56459510241069,
+              195.87622194849402,
+              37.870374841927465,
+              48.996512830373,
+              40.20526339369633,
+              55.89484877973985,
+              55.03212972703956,
+              66.92229090043281,
+              68.627152059849,
+              204.58142735519277,
+              83.55605403892487,
+              94.21715669269138,
+              215.18742127728308,
+              110.37191338282187,
+              101.76456969876266,
+              91.35833509873862,
+              170.79542453108783,
+              128.58774160067557,
+              133.2905371571259,
+              143.6566086838788,
+              124.35793155814667,
+              133.7685095444217,
+              268.23365983668776,
+              138.17665289974312,
+              153.88390168817097,
+              261.69152543751017,
+              179.6633962067209,
+              188.703811981775
+            ]
+          },
+          "all_metrics_match": true,
+          "primary_metrics_match": true,
+          "discrepancies": [],
+          "same_device_repeat_identical": null,
+          "max_abs_delta": 0.0014831626309899093,
+          "max_relative_delta": 1.5667010472758607e-05,
+          "tolerance": {
+            "relative": 0.0001,
+            "absolute": 1e-05
+          }
+        }
+      }
+    }
+  ],
+  "shared_inputs": {
+    "code_sha256": "9e552a2b3e9234fbb534e55733ca1b93a284053dfd406c5dc279c9dc396e44c2",
+    "asset_sha256": "e75ac10a0f1d3aae0eac1ed885d51eace444bc1ff72342a95f2a9ddd14006baf",
+    "params_sha256": "c9c808a17b24fe5f47a2fa6ed4b4f22a71a9ce1808885c71e817c1ce60998c43",
+    "response_sha256": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302",
+    "motion_sha256": "5c6379d050b33e61811b293daa7951dc7ae041c525d56e3b09e429c0426c9704"
+  },
+  "queue_runner_note": "Current runner has missing-status diagnostics fixes; frozen worker, model source, assets and inputs are checked separately.",
+  "recompute_environment": {
+    "device": "NVIDIA GeForce RTX 3090",
+    "torch_version": "2.9.0+cu128",
+    "cuda_version": "12.8",
+    "wm_precision": "FP32",
+    "tf32": false
+  },
+  "finished_unix": 1795322130.910256,
+  "verified_file_count": 12,
+  "recomputed_run_count": 6,
+  "matched_initial_states_across_B_C": true
+}
