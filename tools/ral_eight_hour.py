@@ -149,13 +149,27 @@ def compare_pair(baseline, candidate, rule):
                 B_cal=b, C_cal=c)
 
 
+def session_next_action(state, completed):
+    status = state["status"]
+    if status == "disk_limit_reached":
+        detail = state.get("disk_check", {}).get("message", "旧记录未保存磁盘剩余量；请检查结果目录所在分区的可用空间及本队列产物大小。")
+        return f"磁盘限制导致提前停止。{detail} 释放或转移已备份文件，或使用 --output 指向空间充足的分区；修复后使用新的 --session 重跑。"
+    if status.startswith("preflight_"):
+        return "启动检查未通过；先查看 prepare.log 并修复原因，再使用新的 --session 重跑。"
+    if status in ("repeated_failures", "data_replay_failed", "runner_failed", "cancelled"):
+        return "队列提前停止；检查 status.json、prepare.log 和 jobs/*/console.log，修复停止原因后再安排新任务。"
+    if status in ("preparing", "running"):
+        return "队列仍在运行；等待已安排的任务在总时间预算内完成。"
+    if not completed:
+        return "没有可核验的完整训练结果；先检查任务状态、日志和检查点，不能视为训练完成。"
+    return "汇总相同计划及版本的种子结果进行复核；不自动追加训练、启动 D/C-perm 或正式测试。"
+
+
 def judge_sessions(paths, verify=True):
     pairs, runs, sessions, excluded, initializations = [], [], [], [], []
     for session in map(Path, paths):
         state, plan = read(session / "status.json"), read(session / "plan.json")
         validate_plan(plan)
-        sessions.append(dict(path=str(session), machine=state["machine"], status=state["status"],
-                             deadline_unix=state["deadline_unix"], current_job=state.get("current_job")))
         local = []
         for job in state["jobs"]:
             if job.get("status") != "completed" or job["kind"] == "amplitude":
@@ -176,6 +190,10 @@ def judge_sessions(paths, verify=True):
                 runs.append(row)
             except (OSError, ValueError, KeyError) as exc:
                 excluded.append(dict(session=str(session), job=job["id"], status="invalid", reason=str(exc)))
+        sessions.append(dict(path=str(session), machine=state["machine"], status=state["status"],
+                             deadline_unix=state["deadline_unix"], current_job=state.get("current_job"),
+                             completed_training_runs=len(local), disk_check=state.get("disk_check"),
+                             next_action=session_next_action(state, len(local))))
         baselines = {(x["kind"], x["seed"]): x for x in local if x["group"] == "B"}
         for seed in sorted({x["seed"] for x in local if x["kind"] == "policy"}):
             by_group = {x["group"]: x for x in local if x["kind"] == "policy" and x["seed"] == seed and x["group"] != "C"}
@@ -207,7 +225,7 @@ def judge_sessions(paths, verify=True):
                 test_outcomes_inspected=False, closed_loop_evaluation_performed=False,
                 sessions=sessions, completed_training_runs=len(runs), excluded=excluded,
                 paired_initialization_checks=initializations, paired_comparisons=pairs, decisions=decisions, windows_authorized=False,
-                next_action="Continue remaining preregistered candidates/seeds within the wall budget; no automatic longer training or D/C-perm. Review pooled same-plan seeds after collection.")
+                next_action="\n".join(f"{s['machine']}: {s['next_action']}" for s in sessions))
 
 
 @contextmanager
@@ -266,6 +284,23 @@ def output_size(path):
     return sum(p.stat().st_size for p in Path(path).rglob("*") if p.is_file())
 
 
+def check_disk(path, plan):
+    free, used = shutil.disk_usage(path).free, output_size(path)
+    minimum, maximum = plan["min_free_gib"] * 2**30, plan["max_output_gib"] * 2**30
+    reasons = []
+    if free < minimum:
+        reasons.append("insufficient_free_space")
+    if used >= maximum:
+        reasons.append("session_output_limit")
+    message = (f"结果目录 {path}：所在分区可用 {free / 2**30:.3f} GiB（最低 {plan['min_free_gib']:g} GiB）；"
+               f"本队列产物 {used / 2**30:.3f} GiB（上限 {plan['max_output_gib']:g} GiB）。")
+    if reasons:
+        message += " 停止原因：" + "、".join({"insufficient_free_space": "分区可用空间不足",
+                                                      "session_output_limit": "本队列产物达到上限"}[r] for r in reasons) + "。"
+    return dict(path=str(path), checked_unix=time.time(), free_bytes=free, output_bytes=used,
+                min_free_bytes=minimum, max_output_bytes=maximum, reasons=reasons, message=message)
+
+
 def run_queue(a):
     os.chdir(ROOT)
     plan = read(a.plan)
@@ -304,8 +339,19 @@ def run_queue(a):
             atomic_json(session / "status.json", state)
         def judgment():
             atomic_json(session / "judgment.json", judge_sessions([session], verify=False))
+        def disk_ready(announce=False):
+            state["disk_check"] = check_disk(session, plan)
+            blocked = bool(state["disk_check"]["reasons"])
+            if blocked:
+                state["status"] = "disk_limit_reached"
+            save()
+            if blocked or announce:
+                print(state["disk_check"]["message"], flush=True)
+            return not blocked
         save()
         try:
+            if not disk_ready(announce=True):
+                return 2
             prepare = [sys.executable, "-u", str(WORKER), "prepare", "--session", str(session),
                        "--machine", a.machine, "--params", str(Path(a.params).resolve()),
                        "--motions", str(Path(a.motions).resolve()), "--responses", str(Path(a.responses).resolve())]
@@ -324,8 +370,7 @@ def run_queue(a):
                 if a.max_jobs is not None and len(state["jobs"]) >= a.max_jobs:
                     state["status"] = "job_limit_reached"
                     break
-                if shutil.disk_usage(session).free < plan["min_free_gib"] * 2**30 or output_size(session) >= plan["max_output_gib"] * 2**30:
-                    state["status"] = "disk_limit_reached"
+                if not disk_ready():
                     break
                 job = dict(spec, status="running", started_unix=time.time())
                 state["jobs"].append(job)
@@ -376,6 +421,8 @@ def run_queue(a):
             for sig, handler in old_handlers.items():
                 signal.signal(sig, handler)
             print(f"记录目录：{session}\n结束状态：{state['status']}", flush=True)
+            report = read(session / "judgment.json")
+            print(f"完整训练结果：{report['completed_training_runs']}；后续处理：{report['next_action']}", flush=True)
     return 0 if state["status"] in ("time_budget_reached", "job_limit_reached", "queue_exhausted") else 2
 
 
@@ -417,6 +464,7 @@ def main():
     atomic_json(out, result)
     for s in result["sessions"]:
         print(f"{s['machine']}: {s['status']}；当前任务 {s['current_job'] or '无'}")
+        print(f"  完整训练结果 {s['completed_training_runs']}；{s['next_action']}")
     print(f"已核验 {result['completed_training_runs']} 次训练，{len(result['paired_comparisons'])} 个 B/C 配对，{len(result['excluded'])} 项未计入完整训练。")
     for d in result["decisions"]:
         print(f"{d['kind']} / {d['candidate']}: {d['decision']}；通过种子 {d['passing_seeds']}，全部种子 {d['seeds']}")

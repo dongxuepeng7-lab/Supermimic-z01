@@ -1,6 +1,8 @@
 """Control-flow and scientific comparison safeguards for unattended queues."""
 import copy
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import redirect_stdout
+import io
 import json
 import os
 from pathlib import Path
@@ -8,7 +10,9 @@ import subprocess
 import sys
 import tempfile
 import time
+from types import SimpleNamespace
 import unittest
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import ral_eight_hour as night
@@ -123,6 +127,74 @@ class QueueRules(unittest.TestCase):
             state["jobs"][0]["status"] = "timed_out"
             night.atomic_json(root / "status.json", state)
             self.assertEqual(night.judge_sessions([root])["completed_training_runs"], 0)
+
+    def test_legacy_empty_disk_stop_has_actionable_judgment(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            night.atomic_json(root / "plan.json", self.plan)
+            night.atomic_json(root / "status.json", dict(machine="4090", status="disk_limit_reached",
+                                                         deadline_unix=1., jobs=[]))
+            report = night.judge_sessions([root])
+            self.assertEqual(report["completed_training_runs"], 0)
+            self.assertEqual(report["decisions"], [])
+            self.assertIsNone(report["sessions"][0]["disk_check"])
+            self.assertIn("旧记录未保存", report["next_action"])
+            self.assertIn("--output", report["next_action"])
+
+
+class DiskStops(unittest.TestCase):
+    def run_with_disk(self, root, free_values, used=0):
+        plan = night.read(night.ROOT / "configs/ral/eight_hour.json")
+        plan_path = root / "plan.json"
+        night.atomic_json(plan_path, plan)
+        args = SimpleNamespace(plan=plan_path, hours=None, session="disk_test", machine="4090",
+                               output=root / "results", dry_run=False, max_jobs=None,
+                               params="params.csv", motions="motions", responses="manifest.json",
+                               allow_gpu_mismatch=False)
+        console = io.StringIO()
+        previous = Path.cwd()
+        try:
+            with mock.patch.object(night, "ROOT", root), \
+                    mock.patch.object(night.shutil, "disk_usage", side_effect=[SimpleNamespace(free=x) for x in free_values]), \
+                    mock.patch.object(night, "output_size", return_value=used), \
+                    mock.patch.object(night, "execute", return_value="completed") as execute, \
+                    redirect_stdout(console):
+                self.assertEqual(night.run_queue(args), 2)
+                calls = execute.call_count
+        finally:
+            os.chdir(previous)
+        session = root / "results/disk_test_4090"
+        state = night.read(session / "status.json")
+        report = night.read(session / "judgment.json")
+        self.assertEqual(state["status"], "disk_limit_reached")
+        self.assertEqual(state["jobs"], [])
+        self.assertEqual(report["completed_training_runs"], 0)
+        self.assertEqual(report["sessions"][0]["disk_check"], state["disk_check"])
+        self.assertIn("完整训练结果：0", console.getvalue())
+        self.assertIn("--session", report["next_action"])
+        return state, calls, console.getvalue()
+
+    def test_low_disk_stops_before_gpu_prepare_with_exact_reading(self):
+        with tempfile.TemporaryDirectory() as temp:
+            free = 14 * 2**30 + 123
+            state, calls, output = self.run_with_disk(Path(temp), [free])
+            self.assertEqual(calls, 0)
+            self.assertEqual(state["disk_check"]["free_bytes"], free)
+            self.assertEqual(state["disk_check"]["reasons"], ["insufficient_free_space"])
+            self.assertIn("最低 15 GiB", output)
+
+    def test_disk_rechecked_after_prepare_before_first_training(self):
+        with tempfile.TemporaryDirectory() as temp:
+            state, calls, _ = self.run_with_disk(Path(temp), [100 * 2**30, 14 * 2**30])
+            self.assertEqual(calls, 1)  # prepare only; no training process started
+            self.assertEqual(state["disk_check"]["free_bytes"], 14 * 2**30)
+
+    def test_output_limit_distinguished_from_free_space(self):
+        with tempfile.TemporaryDirectory() as temp:
+            state, calls, output = self.run_with_disk(Path(temp), [200 * 2**30], used=120 * 2**30)
+            self.assertEqual(calls, 0)
+            self.assertEqual(state["disk_check"]["reasons"], ["session_output_limit"])
+            self.assertIn("本队列产物达到上限", output)
 
 
 class Lifecycle(unittest.TestCase):
