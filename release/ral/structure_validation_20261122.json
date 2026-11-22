@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "stage": "online_Aplus_B",
+  "formal_results": false,
+  "research_training_launched": false,
+  "unit_tests": {
+    "passed": 44,
+    "command": "uv run --locked python -m unittest discover -s tests -p 'test_ral_*.py'"
+  },
+  "source_sha256": "10a2a80692337a2d151741f911d94e23cb7cdb1106d4500a7400ed61423f95d5",
+  "protocol_sha256": "cc92d219cfd808ad71a731787653f78bb0bed5cccdd5a6a5bb42b305731273e3",
+  "tools": {
+    "tools/ral_structure.py": "037601aa99db7204d8ae351c894501ca08497cd030a55664adaf6ead8bdebee0",
+    "tools/ral_structure_metrics.py": "a5f9303e60dc4a143250997dddeac685dbd82794f64606da4e317d36ee8cab2f",
+    "tools/ral_backend_check.py": "e783fbe9501a32bdf25d10281428f62854bfb49b1fa21fc99fa7a61178a46a86",
+    "tools/ral_recovery.py": "cc63c154acebb3e1cdc5e1be4f68a2822cb208da7db736da40a5fb6bc70892ba",
+    "tools/ral_eight_hour.py": "d870640d156fd83555799e46610c4bd09cbd4e74e2c07ef0711ac331bacc738e",
+    "tools/ral_eight_hour_worker.py": "44e7b15d8418858340e461c57173603e0b22314bb54252e74a1640d02c5bf21d",
+    "tools/ral_policy_diagnose.py": "413e44d9cbf19dea3dcc2224b8c44199b3ce7d7639e3feb2f1e76d72623ddd6b",
+    "uv.lock": "5115525597b58cfadaeae1885fc66ec977bda1e96dd15966bd2f8fa82f956565",
+    "pyproject.toml": "8317603450caa277cf36f3255bcfceaa1725029125d56a237dbaea4e7f404075",
+    "configs/ral/backend_check_v1.json": "da9a3f5b376cd74d517a6b9a02b9c448657c8b81ec8b8c069ce5faa6b55e7c44"
+  },
+  "gpu_smoke": {
+    "path": "logs/ral_structure/validation_training_smoke01",
+    "summary_sha256": "d27236cfdafdf8bfbe6d8a69ff5b0715fa23fcf8ab7cf6c7c53b6bc485cb143a",
+    "paired_initialization_passed": true,
+    "models": 2,
+    "policy_updates_per_model": 6,
+    "wm_updates_per_model": 12,
+    "environment_transitions_per_model": 632,
+    "wm_horizon": 8,
+    "policy_horizon": 32,
+    "small_networks": true,
+    "not_research_results": true,
+    "prediction_splits": {
+      "fit": true,
+      "cal": true
+    },
+    "evaluator_and_trajectory_recording_executed": true,
+    "clips": 163
+  },
+  "backend_check": {
+    "path": "logs/ral_structure/validation_backend_full01",
+    "summary_sha256": "9c2de72656a520e1e3933864e514a5f9ae34279447590b98ef0736e5b2cfefda",
+    "archive": "logs/ral_structure/validation_backend_full01_review.tar.gz",
+    "blocks": 24,
+    "passed_blocks": 23,
+    "passed": false,
+    "failed_blocks": [
+      "fightAndSports1_subject4__seg000:2:523"
+    ],
+    "gpu_repeat_design": "Two equally initialized worlds in one GPU batch, not separate processes",
+    "response_test_accessed": false,
+    "engineering_development_screen_only": true
+  },
+  "launch": {
+    "machine_5080": "seed 2 A+ then B",
+    "machine_4090": "seed 4 A+ then B",
+    "machine_3090": "backend check done; preserve discrepancy, await four new models for final evaluations",
+    "C_authorized": false
+  },
+  "old_source_archive": "release/ral/source_before_structure_4aec08f18679e513.tar.gz"
+}

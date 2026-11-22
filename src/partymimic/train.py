@@ -146,7 +146,13 @@ parser.add_argument("--lr_decay_len", type=int, default=300)
 parser.add_argument("--lr_decay_by", type=int, default=1400,
                     help="with --lr_decay_ret: start the decay at this iteration at the latest, also if the training return "
                          "has not reached --lr_decay_ret (0 = no deadline)")
+parser.add_argument("--paired_initialization", action=ON, default=False,
+                    help="Isolate WM/actor/critic initialization from the shared runtime random stream")
+parser.add_argument("--paired_initial_reference", default=None,
+                    help="Verify initial actor/critic tensors against this paired control before any update")
 args = parser.parse_args()
+if args.paired_initial_reference and not args.paired_initialization:
+    parser.error("--paired_initial_reference requires --paired_initialization")
 if args.wm_fit_source == "online" and args.experiment_group not in ("A0", "A", "A+", "B"):
     parser.error("--wm_fit_source online is a new A0/A/A+/B diagnostic; C hybrid supervision is not implemented")
 args.experiment_model = "base"
@@ -247,7 +253,9 @@ networks.RunningNorm.no_sync = True
 rotations.ELEMENTWISE = True
 
 from partymimic.experiments.models import make_world_model
-wm = make_world_model(robot, layout, vars(args)).to(dev)
+from partymimic.experiments.initialization import model_rng, stream_seeds, check_initial_reference
+with model_rng(args.seed, "wm", args.paired_initialization):
+    wm = make_world_model(robot, layout, vars(args)).to(dev)
 response_data = None
 if args.experiment_model != "base" and args.wm_fit_source == "legacy":
     from partymimic.experiments.response import (
@@ -259,8 +267,9 @@ if args.experiment_model != "base" and args.wm_fit_source == "legacy":
     if response_data.meta["source_type"] == "synthetic_test" and not args.synthetic_test:
         raise ValueError("Synthetic response fixtures require --synthetic_test")
     response_generator = torch.Generator(device=dev).manual_seed(args.seed + 7301)
-pi = Policy(mdp.obs_dim, GOAL_DIM, J, hist=Hh, enc_hidden=widths(args.enc_hidden), dec_hidden=widths(args.dec_hidden),
-            **policy_kwargs(vars(args), robot)).to(dev)
+with model_rng(args.seed, "pi", args.paired_initialization):
+    pi = Policy(mdp.obs_dim, GOAL_DIM, J, hist=Hh, enc_hidden=widths(args.enc_hidden), dec_hidden=widths(args.dec_hidden),
+                **policy_kwargs(vars(args), robot)).to(dev)
 Q0 = torch.tensor(robot.default_joint_pos_list(), device=dev)
 
 
@@ -298,7 +307,10 @@ def fit_kp2q(dst: networks.FrozenMLP) -> None:
 if args.kp_skip:
     fit_kp2q(pi.kp2q)
 pi_l = copy.deepcopy(pi).to(ldev) if args.pipeline else pi  # --pipeline: the trained policy; pi acts with its copy
-critic = Critic(CRITIC_IN).to(ldev)
+with model_rng(args.seed, "critic", args.paired_initialization):
+    critic = Critic(CRITIC_IN).to(ldev)
+if args.paired_initial_reference:
+    check_initial_reference({"pi": pi, "critic": critic}, args.paired_initial_reference)
 ledger = None
 if args.experiment_group:
     from partymimic.experiments.runtime import RunLedger
@@ -820,6 +832,10 @@ sim_cfg = make_sim(robot)
 # the simulator wrapper calls these once per control step in eager mode otherwise (FK + rotations: thousands of kernels)
 mdp.reward, mdp.termination, mdp.obs = compile_fn(mdp.reward), compile_fn(mdp.termination), compile_fn(mdp.obs)
 motion.goal = compile_fn(motion.goal)
+if args.paired_initialization:
+    # Collection/reset and replay share this stream. Model construction cannot advance it;
+    # different learned policies still collect different transitions (not paired labels).
+    torch.manual_seed(stream_seeds(args.seed)["runtime"])
 env = TrackingSim(sim_cfg, args.num_envs, robot, motion, mdp, dev, gamma=args.gamma, fail_reset=args.fail_reset,
                   div_k=args.div_k, div_tau=args.div_tau)
 PROFILE = os.environ.get("PM_PROFILE") == "1"  # time the physics substep and the phases of an iteration

@@ -1,0 +1,181 @@
+\documentclass[letterpaper,10pt,conference]{ieeeconf}
+\IEEEoverridecommandlockouts
+\overrideIEEEmargins
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,booktabs,etoolbox}
+\usepackage[hidelinks]{hyperref}
+\makeatletter
+\patchcmd{\@makecaption}{\footnotesize\scshape}{\footnotesize\normalfont\rmfamily}{}{\PackageError{lilun}{Caption patch failed}{}}
+\makeatother
+\renewcommand{\theequation}{A\arabic{equation}}
+\renewcommand{\thetable}{A\Roman{table}}
+\newcommand{\ER}{E_R}
+\begin{document}
+\twocolumn[{
+\begin{center}
+{\Large\bfseries lilun Version: Mathematical Derivations}\par\vspace{5pt}
+{\normalsize Analytical supplement to the Z01 actuator world-model manuscript}\par\vspace{5pt}
+{\small\bfseries Derived protocol quantities and conditional results; no new experimental observations.}
+\end{center}
+\vspace{7pt}
+}]
+
+\section*{A. Scope and fixed inputs}
+This supplement accompanies the unchanged eight-page results manuscript. It distinguishes exact calculations from ideal limits and untested hypotheses. No completion rate, held-out error, hardware measurement or training speed is inferred as an observed result. Pending entries in the main manuscript remain pending.
+
+The calculations use the archived full-budget configuration: $J=26$ joints, control interval $\Delta t=0.02$~s, physics interval $\delta t=0.005$~s, paired horizon $H_p=32$, perturbation norm $\epsilon=0.01$~rad, and $I=1000$ training iterations. There are $N_e=1024$ parallel environments, $W=64$ warm-up steps, update-to-vectorized-step ratio $u=0.4$, five world-model updates per iteration, world-model batch size 256 and actor batch size 512. Counts below describe a fresh, completed run with no world-model-only iterations or restart.
+
+\section*{B. Time scales and collection budget}
+For a horizon of $H$ control steps,
+\begin{equation}
+ T_H=H\Delta t,\qquad N_{\rm physics}(H)=H\Delta t/\delta t=4H.
+\end{equation}
+The implied control and physics rates are 50 and 200~Hz. These are simulator rates, not measured hardware event rates. A 20-step shared pre-roll spans 400~ms and 80 physics steps.
+
+\begin{center}
+\small
+\begin{tabular}{@{}rrr@{}}
+\toprule
+Control steps $H$ & Duration (ms) & Physics steps \\
+\midrule
+1 & 20 & 4 \\
+4 & 80 & 16 \\
+8 & 160 & 32 \\
+10 & 200 & 40 \\
+32 & 640 & 128 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The collector accumulates $1/u=2.5$ vectorized steps per iteration, alternating integer collection counts. Thus
+\begin{equation}
+\begin{aligned}
+ N_{\rm vec}&=W+\lfloor I/u\rfloor=64+2500=2564,\\
+ N_{\rm env}&=N_e N_{\rm vec}=2{,}625{,}536.
+\end{aligned}
+\end{equation}
+At four physics substeps per control step, this corresponds to $10{,}502{,}144$ environment-physics substeps. It excludes offline pair generation, evaluation and any extra warm-up after resuming. Each environment slot advances through 51.28~s of accumulated control time, possibly across episode resets; this is not uninterrupted tracking duration or wall-clock runtime.
+
+The scheduled world-model update count is
+\begin{equation}
+ N_{\rm wm}=1000\times5=5000.
+\end{equation}
+Consequently, $5000\times256=1{,}280{,}000$ batch items are drawn for fitting. Sampling may repeat the same items; this is not the number of independent trajectories. The actor receives 1000 scheduled updates. Its assigned rollout budget at fixed $H=32$ is
+\begin{equation}
+ N_{\rm imag}=1000\times512\times32=16{,}384{,}000.
+\end{equation}
+This counts assigned actor-rollout steps, not total network evaluations, valid surviving steps, hardware FLOPs or elapsed time.
+
+\section*{C. Perturbation magnitude and response normalization}
+The direction $D$ is normalized over the entire $32\times26$ command sequence, with $d=832$ entries and $\|D\|_2=1$. Therefore
+\begin{equation}
+\begin{aligned}
+ \|U^\pm-U\|_2&=\epsilon=0.01\ \mathrm{rad},\\
+ \|U^+-U^-\|_2&=2\epsilon=0.02\ \mathrm{rad},\\
+ {\rm RMS}_{h,j}(\epsilon D_{h,j})
+ &=\frac{\epsilon}{\sqrt{d}}
+ =0.346688\ \mathrm{mrad}.
+\end{aligned}
+\end{equation}
+The RMS identity holds for every unit-norm direction. It does not mean that each joint receives the same perturbation or that the peak is 0.346688~mrad. For isotropic normalized Gaussian directions, the expected squared value of one perturbation entry is $\epsilon^2/d=1.201923\times10^{-7}$~rad$^2$.
+
+There are $2J=52$ output channels (angle and speed). The response metric in the manuscript averages $52NH$ scalar squared errors before taking a square root. For full, unmasked blocks the nominal term counts are:
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Split & Pairs $N$ & $52N\times8$ & $52N\times32$ \\
+\midrule
+Fit & 400 & 166,400 & 665,600 \\
+Calibration & 116 & 48,256 & 193,024 \\
+Locked test & 136 & 56,576 & 226,304 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These counts follow from the declared split sizes, not from test outcomes. Locked-test arrays were not opened for this supplement. Channels, time steps and blocks from a source session are not independent experimental replications.
+
+\section*{D. Resolution of completion reporting}
+With 163 clips, a single additional completion changes a per-seed percentage by
+\begin{equation}
+ \Delta p=\frac{100}{163}=0.613497\text{ percentage points}.
+\end{equation}
+For an equally weighted mean across five seeds with the same clip count, changing one clip outcome in one seed changes the mean by $100/(5\times163)=0.122699$ percentage points. This is arithmetic resolution, not a confidence interval or minimum detectable effect. It predicts neither the success count nor its uncertainty.
+
+\clearpage
+\twocolumn[{
+\begin{center}
+{\large\bfseries lilun Version: Conditional Theory and Unfilled Outcomes}\par\vspace{4pt}
+{\small\bfseries Equalities and ideal bounds below are not measured performance.}
+\end{center}
+\vspace{7pt}
+}]
+
+\section*{E. What response supervision can guarantee}
+Write $F(\theta)$ for the common forward training loss and $G(\theta)$ for one fixed response-loss definition, such as mean squared response error. Assume B and C use the same parameter space and fitting data, $\lambda>0$, and both global minima exist and are attained:
+\begin{equation}
+ \theta_B\in\arg\min_\theta F(\theta),\qquad
+ \theta_C\in\arg\min_\theta[F(\theta)+\lambda G(\theta)].
+\end{equation}
+Optimality gives
+\begin{equation}
+\begin{aligned}
+ F(\theta_B)&\le F(\theta_C),\\
+ F(\theta_C)+\lambda G(\theta_C)
+ &\le F(\theta_B)+\lambda G(\theta_B).
+\end{aligned}
+\end{equation}
+Combining the two inequalities yields
+\begin{equation}
+ \lambda[G(\theta_C)-G(\theta_B)]
+ \le F(\theta_B)-F(\theta_C)\le0.
+\end{equation}
+Thus $G(\theta_C)\le G(\theta_B)$ and $F(\theta_C)\ge F(\theta_B)$, with equality possible. Finite optimization need not attain these minima. This concerns the selected fitting loss, not a different MSE metric after Huber training, test error or policy return.
+
+\section*{F. Forward accuracy does not fix response accuracy}
+For one supervised step define the scaled branch errors
+$e^\pm=W_y(y_{\rm wm}^\pm-y_{\rm ref}^\pm)$. Then the response-error identity and triangle inequality are
+\begin{equation}
+\begin{aligned}
+ W_y(R_{\rm wm}-R_{\rm ref})&=\frac{e^+-e^-}{2\epsilon},\\
+ \|W_y(R_{\rm wm}-R_{\rm ref})\|_2
+ &\le\frac{\|e^+\|_2+\|e^-\|_2}{2\epsilon}.
+\end{aligned}
+\end{equation}
+If both branch errors are bounded by $\eta$, the response bound is $\eta/\epsilon=100\eta$ per radian of command. Average forward RMSE does not establish this uniform bound. Branch errors may cancel or amplify, so lower forward error alone does not guarantee better response.
+
+For a scalar output with branch noise variance $\sigma^2$ and cross-branch correlation $\rho$, noise in the finite difference has variance
+\begin{equation}
+ {\rm Var}(R_{\rm noise})
+ =\frac{\sigma^2(1-\rho)}{2\epsilon^2}.
+\end{equation}
+For independent noise ($\rho=0$), the standard deviation is $70.710678\,\sigma$ per radian of command. Neither $\sigma$ nor $\rho$ is measured here. This conditional stochastic calculation is not a measured simulator noise floor.
+
+Within a smooth regime, let $f(s)=y(U+sD)$. If the third directional derivative has norm bounded by $M_3$ for $|s|\le\epsilon$, central differencing satisfies
+\begin{equation}
+ \left\|\frac{f(\epsilon)-f(-\epsilon)}{2\epsilon}-f'(0)\right\|_2
+ \le\frac{M_3\epsilon^2}{6}.
+\end{equation}
+No numerical error follows without $M_3$. Contact switches and saturation boundaries can invalidate the smoothness condition; finite-amplitude response must then be interpreted directly.
+
+\section*{G. Exact controls for D versus C-perm}
+For a batch of $M$ rollout starts let D assign $n_s$ short and $n_l$ long windows, with $n_s+n_l=M$. C-perm applies a permutation $\pi$ to those assignments:
+\begin{equation}
+ H_i^{\rm perm}=H_{\pi(i)}^D,\qquad
+ \sum_i H_i^{\rm perm}=\sum_i H_i^D=n_sH_s+n_lH_l.
+\end{equation}
+The histogram and assigned budget are equal. Identical windows make permutation ineffective; with identical starts, random draws and arithmetic, actor updates coincide. Otherwise the proposed benefit concerns window-to-state assignment. Padding, survival masking and overhead still affect runtime.
+
+Because the world model is frozen and shared, its forward predictions and response errors must also agree when evaluated on identical fixed inputs. The learned actors can visit different states, so policy-conditioned error distributions and control outcomes need not agree. No ordering of D and C-perm completion rates follows from the budget identity.
+
+\section*{H. Meaning of the remaining empty cells}
+\emph{D/C-perm control.} Only $0\le p\le100\%$, $\mathrm{RMSE}\ge0$ and $0\le t_i\le T_i$ follow without further assumptions; $T_i$ is the prescribed clip duration. Exact world-model prediction alone does not guarantee feasible control or successful policy optimization.
+
+\emph{Locked response tests.} Exact agreement with the reference on every evaluated branch gives $\ER=0$. This is an ideal lower limit, not a substitute for a measured test value. The response error of a zero-response predictor still depends on the actual reference responses and cannot be inferred from sample counts.
+
+\emph{Known-parameter recovery and timing refits.} Zero recovery error is an ideal case requiring an exact noiseless model, identifiable parameters and a correct global solution. No nonzero hardware RMSE, timing-model improvement or session timestamp can be calculated without the corresponding records and fit.
+
+\emph{Efficiency.} The counts in Sections B and G are scheduled work. Transitions and time to a prespecified performance target require checkpoint evaluations and timing records. Runs that never meet the target are censored, not assigned zero time. No speedup factor is supplied by the present theory.
+
+\end{document}

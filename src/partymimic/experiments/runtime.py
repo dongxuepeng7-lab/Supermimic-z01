@@ -65,6 +65,7 @@ class RunLedger:
             status="running",
             args=vars(args),
             init_sha256=state_hash(modules),
+            initial_module_sha256={name: state_hash({name: module}) for name, module in modules.items()},
             code_sha256=object_hash(source),
             asset_sha256=object_hash(assets),
             motion_sha256=object_hash(motions),
@@ -88,6 +89,14 @@ class RunLedger:
             formal_results=False,
             started_unix=time.time(),
         )
+        if getattr(args, "paired_initialization", False):
+            from .initialization import stream_seeds
+            self.data["random_streams"] = dict(
+                seeds=stream_seeds(args.seed),
+                model_initialization="isolated CPU/CUDA fork_rng per module",
+                runtime="shared collection/reset/replay stream, seeded before simulator construction",
+                identical_training_labels=False,
+            )
         (self.root / "input_inventory.json").write_text(
             json.dumps(dict(code=source, assets=assets, motions=motions), indent=2)
         )

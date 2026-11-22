@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "stage": "online_structure_development",
+  "status": "runner_implemented_development_launch_ready",
+  "executable_training_config": false,
+  "purpose": "Test whether structured B retains control and improves common development predictions relative to online A+.",
+  "prerequisite_review": "release/ral/recovery01_review_20261122.json",
+  "formal_results": false,
+  "training_seeds": [
+    2,
+    4
+  ],
+  "groups": [
+    "A+",
+    "B"
+  ],
+  "assignments": {
+    "5080": {
+      "seed": 2,
+      "ordered_groups": [
+        "A+",
+        "B"
+      ],
+      "complete_training_runs": 2
+    },
+    "4090": {
+      "seed": 4,
+      "ordered_groups": [
+        "A+",
+        "B"
+      ],
+      "complete_training_runs": 2
+    },
+    "3090": {
+      "before_models_arrive": [
+        "Preserve the completed historical 4090 metadata audit; model binaries remain on 4090",
+        "Preserve completed backend screen and inspect failed cal block; do not rerun the same full check or remove the failed block"
+      ],
+      "after_models_arrive": [
+        "Verify four new model packages, complete budgets and same-seed initial actor/critic hashes",
+        "Evaluate each final EMA policy twice on the common identified reference plant",
+        "Compare common development forward/response errors with the zero-response baseline"
+      ]
+    }
+  },
+  "training_requirements": {
+    "reference_configuration": "configs/ral/recovery_online_v1.json",
+    "policy_updates_per_run": 1000,
+    "world_model_updates_per_run": 5000,
+    "environment_transitions_per_run": 2625536,
+    "wm_fit_source": "online",
+    "wm_window": 8,
+    "policy_horizon": 32,
+    "response_weight": 0.0,
+    "plant": "identified",
+    "paired_initial_actor_and_critic": "Required identical tensor hashes within each seed; isolate random streams before model construction and record collection/replay RNG settings",
+    "shared_settings": "Motion inventory, parameter manifest, action interface, reward, termination rules, randomization distribution, precision, learning rates and update budgets",
+    "online_labels": "Policies collect different transitions; do not claim identical training labels",
+    "historical_checkpoint_reuse": false
+  },
+  "evaluation_requirements": {
+    "evaluator_machine": "3090",
+    "final_iteration": 1000,
+    "checkpoint_weights": "EMA",
+    "evaluation_seed": 0,
+    "reference_clips": 163,
+    "plant": "identified",
+    "repeats_per_model": 2,
+    "scheduled_final_evaluations": 8,
+    "primary_evaluation": "First evaluation; second is a repeatability check, not another training seed",
+    "intermediate_checkpoints": "Preserve 250/500 checkpoints for triggered diagnosis, never replace final with best intermediate",
+    "save_trajectories": "First final evaluation of each B model",
+    "prediction_metrics": [
+      "Common fit/cal forward joint-angle errors at 8/32 steps",
+      "Common scaled response errors at 4/8 steps versus A+ and zero response"
+    ],
+    "locked_response_test_access": false,
+    "heldout_claims": false
+  },
+  "proposed_development_gates_to_freeze_before_training": {
+    "Aplus_completion_min": 0.7,
+    "B_completion_drop_max": 0.05,
+    "B_median_duration_ratio_min": 0.9,
+    "repeat_completion_spread_max": 0.03,
+    "aggregation": "Conservative repeat extrema within each seed; require both seeds and all budget/input checks",
+    "meaning": "Readiness to investigate C, not evidence of superiority, equivalence or significance"
+  },
+  "response_backend_validation": {
+    "status": "development_screen_completed_23_of_24_passed_overall_failed",
+    "splits": [
+      "fit",
+      "cal"
+    ],
+    "score_horizons": [
+      4,
+      8
+    ],
+    "epsilon_factors": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "required_controls": [
+      "Same recorded initial physical state, commands, parameters, step sizes and stored perturbation directions",
+      "Unperturbed trajectory and separate plus/minus trajectories",
+      "Within-backend repeatability, cross-backend forward differences and central-difference responses"
+    ],
+    "tolerance": "Prespecify and justify against numerical repeatability and response scale before inspection; never tune solely to pass",
+    "existing_cpu_amplitude_probe_is_sufficient": false,
+    "configuration": "configs/ral/backend_check_v1.json",
+    "result": "logs/ral_structure/validation_backend_full01/summary.json",
+    "failed_block": "fightAndSports1_subject4__seg000:2:523"
+  },
+  "stop_rules": [
+    "Failed A+ control, incomplete budget or invalid input/weights stops that machine before B",
+    "Failed B control triggers diagnosis using saved checkpoints and trajectories, not automatic budget extension or relaxed termination",
+    "Do not start C until B control and response-data validity are established and a hybrid objective is implemented",
+    "D/C-perm remain pending validated response calibration and a justified window tolerance"
+  ],
+  "historical_4090": {
+    "status": "metadata_audited_52_complete_runs_weights_not_transferred",
+    "session": "logs/ral_8h/night01_retry_4090",
+    "session_identity_confirmed": true,
+    "review_summary": "release/ral/night01_retry_4090_review_20261122.json",
+    "completed_training_runs": 52,
+    "timed_out_training_runs": 1,
+    "closed_loop_results_available": false,
+    "preserve_all_results": true,
+    "pool_with_online_stage": false
+  },
+  "launch_readiness": {
+    "new_common_runner": "tools/ral_structure.py",
+    "paired_initialization_implementation_and_validation": "isolated module RNG + initial tensor reference check; unit and bounded GPU validation",
+    "new_source_and_protocol_fingerprints": "release/ral/structure_protocol_v1.json",
+    "old_recovery_runner_supports_this_plan": false,
+    "old_eight_hour_queue_is_this_plan": false,
+    "training_launched": false
+  },
+  "execution_config": "configs/ral/structure_online_v1.json",
+  "frozen_protocol": "release/ral/structure_protocol_v1.json"
+}

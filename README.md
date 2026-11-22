@@ -126,6 +126,8 @@ uv run python tools/play_reference.py \
 
 ## 训练
 
+**当前 RA-L 开发阶段：在线 A+/B 结构对照。** 5080 执行 seed 2，4090 执行 seed 4；每台先 A+ 后 B，均训练世界模型、策略和价值网络。3090 负责响应后端检查与最终模型复核。入口为 `scripts/ral_5080_structure.sh`、`scripts/ral_4090_structure.sh`、`scripts/ral_3090_backend_check.sh` 和 `scripts/ral_3090_structure_eval.sh`。完整同步、启动、回传和判断命令见 [当前三机操作说明](docs/ral_experiments.md#structure-stage-launch)。旧 8 小时队列保留为历史实验，不是当前启动方案。
+
 RA-L 论文的 **A0、A、A+、B、C、C-perm、D 七组**使用独立的实验入口和参数清单，见
 [七组实验执行说明](docs/ral_experiments.md) 与 [任务清单](configs/ral/tasks.json)。
 入口为 `uv run python tools/ral.py --help`。当前已导入 2026-11-20 辨识快照；

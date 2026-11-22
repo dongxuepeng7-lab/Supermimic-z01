@@ -102,3 +102,14 @@ logs/ral_verification/manuscript_before_template_20261122/：修订前的源稿�
 排版：保留 8 页及全部表格数值、公式、摘要和参考文献；精简闭环与失败分析中的重复表述。全部 8 页渲染检查通过，两处表题仍为约 8 pt 的 Nimbus Roman 正体，无溢出或未解析引用。
 输出：output/pdf/Z01_RAL_Clarified_20261122.pdf。
 审计：release/ral/manuscript_zero_clarification_20261122.json。
+
+
+九、2026-11-22 lilun 理论推导版（独立版本）
+
+用户要求将可由数学公式推导的数值加入论文并命名为 lilun 版。output/pdf/lilun版.pdf 保留前 8 页原论文，追加第 9--10 页理论附录，共 10 页；项目目录另保存同名副本。RA-L_English_Draft.pdf 和 manuscript.tex 不受本次理论版生成影响。
+
+附录含 13 个编号公式：时域换算、采集与更新预算、扰动维度及逐元素 RMS、响应指标的标量项数、完成率报告分辨率、同一模型空间下响应正则项的理想全局最优不等式、前向误差到响应误差的上界、有限差分噪声和截断误差、D/C-perm 等预算恒等式。全部数值分别注明协议推导、条件结论或理想界限。
+
+未将理论下限或假设改填为实测完成率、测试误差或加速比；D/C-perm 等实验格仍保留 Pending。第 9 页中的锁定测试项数来自已声明的 136 对样本数量，本次未读取锁定测试数组。
+
+可编辑附录：lilun_appendix.tex。计算与来源核验：release/ral/manuscript_lilun_20261122.json。

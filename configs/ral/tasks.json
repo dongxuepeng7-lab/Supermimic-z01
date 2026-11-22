@@ -31,8 +31,8 @@
     {
       "id": "PAIR-01",
       "owner": "3090_eval",
-      "status": "generated_pending_backend_validation",
-      "task": "Frozen CPU physics +/- pairs generated: fit 400, cal 116, test 136, with disjoint source sessions and 32-step horizons. Validate CPU/GPU response discrepancy before formal claims; preserve scales, amplitudes and hashes."
+      "status": "development_backend_screen_failed_1_of_24",
+      "task": "Executed prespecified fit/cal CPU/training-scene GPU check on local 3090: 23/24 blocks passed; cal fightAndSports1_subject4__seg000:2:523 failed. Archived CPU replay and initial-state reconstruction pass; response discrepancy remains. Preserve raw arrays and thresholds; do not remove the block or enable C. See logs/ral_structure/validation_backend_full01 and release/ral/structure_validation_20261122.json. Locked test arrays untouched."
     },
     {
       "id": "TRAIN-01",
@@ -79,26 +79,26 @@
     {
       "id": "NIGHT-3090",
       "owner": "3090_eval",
-      "status": "independent_recovery_checkpoint_evaluation_ready",
-      "task": "After transfer of the new 5080 recovery session, run scripts/ral_3090_recover_eval.sh: 250/500/1000 update checkpoints, repeat final evaluations, record final A+ trajectories and immutable input/checkpoint fingerprints. Sixteen reference-library development checks; report final-checkpoint gates, not best intermediate models. Prior 19 diagnostics are complete and should not be repeated without new evidence."
+      "status": "backend_screen_complete_waiting_structure_models",
+      "task": "Backend screen completed: 1/24 development blocks fails; diagnose preserved trajectories without relaxing criteria. No need to repeat the same full check locally. After 5080/4090 new online A+/B packages arrive, verify four complete models, initial hashes, and final EMA twice each (eight checks), plus common fit/cal predictions. Response metrics remain diagnostic and C stays blocked."
     },
     {
       "id": "NIGHT-4090",
       "owner": "4090_train",
-      "status": "historical_queue_not_current_priority",
-      "task": "Preserve any completed or active historical queue results. The old eight-hour script remains available, but the current priority is the separately versioned 5080/3090 A/A+ recovery experiment. Do not interpret old queue completion as closed-loop success."
+      "status": "structure_seed4_ready",
+      "task": "Historical night01_retry_4090 metadata audit is complete; preserve its checkpoints. Execute scripts/ral_4090_structure.sh: seed 4 online A+ then B under the same structure protocol and full budgets. Send the generated transfer archive with initial/250/500/1000 snapshots, not the whole historical directory."
     },
     {
       "id": "NIGHT-5080",
       "owner": "5080_train",
-      "status": "online_A_Aplus_recovery_ready",
-      "task": "Run scripts/ral_5080_recover.sh under recovery_online_v1: seeds 2/4, A/A+, 1000 policy and 5000 WM updates, online 8-step GPU fitting and normalizers. Four runs only, local physical-loop checks, stop on failed baseline; export selected checkpoints and provenance. New diagnostic protocol; never pool with night01 or auto-run C. See latest docs section."
+      "status": "structure_seed2_ready",
+      "task": "Execute scripts/ral_5080_structure.sh: seed 2 online A+ then B, 1000 policy/5000 WM updates each. Isolated module initialization and pre-update B reference checks; A+ completion below 70% stops before B. New frozen structure protocol only. Preserve recovery and historical queues; do not launch C."
     },
     {
       "id": "RECOVERY-01",
       "owner": "5080_train_and_3090_eval",
-      "status": "implemented_pending_full_budget_experiment",
-      "task": "First restore online A+ before controlled B and C tests. Online changes data, normalization and the forward objective together; recovery does not isolate a unique root cause. Existing A/A+ random streams are not identical across different model widths. Development gates are not equivalence tests. Online C is deliberately rejected pending a validated hybrid loss design; response test remains locked."
+      "status": "full_budget_recovery_completed_development_gates_passed",
+      "task": "recover01 passed all predeclared development gates on 3090: final A+ completed 136/132 clips for seed 2 and 133/136 for seed 4 across two evaluations of 163 clips; A completed 127/131 and 129/129. Online changes data, normalization and the forward objective together, so recovery does not isolate a unique root cause. A/A+ widths and initialization differ; these two-seed development results do not establish benefit, equivalence, or B/C contributions. Online C remains rejected pending validated hybrid supervision; response test remains locked."
     }
   ]
 }
