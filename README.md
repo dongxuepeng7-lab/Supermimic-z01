@@ -126,16 +126,16 @@ uv run python tools/play_reference.py \
 
 ## 训练
 
-**当前 RA-L 开发阶段：在线 A+/B 结构对照。** 5080 执行 seed 2，4090 执行 seed 4；每台先 A+ 后 B，均训练世界模型、策略和价值网络。3090 负责响应后端检查与最终模型复核。入口为 `scripts/ral_5080_structure.sh`、`scripts/ral_4090_structure.sh`、`scripts/ral_3090_backend_check.sh` 和 `scripts/ral_3090_structure_eval.sh`。完整同步、启动、回传和判断命令见 [当前三机操作说明](docs/ral_experiments.md#structure-stage-launch)。旧 8 小时队列保留为历史实验，不是当前启动方案。
+**当前 RA-L 开发阶段：三机 8 小时在线 A+/B 复核与扩展。** 5080 训练 seed 6/10/14……，4090 训练 seed 8/12/16……，每个种子先 A+ 后 B，每模型固定 5000 次策略更新，同时训练世界模型和价值网络。3090 检查全部 fit/cal 响应块，并评估已收到的 seed 2/4 四模型。入口为 `scripts/ral_5080_online_8h.sh`、`scripts/ral_4090_online_8h.sh`、`scripts/ral_3090_online_8h.sh`；统一判断入口为 `scripts/ral_online_8h_judge.sh`。同步、启动、停止条件与回传见 [当前三机 8 小时操作说明](docs/ral_online_night_20261123.md)。旧队列及 1000 次更新结果保留，不与新预算混合统计；C 暂不启动。
 
 RA-L 论文的 **A0、A、A+、B、C、C-perm、D 七组**使用独立的实验入口和参数清单，见
 [七组实验执行说明](docs/ral_experiments.md) 与 [任务清单](configs/ral/tasks.json)。
 入口为 `uv run python tools/ral.py --help`。当前已导入 2026-11-20 辨识快照；
 论文实验保留本仓库 PartyMimic Z01 实现名称，动作库、配对数据和校准检查通过后才启动对应组。
-当前 RA-L 入口使用 `configs/ral/pilot02.json`、`release/ral/protocol_v2.json` 和新的 `pilot02` 输出目录。
+历史 pilot02 入口使用 `configs/ral/pilot02.json`、`release/ral/protocol_v2.json` 和独立的 `pilot02` 输出目录。
 `pilot01` 模型及 `protocol_v1.json` 保留归档。pilot02 的十次训练已完成并通过完整性核验；C 的前向预测恢复，但响应收益未泛化到校准集，D/C-perm 暂未启动。复核见 [pilot02_training_review.json](release/ral/pilot02_training_review.json)，后续安排见执行说明末尾。
 
-三机 **8 小时无人值守开发实验**另有独立入口：`bash scripts/ral_3090_8h.sh --session night01`、
+历史三机 **8 小时无人值守开发实验**入口为：`bash scripts/ral_3090_8h.sh --session night01`、
 `bash scripts/ral_4090_8h.sh --session night01`、`bash scripts/ral_5080_8h.sh --session night01`，在对应机器各执行一条。
 每轮自动检查并切换候选/种子，默认包含编译、训练和检查的总时限为 8 小时；输出保存在 `logs/ral_8h/`。
 分工、后台启动和三份判断脚本见 [8 小时执行说明](docs/ral_experiments.md#三台机器的-8-小时任务队列)。

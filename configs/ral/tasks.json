@@ -79,20 +79,20 @@
     {
       "id": "NIGHT-3090",
       "owner": "3090_eval",
-      "status": "backend_screen_complete_waiting_structure_models",
-      "task": "Backend screen completed: 1/24 development blocks fails; diagnose preserved trajectories without relaxing criteria. No need to repeat the same full check locally. After 5080/4090 new online A+/B packages arrive, verify four complete models, initial hashes, and final EMA twice each (eight checks), plus common fit/cal predictions. Response metrics remain diagnostic and C stays blocked."
+      "status": "structure_review_complete_online_night_ready",
+      "task": "Independent eight-evaluation review completed and both seed 2/4 A+/B control screens passed. Primary completions: 133/132 (seed 2 A+/B) and 131/130 (seed 4 A+/B); repeat checks: 130/130 and 130/129. B cal q32 improves 10.3%/5.3%, without stable response or completion benefit. See release/ral/structure01_review_20261123.json. Next run scripts/ral_3090_online_8h.sh for full 400 fit + 116 cal checks in two independent processes and matched training-randomization/noise evaluations. Preserve old failures; no C, heldout claim or locked response-test access."
     },
     {
       "id": "NIGHT-4090",
       "owner": "4090_train",
-      "status": "structure_seed4_ready",
-      "task": "Historical night01_retry_4090 metadata audit is complete; preserve its checkpoints. Execute scripts/ral_4090_structure.sh: seed 4 online A+ then B under the same structure protocol and full budgets. Send the generated transfer archive with initial/250/500/1000 snapshots, not the whole historical directory."
+      "status": "online_night_ready",
+      "task": "Previous structure01_4090 seed 4 A+/B models imported and budgets/actual weights verified. Next use scripts/ral_4090_online_8h.sh: fresh paired seeds 8,12,16,... under the same 5000-update protocol as 5080. Preserve historical 8-hour results and old 1000-update models. New budget is reported separately; no favorable-seed selection. Archive generated initial/final model pairs after verification, keep metadata and failures."
     },
     {
       "id": "NIGHT-5080",
       "owner": "5080_train",
-      "status": "structure_seed2_ready",
-      "task": "Execute scripts/ral_5080_structure.sh: seed 2 online A+ then B, 1000 policy/5000 WM updates each. Isolated module initialization and pre-update B reference checks; A+ completion below 70% stops before B. New frozen structure protocol only. Preserve recovery and historical queues; do not launch C."
+      "status": "online_night_ready",
+      "task": "Previous structure02_5080 seed 2 A+/B models imported and budgets/actual weights verified. Next use scripts/ral_5080_online_8h.sh: fresh paired seeds 6,10,14,...; fixed 5000 policy/25000 WM/12865536 environment transitions per model. Two final EMA checks and common fit/cal diagnostics. Verified per-pair archive cleanup; stop on control failure, disk limit or eight-hour deadline. Keep negative/partial results. No C or locked test."
     },
     {
       "id": "RECOVERY-01",
@@ -100,5 +100,8 @@
       "status": "full_budget_recovery_completed_development_gates_passed",
       "task": "recover01 passed all predeclared development gates on 3090: final A+ completed 136/132 clips for seed 2 and 133/136 for seed 4 across two evaluations of 163 clips; A completed 127/131 and 129/129. Online changes data, normalization and the forward objective together, so recovery does not isolate a unique root cause. A/A+ widths and initialization differ; these two-seed development results do not establish benefit, equivalence, or B/C contributions. Online C remains rejected pending validated hybrid supervision; response test remains locked."
     }
-  ]
+  ],
+  "current_execution_requirements": "docs/ral_online_night_20261123.md",
+  "current_execution_config": "configs/ral/online_night_v1.json",
+  "current_frozen_protocol": "release/ral/online_night_protocol_v1.json"
 }

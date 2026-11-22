@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "stage": "online_structure_development",
-  "status": "runner_implemented_development_launch_ready",
+  "status": "completed_four_models_and_eight_independent_evaluations_control_screen_passed",
   "executable_training_config": false,
   "purpose": "Test whether structured B retains control and improves common development predictions relative to online A+.",
   "prerequisite_review": "release/ral/recovery01_review_20261122.json",
@@ -134,8 +134,11 @@
     "new_source_and_protocol_fingerprints": "release/ral/structure_protocol_v1.json",
     "old_recovery_runner_supports_this_plan": false,
     "old_eight_hour_queue_is_this_plan": false,
-    "training_launched": false
+    "training_launched": true
   },
   "execution_config": "configs/ral/structure_online_v1.json",
-  "frozen_protocol": "release/ral/structure_protocol_v1.json"
+  "frozen_protocol": "release/ral/structure_protocol_v1.json",
+  "superseding_task_plan": "configs/ral/online_night_v1.json",
+  "review_directory": "logs/ral_structure/structure01_3090_verified",
+  "review_summary": "release/ral/structure01_review_20261123.json"
 }

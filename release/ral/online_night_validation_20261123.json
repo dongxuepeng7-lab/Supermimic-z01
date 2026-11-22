@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-23",
+  "passed": true,
+  "unit_tests": 53,
+  "unit_log": "logs/ral_online_8h/validation_unittest_final.log",
+  "unit_log_sha256": "bb5d24288950ad7a39560aa77fb321028d14a14b6b6469b1a3dc7ff8e77bdbdd",
+  "shell_syntax_checked": true,
+  "all_three_launchers_preview_checked": true,
+  "source_code_sha256": "10a2a80692337a2d151741f911d94e23cb7cdb1106d4500a7400ed61423f95d5",
+  "legacy_source_unchanged": true,
+  "legacy_structure_protocol_sha256": "cc92d219cfd808ad71a731787653f78bb0bed5cccdd5a6a5bb42b305731273e3",
+  "online_night_protocol_sha256": "91ac2df09b77ca4c2c3b9288d162d5dcf1030c7081ea176264b510519d486b60",
+  "frozen_tools": {
+    "tools/ral_structure.py": "037601aa99db7204d8ae351c894501ca08497cd030a55664adaf6ead8bdebee0",
+    "tools/ral_structure_metrics.py": "a5f9303e60dc4a143250997dddeac685dbd82794f64606da4e317d36ee8cab2f",
+    "tools/ral_backend_check.py": "e783fbe9501a32bdf25d10281428f62854bfb49b1fa21fc99fa7a61178a46a86",
+    "tools/ral_recovery.py": "cc63c154acebb3e1cdc5e1be4f68a2822cb208da7db736da40a5fb6bc70892ba",
+    "tools/ral_eight_hour.py": "d870640d156fd83555799e46610c4bd09cbd4e74e2c07ef0711ac331bacc738e",
+    "tools/ral_eight_hour_worker.py": "44e7b15d8418858340e461c57173603e0b22314bb54252e74a1640d02c5bf21d",
+    "tools/ral_policy_diagnose.py": "413e44d9cbf19dea3dcc2224b8c44199b3ce7d7639e3feb2f1e76d72623ddd6b",
+    "uv.lock": "5115525597b58cfadaeae1885fc66ec977bda1e96dd15966bd2f8fa82f956565",
+    "pyproject.toml": "8317603450caa277cf36f3255bcfceaa1725029125d56a237dbaea4e7f404075",
+    "configs/ral/backend_check_v1.json": "da9a3f5b376cd74d517a6b9a02b9c448657c8b81ec8b8c069ce5faa6b55e7c44",
+    "tools/ral_online_night.py": "2aacb6a438a5f5d94ca8878c1171cf5c644a6f13e8c05bb13f9bd19c72d41b48",
+    "tools/ral_online_night_worker.py": "2100b10563795608cd410a700cc93d6eaaed6a22735e9ee3cde45089d7feed98",
+    "tools/ral_online_eval_worker.py": "8a7ffbabf1504fa680b15c441aabb3a81dfcddf2184e9680bf6068e9ee46c3ac",
+    "configs/ral/online_night_v1.json": "c6499a9e27b4b219b91966a93c21a12074e2411da3f87d3a0df3353551b5747a"
+  },
+  "deadline_and_preflight": "logs/ral_online_8h/validation_deadline02/status.json",
+  "deadline_status": "time_budget_reached",
+  "real_tiny_model_verification_and_archive": "logs/ral_online_8h/validation_retention01/s2_retention.json",
+  "gpu_smoke": {
+    "passed": true,
+    "smoke_only": true,
+    "research_results": false,
+    "backend_blocks": 2,
+    "backend_screen_passed": true,
+    "scenario_clips": 1,
+    "scenario_motion": "dance1_subject3__seg004.npz",
+    "scenario_frames": 501,
+    "identical_Aplus_B_initial_scenarios": true,
+    "scenario_sha256": "2409fe908d80ddd286ee52e83f281b3e5c7ff7e4872e278d457c102af7e277fa",
+    "source_directories_unchanged": true,
+    "checkpoints": {
+      "Aplus": "6c6ef5e7af37c9450d38f5ad2df0298c25f7f1f7156ba78b82b5dfcfb56435f3",
+      "B": "a3b5aa450348452f8951e1601be43d6621c2320afa4676cc9a5f43a0349610c8"
+    }
+  },
+  "full_eight_hour_queue_executed": false,
+  "full_5000_update_models_trained": false,
+  "explanation": "Validated existing training checkpoints and scoped archive retention; executed two backend smoke blocks and a matched one-motion randomized A+/B evaluation. These are code checks, not research performance results."
+}
