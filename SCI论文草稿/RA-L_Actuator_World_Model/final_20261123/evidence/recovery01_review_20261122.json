@@ -1,0 +1,862 @@
+{
+  "schema_version": 1,
+  "reviewed_date": "2026-11-22",
+  "status": "complete",
+  "formal_results": false,
+  "protocol": "recovery_online_v1",
+  "input_archive": "/home/zoyi/Downloads/recover01_5080_transfer.tar.gz",
+  "input_archive_sha256": "1decf25ac4c1314af71b2fb4e8bb9db2f786497cf2ec7593c4852b9916d7392f",
+  "evaluations_validated": 16,
+  "episodes_validated_3090": 2608,
+  "episodes_validated_5080": 652,
+  "reference_motion_count": 163,
+  "plant": "identified",
+  "input_fingerprints": {
+    "code_sha256": "4aec08f18679e51339b96afb200cb1fc7622d98138d45fbad76e4ae4e1cebd48",
+    "asset_sha256": "e75ac10a0f1d3aae0eac1ed885d51eace444bc1ff72342a95f2a9ddd14006baf",
+    "params_sha256": "c9c808a17b24fe5f47a2fa6ed4b4f22a71a9ce1808885c71e817c1ce60998c43",
+    "response_sha256": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302",
+    "motion_sha256": "5c6379d050b33e61811b293daa7951dc7ae041c525d56e3b09e429c0426c9704",
+    "evaluator_sha256": "364f583df7bb81097e3447ca9910962dcf836a221d3148dc93118c3f935e7b2b",
+    "runner_sha256": "cc63c154acebb3e1cdc5e1be4f68a2822cb208da7db736da40a5fb6bc70892ba"
+  },
+  "evaluation_environments": [
+    {
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "torch_version": "2.9.0+cu128",
+      "cuda_version": "12.8"
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 5080",
+      "torch_version": "2.9.0+cu128",
+      "cuda_version": "12.8"
+    }
+  ],
+  "actual_training": {
+    "runs": 4,
+    "seeds": [
+      2,
+      4
+    ],
+    "groups": [
+      "A",
+      "A+"
+    ],
+    "policy_updates_per_run": 1000,
+    "world_model_updates_per_run": 5000,
+    "environment_transitions_per_run": 2625536,
+    "weight_and_normalizer_audit": "logs/ral_verification/recover01_5080_20261122/checkpoint_validation.json"
+  },
+  "quick_5080": [
+    {
+      "job": "s2_A",
+      "group": "A",
+      "seed": 2,
+      "completed": 131,
+      "clips": 163,
+      "completion_percent": 80.3680981595092,
+      "median_valid_s": 14.920000076293945,
+      "valid_duration_percent": 88.03321190775391,
+      "q_rmse_rad": 0.08016845555407545,
+      "root_xyz_velocity_rmse_m_s": 0.3160041107426115,
+      "logged_training_time_s": 96.68268,
+      "training_log_rows": 40
+    },
+    {
+      "job": "s2_Aplus",
+      "group": "A+",
+      "seed": 2,
+      "completed": 131,
+      "clips": 163,
+      "completion_percent": 80.3680981595092,
+      "median_valid_s": 15.279999732971191,
+      "valid_duration_percent": 88.09908813960014,
+      "q_rmse_rad": 0.07901370961181313,
+      "root_xyz_velocity_rmse_m_s": 0.3123823392595759,
+      "logged_training_time_s": 115.84476000000001,
+      "training_log_rows": 40
+    },
+    {
+      "job": "s4_Aplus",
+      "group": "A+",
+      "seed": 4,
+      "completed": 135,
+      "clips": 163,
+      "completion_percent": 82.82208588957056,
+      "median_valid_s": 15.339999198913574,
+      "valid_duration_percent": 89.05856995982853,
+      "q_rmse_rad": 0.0814203581243926,
+      "root_xyz_velocity_rmse_m_s": 0.31569248114720877,
+      "logged_training_time_s": 98.46612,
+      "training_log_rows": 40
+    },
+    {
+      "job": "s4_A",
+      "group": "A",
+      "seed": 4,
+      "completed": 127,
+      "clips": 163,
+      "completion_percent": 77.91411042944786,
+      "median_valid_s": 14.920000076293945,
+      "valid_duration_percent": 86.86540747432726,
+      "q_rmse_rad": 0.08054415263560534,
+      "root_xyz_velocity_rmse_m_s": 0.31681098302139776,
+      "logged_training_time_s": 95.92704,
+      "training_log_rows": 40
+    }
+  ],
+  "evaluations_3090": [
+    {
+      "completed": 0,
+      "clips": 163,
+      "completion": 0.0,
+      "median_valid_s": 1.0,
+      "nonfinite_steps": 0,
+      "group": "A",
+      "seed": 2,
+      "iteration": 250,
+      "checkpoint_sha256": "501275291bd6597a2a4bcdcf40e1a859f8eead6fe9aab4142703f560873f2db6",
+      "final": false,
+      "repeat_check": 0,
+      "completion_percent": 0.0,
+      "valid_duration_percent": 4.237462122916351,
+      "q_rmse_rad": 0.062327761003289864,
+      "root_xyz_velocity_rmse_m_s": 0.5128495414489486,
+      "job": "s2_A"
+    },
+    {
+      "completed": 3,
+      "clips": 163,
+      "completion": 0.018404907975460124,
+      "median_valid_s": 2.559999942779541,
+      "nonfinite_steps": 0,
+      "group": "A",
+      "seed": 2,
+      "iteration": 500,
+      "checkpoint_sha256": "9f06c396c43018ba3f88dd3ba40d2e0cdca92d248ee9caad18f9d012531af9f3",
+      "final": false,
+      "repeat_check": 0,
+      "completion_percent": 1.8404907975460123,
+      "valid_duration_percent": 16.600790521084992,
+      "q_rmse_rad": 0.08359532559033037,
+      "root_xyz_velocity_rmse_m_s": 0.44839936196034685,
+      "job": "s2_A"
+    },
+    {
+      "completed": 127,
+      "clips": 163,
+      "completion": 0.7791411042944786,
+      "median_valid_s": 14.5,
+      "nonfinite_steps": 0,
+      "group": "A",
+      "seed": 2,
+      "iteration": 1000,
+      "checkpoint_sha256": "7127b635a283afe71ae17c8de3d17dca9262f088f3eb4ffd4f711cf320127331",
+      "final": true,
+      "repeat_check": 0,
+      "completion_percent": 77.91411042944786,
+      "valid_duration_percent": 85.4208375203057,
+      "q_rmse_rad": 0.0799939178393755,
+      "root_xyz_velocity_rmse_m_s": 0.3086160711705531,
+      "job": "s2_A"
+    },
+    {
+      "completed": 131,
+      "clips": 163,
+      "completion": 0.803680981595092,
+      "median_valid_s": 14.859999656677246,
+      "nonfinite_steps": 0,
+      "group": "A",
+      "seed": 2,
+      "iteration": 1000,
+      "checkpoint_sha256": "7127b635a283afe71ae17c8de3d17dca9262f088f3eb4ffd4f711cf320127331",
+      "final": true,
+      "repeat_check": 1,
+      "completion_percent": 80.3680981595092,
+      "valid_duration_percent": 86.64852932695477,
+      "q_rmse_rad": 0.07999410913355202,
+      "root_xyz_velocity_rmse_m_s": 0.31152940870301526,
+      "job": "s2_A"
+    },
+    {
+      "completed": 0,
+      "clips": 163,
+      "completion": 0.0,
+      "median_valid_s": 1.0,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 2,
+      "iteration": 250,
+      "checkpoint_sha256": "2fd4941f165f5868528a84d61d39b1232db3fe5cfc16087403d70af622061637",
+      "final": false,
+      "repeat_check": 0,
+      "completion_percent": 0.0,
+      "valid_duration_percent": 4.121537218011671,
+      "q_rmse_rad": 0.06372930119776335,
+      "root_xyz_velocity_rmse_m_s": 0.5180563318681068,
+      "job": "s2_Aplus"
+    },
+    {
+      "completed": 11,
+      "clips": 163,
+      "completion": 0.06748466257668712,
+      "median_valid_s": 3.5,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 2,
+      "iteration": 500,
+      "checkpoint_sha256": "21a6f607b6aafdb3bfada325ded70a91eb028e0693f5172efebfa53c40d0151b",
+      "final": false,
+      "repeat_check": 0,
+      "completion_percent": 6.748466257668712,
+      "valid_duration_percent": 22.175453217093686,
+      "q_rmse_rad": 0.08342517104238854,
+      "root_xyz_velocity_rmse_m_s": 0.4677126822269039,
+      "job": "s2_Aplus"
+    },
+    {
+      "completed": 136,
+      "clips": 163,
+      "completion": 0.8343558282208589,
+      "median_valid_s": 15.339999198913574,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 2,
+      "iteration": 1000,
+      "checkpoint_sha256": "e7ebdfe6f67a1237d726e973a82b4dca3cb7afa30c412fe5aa45ebd4e96fccda",
+      "final": true,
+      "repeat_check": 0,
+      "completion_percent": 83.43558282208589,
+      "valid_duration_percent": 89.1432677007512,
+      "q_rmse_rad": 0.07857498701324621,
+      "root_xyz_velocity_rmse_m_s": 0.3117267061512884,
+      "job": "s2_Aplus"
+    },
+    {
+      "completed": 132,
+      "clips": 163,
+      "completion": 0.8098159509202454,
+      "median_valid_s": 15.359999656677246,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 2,
+      "iteration": 1000,
+      "checkpoint_sha256": "e7ebdfe6f67a1237d726e973a82b4dca3cb7afa30c412fe5aa45ebd4e96fccda",
+      "final": true,
+      "repeat_check": 1,
+      "completion_percent": 80.98159509202453,
+      "valid_duration_percent": 85.07691238642587,
+      "q_rmse_rad": 0.07824291584452872,
+      "root_xyz_velocity_rmse_m_s": 0.31392675006742576,
+      "job": "s2_Aplus"
+    },
+    {
+      "completed": 0,
+      "clips": 163,
+      "completion": 0.0,
+      "median_valid_s": 1.0199999809265137,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 4,
+      "iteration": 250,
+      "checkpoint_sha256": "b5a566cc8e315e7ee3cf8aa4f8f68e167fb9b17470a9d2ab6f1593f056ed7842",
+      "final": false,
+      "repeat_check": 0,
+      "completion_percent": 0.0,
+      "valid_duration_percent": 4.162602886787569,
+      "q_rmse_rad": 0.06436741838289974,
+      "root_xyz_velocity_rmse_m_s": 0.5223661474858893,
+      "job": "s4_Aplus"
+    },
+    {
+      "completed": 3,
+      "clips": 163,
+      "completion": 0.018404907975460124,
+      "median_valid_s": 2.559999942779541,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 4,
+      "iteration": 500,
+      "checkpoint_sha256": "6224b9e149d06b5e1150894f49622129d112496868ba9415a9e73fc0a16ee713",
+      "final": false,
+      "repeat_check": 0,
+      "completion_percent": 1.8404907975460123,
+      "valid_duration_percent": 16.806546600240708,
+      "q_rmse_rad": 0.08707694787914955,
+      "root_xyz_velocity_rmse_m_s": 0.4596393857532326,
+      "job": "s4_Aplus"
+    },
+    {
+      "completed": 133,
+      "clips": 163,
+      "completion": 0.8159509202453987,
+      "median_valid_s": 14.920000076293945,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 4,
+      "iteration": 1000,
+      "checkpoint_sha256": "c449436c52278fe832a20c4939a4644f5f7bbf526f9a700470f2446d70702d82",
+      "final": true,
+      "repeat_check": 0,
+      "completion_percent": 81.59509202453988,
+      "valid_duration_percent": 87.59646167610619,
+      "q_rmse_rad": 0.08154203808275134,
+      "root_xyz_velocity_rmse_m_s": 0.3161812363798549,
+      "job": "s4_Aplus"
+    },
+    {
+      "completed": 136,
+      "clips": 163,
+      "completion": 0.8343558282208589,
+      "median_valid_s": 15.359999656677246,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 4,
+      "iteration": 1000,
+      "checkpoint_sha256": "c449436c52278fe832a20c4939a4644f5f7bbf526f9a700470f2446d70702d82",
+      "final": true,
+      "repeat_check": 1,
+      "completion_percent": 83.43558282208589,
+      "valid_duration_percent": 89.29426963667497,
+      "q_rmse_rad": 0.08166783473114227,
+      "root_xyz_velocity_rmse_m_s": 0.3222305050080715,
+      "job": "s4_Aplus"
+    },
+    {
+      "completed": 0,
+      "clips": 163,
+      "completion": 0.0,
+      "median_valid_s": 1.0,
+      "nonfinite_steps": 0,
+      "group": "A",
+      "seed": 4,
+      "iteration": 250,
+      "checkpoint_sha256": "003e1bc902044eee034f1160d87750cb0a4ab5f19b8b3d163ef6b63d0a3a2451",
+      "final": false,
+      "repeat_check": 0,
+      "completion_percent": 0.0,
+      "valid_duration_percent": 4.163458399728641,
+      "q_rmse_rad": 0.06371914259116777,
+      "root_xyz_velocity_rmse_m_s": 0.5190420159029532,
+      "job": "s4_A"
+    },
+    {
+      "completed": 6,
+      "clips": 163,
+      "completion": 0.03680981595092025,
+      "median_valid_s": 2.4600000381469727,
+      "nonfinite_steps": 0,
+      "group": "A",
+      "seed": 4,
+      "iteration": 500,
+      "checkpoint_sha256": "6f63f64d0405de1d53aebe97073909c9fca6bdd086618844dd4cdd1068be2b31",
+      "final": false,
+      "repeat_check": 0,
+      "completion_percent": 3.6809815950920246,
+      "valid_duration_percent": 17.30190099003955,
+      "q_rmse_rad": 0.08484917865125635,
+      "root_xyz_velocity_rmse_m_s": 0.42098825022487124,
+      "job": "s4_A"
+    },
+    {
+      "completed": 129,
+      "clips": 163,
+      "completion": 0.7914110429447853,
+      "median_valid_s": 14.920000076293945,
+      "nonfinite_steps": 0,
+      "group": "A",
+      "seed": 4,
+      "iteration": 1000,
+      "checkpoint_sha256": "3457ecd394d8ade40116baaa58877299db9d5a437c42f91be18354670f139421",
+      "final": true,
+      "repeat_check": 0,
+      "completion_percent": 79.14110429447852,
+      "valid_duration_percent": 87.38599999801757,
+      "q_rmse_rad": 0.08037781022932552,
+      "root_xyz_velocity_rmse_m_s": 0.31850011694466507,
+      "job": "s4_A"
+    },
+    {
+      "completed": 129,
+      "clips": 163,
+      "completion": 0.7914110429447853,
+      "median_valid_s": 14.920000076293945,
+      "nonfinite_steps": 0,
+      "group": "A",
+      "seed": 4,
+      "iteration": 1000,
+      "checkpoint_sha256": "3457ecd394d8ade40116baaa58877299db9d5a437c42f91be18354670f139421",
+      "final": true,
+      "repeat_check": 1,
+      "completion_percent": 79.14110429447852,
+      "valid_duration_percent": 87.12292309498012,
+      "q_rmse_rad": 0.08062701724662909,
+      "root_xyz_velocity_rmse_m_s": 0.32110480200182423,
+      "job": "s4_A"
+    }
+  ],
+  "final_3090_primary": [
+    {
+      "completed": 127,
+      "clips": 163,
+      "completion": 0.7791411042944786,
+      "median_valid_s": 14.5,
+      "nonfinite_steps": 0,
+      "group": "A",
+      "seed": 2,
+      "iteration": 1000,
+      "checkpoint_sha256": "7127b635a283afe71ae17c8de3d17dca9262f088f3eb4ffd4f711cf320127331",
+      "final": true,
+      "repeat_check": 0,
+      "completion_percent": 77.91411042944786,
+      "valid_duration_percent": 85.4208375203057,
+      "q_rmse_rad": 0.0799939178393755,
+      "root_xyz_velocity_rmse_m_s": 0.3086160711705531,
+      "job": "s2_A"
+    },
+    {
+      "completed": 136,
+      "clips": 163,
+      "completion": 0.8343558282208589,
+      "median_valid_s": 15.339999198913574,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 2,
+      "iteration": 1000,
+      "checkpoint_sha256": "e7ebdfe6f67a1237d726e973a82b4dca3cb7afa30c412fe5aa45ebd4e96fccda",
+      "final": true,
+      "repeat_check": 0,
+      "completion_percent": 83.43558282208589,
+      "valid_duration_percent": 89.1432677007512,
+      "q_rmse_rad": 0.07857498701324621,
+      "root_xyz_velocity_rmse_m_s": 0.3117267061512884,
+      "job": "s2_Aplus"
+    },
+    {
+      "completed": 133,
+      "clips": 163,
+      "completion": 0.8159509202453987,
+      "median_valid_s": 14.920000076293945,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 4,
+      "iteration": 1000,
+      "checkpoint_sha256": "c449436c52278fe832a20c4939a4644f5f7bbf526f9a700470f2446d70702d82",
+      "final": true,
+      "repeat_check": 0,
+      "completion_percent": 81.59509202453988,
+      "valid_duration_percent": 87.59646167610619,
+      "q_rmse_rad": 0.08154203808275134,
+      "root_xyz_velocity_rmse_m_s": 0.3161812363798549,
+      "job": "s4_Aplus"
+    },
+    {
+      "completed": 129,
+      "clips": 163,
+      "completion": 0.7914110429447853,
+      "median_valid_s": 14.920000076293945,
+      "nonfinite_steps": 0,
+      "group": "A",
+      "seed": 4,
+      "iteration": 1000,
+      "checkpoint_sha256": "3457ecd394d8ade40116baaa58877299db9d5a437c42f91be18354670f139421",
+      "final": true,
+      "repeat_check": 0,
+      "completion_percent": 79.14110429447852,
+      "valid_duration_percent": 87.38599999801757,
+      "q_rmse_rad": 0.08037781022932552,
+      "root_xyz_velocity_rmse_m_s": 0.31850011694466507,
+      "job": "s4_A"
+    }
+  ],
+  "final_3090_repeatability": [
+    {
+      "job": "s2_A",
+      "completed_repeat0": 127,
+      "completed_repeat1": 131,
+      "completion_spread_pp": 2.4539877300613426,
+      "motion_outcome_disagreements": 8,
+      "changed_motion_ids": [
+        "fight1_subject3__seg000",
+        "fight1_subject5__seg001",
+        "jumps1_subject5__seg001",
+        "jumps1_subject5__seg006",
+        "run1_subject2__seg000",
+        "sprint1_subject2__seg002",
+        "sprint1_subject4__seg005",
+        "walk2_subject1__seg003"
+      ]
+    },
+    {
+      "job": "s2_Aplus",
+      "completed_repeat0": 136,
+      "completed_repeat1": 132,
+      "completion_spread_pp": 2.453987730061357,
+      "motion_outcome_disagreements": 4,
+      "changed_motion_ids": [
+        "run2_subject4__seg003",
+        "sprint1_subject2__seg010",
+        "walk1_subject2__seg003",
+        "walk3_subject5__seg000"
+      ]
+    },
+    {
+      "job": "s4_Aplus",
+      "completed_repeat0": 133,
+      "completed_repeat1": 136,
+      "completion_spread_pp": 1.8404907975460105,
+      "motion_outcome_disagreements": 5,
+      "changed_motion_ids": [
+        "fight1_subject5__seg001",
+        "fightAndSports1_subject1__seg000",
+        "jumps1_subject5__seg007",
+        "run2_subject4__seg004",
+        "sprint1_subject2__seg002"
+      ]
+    },
+    {
+      "job": "s4_A",
+      "completed_repeat0": 129,
+      "completed_repeat1": 129,
+      "completion_spread_pp": 0.0,
+      "motion_outcome_disagreements": 4,
+      "changed_motion_ids": [
+        "run2_subject1__seg001",
+        "run2_subject1__seg004",
+        "sprint1_subject2__seg002",
+        "walk1_subject5__seg005"
+      ]
+    }
+  ],
+  "final_cross_gpu_comparison": [
+    {
+      "job": "s2_A",
+      "completed_5080": 131,
+      "completed_3090": 127,
+      "delta_3090_minus_5080_pp": -2.4539877300613426,
+      "motion_outcome_disagreements": 10
+    },
+    {
+      "job": "s2_Aplus",
+      "completed_5080": 131,
+      "completed_3090": 136,
+      "delta_3090_minus_5080_pp": 3.067484662576689,
+      "motion_outcome_disagreements": 5
+    },
+    {
+      "job": "s4_Aplus",
+      "completed_5080": 135,
+      "completed_3090": 133,
+      "delta_3090_minus_5080_pp": -1.2269938650306784,
+      "motion_outcome_disagreements": 10
+    },
+    {
+      "job": "s4_A",
+      "completed_5080": 127,
+      "completed_3090": 129,
+      "delta_3090_minus_5080_pp": 1.2269938650306642,
+      "motion_outcome_disagreements": 4
+    }
+  ],
+  "primary_group_summary": {
+    "A": {
+      "mean_completion_percent": 78.52760736196319,
+      "sample_sd_pp": 0.8676156824374741,
+      "training_seeds": [
+        2,
+        4
+      ],
+      "n_training_seeds": 2,
+      "primary_evaluation_repeat": 0
+    },
+    "A+": {
+      "mean_completion_percent": 82.51533742331289,
+      "sample_sd_pp": 1.3014235236562213,
+      "training_seeds": [
+        2,
+        4
+      ],
+      "n_training_seeds": 2,
+      "primary_evaluation_repeat": 0
+    }
+  },
+  "primary_paired_comparison": [
+    {
+      "seed": 2,
+      "A_completed": 127,
+      "Aplus_completed": 136,
+      "Aplus_minus_A_pp": 5.521472392638032
+    },
+    {
+      "seed": 4,
+      "A_completed": 129,
+      "Aplus_completed": 133,
+      "Aplus_minus_A_pp": 2.453987730061357
+    }
+  ],
+  "final_Aplus_termination": [
+    {
+      "job": "s2_Aplus",
+      "counts": {
+        "height_only": 23,
+        "tilt_only": 3,
+        "height_and_tilt": 1,
+        "neither_threshold": 0,
+        "terminal_sample_unavailable": 0,
+        "reference_complete": 136
+      },
+      "interpretation": "Threshold diagnostics, not a causal explanation of the fall; terminal sample unavailable for last terminating worlds."
+    },
+    {
+      "job": "s4_Aplus",
+      "counts": {
+        "height_only": 27,
+        "tilt_only": 1,
+        "height_and_tilt": 2,
+        "neither_threshold": 0,
+        "terminal_sample_unavailable": 0,
+        "reference_complete": 133
+      },
+      "interpretation": "Threshold diagnostics, not a causal explanation of the fall; terminal sample unavailable for last terminating worlds."
+    }
+  ],
+  "primary_motion_family_counts": [
+    {
+      "job": "s2_A",
+      "families": {
+        "dance": {
+          "completed": 21,
+          "clips": 21
+        },
+        "fallAndGetUp": {
+          "completed": 0,
+          "clips": 9
+        },
+        "fight": {
+          "completed": 14,
+          "clips": 19
+        },
+        "fightAndSports": {
+          "completed": 6,
+          "clips": 6
+        },
+        "jumps": {
+          "completed": 15,
+          "clips": 17
+        },
+        "run": {
+          "completed": 14,
+          "clips": 18
+        },
+        "sprint": {
+          "completed": 13,
+          "clips": 22
+        },
+        "walk": {
+          "completed": 44,
+          "clips": 51
+        }
+      },
+      "interpretation": "Descriptive motion-name categories; segmented clips are not independent subjects."
+    },
+    {
+      "job": "s2_Aplus",
+      "families": {
+        "dance": {
+          "completed": 21,
+          "clips": 21
+        },
+        "fallAndGetUp": {
+          "completed": 0,
+          "clips": 9
+        },
+        "fight": {
+          "completed": 16,
+          "clips": 19
+        },
+        "fightAndSports": {
+          "completed": 6,
+          "clips": 6
+        },
+        "jumps": {
+          "completed": 16,
+          "clips": 17
+        },
+        "run": {
+          "completed": 16,
+          "clips": 18
+        },
+        "sprint": {
+          "completed": 16,
+          "clips": 22
+        },
+        "walk": {
+          "completed": 45,
+          "clips": 51
+        }
+      },
+      "interpretation": "Descriptive motion-name categories; segmented clips are not independent subjects."
+    },
+    {
+      "job": "s4_Aplus",
+      "families": {
+        "dance": {
+          "completed": 21,
+          "clips": 21
+        },
+        "fallAndGetUp": {
+          "completed": 0,
+          "clips": 9
+        },
+        "fight": {
+          "completed": 15,
+          "clips": 19
+        },
+        "fightAndSports": {
+          "completed": 5,
+          "clips": 6
+        },
+        "jumps": {
+          "completed": 16,
+          "clips": 17
+        },
+        "run": {
+          "completed": 16,
+          "clips": 18
+        },
+        "sprint": {
+          "completed": 15,
+          "clips": 22
+        },
+        "walk": {
+          "completed": 45,
+          "clips": 51
+        }
+      },
+      "interpretation": "Descriptive motion-name categories; segmented clips are not independent subjects."
+    },
+    {
+      "job": "s4_A",
+      "families": {
+        "dance": {
+          "completed": 21,
+          "clips": 21
+        },
+        "fallAndGetUp": {
+          "completed": 0,
+          "clips": 9
+        },
+        "fight": {
+          "completed": 15,
+          "clips": 19
+        },
+        "fightAndSports": {
+          "completed": 6,
+          "clips": 6
+        },
+        "jumps": {
+          "completed": 15,
+          "clips": 17
+        },
+        "run": {
+          "completed": 14,
+          "clips": 18
+        },
+        "sprint": {
+          "completed": 14,
+          "clips": 22
+        },
+        "walk": {
+          "completed": 44,
+          "clips": 51
+        }
+      },
+      "interpretation": "Descriptive motion-name categories; segmented clips are not independent subjects."
+    }
+  ],
+  "development_gate": {
+    "passed": true,
+    "reasons": [],
+    "pairs": [
+      {
+        "seed": 2,
+        "worst_completion_drop_pp": -0.6134969325153339,
+        "worst_duration_ratio": 1.0323014504257169
+      },
+      {
+        "seed": 4,
+        "worst_completion_drop_pp": -2.4539877300613466,
+        "worst_duration_ratio": 1.0
+      }
+    ],
+    "formal_results": false,
+    "meaning": "Development readiness for a separately designed B comparison; not proof of benefit or equivalence.",
+    "next_action": "Review an online A+/B comparison",
+    "automatic_training_authorized": false
+  },
+  "response_test_accessed": false,
+  "source_hashes": {
+    "logs/ral_verification/recover01_5080_20261122/import/recover01_5080/jobs/s2_A/quick_eval.json": "0503b21d3d2ab3ad8d35248bbf992feee74348aa2a284b5414f247639b8bd80a",
+    "logs/ral_verification/recover01_5080_20261122/import/recover01_5080/jobs/s2_A/quick_eval.inputs.json": "f9e7c440028a0fe870f5434108cac5e620e20b8c01b674af02a6370ea812b000",
+    "logs/ral_verification/recover01_5080_20261122/import/recover01_5080/jobs/s2_Aplus/quick_eval.json": "70811fe49a46639637cd7781179eeb2609693cd36d01e8ad104b4abbaf246582",
+    "logs/ral_verification/recover01_5080_20261122/import/recover01_5080/jobs/s2_Aplus/quick_eval.inputs.json": "969ee68b2786c0cd582b42596b684061cfa5c7421ec5845ed13326203ee990bc",
+    "logs/ral_verification/recover01_5080_20261122/import/recover01_5080/jobs/s4_Aplus/quick_eval.json": "4980a9a0eae9bbfd4e27d1f46745623d89dc3f650e0e6290ca03fa53925d7173",
+    "logs/ral_verification/recover01_5080_20261122/import/recover01_5080/jobs/s4_Aplus/quick_eval.inputs.json": "460cc96e219fb0523a5c7dc110e7658dba523d30c7967c88b20e4b64855406da",
+    "logs/ral_verification/recover01_5080_20261122/import/recover01_5080/jobs/s4_A/quick_eval.json": "dcaf7974d5b35f57ad39afd2954ab5f3baf737f253d8cc50f371b6c851950c98",
+    "logs/ral_verification/recover01_5080_20261122/import/recover01_5080/jobs/s4_A/quick_eval.inputs.json": "a02fcf90ab0487e20e37fc0d6d4a328d7aa7f7752710329e1d7fbf7c79760492",
+    "logs/ral_recovery/recover01_3090/s2_A_i000250_r0.json": "774dfc9cafbe7df0ea4ce403c1245547b250f146307b6e03fae561a313ea3fa9",
+    "logs/ral_recovery/recover01_3090/s2_A_i000250_r0.inputs.json": "18886ab6c199de1ecf60ca1fc354f97af0e30b4efaf0836795488285e3716ea6",
+    "logs/ral_recovery/recover01_3090/s2_A_i000500_r0.json": "d5d3ec81989461471d419b30125c8d7856be8470328438f06cb0b8f7f7bf140d",
+    "logs/ral_recovery/recover01_3090/s2_A_i000500_r0.inputs.json": "0841ceeb4f25479fddaca6fe79e8e20d8260fb4601859f2bacf06526098bc6e3",
+    "logs/ral_recovery/recover01_3090/s2_A_i001000_r0.json": "842cfa2aa1959fa8d819411b22ec440db9b41df7d1e40600c94c1a00c6e575a1",
+    "logs/ral_recovery/recover01_3090/s2_A_i001000_r0.inputs.json": "43e889913cd7fc18e9ae9a2d2c3083796ea0dc093ff56f4a6a8c304c0704693c",
+    "logs/ral_recovery/recover01_3090/s2_A_i001000_r1.json": "fb02666ada333dfa9a2a4f093bd5ed80b24d3b18d45a54fa0233b2a2f4480a92",
+    "logs/ral_recovery/recover01_3090/s2_A_i001000_r1.inputs.json": "00e954c3188ceffd1ae75c3987aa72e21ea6c0adc9f43cc540bee0dd40083d43",
+    "logs/ral_recovery/recover01_3090/s2_Aplus_i000250_r0.json": "4036390aea810c8d3ec2f5a3e1c510b4d8f2aa92ae30cddc088891de6d25601c",
+    "logs/ral_recovery/recover01_3090/s2_Aplus_i000250_r0.inputs.json": "b695b6299a4b29919a066e03f18096f0bc954934c699e5e695a6dcd66a859367",
+    "logs/ral_recovery/recover01_3090/s2_Aplus_i000500_r0.json": "14e386b4f06e010dfaa1f5d0d44b44892de07fe5a2b87506618841d3486f021b",
+    "logs/ral_recovery/recover01_3090/s2_Aplus_i000500_r0.inputs.json": "1b81472523058d1bd1668ee2e4f8f96a2848896b1f599b318f32ecc00eb40f1a",
+    "logs/ral_recovery/recover01_3090/s2_Aplus_i001000_r0.json": "4d0b10964edcceb98d0c18d41eba6fd06e4bb899bc4abad49fd0998446710b1a",
+    "logs/ral_recovery/recover01_3090/s2_Aplus_i001000_r0.inputs.json": "9430dd76b795a2884d149fc89be6df8df87dd9a5536005f5153b7186af2e4112",
+    "logs/ral_recovery/recover01_3090/s2_Aplus_i001000_r1.json": "ba14981b5ccb079f5af5e203cb0afaa4ebae3d1b9b5c4de70fb8467d3c497028",
+    "logs/ral_recovery/recover01_3090/s2_Aplus_i001000_r1.inputs.json": "db8072ac4f72c77bf5e39727aeefd798479c960644edad2df6c83cc2ec6f714c",
+    "logs/ral_recovery/recover01_3090/s4_Aplus_i000250_r0.json": "fe7dae719b440dcf670bd8f4822afc7652af5a8278996497c87e0bbdb9ff25d8",
+    "logs/ral_recovery/recover01_3090/s4_Aplus_i000250_r0.inputs.json": "ced82087ccd8623d725eea1d66a4607b42a994dd5d2668aa7658827b5d3c8bd1",
+    "logs/ral_recovery/recover01_3090/s4_Aplus_i000500_r0.json": "d5bc2e213bb1a691bfae75dbdd785b80a499aec798d700a222370ed1ed661316",
+    "logs/ral_recovery/recover01_3090/s4_Aplus_i000500_r0.inputs.json": "3ecdb428e8742beee8f44c8cfc0612190fba95acf9190af28ce25da1e399dae0",
+    "logs/ral_recovery/recover01_3090/s4_Aplus_i001000_r0.json": "eb2c9a710907bc32b8d960db399f23fb60e940fda933f9c2f9367269da65e3ab",
+    "logs/ral_recovery/recover01_3090/s4_Aplus_i001000_r0.inputs.json": "cce6f51db33461fb9355c10d84410a62a4c6b6e6104686b14d463f1776525ecc",
+    "logs/ral_recovery/recover01_3090/s4_Aplus_i001000_r1.json": "142852058cc0487933905b1695af0eb6055c2c8f444972783eb6b56a9402f741",
+    "logs/ral_recovery/recover01_3090/s4_Aplus_i001000_r1.inputs.json": "79610743c0eed048d21b5d6a3404890be797be8c7109a15a5c6cc99758092ca8",
+    "logs/ral_recovery/recover01_3090/s4_A_i000250_r0.json": "1285fff299ce64f67bb5cbfdfedf5bf588814765e229a4daf6c87dbc8ed79854",
+    "logs/ral_recovery/recover01_3090/s4_A_i000250_r0.inputs.json": "f9e764267fa97db6c092f769288a4e965432fb0e9c7e4453a1b65be1fe068c10",
+    "logs/ral_recovery/recover01_3090/s4_A_i000500_r0.json": "e93af377e621639103d9c231bcfc4a87414b2d064ea219f77366669e6bb1e942",
+    "logs/ral_recovery/recover01_3090/s4_A_i000500_r0.inputs.json": "6875370b344f5722b43326e5b10f7bb3ff150ac5f7fcb0fde8aba8e4ce80941e",
+    "logs/ral_recovery/recover01_3090/s4_A_i001000_r0.json": "da1b9d56349090cbb3ca0084c19be15fb03246733a94efe00dca7015e9627d05",
+    "logs/ral_recovery/recover01_3090/s4_A_i001000_r0.inputs.json": "56e35bf6f6b3b70a6244d73e822b3afd3cbe97338e73f2ee1e85d90ee9d8cc36",
+    "logs/ral_recovery/recover01_3090/s4_A_i001000_r1.json": "d838243d518ae04f83f863c57641a8328cb03981bc3f0280930d5be124417dfa",
+    "logs/ral_recovery/recover01_3090/s4_A_i001000_r1.inputs.json": "d99d90b459649f8da2074e3022e8512833267737125b7505b824530a0a1e9e81",
+    "logs/ral_recovery/recover01_3090/s2_Aplus_i001000_r0.termination.json": "b707fe1a897d4a2838c3f7a5f917150da1d0d71a3fd4cee66662c4a15331bfd7",
+    "logs/ral_recovery/recover01_3090/s2_Aplus_i001000_r0.trajectory.npz": "111eb707c2f6bc7555cf4f2ed4f8d861e9efc7441b6e5e0d7b8c9e2e59f0e5ea",
+    "logs/ral_recovery/recover01_3090/s4_Aplus_i001000_r0.termination.json": "1b8bc4489f1bcf2b7b5083810c9991e63ffc086b88549842adff5fa7d62201c3",
+    "logs/ral_recovery/recover01_3090/s4_Aplus_i001000_r0.trajectory.npz": "8763efd94d8969b44e348d2d1dc0570cec5d98d54806c42d37bbca7c4909b067",
+    "logs/ral_recovery/recover01_3090/summary.json": "703f455f67f81fae150fa8607f44870cd5200f046a2bc08fb8e427ea31ce5510",
+    "logs/ral_recovery/recover01_3090/source.json": "e03e2fc5990340bdec688d29e1fa1712a71a48e551ca539f5f63ff9bd8e50cd9",
+    "logs/ral_recovery/recover01_3090_review.tar.gz": "d13ba39e1cf8a17a3dc9f4a81be9cb42643c56218403ac2225191f7b717b44c1",
+    "logs/ral_verification/recover01_5080_20261122/import/recover01_5080/protocol.json": "4ddaf7abd5e371c9f9504758fad6bf7b696dab3188dbd2ba2f094c4c98abbb3e",
+    "logs/ral_verification/recover01_5080_20261122/import/recover01_5080/config.json": "d1e00e5663a0c00ae25298965bb6e36f8f645c8da29ceed57b71600ef6a1e81c",
+    "logs/ral_verification/recover01_5080_20261122/import_validation.json": "ae73a4068c4dc991c7ab49e1094cce270de1f0daf77178c2f869d921a6518cf1",
+    "logs/ral_verification/recover01_5080_20261122/checkpoint_validation.json": "5e0e78693f6464daf6040ae217dcfa71b12ad54f31261b488f28a4b982129da4",
+    "logs/ral_verification/recover01_5080_20261122/quick_metrics.json": "59767443f6111cf03c2763f3af7f4cf5ad8dd79311047a1683ad24db723fdb28"
+  },
+  "interpretation": {
+    "scope": "Training-reference development recovery; final iteration 1000 EMA, first 3090 evaluation primary.",
+    "repeated_evaluations": "Second evaluations measure repeatability; they are not additional training seeds or chosen replacements.",
+    "intervention": "Online data, normalization and 8-step forward fitting changed together; this does not identify an individual failure cause.",
+    "comparison": "A and A+ differ in network width and random initialization; no causal benefit, significance or equivalence claim.",
+    "metrics": "RMSE is computed over each model's valid frames; unequal survival duration limits direct error comparisons.",
+    "generalization": "Reference motions and shared identified plant are development data, not held-out robustness or hardware control.",
+    "history": "Do not pool these results with the historical frozen-pair experiment or overwrite its reported zeros.",
+    "next_step": "Freeze a new online A+/B comparison if the recovery gate passes; C awaits B and validated hybrid response supervision."
+  }
+}

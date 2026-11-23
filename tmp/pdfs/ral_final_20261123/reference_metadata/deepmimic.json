@@ -1,0 +1,562 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        11,
+        22
+      ]
+    ],
+    "date-time": "2026-11-22T15:54:15Z",
+    "timestamp": 1795362855870,
+    "version": "4.10.3"
+  },
+  "reference-count": 55,
+  "publisher": "Association for Computing Machinery (ACM)",
+  "issue": "4",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2018,
+            7,
+            30
+          ]
+        ],
+        "date-time": "2018-07-30T00:00:00Z",
+        "timestamp": 1532908800000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://www.acm.org/publications/policies/copyright_policy#Background"
+    }
+  ],
+  "funder": [
+    {
+      "DOI": "10.13039/501100000038",
+      "name": "NSERC",
+      "doi-asserted-by": "crossref",
+      "id": [
+        {
+          "id": "10.13039/501100000038",
+          "id-type": "DOI",
+          "asserted-by": "crossref"
+        }
+      ]
+    },
+    {
+      "name": "Berkeley"
+    }
+  ],
+  "content-domain": {
+    "domain": [
+      "dl.acm.org"
+    ],
+    "crossmark-restriction": true
+  },
+  "short-container-title": [
+    "ACM Trans. Graph."
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2018,
+        8,
+        31
+      ]
+    ]
+  },
+  "abstract": "<jats:p>A longstanding goal in character animation is to combine data-driven specification of behavior with a system that can execute a similar behavior in a physical simulation, thus enabling realistic responses to perturbations and environmental variation. We show that well-known reinforcement learning (RL) methods can be adapted to learn robust control policies capable of imitating a broad range of example motion clips, while also learning complex recoveries, adapting to changes in morphology, and accomplishing user-specified goals. Our method handles keyframed motions, highly-dynamic actions such as motion-captured flips and spins, and retargeted motions. By combining a motion-imitation objective with a task objective, we can train characters that react intelligently in interactive settings, e.g., by walking in a desired direction or throwing a ball at a user-specified target. This approach thus combines the convenience and motion quality of using motion clips to define the desired style and appearance, with the flexibility and generality afforded by RL methods and physics-based animation. We further explore a number of methods for integrating multiple clips into the learning process to develop multi-skilled agents capable of performing a rich repertoire of diverse skills. We demonstrate results using multiple characters (human, Atlas robot, bipedal dinosaur, dragon) and a large variety of skills, including locomotion, acrobatics, and martial arts.</jats:p>",
+  "DOI": "10.1145/3197517.3201311",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2018,
+        7,
+        31
+      ]
+    ],
+    "date-time": "2018-07-31T11:56:23Z",
+    "timestamp": 1533038183000
+  },
+  "page": "1-14",
+  "update-policy": "https://doi.org/10.1145/crossmark-policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 783,
+  "title": [
+    "DeepMimic"
+  ],
+  "prefix": "10.1145",
+  "volume": "37",
+  "author": [
+    {
+      "given": "Xue Bin",
+      "family": "Peng",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "University of California"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Pieter",
+      "family": "Abbeel",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "University of California"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Sergey",
+      "family": "Levine",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "University of California"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Michiel",
+      "family": "van de Panne",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "University of British Columbia"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    }
+  ],
+  "member": "320",
+  "published-online": {
+    "date-parts": [
+      [
+        2018,
+        7,
+        30
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "e_1_2_2_1_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2485895.2485907"
+    },
+    {
+      "key": "e_1_2_2_2_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2897824.2925893"
+    },
+    {
+      "key": "e_1_2_2_3_1",
+      "volume-title": "Unifying Count-Based Exploration and Intrinsic Motivation. CoRR abs/1606.01868",
+      "author": "Bellemare Marc G.",
+      "year": "2016"
+    },
+    {
+      "key": "e_1_2_2_4_1",
+      "volume-title": "CoRR abs/1606.01540",
+      "author": "Brockman Greg",
+      "year": "2016"
+    },
+    {
+      "key": "e_1_2_2_5_1",
+      "unstructured": "Greg Brockman Vicki Cheung Ludwig Pettersson Jonas Schneider John Schulman Jie Tang and Wojciech Zaremba. 2016b. OpenAI Gym. arXiv:arXiv:1606.01540  Greg Brockman Vicki Cheung Ludwig Pettersson Jonas Schneider John Schulman Jie Tang and Wojciech Zaremba. 2016b. OpenAI Gym. arXiv:arXiv:1606.01540"
+    },
+    {
+      "key": "e_1_2_2_6_1",
+      "unstructured": "Bullet. 2015. Bullet Physics Library http://bulletphysics.org.  Bullet. 2015. Bullet Physics Library http://bulletphysics.org."
+    },
+    {
+      "key": "e_1_2_2_7_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1618452.1618516"
+    },
+    {
+      "key": "e_1_2_2_8_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1778765.1781156"
+    },
+    {
+      "key": "e_1_2_2_9_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "M. Da Silva Y. Abe and J. Popovic. 2008. Simulation of Human Motion Data using Short-Horizon Model-Predictive Control. Computer Graphics Forum (2008).  M. Da Silva Y. Abe and J. Popovic. 2008. Simulation of Human Motion Data using Short-Horizon Model-Predictive Control. Computer Graphics Forum (2008).",
+      "DOI": "10.1111/j.1467-8659.2008.01134.x"
+    },
+    {
+      "key": "e_1_2_2_10_1",
+      "volume-title": "Benchmarking Deep Reinforcement Learning for Continuous Control. CoRR abs/1604.06778",
+      "author": "Duan Yan",
+      "year": "2016"
+    },
+    {
+      "key": "e_1_2_2_11_1",
+      "volume-title": "Advances in Neural Information Processing Systems 30. Curran Associates",
+      "author": "Fu Justin"
+    },
+    {
+      "key": "e_1_2_2_12_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2682626"
+    },
+    {
+      "key": "e_1_2_2_13_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2767002"
+    },
+    {
+      "key": "e_1_2_2_14_1",
+      "volume-title": "Emergence of Locomotion Behaviours in Rich Environments. CoRR abs/1707.02286",
+      "author": "Heess Nicolas",
+      "year": "2017"
+    },
+    {
+      "key": "e_1_2_2_15_1",
+      "volume-title": "Learning and Transfer of Modulated Locomotor Controllers. CoRR abs/1610.05182",
+      "author": "Heess Nicolas",
+      "year": "2016"
+    },
+    {
+      "key": "e_1_2_2_16_1",
+      "volume-title": "Advances in Neural Information Processing Systems 29. Curran Associates",
+      "author": "Ho Jonathan"
+    },
+    {
+      "key": "e_1_2_2_17_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3072959.3073663"
+    },
+    {
+      "key": "e_1_2_2_18_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2897824.2925975"
+    },
+    {
+      "key": "e_1_2_2_19_1",
+      "volume-title": "Filip De Turck, and Pieter Abbeel",
+      "author": "Houthooft Rein",
+      "year": "2016"
+    },
+    {
+      "key": "e_1_2_2_20_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1833349.1781155"
+    },
+    {
+      "key": "e_1_2_2_21_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2661229.2661233"
+    },
+    {
+      "key": "e_1_2_2_22_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1866158.1866160"
+    },
+    {
+      "key": "e_1_2_2_23_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2185520.2185524"
+    },
+    {
+      "key": "e_1_2_2_24_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3083723"
+    },
+    {
+      "key": "e_1_2_2_25_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2893476"
+    },
+    {
+      "key": "e_1_2_2_26_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1778765.1778865"
+    },
+    {
+      "key": "e_1_2_2_27_1",
+      "volume-title": "Learning human behaviors from motion capture by adversarial imitation. CoRR abs/1707.02201",
+      "author": "Merel Josh",
+      "year": "2017"
+    },
+    {
+      "key": "e_1_2_2_28_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1038/nature14236"
+    },
+    {
+      "key": "e_1_2_2_29_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2185520.2185539"
+    },
+    {
+      "key": "e_1_2_2_30_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1531326.1531387"
+    },
+    {
+      "key": "e_1_2_2_31_1",
+      "volume-title": "Overcoming Exploration in Reinforcement Learning with Demonstrations. CoRR abs/1709.10089",
+      "author": "Nair Ashvin",
+      "year": "2017"
+    },
+    {
+      "key": "e_1_2_2_32_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2766910"
+    },
+    {
+      "key": "e_1_2_2_33_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2897824.2925881"
+    },
+    {
+      "key": "e_1_2_2_34_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3072959.3073602"
+    },
+    {
+      "key": "e_1_2_2_35_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3099564.3099567"
+    },
+    {
+      "key": "e_1_2_2_36_1",
+      "volume-title": "EPOpt: Learning Robust Neural Network Policies Using Model Ensembles. CoRR abs/1610.01283",
+      "author": "Rajeswaran Aravind",
+      "year": "2016"
+    },
+    {
+      "key": "e_1_2_2_37_1",
+      "volume-title": "Learning Complex Dexterous Manipulation with Deep Reinforcement Learning and Demonstrations. CoRR abs/1709.10087",
+      "author": "Rajeswaran Aravind",
+      "year": "2017"
+    },
+    {
+      "key": "e_1_2_2_38_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1276377.1276510"
+    },
+    {
+      "key": "e_1_2_2_39_1",
+      "volume-title": "Trust Region Policy Optimization. CoRR abs/1502.05477",
+      "author": "Schulman John",
+      "year": "2015"
+    },
+    {
+      "key": "e_1_2_2_40_1",
+      "volume-title": "High-Dimensional Continuous Control Using Generalized Advantage Estimation. CoRR abs/1506.02438",
+      "author": "Schulman John",
+      "year": "2015"
+    },
+    {
+      "key": "e_1_2_2_41_1",
+      "volume-title": "Proximal Policy Optimization Algorithms. CoRR abs/1707.06347",
+      "author": "Schulman John",
+      "year": "2017"
+    },
+    {
+      "key": "e_1_2_2_42_1",
+      "volume-title": "Proc. of IEEE International Conference on Robotics and Animation.",
+      "author": "Sharon Dana"
+    },
+    {
+      "key": "e_1_2_2_43_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1276377.1276511"
+    },
+    {
+      "key": "e_1_2_2_44_1",
+      "unstructured": "R. Sutton D. Mcallester S. Singh and Y. Mansour. 2001. Policy Gradient Methods for Reinforcement Learning with Function Approximation. 1057--1063 pages.   R. Sutton D. Mcallester S. Singh and Y. Mansour. 2001. Policy Gradient Methods for Reinforcement Learning with Function Approximation. 1057--1063 pages."
+    },
+    {
+      "key": "e_1_2_2_45_1",
+      "volume-title": "Barto",
+      "author": "Sutton Richard S.",
+      "year": "1998"
+    },
+    {
+      "key": "e_1_2_2_46_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/MCG.2011.30"
+    },
+    {
+      "key": "e_1_2_2_47_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/IROS.2012.6386025"
+    },
+    {
+      "key": "e_1_2_2_48_1",
+      "volume-title": "John Quan, James Kirkpatrick, Raia Hadsell, Nicolas Heess, and Razvan Pascanu.",
+      "author": "Teh Yee Whye",
+      "year": "2017"
+    },
+    {
+      "key": "e_1_2_2_49_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2601097.2601192"
+    },
+    {
+      "key": "e_1_2_2_50_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2185520.2185521"
+    },
+    {
+      "key": "e_1_2_2_51_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/BF00992696"
+    },
+    {
+      "key": "e_1_2_2_52_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3130800.3130833"
+    },
+    {
+      "key": "e_1_2_2_53_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1778765.1778811"
+    },
+    {
+      "key": "e_1_2_2_54_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1467-8659.2009.01625.x"
+    },
+    {
+      "key": "e_1_2_2_55_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1276377.1276509"
+    }
+  ],
+  "container-title": [
+    "ACM Transactions on Graphics"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://dl.acm.org/doi/10.1145/3197517.3201311",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://dl.acm.org/doi/pdf/10.1145/3197517.3201311",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        6,
+        17
+      ]
+    ],
+    "date-time": "2025-06-17T21:39:44Z",
+    "timestamp": 1750196384000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://dl.acm.org/doi/10.1145/3197517.3201311"
+    }
+  },
+  "subtitle": [
+    "example-guided deep reinforcement learning of physics-based character skills"
+  ],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2018,
+        7,
+        30
+      ]
+    ]
+  },
+  "references-count": 55,
+  "journal-issue": {
+    "issue": "4",
+    "published-print": {
+      "date-parts": [
+        [
+          2018,
+          8,
+          31
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "10.1145/3197517.3201311"
+  ],
+  "URL": "https://doi.org/10.1145/3197517.3201311",
+  "relation": {},
+  "ISSN": [
+    "0730-0301",
+    "1557-7368"
+  ],
+  "issn-type": [
+    {
+      "value": "0730-0301",
+      "type": "print"
+    },
+    {
+      "value": "1557-7368",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2018,
+        7,
+        30
+      ]
+    ]
+  },
+  "assertion": [
+    {
+      "value": "2018-07-30",
+      "order": 2,
+      "name": "published",
+      "label": "Published",
+      "group": {
+        "name": "publication_history",
+        "label": "Publication History"
+      }
+    }
+  ]
+}

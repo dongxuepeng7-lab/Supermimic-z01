@@ -1,0 +1,111 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand*\HyPL@Entry[1]{}
+\citation{deepmimic}
+\citation{amp}
+\citation{omnih2o}
+\citation{supermimic}
+\citation{supermimic}
+\citation{hwangbo}
+\citation{asap}
+\citation{neuralactuator}
+\citation{rudin}
+\citation{shac}
+\citation{song}
+\citation{schwarke}
+\citation{supermimic}
+\citation{sobolev}
+\citation{mbmix}
+\citation{ahac}
+\citation{macura}
+\citation{dmo}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-A}Actuation and Transfer}{1}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-B}Differentiable Models and Policy Gradients}{1}{subsection.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Overall framework retained from the proposed design. The executed A+/B study uses instantaneous actuation, online trajectory fitting, and a fixed 32-step actor horizon. Delay buffers, actuator lag, response-supervised online training, and calibrated horizon selection are extensions requiring further validation. Historical C runs use frozen CPU pairs. The robot panel is illustrative; it is not a photograph of a hardware experiment.}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:framework}{{1}{2}{Overall framework retained from the proposed design. The executed A+/B study uses instantaneous actuation, online trajectory fitting, and a fixed 32-step actor horizon. Delay buffers, actuator lag, response-supervised online training, and calibrated horizon selection are extensions requiring further validation. Historical C runs use frozen CPU pairs. The robot panel is illustrative; it is not a photograph of a hardware experiment}{figure.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Actuator Structure and Response Analysis}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-A}Task, Parameters, and the Supported Transition}{2}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:target}{{1}{2}{Task, Parameters, and the Supported Transition}{equation.3.1}{}}
+\newlabel{eq:effort}{{2}{2}{Task, Parameters, and the Supported Transition}{equation.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-B}Paired Finite-Amplitude Response}{2}{subsection.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces All enabled identified joints. Armature is added joint inertia; a recorded zero is neither missing data nor zero rigid-body inertia. L/R denote left/right.}}{3}{table.1}\protected@file@percent }
+\newlabel{tab:params}{{I}{3}{\lang {All enabled identified joints. Armature is added joint inertia; a recorded zero is neither missing data nor zero rigid-body inertia. L/R denote left/right.}{全部启用的辨识关节。Armature 是附加关节惯量，记录为零不表示数据缺失，也不表示刚体惯量为零。}}{table.1}{}}
+\newlabel{eq:response}{{3}{3}{Paired Finite-Amplitude Response}{equation.3.3}{}}
+\newlabel{eq:loss}{{4}{3}{Paired Finite-Amplitude Response}{equation.3.4}{}}
+\newlabel{eq:metric}{{5}{3}{Paired Finite-Amplitude Response}{equation.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-C}Why Forward Fit Does Not Determine Response Fit}{3}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:branchbound}{{6}{3}{Why Forward Fit Does Not Determine Response Fit}{equation.3.6}{}}
+\newlabel{eq:noise}{{7}{3}{Why Forward Fit Does Not Determine Response Fit}{equation.3.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-D}A Conditional Training-Loss Result}{3}{subsection.3.4}\protected@file@percent }
+\newlabel{eq:optimality}{{8}{3}{A Conditional Training-Loss Result}{equation.3.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-E}Actor Objective and Conditional Horizon Selection}{3}{subsection.3.5}\protected@file@percent }
+\newlabel{eq:actor}{{9}{3}{Actor Objective and Conditional Horizon Selection}{equation.3.9}{}}
+\citation{lafan}
+\citation{mujoco}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Experimental Protocol}{4}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-A}Platform, Data, and Derived Quantities}{4}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:budget}{{10}{4}{Platform, Data, and Derived Quantities}{equation.4.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-B}Stages, Pairing, and Stopping Rules}{4}{subsection.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Protocol constants and exact budget arithmetic. The two update budgets are reported separately.}}{4}{table.2}\protected@file@percent }
+\newlabel{tab:settings}{{II}{4}{\lang {Protocol constants and exact budget arithmetic. The two update budgets are reported separately.}{协议常数与精确预算计算。两种更新预算分别报告。}}{table.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Seven-group design and execution scope. Only A+/B have the current 5000-update online comparison.}}{4}{table.3}\protected@file@percent }
+\newlabel{tab:variants}{{III}{4}{\lang {Seven-group design and execution scope. Only A+/B have the current 5000-update online comparison.}{七组设计及执行范围。当前5000次更新的在线对照仅包含 A+/B。}}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-C}Metrics and Evidence Provenance}{4}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Results}{5}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-A}Archived Joint Replay}{5}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-B}From Frozen-Data Failure to Online Control}{5}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-C}Current Online A+/B Comparison}{5}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-D}Independent Policy and Response Checks}{5}{subsection.5.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Archived joint replay, one record per joint/condition. O/I: original/identified parameters. All three errors improve on seven records; the adverse left-ankle-roll result is retained. These records do not evaluate a learned whole-body policy.}}{6}{table.4}\protected@file@percent }
+\newlabel{tab:archived}{{IV}{6}{\lang {Archived joint replay, one record per joint/condition. O/I: original/identified parameters. All three errors improve on seven records; the adverse left-ankle-roll result is retained. These records do not evaluate a learned whole-body policy.}{归档关节回放，每个关节／条件只有一条记录。O/I 分别表示原始／辨识参数。七条记录的三项误差均改善；保留左踝侧摆的不利结果。这些记录不评估学习到的全身策略。}}{table.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Archived measured and predicted joint trajectories over the first three scored periods: left knee, left hip roll, and right ankle pitch. Top: angle; bottom: joint-side torque. Black: measured; dashed gray: original parameters; blue: identified parameters. Full-record statistics are in Table\nobreakspace  {}\ref  {tab:archived}. The right-ankle candidate is separate from the enabled whole-body training manifest.}}{6}{figure.2}\protected@file@percent }
+\newlabel{fig:replay}{{2}{6}{Archived measured and predicted joint trajectories over the first three scored periods: left knee, left hip roll, and right ankle pitch. Top: angle; bottom: joint-side torque. Black: measured; dashed gray: original parameters; blue: identified parameters. Full-record statistics are in Table~\ref {tab:archived}. The right-ankle candidate is separate from the enabled whole-body training manifest}{figure.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Current online comparison: mean $\pm $ sample SD across training seeds. Each final EMA actor is evaluated on 163 reference clips; only the first evaluation enters this table. CPU calibration metrics are diagnostics, not locked-test results.}}{6}{table.5}\protected@file@percent }
+\newlabel{tab:online}{{V}{6}{\lang {Current online comparison: mean $\pm $ sample SD across training seeds. Each final EMA actor is evaluated on 163 reference clips; only the first evaluation enters this table. CPU calibration metrics are diagnostics, not locked-test results.}{当前在线对照：跨训练种子的均值$\pm $样本标准差。每个最终EMA策略评估163条参考动作，本表仅采用首次评估。CPU校准指标是诊断结果，不是锁定测试结果。}}{table.5}{}}
+\citation{dmo}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces All 31 current paired seeds. Horizontal: paired reduction in CPU calibration angle RMSE at 32 steps; positive favors B. Vertical: first-evaluation completion difference; positive favors B. Red crosses mark the two queue-stopping pairs, including their negative results. No regression or causal relationship is inferred from this descriptive plot.}}{7}{figure.3}\protected@file@percent }
+\newlabel{fig:scatter}{{3}{7}{All 31 current paired seeds. Horizontal: paired reduction in CPU calibration angle RMSE at 32 steps; positive favors B. Vertical: first-evaluation completion difference; positive favors B. Red crosses mark the two queue-stopping pairs, including their negative results. No regression or causal relationship is inferred from this descriptive plot}{figure.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces Old 1000-update policies on the common 3090: mean completion over 14 evaluation seeds. Only two training seeds; training-distribution randomization and observation noise.}}{7}{table.6}\protected@file@percent }
+\newlabel{tab:random}{{VI}{7}{\lang {Old 1000-update policies on the common 3090: mean completion over 14 evaluation seeds. Only two training seeds; training-distribution randomization and observation noise.}{旧1000次更新策略在同一3090上的评估：14个评估种子的平均完成率。仅有两个训练种子，采用训练分布随机化和观测噪声。}}{table.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces Full fit/cal backend checks on RTX 3090. Each process covers 516 blocks. Failure categories overlap.}}{7}{table.7}\protected@file@percent }
+\newlabel{tab:backend}{{VII}{7}{\lang {Full fit/cal backend checks on RTX 3090. Each process covers 516 blocks. Failure categories overlap.}{RTX 3090上的完整拟合／校准后端检查。每个进程覆盖516个数据块，失败类别可重叠。}}{table.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Discussion and Conclusion}{7}{section.6}\protected@file@percent }
+\bibstyle{IEEEtran}
+\bibdata{references}
+\bibcite{deepmimic}{1}
+\bibcite{amp}{2}
+\bibcite{omnih2o}{3}
+\bibcite{supermimic}{4}
+\bibcite{hwangbo}{5}
+\bibcite{asap}{6}
+\bibcite{neuralactuator}{7}
+\bibcite{rudin}{8}
+\bibcite{shac}{9}
+\bibcite{song}{10}
+\bibcite{schwarke}{11}
+\bibcite{sobolev}{12}
+\bibcite{mbmix}{13}
+\bibcite{ahac}{14}
+\bibcite{macura}{15}
+\bibcite{dmo}{16}
+\bibcite{lafan}{17}
+\bibcite{mujoco}{18}
+\@writefile{toc}{\contentsline {section}{References}{8}{section*.1}\protected@file@percent }
+\gdef \@abspage@last{8}

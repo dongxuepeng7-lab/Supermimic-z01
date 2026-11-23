@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-23",
+  "artifact_status": "Current-evidence revision; not a declaration that the full research hypothesis is experimentally established",
+  "pdf": {
+    "en": {
+      "pages": 8,
+      "all_fonts_embedded": true,
+      "undefined_references": false,
+      "overfull_boxes": false,
+      "all_pages_visually_reviewed": true,
+      "output": "output/pdf/Z01_RAL_Final_20261123_EN.pdf",
+      "sha256": "76ed40624a07215b47698df37ad44892d04e8028d2ee55119cc18b4ecc26e012"
+    },
+    "zh": {
+      "pages": 12,
+      "all_fonts_embedded": true,
+      "undefined_references": false,
+      "overfull_boxes": false,
+      "all_pages_visually_reviewed": true,
+      "output": "output/pdf/Z01_RAL_Final_20261123_ZH.pdf",
+      "sha256": "12eaefccea0cabc70e9227e9adf1228f6c3aa22c4c66c4c0d532b24d70b24b62"
+    }
+  },
+  "numerical_validation": [
+    "PASS: 186 metadata hashes; 124 evaluation counts; 62 calibration records; all online table means/SDs;",
+    "31 plotted pairs, including 2 failed screens; bilingual equations/citations/tables; 18 bibliography entries; exact budget arithmetic.",
+    "21 enabled parameters; all 8 archived replay rows; 4 independent randomized evaluation contrasts."
+  ],
+  "reference_entries": 18,
+  "reference_verification_exception": "SuperMimic CoRL 2026 designation is from authors project; independent proceedings volume/pages not confirmed. See reference_audit.json.",
+  "theory": "Derived quantities and conditional bounds are labeled; no numerical policy success or unmeasured outcome inferred.",
+  "visual_review": "20 final pages reviewed. Figure/table captions use consistent body-family type; plots, equation numbers and references legible; no clipping or overlapping text detected.",
+  "build": "Tectonic 0.17.0; bundled IEEE class; Liberation Serif + Noto Serif CJK SC for Chinese."
+}

@@ -1,0 +1,1073 @@
+面向双足动作跟踪的执行器结构化世界模型：
+预测、响应与控制
+
+英文修订稿的完整中文译稿
+
+2026 年 11 月 23 日
+
+摘要
+可微世界模型使控制器同时受到运动预测误差与指令敏感度误差的影响。本文研究面向
+26 关节 Z01 双足机器人的执行器结构化状态转移，并将上述两类误差与闭环控制性能分别评
+估。该框架结合辨识关节参数、显式力矩通道以及成对有限幅度响应诊断。通过分支误差和
+扰动噪声分析，说明轨迹拟合改善为何不必然带来响应或控制改善。归档参数对照在八条关
+节记录中的七条上同时降低角度、速度和力矩预测误差。当前在线实验完成 31 对匹配训练种
+子，每个模型执行 5000 次策略更新和 25000 次世界模型更新。在 163 条参考动作上，4090 批
+次中匹配模型／结构化模型的平均完成率分别为 89.11% ／ 89.85%，5080 批次分别为 88.90%
+／ 87.79%。按种子配对计算的校准角度误差平均降幅分别为 3.09% 和 5.30%，但未观察到一
+致的控制改善。两次独立进程的完整 CPU/GPU 检查分别有 65 和 67 个响应块未通过，总数均
+为 516。结果支持所研究条件下的前向预测收益，同时表明响应有效性和策略优化仍是支持更
+强控制结论的待解决条件。
+
+关键词：类人及双足运动；机器人控制中的机器学习；动力学与控制。
+
+1 引言
+动作模仿为获得多样化全身行为提供了可行途径：参考动作跟踪、学习得到的动作先验以及类人
+机器人遥操作，显著拓展了可从人类动作数据中获得的技能范围 [1, 2, 3]。可微世界模型提供了
+另一种控制器训练方式：以学习到的状态转移替代代价较高的想象物理轨迹展开，并通过该转移
+传播梯度 [4]。由此得到的控制器不仅依赖模型预测机器人将如何运动，还依赖关节指令改变时，
+预测运动将如何变化。
+对于位置控制的双足机器人，这一区别尤为重要。比例—微分（PD）增益、力矩限制、阻尼
+及摩擦共同决定动作到关节加速度的局部映射。网络可能准确拟合常见运动，却给出不准确的局
+部导数。反之，施加执行器结构可能降低前向误差，却不能改善通过长时域、接触相关轨迹进行
+的策略优化。因此，关节标定、响应保真度与闭环控制需要各自独立的证据。
+本文在本地 PartyMimic Z01 实现中研究这一问题，采用 SuperMimic 的可微世界模型训练范
+式 [4]。主要对照保持网络输入宽度、参数量、初始策略／价值网络以及更新预算一致，仅将原始
+动作输入通道替换为显式执行器力矩。当前实验包含 31 对训练种子、共 62 个策略，开展于早期
+冻结数据训练失败和后续在线世界模型拟合恢复之后。分阶段报告既避免用过时的失败表描述当
+前控制器，也保留真实的不利证据。
+本文的贡献有三点。第一，给出参数、数据及训练预算可追溯的匹配执行器结构对照。第二，
+推导连接轨迹拟合与响应监督的有限差分误差和噪声关系，明确响应监督能够及不能保证的性
+质。第三，报告分阶段实证评估，包括归档关节回放、在线策略训练、独立随机化策略评估以及
+1
+
+Hardware and simulation
+
+Differentiable world model
+
+Joint identification
+
+Policy optimization
+
+Structured actuator
+
+π
+target
+
+Command
+
+Command history / delay buffer
+
+Feedback
+
+t−d
+
+φ
+
+···
+
+t−1
+
+t
+
+targets
+
+Fit joint-specific parameters
+
+PD effort + actuator lag
+
+Physics simulator
+
+Actor
+
+Observation history + reference
+
+Action → joint target
+
+Actor gradient
+through model
+
+mjlab
+
+Effort limits and joint friction
+Mean effort over driver substeps
+
+Imagined return
+Rewards + terminal critic value
+over H rollout steps
+
+state, context
+Current pose
+
+Successive poses →
+
+Learned body dynamics
+
+Simulation targets
+Trajectories and pairs
+
+U+
+
+Imagined state sequence
+
+Integrate velocity increment
+
+U−
+
+State and actuator memory advance
+
+predictions
+
+World-model fitting
+
+Optional horizon selector
+
+Trajectory loss + weighted multi-step response loss
+
+Calibration errors → short / long H
+
+A0 / A · simulator parameters
+
+B · structured transition
+
+C · response loss
+
+D · calibrated horizon
+
+图 1: 保留原设计的整体框架。已执行的 A+/B 实验采用瞬时执行器、在线轨迹拟合和固定 32 步
+策略时域。延迟缓冲、执行器滞后、带响应监督的在线训练以及校准时域选择，均为需要进一步
+验证的扩展。历史 C 组使用冻结的 CPU 配对数据。机器人面板仅为示意，并非实机实验照片。
+完整响应后端检查。响应校准的时域选择机制作为有条件的扩展提出，本文不将其控制器收益声
+称为已完成的实验结果。
+
+2 相关工作
+2.1
+
+执行器与迁移
+
+学习得到的执行器模型已用于将敏捷运动迁移到真实四足机器人 [5]。ASAP 利用学习得到的残差
+动作对齐类人机器人的仿真与实机 [6]，NeuralActuator 则建模非线性执行器行为及外力感知 [7]。
+这些方法支持显式表示执行器通道的研究动机，但其物理验证结论不能直接移用于另一机器人或
+执行器近似。本文仅启用归档参数清单中已核实的条目；实现中的对照不包含未经验证的延迟与
+负载项。大规模并行采集遵循 Rudin 等工作所代表的运动控制训练实践 [8]。
+
+2.2
+
+可微模型与策略梯度
+
+SHAC 结合短时域可微轨迹展开与学习得到的价值函数 [9]。后续研究考察了可微仿真中的四足
+控制和可部署运动策略 [10, 11]。SuperMimic 学习刚体仿真的可微预测器，并联合训练动作跟踪
+策略 [4]。本文实现是经过明确修改的本地分支，并非对该系统或其效率结论的原样复现。
+Sobolev 训练在输出目标之外补充导数信息 [12]；MB-MIX 将导数感知模型拟合与截断窗口
+混合相结合 [13]。AHAC 自适应调整时域以避开刚性接触动力学 [14]，MACURA 则依据不确定
+性调整合成轨迹长度 [15]。解耦反向传播将物理轨迹生成与用于求导的学习模型分离 [16]。本文
+响应标签是由成对轨迹得到的有限幅度测量，而非精确仿真器导数。因此，在据此决定策略时域
+之前，必须验证其在不同扰动幅度及数值后端下的有效性。
+
+2
+
+表 1: 全部启用的辨识关节。Armature 是附加关节惯量，记录为零不表示数据缺失，也不表示刚体
+惯量为零。
+关节
+
+附加惯量
+阻尼
+(kg m2 ) (N m s/rad)
+
+左膝
+右膝
+左踝俯仰
+右髋偏航
+左髋俯仰
+右髋俯仰
+左髋侧摆
+
+0.292000 0.416000 2.505000
+0.205700 0.000790 3.706800
+0.104700
+0 0.638200
+0.010100 0.634100 0.248000
+0 4.840868 1.388000
+0 4.293868 1.330309
+0 13.492700 1.477300
+
+摩擦
+(N m)
+
+3 执行器结构与响应分析
+3.1
+
+任务、参数及当前支持的状态转移
+
+令 xt 包含机体位姿／速度及关节位置／速度 (qt , q̇t )。策略 at = πθ (ot , ct ) 接收观测历史和参考目
+标。固定映射给出位置指令：
+qtcmd = q0 + Sat + ∆q(ξ),
+(1)
+其中 q0 为中立构型，S 包含动作缩放系数，ξ 为仿真上下文。任务是参考动作跟踪，不是独立的
+速度指令基准。
+辨识场景修改七个关节上的 21 项附加惯量、阻尼及摩擦参数（表1），其余条目保留标称值。
+在已记录的踝关节回放中，反馈事件更新模拟状态缓存，指令事件基于缓存计算饱和 PD 力矩，
+该力矩保持到下一次指令。后续反馈采用模拟状态，而非重置为测量状态。这种记录事件解释为
+关节辨识提供动机，但要隔离其收益，仍需分别重新拟合连续 PD、周期 PD 和事件 PD 基线。现
+有证据不包含这些重新拟合结果。
+已执行的结构化模型采用瞬时通道：
+ut = Kp (qtcmd − qt ) − Kd q̇t ,
+τt = clip(ut , −ℓ, ℓ) − bq̇t − fc tanh(q̇t /vs ),
+
+(2)
+
+其中 vs = 0.01 rad/s。学习到的机体动力学网络接收 τt /ℓ、状态及参数上下文，预测速度增量，并
+通过基础状态转移积分位姿。附加惯量作为上下文特征输入。匹配模型 A+ 在相同输入宽度下接
+收原始 at ，网络容量和上下文保持一致。两组世界模型均采用三个 1024 单元隐藏层。
+式(2)每 20 ms 策略步计算一次，不实现实机指令延迟、力矩滤波、异步保持或负载偏置。其中平
+滑库仑项是对仿真器约束摩擦的近似。一般记忆扩展可缓存延迟目标，
+并按 mi+1 = (1−α)mi +αui
+滤波力矩，其中 α = 1 − exp(−δ/Te )。验证该扩展需要因果执行器历史及关节回放；当前结果对
+应零延迟和 α = 1。
+
+3.2
+
+成对有限幅度响应
+
+对于 32 步目标序列 U 和在全部 32 × 26 个元素上归一化的方向 D，构造 U ± = U ± ϵD。两个物
+理分支在共同预运行之后复制相同的积分状态及随机化参数。模型分支从对应的共同观测状态开
+始。定义：
+y b (U + ) − yhb (U − )
+Rhb = h
+,
+(3)
+2ϵ
+3
+
+其中 yh 堆叠关节角度及速度，b 表示学习模型或参考物理系统。各分支演化过程中不使用测量纠
+正。输出缩放为 Wy = diag(100I26 , 10I26 )，分别重复用于角度和速度通道，单位采用 rad 与 rad/s。
+带响应监督的候选 C 最小化：
+h 
+i
+LC = Ltraj + λR E ρ Wy (Rhwm − Rhref ) ,
+
+(4)
+
+并对采样数据块、监督步和通道取平均。仅使用轨迹损失的对照采用相同拟合标签，并令 λR = 0。
+历史 C 组采用冻结 CPU 配对、MSE 或 Huber 损失，以及 4 步或 8 步响应前缀。当前在线 A+/B 采
+用 8 步轨迹目标，不使用响应惩罚。将在线前向拟合与已验证的响应标签结合，是另一项尚未执
+行的干预。
+报告时仍采用未经修改的平方误差指标：
+v
+u
+N X
+H
+u 1 X
+wm − Rref )∥2 .
+∥Wy (Rn,h
+ER (H) = t
+n,h 2
+52N H
+
+(5)
+
+n=1 h=1
+
+该指标测量投影到关节通道的响应，不是完整状态雅可比矩阵。仅有准确的关节响应，并不能保
+证经过机体运动、接触切换、奖励以及终端价值网络的梯度准确。
+
+3.3
+
+为何前向拟合不能决定响应拟合
+
+wm,±
+令 e±
+− yhref,± )。直接代入得到：
+h = Wy (yh
+−
+e+
+h − eh
+,
+2ϵ
+∥e+ ∥2 + ∥e−
+h ∥2
+.
+∥Wy (Rhwm − Rhref )∥2 ≤ h
+2ϵ
+
+Wy (Rhwm − Rhref ) =
+
+(6)
+
+若两分支误差均不超过 η，则响应误差上界为 η/ϵ。较低的平均前向 RMSE 并不构成这一一致上
+界，也不控制两个分支误差之差。一个简单的光滑反例是近似误差 e(u) = η sin(ku)：其幅值不超
+过 η，但导数 e′ (0) = ηk。随着 k 增大，输出准确性可与任意大的局部导数误差并存。这是解析示
+例，并非拟合得到的机器人响应。
+假设某个标量输出的两分支噪声均为零均值、方差均为 σ 2 ，相关系数为 ρn ，则：
+Var(Rnoise ) =
+
+σ 2 (1 − ρn )
+.
+2ϵ2
+
+(7)
+
+若噪声独立且 ϵ = 0.01 rad，标准差放大系数为每弧度 70.7107。该计算没有估计 σ 或 ρn 。GPU 数
+值差异未必服从这一随机模型；公式用于说明中心差分对分支差异的敏感性。
+在光滑区域内，若三阶方向导数上界为 M3 ，中心差分截断误差不超过 M3 ϵ2 /6。降低扰动幅
+度会减小这一光滑截断项，同时放大噪声。接触切换与饱和边界可能破坏光滑假设。因此，本文
+保留有限幅度解释，并检查 0.5ϵ、ϵ、2ϵ 三种幅度，不将单次响应测量视为精确导数。
+
+3.4
+
+有条件的训练损失结论
+
+令 F 为共同前向拟合损失，G 为相同模型族及数据上的固定响应拟合损失。假设全局最小值可达
+到，且 θB ∈ arg min F 、θC ∈ arg min(F + λG)，其中 λ > 0。最优性给出：
+
+
+λ G(θC ) − G(θB ) ≤ F (θB ) − F (θC ) ≤ 0.
+4
+
+(8)
+
+第一个不等式来自将 C 的目标函数值与该目标在 θB 处的值比较，第二个来自 B 的最优性。因此，
+在这些假设下，响应拟合损失不能增大，但前向拟合损失可能增大。有限优化、变化的在线数据
+以及变化的损失定义都会破坏上述前提。尤其是，Huber 拟合目标不保证报告的 MSE 更小，二者
+也都不保证校准误差或控制器回报改善。这一有条件的结论解释了可能的拟合权衡，并未为未测
+量实验指定理论数值。
+
+3.5
+
+策略目标与有条件的时域选择
+
+每次策略更新中固定模型及价值网络权重，梯度仍通过它们的输入传播，以最大化：
+JH =
+
+H−1
+X
+
+γ k Sk rk + γ H SH V (xH , cH ),
+
+k=0
+
+Sk =
+
+Y
+
+(1 − pi ),
+
+(9)
+
+i<k
+
+其中 pi 为预测终止概率。已执行的策略时域为 H = 32。评估时，冻结策略直接驱动物理仿真器；
+学习到的世界模型不是评估场景。
+提出的选择器仅在当前状态区域的每个响应前缀均通过预先指定、超过噪声水平的校准
+准则时，选择长窗口；否则使用短窗口，并记录未经验证的回退情形。对于敏感度误差递推
+P
+k
+eh+1 ≤ Leh + δ、e0 = 0，反复代入得 eH ≤ δ H−1
+k=0 L 。这一有条件的界为前缀检查提供动机，
+但数值保证需要测量或合理确定 L 与 δ。
+未来 D/C-perm 对照将共享冻结 C 模型、价值网络、初始策略以及轨迹起始批次。C-perm 打
+乱 D 的窗口标签。若短、长窗口数量分别为 ns , nl ，两组获得完全相同的分配预算 ns Hs + nl Hl 。
+该恒等式不意味着实际执行工作量相同，也不能推断策略完成率的大小关系。由于尚未建立所需
+的响应有效性，D/C-perm 仍未执行。
+
+4 实验协议
+4.1
+
+平台、数据及推导量
+
+平台为 26 关节 Z01，参考动作库包含 163 条由 LAFAN1 [17] 重定向得到的片段，涵盖行走及其
+他动作类别。训练采用基于 MuJoCo 的 GPU 物理仿真 [18]。控制间隔 20 ms，物理仿真间隔 5 ms。
+响应数据集包括来自 23 个源会话的 400 个拟合块、来自七个会话的 116 个校准块，以及来自七
+个会话的 136 个锁定测试块。响应划分之间的会话不重叠。策略训练使用完整参考库，因此这些
+划分不构成未见策略动作。测试响应数组未被读取。
+表2区分执行预算与推导计算。设 Ne = 1024、预热步数 W = 64、更新与采集比 u = 0.4、策
+略迭代次数 I，则：
+
+Nenv = Ne W + ⌊I/u⌋ , Nimag = I × 512 × 32.
+(10)
+当 I = 5000 时，分别为 12,865,536 次环境转移和 81,920,000 个分配的策略想象步。这些量并非达
+到目标所测得的转移数、独立样本数或实际时间加速比。8 步与 32 步窗口分别对应 160 ms 和 640
+ms；20 步预运行对应 400 ms。
+√
+方向归一化包含 d = 832 个元素，
+因此 RMS(ϵD) = ϵ/ 832 = 0.346688 mrad，
+且 ∥U + −U − ∥2 =
+0.02 rad。这些精确量描述输入扰动，而非观测准确率。163 条动作中每增加一条完成动作，单个
+训练种子的完成率变化 100/163 = 0.613497 个百分点（pp）。
+
+5
+
+表 2: 协议常数与精确预算计算。两种更新预算分别报告。
+项目
+
+早期
+
+策略更新次数 I
+世界模型更新次数 5I
+环境转移数
+分配的想象步数
+
+当前
+
+1,000
+5,000
+5,000
+25,000
+2,625,536 12,865,536
+16,384,000 81,920,000
+
+关节数／参考片段数
+控制／物理仿真间隔
+并行环境数
+世界模型／策略批量大小
+在线世界模型／策略时域
+世界模型／策略精度
+拟合／校准／锁定测试配对数
+
+26 / 163
+20 / 5 ms
+1,024
+256 / 512
+8 / 32
+FP32 / BF16
+400 / 116 / 136
+
+表 3: 七组设计及执行范围。当前 5000 次更新的在线对照仅包含 A+/B。
+组别
+
+变更
+
+证据
+
+A0
+标称场景、基础世界模型 早期
+A
+辨识场景、基础世界模型 早期
+A+
+匹配的原始动作输入
+在线
+B
+显式力矩通道
+在线
+C
+B 加响应损失
+仅冻结配对轮次
+C-perm 打乱窗口标签
+未运行
+D
+校准窗口标签
+未运行
+
+4.2
+
+阶段、配对及停止规则
+
+表3保留七组设计，同时区分已完成对照与方案。A0/A 改变标称与辨识场景参数；A+/B 在相同输
+入宽度和容量下隔离当前动作表示。在在线对照中，策略及价值网络按种子匹配初始权重，共享
+训练超参数。但后续采集轨迹依赖学习到的策略；相同初始种子不意味着在线拟合标签完全一致。
+早期冻结配对实验采用 1000 次策略更新，在固定 CPU 配对上使用 32 步世界模型目标。在线
+恢复同时改变拟合覆盖范围、归一化更新、前向窗口以及训练数据后端。这是一项恢复干预，并
+非对上述某一因素的隔离测试。后续匹配 A+/B 实验采用在线 8 步拟合、32 步策略时域，每次策
+略更新对应五次世界模型更新，世界模型／策略分别采用 FP32 ／ BF16 计算。旧 1000 次更新检
+查点与新 5000 次更新检查点不合并。
+当前实验中，4090 队列分配种子 8, 12, . . .，5080 队列分配 6, 10, . . .。每个种子在同一机器上
+先训练 A+ 再训练 B，仅对达到分配预算的最终 EMA 策略进行两次完整评估；首次为主要结果，
+第二次检查重复性。当 A+ 完成率低于 70%、B 的保守完成率降幅超过 5 个百分点、B/A+ 有效时
+长中位数之比低于 0.9，或重复评估极差超过 3 个百分点时，队列停止。保守降幅比较两次评估
+中的最高 A+ 完成率与最低 B 完成率。这些是工程筛查条件，并非等效性或优越性检验。所有完
+整负结果均保留于各批次汇总。
+
+4.3
+
+指标与证据来源
+
+每次策略评估均采用评估种子 0 和辨识场景，从每条参考动作的首帧开始。完成要求到达参考动
+作末尾，且未越过训练终止阈值：根部高度相对参考的绝对误差 0.25 m，或 Rzz 相对参考的绝对
+6
+
+表 4: 归档关节回放，每个关节／条件只有一条记录。O/I 分别表示原始／辨识参数。七条记录的
+三项误差均改善；保留左踝侧摆的不利结果。这些记录不评估学习到的全身策略。
+关节
+
+幅度系数／周期 (s)
+
+角度 (mrad)
+O
+I
+
+左膝
+右膝
+左髋俯仰
+右髋俯仰
+左髋侧摆
+右髋偏航 †
+右踝俯仰 †
+左踝侧摆
+
+0.3 / 2
+0.3 / 2
+0.3 / 2
+0.3 / 2
+0.3 / 3
+0.1 / 2
+0.3 / 3
+0.3 / 2
+
+7.400
+7.196
+10.217
+8.733
+13.861
+1.363
+4.415
+7.764
+
+3.680
+5.498
+7.205
+6.694
+3.192
+1.112
+2.141
+9.116
+
+速度 (rad/s)
+力矩 (N m)
+O
+I
+O
+I
+0.0886
+0.0757
+0.1136
+0.0747
+0.0307
+0.0331
+0.0582
+0.1586
+
+0.0781
+0.0670
+0.0956
+0.0602
+0.0253
+0.0322
+0.0564
+0.1729
+
+1.823
+1.715
+3.356
+2.738
+2.844
+0.445
+0.486
+0.587
+
+0.806
+0.892
+1.764
+1.743
+0.751
+0.424
+0.462
+0.686
+
+†
+
+采用冻结的关节专用候选参数，其余行采用归档舍入参数。指标为预热后整条记录的 RMSE，保留瞬态，最大积
+分步长为 0.5 ms，评分间隔为 2 ms。尚无原始实机拟合会话可用于独立重新辨识。
+
+误差 0.8。这些是跟踪终止条件，不是物理跌倒的直接标签。校准角度 RMSE 在两分支、所有关
+节以及 32 步前缀上汇总；ER 由式(5)定义。报告的标准差跨训练种子计算，而非跨单帧计算。
+已检查当前训练台账、每个模型全部 5001 行迭代记录、协议／数据／工具指纹、记录中的
+初始模块哈希，以及全部 124 份评估输出，审计覆盖 20,212 个动作回合。当前实验回传包包含元
+数据而非权重，因此新检查点的实际张量及同一设备复评仍未独立核验。相比之下，早期种子 2
+／ 4 模型与本地 3090 场景数组已从实际文件核验。这一区别限定了当前证据的强度。
+
+5 结果
+5.1
+
+归档关节回放
+
+表4报告现有八条归档记录，其中七条的三项 RMSE 均改善。左膝位置误差从 7.400 降至 3.680
+mrad，左髋侧摆误差从 13.861 降至 3.192 mrad。右踝俯仰位置误差从 4.415 降至 2.141 mrad，其
+速度与力矩收益较小。图2采用这些记录固定的早期窗口，而非挑选最佳区间。
+左踝侧摆位置误差由 7.764 升至 9.116 mrad，速度与力矩预测也变差。记录位置跨越模型下
+限；归档的关闭限位诊断降低了绝对误差，但未改变原始／辨识参数的优劣顺序。原因尚未确定。
+这些是同一记录内的参数对照，每个条件仅一条记录；既不能隔离事件时序辨识的效果，也不能
+证明学习策略的迁移。原始拟合会话与匹配时序重新拟合仍不可用。
+
+5.2
+
+从冻结数据失败到在线控制
+
+历史共同种子评估中，A0/A 在辨识场景的完成率分别为 79.14 ± 2.74% 和 79.51 ± 2.24%，跨五个
+训练种子统计。A+、B 及两个 C 候选在每个种子上均未完成 163 条动作中的任何一条，有效时长
+中位数约为 1.00–1.02 s。这些是实际观测到的失败，并非缺失条目或理论下界。本文在正文中保
+留该结果，避免重复展示相同的零百分比表格。
+后续在线恢复中，种子 2、4 的 A+ 首次评估分别完成 136/163 和 133/163 条；该恢复实验中
+的 A 分别为 127/163 和 129/163 条。另一组匹配的 1000 次更新结构实验在共同 3090 上获得 A+/B
+完成数 133/132 及 131/130。恢复说明匹配输入路径能够支持策略学习，但不能确定早期失败的唯
+一原因。这些小规模实验构成扩大当前对照的动机，不能替代更大规模的比较。
+
+7
+
+L knee | 0.3 / 2 s
+
+L hip roll | 0.3 / 3 s
+
+−0.65
+
+Position (rad)
+
+Position (rad)
+
+−0.60
+Measured
+Original model
+Identified set
+
+−0.70
+−0.75
+−0.80
+
+0.60
+
+−0.04
+
+Position (rad)
+
+−0.55
+
+−0.85
+
+R ankle pitch | 0.3 / 3 s
+
+−0.02
+
+−0.06
+−0.08
+
+0.55
+0.50
+0.45
+0.40
+0.35
+
+0
+
+2
+
+4
+
+6
+
+0
+
+2
+
+4
+
+6
+
+8
+
+−4
+−6
+−8
+−10
+−12
+
+Torque (N m)
+
+2
+
+Torque (N m)
+
+0
+−2
+
+4
+
+6
+
+8
+
+−14
+0
+
+2
+
+4
+
+6
+
+0
+
+2
+
+4
+
+6
+
+8
+
+0
+
+2
+
+4
+
+6
+
+Position residual (mrad)
+
+0
+−1
+
+−3
+
+8
+
+Time from first scored sample (s)
+
+10
+
+1
+
+−2
+
+−4
+
+20
+
+Position residual (mrad)
+
+Torque (N m)
+
+2
+
+2
+
+0
+−2
+
+Position residual (mrad)
+
+0
+
+15
+
+7.5
+5.0
+
+5
+2.5
+图 2: 归档实测及预测关节轨迹，展示前三个评分周期：左膝、左髋侧摆、右踝俯仰。上排为角度，
+10
+0.0
+下排为关节侧力矩。黑色为测量，灰色虚线为原始参数，蓝色为辨识参数。整条记录统计见表4。
+0
+5
+−2.5
+右踝候选参数独立于已启用的全身训练参数清单。
+−5
+−10
+
+0
+
+−5
+
+−5.0
+−7.5
+
+−10.0
+表 5: 当前在线对照：跨训练种子的均值 ± 样本标准差。每个最终
+EMA 策略评估 163 条参考动
+0
+2
+4
+6
+0
+2
+4
+6
+8
+0
+2
+4
+6
+8
+作，本表仅采用首次评估。CPU
+校准指标是诊断结果，不是锁定测试结果。
+Time from first scored sample (s)
+Time from first scored sample (s)
+Time from first scored sample (s)
+
+GPU
+
+n 组别
+
+完成率 (%)
+
+校准角度 RMSE32 (rad)
+
+校准 ER (8)
+
+4090
+4090
+5080
+5080
+
+20
+20
+11
+11
+
+89.11 ± 2.56
+89.85 ± 2.49
+88.90 ± 2.71
+87.79 ± 1.95
+
+0.04384 ± 0.00204
+0.04239 ± 0.00205
+0.04416 ± 0.00138
+0.04180 ± 0.00148
+
+73.726 ± 0.021
+73.746 ± 0.025
+73.736 ± 0.019
+73.740 ± 0.031
+
+A+
+B
+A+
+B
+
+保留全部 31 对完整结果，包括两对触发门槛的负结果。不同 GPU 使用不同种子，不合并统计。队列在首次控制检查
+失败时停止，因此仅作描述性统计。当前模型权重仍待回传后独立核验。零响应预测器的校准 ER (8) = 73.893304。
+
+5.3
+
+当前在线 A+/B 对照
+
+4090 完成 20 对，末个种子 84；5080 完成 11 对，末个种子 46。记录中的每个模型均达到 5000 次
+策略和 25000 次世界模型更新。表5按训练／评估 GPU 分别展示全部完整配对。4090 批次的平均
+B 减 A+ 完成率为 +0.74 个百分点，5080 批次为 −1.12 个百分点。B 胜／平／负的种子数分别为
+12/1/7 和 4/0/7。种子及机器均不同，因此不能将该差异解释为 GPU 效应。
+4090 在种子 84 后停止：A+ 两次均完成 152/163 条，B 分别为 142/163 和 140/163，保守降幅
+7.36 个百分点。5080 在种子 46 后停止：A+ 两次均完成 150/163 条，B 两次均为 140/163，降幅
+6.13 个百分点。两者均超过预设 5 个百分点门槛。队列分别运行约 5.97 和 3.78 小时后因控制检
+查停止，不是训练缺失或磁盘耗尽。由于停止依赖观测结果，汇总仅用于描述，不采用固定样本
+量显著性解释。
+在共同 CPU 校准配对上，B 在 14/20 和 10/11 个种子降低 32 步角度 RMSE。配对百分比降幅
+的均值分别为 3.09% 和 5.30%；该值不是批次均值之比。图3表明预测改善与完成率改善并不可靠
+地同时出现。即使两对触发停止的种子，B 的校准角度误差也更低。同时，B 的校准 ER (8) 平均
+
+8
+
+RTX 4090: 20 paired training seeds
+
+RTX 5080: 11 paired training seeds
+
+B minus A+ completion
+(percentage points)
+
+8
+4
+0
+−4
+−8
+
+seed 84
+
+seed 46
+
+−10
+−5
+0
+5
+10
+15
+B reduction in calibration angle RMSE (%)
+
+−10
+−5
+0
+5
+10
+15
+B reduction in calibration angle RMSE (%)
+
+图 3: 当前全部 31 对种子。横轴为 32 步 CPU 校准角度 RMSE 的配对降幅，正值表示 B 更优；纵
+轴为首次评估完成率之差，正值表示 B 更优。红叉标记导致两队列停止的配对，保留了对应负结
+果。不从此描述性散点图推断回归或因果关系。
+表 6: 旧 1000 次更新策略在同一 3090 上的评估：14 个评估种子的平均完成率。仅有两个训练种
+子，采用训练分布随机化和观测噪声。
+场景 种子 A+ (%) B (%) ∆(百分点)
+辨识
+辨识
+标称
+标称
+
+2
+4
+2
+4
+
+81.99
+79.84
+80.67
+79.45
+
+80.94
+79.45
+77.83
+77.65
+
+−1.05
+−0.39
+−2.85
+−1.80
+
+比 A+ 高 0.027% 和 0.006%，相对零响应基线仅低约 0.20% 和 0.21%。因此，当前前向收益不足
+以证明具有实用价值的响应保真度。
+
+5.4
+
+独立策略与响应检查
+
+3090 随机化评估使用早期四个 1000 次更新模型，而非 62 个新策略。两种场景各完成 14 个评估
+种子，形成 28 个平衡的四模型单元。启用训练范围的动力学随机化及默认训练观测噪声，并匹
+配初始场景哈希。表6显示，四种条件／训练种子组合的平均 B 减 A+ 完成率均为负值。训练种子
+仍只有两个。另一个不完整单元中已完成的三份评估予以保留，但不计入平衡汇总；其第四个模
+型在八小时上限被中断。这是训练分布内敏感性评估，并非未见条件鲁棒性。
+两个独立 3090 进程在三种幅度及 4 ／ 8 步时域下检查全部拟合／校准响应块。工程容差事
+先固定：缩放前向 RMSE 不超过 0.1；CPU/GPU 响应差异不超过 0.1 与 CPU 响应 RMS 的 10% 二
+者中的较大值；重复差异不超过 0.01 与 CPU 响应 RMS 的 1% 二者中的较大值。两个 CPU 场景完
+全匹配，归档 CPU 回放最大差异为 5.61 × 10−13 ，初始状态转移检查通过。但两次分别有 65/516
+和 67/516 个块未通过至少一项规定检查（表7）；另有 15/516 个块未通过跨进程响应重复性检查。
+从保存的原始轨迹重新计算后得到相同计数。
+这些结果将数值不一致定位到响应流程的后端／重复性环节，但不能证明求解器、精度或接
+触中的某一项是唯一原因。保留原始失败数据块，且未放宽阈值。因此，带响应监督的在线 C 以
+及基于时域选择的 D/C-perm 尚未推进到策略训练。
+
+9
+
+表 7: RTX 3090 上的完整拟合／校准后端检查。每个进程覆盖 516 个数据块，失败类别可重叠。
+检查项／失败块数
+
+第1次
+
+第2次
+
+前向偏差
+CPU/GPU 响应偏差
+进程内 GPU 重复性
+任一规定检查
+
+42
+47
+24
+65
+
+42
+46
+26
+67
+
+跨进程响应重复性
+
+15 / 516
+
+6 讨论与结论
+实验模式与理论分析的适用范围一致：执行器结构可以改善轨迹预测，而分支响应误差与策略
+性能仍未解决。旧冻结数据实验中，MSE 权重 10−4 的 C 将平均拟合 ER (8) 从 B 的 69.978 降至
+14.014，但校准误差从 75.323 升至 76.136。Huber 候选达到 74.368，仍高于零响应校准基线 73.893。
+式(8)讨论共同拟合目标下的全局优化，不能预测这些校准结果。式(6)至式(7)解释较小前向误差
+为何不足，但并未确定实验失败的唯一原因。
+若干进一步联系需要直接测试。在式(2)中，超出未饱和 PD 区间时，指令导数为零，而平滑
+摩擦斜率在零速度附近最大。它们对优化的影响仍是假设，需要饱和、响应及梯度测量。较短或
+经校准的时域可能减小敏感度误差累积，但不能根据相同想象步预算推断 D 或 C-perm 的完成率。
+遵循文献 [16] 的解耦原则，在固定前向值下进行梯度替换对照，可隔离反向模型效应；本文尚未
+执行该实验。
+当前研究具有可追溯预算和较广种子覆盖，但仍处于开发验证阶段：校准数据用于筛查，当
+前模型权重尚未独立回传，当前评估使用训练参考动作。历史实机证据为归档关节回放，而非全
+身部署。本文尚未建立匹配 PPO 效率对照、未见执行器条件鲁棒性、事件时序重新拟合优势或达
+到目标时间收益。未执行结果不填为零，也不用理想理论值替代。
+综上，辨识参数改善了八条归档关节记录中的七条；在线结构化模型在 31 对种子中的 24 对
+降低了校准角度误差。当前完成率约 88%–90%，作为对活跃实现的描述，已更新了冻结数据阶段
+的失败结论。闭环差异不一致以及完整响应后端检查失败，使我们尚不能声称稳定的控制改善。
+由此形成的贡献是：通过实验区分预测、响应与控制证据，并以有条件的分析明确支持响应校准
+策略优化之前必须完成的验证。
+
+参考文献
+[1] X. B. Peng, P. Abbeel, S. Levine, and M. van de Panne, “DeepMimic: Example-guided deep reinforcement learning of physics-based character skills,” ACM Transactions on Graphics, vol. 37, no. 4,
+pp. 143:1–143:14, 2018.
+[2] X. B. Peng, Z. Ma, P. Abbeel, S. Levine, and A. Kanazawa, “AMP: Adversarial motion priors for
+stylized physics-based character control,” ACM Transactions on Graphics, vol. 40, no. 4, pp. 144:1–
+144:20, 2021.
+[3] T. He, Z. Luo, X. He, W. Xiao, C. Zhang, W. Zhang, K. M. Kitani, C. Liu, and G. Shi, “OmniH2O:
+Universal and dexterous human-to-humanoid whole-body teleoperation and learning,” in Proc.
+Conference on Robot Learning, ser. Proceedings of Machine Learning Research, vol. 270, 2025, pp.
+1516–1540. [Online]. Available: https://proceedings.mlr.press/v270/he25b.html
+10
+
+[4] Q. Liao, Y. Shao, J. Long, K. Zakka, R. Horowitz, P. Abbeel, and K. Sreenath, “SuperMimic:
+Scaling humanoid whole-body control with one differentiable world model,” in Conference on
+Robot Learning, 2026. [Online]. Available: https://supermimic.github.io/
+[5] J. Hwangbo, J. Lee, A. Dosovitskiy, D. Bellicoso, V. Tsounis, V. Koltun, and M. Hutter, “Learning
+agile and dynamic motor skills for legged robots,” Science Robotics, vol. 4, no. 26, p. eaau5872,
+2019.
+[6] T. He, J. Gao, W. Xiao, Y. Zhang, Z. Wang, J. Wang, Z. Luo, G. He, N. Sobanbabu, C. Pan, Z. Yi,
+G. Qu, K. Kitani, J. K. Hodgins, L. Fan, Y. Zhu, C. Liu, and G. Shi, “ASAP: Aligning simulation and
+real-world physics for learning agile humanoid whole-body skills,” in Proc. Robotics: Science and
+Systems, 2025.
+[7] Z. Dou, J. U. Onyemelukwe, H. Zhang, H. Zhang, M. Guo, Y. Tian, M. P. Lipiec, J. Jacob, C. Liu, P. Y.
+Chen, Y. Ivanov, and W. Matusik, “NeuralActuator: Neural actuation modeling for robot dynamics
+and external force perception,” in Proc. Robotics: Science and Systems, 2026.
+[8] N. Rudin, D. Hoeller, P. Reist, and M. Hutter, “Learning to walk in minutes using
+massively parallel deep reinforcement learning,” in Proc. Conference on Robot Learning, ser.
+Proceedings of Machine Learning Research, vol. 164, 2022, pp. 91–100. [Online]. Available:
+https://proceedings.mlr.press/v164/rudin22a.html
+[9] J. Xu, V. Makoviychuk, Y. Narang, F. Ramos, W. Matusik, A. Garg, and M. Macklin,
+“Accelerated policy learning with parallel differentiable simulation,” in Proc. International
+Conference on Learning Representations, 2022. [Online]. Available: https://openreview.net/forum?
+id=ZSKRQMvttc
+[10] Y. Song, S. b. Kim, and D. Scaramuzza, “Learning quadruped locomotion using differentiable
+simulation,” in Proc. Conference on Robot Learning, ser. Proceedings of Machine Learning Research,
+vol. 270, 2025, pp. 258–271. [Online]. Available: https://proceedings.mlr.press/v270/song25a.html
+[11] C. Schwarke, V. Klemm, J. Bagajo, J. P. Sleiman, I. Georgiev, J. T. Torres, and M. Hutter,
+“Learning deployable locomotion control via differentiable simulation,” in Proc. Conference on
+Robot Learning, ser. Proceedings of Machine Learning Research, vol. 305, 2025, pp. 3665–3684.
+[Online]. Available: https://proceedings.mlr.press/v305/schwarke25a.html
+[12] W. M. Czarnecki, S. Osindero, M. Jaderberg, G. Świrszcz, and R. Pascanu, “Sobolev
+training for neural networks,” in Advances in Neural Information Processing Systems, vol. 30, 2017. [Online]. Available:
+https://proceedings.neurips.cc/paper/2017/hash/
+758a06618c69880a6cee5314ee42d52f-Abstract.html
+[13] X. Zhang, X. Cai, B. Liu, W. Huang, S.-C. Zhu, S. Qi, and Y. Yang, “Differentiable information
+enhanced model-based reinforcement learning,” in Proc. AAAI Conference on Artificial Intelligence,
+vol. 39, no. 21, 2025, pp. 22 605–22 613.
+[14] I. Georgiev, K. Srinivasan, J. Xu, E. Heiden, and A. Garg, “Adaptive horizon actor-critic for policy
+learning in contact-rich differentiable simulation,” in Proc. International Conference on Machine
+Learning, ser. Proceedings of Machine Learning Research, vol. 235, 2024, pp. 15 418–15 437.
+[Online]. Available: https://proceedings.mlr.press/v235/georgiev24a.html
+
+11
+
+[15] B. Frauenknecht, A. Eisele, D. Subhasish, F. Solowjow, and S. Trimpe, “Trust the model
+where it trusts itself—model-based actor-critic with uncertainty-aware rollout adaption,” in
+Proc. International Conference on Machine Learning, ser. Proceedings of Machine Learning
+Research, vol. 235, 2024, pp. 13 973–14 005. [Online]. Available: https://proceedings.mlr.press/
+v235/frauenknecht24a.html
+[16] J. Amigo, R. Khorrambakht, E. Chane-Sane, N. Mansard, and L. Righetti, “First order modelbased RL through decoupled backpropagation,” in Proc. Conference on Robot Learning, ser.
+Proceedings of Machine Learning Research, vol. 305, 2025, pp. 5234–5255. [Online]. Available:
+https://proceedings.mlr.press/v305/amigo25a.html
+[17] F. G. Harvey, M. Yurick, D. Nowrouzezahrai, and C. Pal, “Robust motion in-betweening,” ACM
+Transactions on Graphics, vol. 39, no. 4, 2020.
+[18] E. Todorov, T. Erez, and Y. Tassa, “MuJoCo: A physics engine for model-based control,” in Proc.
+IEEE/RSJ International Conference on Intelligent Robots and Systems, 2012, pp. 5026–5033.
+
+12
+
+

@@ -1,0 +1,110 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand*\HyPL@Entry[1]{}
+\citation{deepmimic}
+\citation{amp}
+\citation{omnih2o}
+\citation{supermimic}
+\citation{supermimic}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}引言}{1}{section.1}\protected@file@percent }
+\citation{hwangbo}
+\citation{asap}
+\citation{neuralactuator}
+\citation{rudin}
+\citation{shac}
+\citation{song}
+\citation{schwarke}
+\citation{supermimic}
+\citation{sobolev}
+\citation{mbmix}
+\citation{ahac}
+\citation{macura}
+\citation{dmo}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 保留原设计的整体框架。已执行的A+/B实验采用瞬时执行器、在线轨迹拟合和固定32步策略时域。延迟缓冲、执行器滞后、带响应监督的在线训练以及校准时域选择，均为需要进一步验证的扩展。历史C组使用冻结的CPU配对数据。机器人面板仅为示意，并非实机实验照片。}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:framework}{{1}{2}{保留原设计的整体框架。已执行的A+/B实验采用瞬时执行器、在线轨迹拟合和固定32步策略时域。延迟缓冲、执行器滞后、带响应监督的在线训练以及校准时域选择，均为需要进一步验证的扩展。历史C组使用冻结的CPU配对数据。机器人面板仅为示意，并非实机实验照片。}{figure.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}相关工作}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}执行器与迁移}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}可微模型与策略梯度}{2}{subsection.2.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 全部启用的辨识关节。Armature 是附加关节惯量，记录为零不表示数据缺失，也不表示刚体惯量为零。}}{3}{table.1}\protected@file@percent }
+\newlabel{tab:params}{{1}{3}{\lang {All enabled identified joints. Armature is added joint inertia; a recorded zero is neither missing data nor zero rigid-body inertia. L/R denote left/right.}{全部启用的辨识关节。Armature 是附加关节惯量，记录为零不表示数据缺失，也不表示刚体惯量为零。}}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}执行器结构与响应分析}{3}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}任务、参数及当前支持的状态转移}{3}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:target}{{1}{3}{任务、参数及当前支持的状态转移}{equation.3.1}{}}
+\newlabel{eq:effort}{{2}{3}{任务、参数及当前支持的状态转移}{equation.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}成对有限幅度响应}{3}{subsection.3.2}\protected@file@percent }
+\newlabel{eq:response}{{3}{3}{成对有限幅度响应}{equation.3.3}{}}
+\newlabel{eq:loss}{{4}{4}{成对有限幅度响应}{equation.3.4}{}}
+\newlabel{eq:metric}{{5}{4}{成对有限幅度响应}{equation.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}为何前向拟合不能决定响应拟合}{4}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:branchbound}{{6}{4}{为何前向拟合不能决定响应拟合}{equation.3.6}{}}
+\newlabel{eq:noise}{{7}{4}{为何前向拟合不能决定响应拟合}{equation.3.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}有条件的训练损失结论}{4}{subsection.3.4}\protected@file@percent }
+\newlabel{eq:optimality}{{8}{4}{有条件的训练损失结论}{equation.3.8}{}}
+\citation{lafan}
+\citation{mujoco}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}策略目标与有条件的时域选择}{5}{subsection.3.5}\protected@file@percent }
+\newlabel{eq:actor}{{9}{5}{策略目标与有条件的时域选择}{equation.3.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}实验协议}{5}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}平台、数据及推导量}{5}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:budget}{{10}{5}{平台、数据及推导量}{equation.4.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces 协议常数与精确预算计算。两种更新预算分别报告。}}{6}{table.2}\protected@file@percent }
+\newlabel{tab:settings}{{2}{6}{\lang {Protocol constants and exact budget arithmetic. The two update budgets are reported separately.}{协议常数与精确预算计算。两种更新预算分别报告。}}{table.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces 七组设计及执行范围。当前5000次更新的在线对照仅包含 A+/B。}}{6}{table.3}\protected@file@percent }
+\newlabel{tab:variants}{{3}{6}{\lang {Seven-group design and execution scope. Only A+/B have the current 5000-update online comparison.}{七组设计及执行范围。当前5000次更新的在线对照仅包含 A+/B。}}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}阶段、配对及停止规则}{6}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}指标与证据来源}{6}{subsection.4.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces 归档关节回放，每个关节／条件只有一条记录。O/I 分别表示原始／辨识参数。七条记录的三项误差均改善；保留左踝侧摆的不利结果。这些记录不评估学习到的全身策略。}}{7}{table.4}\protected@file@percent }
+\newlabel{tab:archived}{{4}{7}{\lang {Archived joint replay, one record per joint/condition. O/I: original/identified parameters. All three errors improve on seven records; the adverse left-ankle-roll result is retained. These records do not evaluate a learned whole-body policy.}{归档关节回放，每个关节／条件只有一条记录。O/I 分别表示原始／辨识参数。七条记录的三项误差均改善；保留左踝侧摆的不利结果。这些记录不评估学习到的全身策略。}}{table.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}结果}{7}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}归档关节回放}{7}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}从冻结数据失败到在线控制}{7}{subsection.5.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 归档实测及预测关节轨迹，展示前三个评分周期：左膝、左髋侧摆、右踝俯仰。上排为角度，下排为关节侧力矩。黑色为测量，灰色虚线为原始参数，蓝色为辨识参数。整条记录统计见表\ref  {tab:archived}。右踝候选参数独立于已启用的全身训练参数清单。}}{8}{figure.2}\protected@file@percent }
+\newlabel{fig:replay}{{2}{8}{归档实测及预测关节轨迹，展示前三个评分周期：左膝、左髋侧摆、右踝俯仰。上排为角度，下排为关节侧力矩。黑色为测量，灰色虚线为原始参数，蓝色为辨识参数。整条记录统计见表\ref {tab:archived}。右踝候选参数独立于已启用的全身训练参数清单。}{figure.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces 当前在线对照：跨训练种子的均值$\pm $样本标准差。每个最终EMA策略评估163条参考动作，本表仅采用首次评估。CPU校准指标是诊断结果，不是锁定测试结果。}}{8}{table.5}\protected@file@percent }
+\newlabel{tab:online}{{5}{8}{\lang {Current online comparison: mean $\pm $ sample SD across training seeds. Each final EMA actor is evaluated on 163 reference clips; only the first evaluation enters this table. CPU calibration metrics are diagnostics, not locked-test results.}{当前在线对照：跨训练种子的均值$\pm $样本标准差。每个最终EMA策略评估163条参考动作，本表仅采用首次评估。CPU校准指标是诊断结果，不是锁定测试结果。}}{table.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}当前在线A+/B对照}{8}{subsection.5.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 当前全部31对种子。横轴为32步CPU校准角度RMSE的配对降幅，正值表示B更优；纵轴为首次评估完成率之差，正值表示B更优。红叉标记导致两队列停止的配对，保留了对应负结果。不从此描述性散点图推断回归或因果关系。}}{9}{figure.3}\protected@file@percent }
+\newlabel{fig:scatter}{{3}{9}{当前全部31对种子。横轴为32步CPU校准角度RMSE的配对降幅，正值表示B更优；纵轴为首次评估完成率之差，正值表示B更优。红叉标记导致两队列停止的配对，保留了对应负结果。不从此描述性散点图推断回归或因果关系。}{figure.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces 旧1000次更新策略在同一3090上的评估：14个评估种子的平均完成率。仅有两个训练种子，采用训练分布随机化和观测噪声。}}{9}{table.6}\protected@file@percent }
+\newlabel{tab:random}{{6}{9}{\lang {Old 1000-update policies on the common 3090: mean completion over 14 evaluation seeds. Only two training seeds; training-distribution randomization and observation noise.}{旧1000次更新策略在同一3090上的评估：14个评估种子的平均完成率。仅有两个训练种子，采用训练分布随机化和观测噪声。}}{table.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}独立策略与响应检查}{9}{subsection.5.4}\protected@file@percent }
+\citation{dmo}
+\bibstyle{IEEEtran}
+\bibdata{references}
+\bibcite{deepmimic}{1}
+\bibcite{amp}{2}
+\bibcite{omnih2o}{3}
+\bibcite{supermimic}{4}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces RTX 3090上的完整拟合／校准后端检查。每个进程覆盖516个数据块，失败类别可重叠。}}{10}{table.7}\protected@file@percent }
+\newlabel{tab:backend}{{7}{10}{\lang {Full fit/cal backend checks on RTX 3090. Each process covers 516 blocks. Failure categories overlap.}{RTX 3090上的完整拟合／校准后端检查。每个进程覆盖516个数据块，失败类别可重叠。}}{table.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}讨论与结论}{10}{section.6}\protected@file@percent }
+\bibcite{hwangbo}{5}
+\bibcite{asap}{6}
+\bibcite{neuralactuator}{7}
+\bibcite{rudin}{8}
+\bibcite{shac}{9}
+\bibcite{song}{10}
+\bibcite{schwarke}{11}
+\bibcite{sobolev}{12}
+\bibcite{mbmix}{13}
+\bibcite{ahac}{14}
+\bibcite{macura}{15}
+\bibcite{dmo}{16}
+\bibcite{lafan}{17}
+\bibcite{mujoco}{18}
+\gdef \@abspage@last{12}

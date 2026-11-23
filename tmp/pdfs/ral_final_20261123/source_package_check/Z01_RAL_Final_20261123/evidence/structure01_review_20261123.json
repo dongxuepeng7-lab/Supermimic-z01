@@ -1,0 +1,540 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-11-23",
+  "stage": "online_Aplus_B_1000_updates",
+  "formal_results": false,
+  "source_archives": [
+    {
+      "machine": "5080",
+      "archive": "/home/zoyi/Downloads/structure01_5080_transfer.tar.gz",
+      "sha256": "d55fe6edd227d7571580205e69ad561b3d034745670fc6140e9e9d610e2d5cee",
+      "internal_session": "structure02_5080",
+      "protocol_sha256": "cc92d219cfd808ad71a731787653f78bb0bed5cccdd5a6a5bb42b305731273e3",
+      "paired_initialization": {
+        "passed": true,
+        "initial_module_sha256": [
+          {
+            "wm": "4948e2acc86512d4fcbfb405aa1f1c127df1a6e21689d438d722779c0783bbbd",
+            "pi": "50ad6a194a928bd305bc000b235904eaa53d721058776444fdb81655ae994ef9",
+            "critic": "d50daa1d057be6f0e070d498ad5265fae5ba9a43b50d5c8040d799661e1fa478"
+          },
+          {
+            "wm": "4948e2acc86512d4fcbfb405aa1f1c127df1a6e21689d438d722779c0783bbbd",
+            "pi": "50ad6a194a928bd305bc000b235904eaa53d721058776444fdb81655ae994ef9",
+            "critic": "d50daa1d057be6f0e070d498ad5265fae5ba9a43b50d5c8040d799661e1fa478"
+          }
+        ],
+        "identical_actor_and_critic": true,
+        "identical_training_labels": false
+      }
+    },
+    {
+      "machine": "4090",
+      "archive": "/home/zoyi/Downloads/structure01_4090_transfer.tar.gz",
+      "sha256": "50be2b8b58231d1cd54febfd97d7d378f5d7d167799065a33a0ee43792961536",
+      "internal_session": "structure01_4090",
+      "protocol_sha256": "cc92d219cfd808ad71a731787653f78bb0bed5cccdd5a6a5bb42b305731273e3",
+      "paired_initialization": {
+        "passed": true,
+        "initial_module_sha256": [
+          {
+            "wm": "c1c37022bacd0aec93f51ddff97c01208f0e2222aa38c68e88f4b0f08f800e4a",
+            "pi": "c0982c3283944534d3f57337ad7aef177b5bf2ecba83cd115dcf9155eea74271",
+            "critic": "7c7630757a5d7fe4facb15077f35126995462190c341895b8f149c335c21e25f"
+          },
+          {
+            "wm": "c1c37022bacd0aec93f51ddff97c01208f0e2222aa38c68e88f4b0f08f800e4a",
+            "pi": "c0982c3283944534d3f57337ad7aef177b5bf2ecba83cd115dcf9155eea74271",
+            "critic": "7c7630757a5d7fe4facb15077f35126995462190c341895b8f149c335c21e25f"
+          }
+        ],
+        "identical_actor_and_critic": true,
+        "identical_training_labels": false
+      }
+    }
+  ],
+  "complete_training_models": 4,
+  "policy_updates_per_model": 1000,
+  "world_model_updates_per_model": 5000,
+  "environment_transitions_per_model": 2625536,
+  "verified_snapshots_per_model": [
+    "initial.pt",
+    "ckpt_000250.pt",
+    "ckpt_000500.pt",
+    "ckpt_001000.pt"
+  ],
+  "original_3090_attempt": "Failed before evaluation because structure01_5080 was requested but the archive contained structure02_5080",
+  "independent_review": "/home/zoyi/Projects/Supermimic-z01/logs/ral_structure/structure01_3090_verified",
+  "independent_summary_sha256": "97dc1909f5b66f39b37e1aff4d354c23d1ed8343db9ecc2d2c83638fa53ae41e",
+  "independent_gpu": "NVIDIA GeForce RTX 3090",
+  "remote_quick_evaluations": [
+    {
+      "machine": "5080",
+      "seed": 2,
+      "group": "A+",
+      "completed": 132,
+      "clips": 163,
+      "completion": 0.8098159509202454,
+      "median_valid_s": 15.339999198913574,
+      "nonfinite_steps": 0
+    },
+    {
+      "machine": "5080",
+      "seed": 2,
+      "group": "B",
+      "completed": 132,
+      "clips": 163,
+      "completion": 0.8098159509202454,
+      "median_valid_s": 15.279999732971191,
+      "nonfinite_steps": 0
+    },
+    {
+      "machine": "4090",
+      "seed": 4,
+      "group": "A+",
+      "completed": 131,
+      "clips": 163,
+      "completion": 0.803680981595092,
+      "median_valid_s": 14.920000076293945,
+      "nonfinite_steps": 0
+    },
+    {
+      "machine": "4090",
+      "seed": 4,
+      "group": "B",
+      "completed": 129,
+      "clips": 163,
+      "completion": 0.7914110429447853,
+      "median_valid_s": 14.920000076293945,
+      "nonfinite_steps": 0
+    }
+  ],
+  "independent_rows": [
+    {
+      "completed": 133,
+      "clips": 163,
+      "completion": 0.8159509202453987,
+      "median_valid_s": 15.339999198913574,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 2,
+      "final": true,
+      "repeat_check": 0,
+      "checkpoint_sha256": "6c6ef5e7af37c9450d38f5ad2df0298c25f7f1f7156ba78b82b5dfcfb56435f3"
+    },
+    {
+      "completed": 130,
+      "clips": 163,
+      "completion": 0.7975460122699386,
+      "median_valid_s": 14.859999656677246,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 2,
+      "final": true,
+      "repeat_check": 1,
+      "checkpoint_sha256": "6c6ef5e7af37c9450d38f5ad2df0298c25f7f1f7156ba78b82b5dfcfb56435f3"
+    },
+    {
+      "completed": 132,
+      "clips": 163,
+      "completion": 0.8098159509202454,
+      "median_valid_s": 15.279999732971191,
+      "nonfinite_steps": 0,
+      "group": "B",
+      "seed": 2,
+      "final": true,
+      "repeat_check": 0,
+      "checkpoint_sha256": "a3b5aa450348452f8951e1601be43d6621c2320afa4676cc9a5f43a0349610c8"
+    },
+    {
+      "completed": 130,
+      "clips": 163,
+      "completion": 0.7975460122699386,
+      "median_valid_s": 14.859999656677246,
+      "nonfinite_steps": 0,
+      "group": "B",
+      "seed": 2,
+      "final": true,
+      "repeat_check": 1,
+      "checkpoint_sha256": "a3b5aa450348452f8951e1601be43d6621c2320afa4676cc9a5f43a0349610c8"
+    },
+    {
+      "completed": 131,
+      "clips": 163,
+      "completion": 0.803680981595092,
+      "median_valid_s": 15.279999732971191,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 4,
+      "final": true,
+      "repeat_check": 0,
+      "checkpoint_sha256": "c19b5db35a55d5f94e4e46f08281b39d1dc1f057b691199a71a766b449ec9f34"
+    },
+    {
+      "completed": 130,
+      "clips": 163,
+      "completion": 0.7975460122699386,
+      "median_valid_s": 14.859999656677246,
+      "nonfinite_steps": 0,
+      "group": "A+",
+      "seed": 4,
+      "final": true,
+      "repeat_check": 1,
+      "checkpoint_sha256": "c19b5db35a55d5f94e4e46f08281b39d1dc1f057b691199a71a766b449ec9f34"
+    },
+    {
+      "completed": 130,
+      "clips": 163,
+      "completion": 0.7975460122699386,
+      "median_valid_s": 15.279999732971191,
+      "nonfinite_steps": 0,
+      "group": "B",
+      "seed": 4,
+      "final": true,
+      "repeat_check": 0,
+      "checkpoint_sha256": "8e5f907c948df4054cccde8367c381e2b22a87c9047aaa8e3b3cd6153bd1f20d"
+    },
+    {
+      "completed": 129,
+      "clips": 163,
+      "completion": 0.7914110429447853,
+      "median_valid_s": 14.920000076293945,
+      "nonfinite_steps": 0,
+      "group": "B",
+      "seed": 4,
+      "final": true,
+      "repeat_check": 1,
+      "checkpoint_sha256": "8e5f907c948df4054cccde8367c381e2b22a87c9047aaa8e3b3cd6153bd1f20d"
+    }
+  ],
+  "control_gate": {
+    "passed": true,
+    "reasons": [],
+    "pairs": [
+      {
+        "seed": 2,
+        "worst_completion_drop_pp": 1.8404907975460127,
+        "worst_duration_ratio": 0.9687092850519625
+      },
+      {
+        "seed": 4,
+        "worst_completion_drop_pp": 1.2269938650306789,
+        "worst_duration_ratio": 0.9764398126329519
+      }
+    ],
+    "formal_results": false,
+    "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+    "next_action": "Review predictions and response backend validity before designing C",
+    "automatic_training_authorized": false,
+    "C_authorized": false
+  },
+  "paired_results": [
+    {
+      "seed": 2,
+      "primary": {
+        "A+": {
+          "completed": 133,
+          "clips": 163,
+          "completion": 0.8159509202453987,
+          "median_valid_s": 15.339999198913574
+        },
+        "B": {
+          "completed": 132,
+          "clips": 163,
+          "completion": 0.8098159509202454,
+          "median_valid_s": 15.279999732971191
+        }
+      },
+      "repeat_ranges": {
+        "A+": [
+          0.7975460122699386,
+          0.8159509202453987
+        ],
+        "B": [
+          0.7975460122699386,
+          0.8098159509202454
+        ]
+      },
+      "prediction_diagnostics": {
+        "fit": {
+          "valid": true,
+          "q32_B_reduction_percent": 4.907428007750492,
+          "response8_B_reduction_percent": -0.06988088321200756,
+          "response8_B_reduction_vs_zero_percent": 0.09809204728822324,
+          "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+        },
+        "cal": {
+          "valid": true,
+          "q32_B_reduction_percent": 10.325120386324008,
+          "response8_B_reduction_percent": -0.018161134797655114,
+          "response8_B_reduction_vs_zero_percent": 0.17992269987588388,
+          "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+        }
+      },
+      "primary_B_minus_Aplus_completion_pp": -0.6134969325153339
+    },
+    {
+      "seed": 4,
+      "primary": {
+        "A+": {
+          "completed": 131,
+          "clips": 163,
+          "completion": 0.803680981595092,
+          "median_valid_s": 15.279999732971191
+        },
+        "B": {
+          "completed": 130,
+          "clips": 163,
+          "completion": 0.7975460122699386,
+          "median_valid_s": 15.279999732971191
+        }
+      },
+      "repeat_ranges": {
+        "A+": [
+          0.7975460122699386,
+          0.803680981595092
+        ],
+        "B": [
+          0.7914110429447853,
+          0.7975460122699386
+        ]
+      },
+      "prediction_diagnostics": {
+        "fit": {
+          "valid": true,
+          "q32_B_reduction_percent": 10.357552949342292,
+          "response8_B_reduction_percent": -0.10463535411746346,
+          "response8_B_reduction_vs_zero_percent": 0.07719827556138521,
+          "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+        },
+        "cal": {
+          "valid": true,
+          "q32_B_reduction_percent": 5.3171544315883965,
+          "response8_B_reduction_percent": 0.007773828237535122,
+          "response8_B_reduction_vs_zero_percent": 0.17754793368258762,
+          "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+        }
+      },
+      "primary_B_minus_Aplus_completion_pp": -0.613496932515345
+    }
+  ],
+  "predictions": {
+    "s2_Aplus": {
+      "checkpoint_sha256": "6c6ef5e7af37c9450d38f5ad2df0298c25f7f1f7156ba78b82b5dfcfb56435f3",
+      "response_manifest_sha256": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302",
+      "formal_results": false,
+      "response_test_accessed": false,
+      "interpretation": "CPU pair labels; diagnostic until backend consistency is established",
+      "splits": {
+        "fit": {
+          "valid": true,
+          "blocks": 400,
+          "q_rmse_rad": {
+            "8": 0.029397180974288253,
+            "32": 0.05929365224073785
+          },
+          "response_rmse": {
+            "4": 89.7518225371471,
+            "8": 71.03521784963289
+          },
+          "zero_response_rmse": {
+            "4": 89.85832522749172,
+            "8": 71.15465494503424
+          }
+        },
+        "cal": {
+          "valid": true,
+          "blocks": 116,
+          "q_rmse_rad": {
+            "8": 0.020078888962020095,
+            "32": 0.04947116180416315
+          },
+          "response_rmse": {
+            "4": 15.158371066087554,
+            "8": 73.74695974276995
+          },
+          "zero_response_rmse": {
+            "4": 15.651357542263288,
+            "8": 73.89330385486116
+          }
+        }
+      }
+    },
+    "s2_B": {
+      "checkpoint_sha256": "a3b5aa450348452f8951e1601be43d6621c2320afa4676cc9a5f43a0349610c8",
+      "response_manifest_sha256": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302",
+      "formal_results": false,
+      "response_test_accessed": false,
+      "interpretation": "CPU pair labels; diagnostic until backend consistency is established",
+      "splits": {
+        "fit": {
+          "valid": true,
+          "blocks": 400,
+          "q_rmse_rad": {
+            "8": 0.02728207803986357,
+            "32": 0.0563838589438577
+          },
+          "response_rmse": {
+            "4": 89.78765628132119,
+            "8": 71.08485788725778
+          },
+          "zero_response_rmse": {
+            "4": 89.85832522749172,
+            "8": 71.15465494503424
+          }
+        },
+        "cal": {
+          "valid": true,
+          "blocks": 116,
+          "q_rmse_rad": {
+            "8": 0.01826424031621551,
+            "32": 0.04436320479137017
+          },
+          "response_rmse": {
+            "4": 15.235988107229323,
+            "8": 73.760353027538
+          },
+          "zero_response_rmse": {
+            "4": 15.651357542263288,
+            "8": 73.89330385486116
+          }
+        }
+      }
+    },
+    "s4_Aplus": {
+      "checkpoint_sha256": "c19b5db35a55d5f94e4e46f08281b39d1dc1f057b691199a71a766b449ec9f34",
+      "response_manifest_sha256": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302",
+      "formal_results": false,
+      "response_test_accessed": false,
+      "interpretation": "CPU pair labels; diagnostic until backend consistency is established",
+      "splits": {
+        "fit": {
+          "valid": true,
+          "blocks": 400,
+          "q_rmse_rad": {
+            "8": 0.029006111078762442,
+            "32": 0.06372456936381161
+          },
+          "response_rmse": {
+            "4": 89.75636528737463,
+            "8": 71.02540709221071
+          },
+          "zero_response_rmse": {
+            "4": 89.85832522749172,
+            "8": 71.15465494503424
+          }
+        },
+        "cal": {
+          "valid": true,
+          "blocks": 116,
+          "q_rmse_rad": {
+            "8": 0.019095717180554892,
+            "32": 0.04978336574483472
+          },
+          "response_rmse": {
+            "4": 15.119202826246466,
+            "8": 73.76784240610024
+          },
+          "zero_response_rmse": {
+            "4": 15.651357542263288,
+            "8": 73.89330385486116
+          }
+        }
+      }
+    },
+    "s4_B": {
+      "checkpoint_sha256": "8e5f907c948df4054cccde8367c381e2b22a87c9047aaa8e3b3cd6153bd1f20d",
+      "response_manifest_sha256": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302",
+      "formal_results": false,
+      "response_test_accessed": false,
+      "interpretation": "CPU pair labels; diagnostic until backend consistency is established",
+      "splits": {
+        "fit": {
+          "valid": true,
+          "blocks": 400,
+          "q_rmse_rad": {
+            "8": 0.02767167336876518,
+            "32": 0.05712426335021447
+          },
+          "response_rmse": {
+            "4": 89.78636844789486,
+            "8": 71.09972477843502
+          },
+          "zero_response_rmse": {
+            "4": 89.85832522749172,
+            "8": 71.15465494503424
+          }
+        },
+        "cal": {
+          "valid": true,
+          "blocks": 116,
+          "q_rmse_rad": {
+            "8": 0.018250093708343587,
+            "32": 0.04713630730693938
+          },
+          "response_rmse": {
+            "4": 15.247545968298333,
+            "8": 73.76210782073706
+          },
+          "zero_response_rmse": {
+            "4": 15.651357542263288,
+            "8": 73.89330385486116
+          }
+        }
+      }
+    }
+  },
+  "primary_episode_diagnostics": [
+    {
+      "seed": 2,
+      "primary_completion_pairs": {
+        "Aplus_0_B_0": 27,
+        "Aplus_0_B_1": 3,
+        "Aplus_1_B_0": 4,
+        "Aplus_1_B_1": 129
+      },
+      "B_termination_counts": {
+        "height_only": 28,
+        "tilt_only": 2,
+        "height_and_tilt": 1,
+        "neither_threshold": 0,
+        "terminal_sample_unavailable": 0,
+        "reference_complete": 132
+      }
+    },
+    {
+      "seed": 4,
+      "primary_completion_pairs": {
+        "Aplus_0_B_0": 25,
+        "Aplus_0_B_1": 7,
+        "Aplus_1_B_0": 8,
+        "Aplus_1_B_1": 123
+      },
+      "B_termination_counts": {
+        "height_only": 30,
+        "tilt_only": 3,
+        "height_and_tilt": 0,
+        "neither_threshold": 0,
+        "terminal_sample_unavailable": 0,
+        "reference_complete": 130
+      }
+    }
+  ],
+  "observations": [
+    "Both seeds pass the predeclared operational control-retention screen; this is not superiority or equivalence.",
+    "B completes one fewer clip than A+ in each primary 163-clip evaluation; repeat variation is larger than this one-clip difference.",
+    "B lowers common CPU cal 32-step-window joint-angle RMSE by 10.3251% and 5.3172%; this is development forward-prediction evidence.",
+    "Cal response8 reduction vs A+ is -0.01816% and +0.00777%, inconsistent; B improves over the zero-response baseline by only about 0.18%.",
+    "The prior backend sample failed overall (23/24 pass), so response metrics remain diagnostic; no C or window-stage result is established."
+  ],
+  "limits": [
+    "Only two training seeds; repeats are not independent training seeds.",
+    "Policy evaluation uses the training-reference library, not independent heldout motions/hardware.",
+    "Forward metric is RMSE across all steps in an 8/32-step window, not only the last step.",
+    "No locked response-test arrays were opened.",
+    "The newly planned 5000-update queue is a separate study and has not been run."
+  ],
+  "next_config": "configs/ral/online_night_v1.json",
+  "next_protocol": "release/ral/online_night_protocol_v1.json",
+  "next_protocol_sha256": "91ac2df09b77ca4c2c3b9288d162d5dcf1030c7081ea176264b510519d486b60"
+}

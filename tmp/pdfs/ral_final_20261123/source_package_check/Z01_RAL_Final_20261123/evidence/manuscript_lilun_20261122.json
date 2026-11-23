@@ -1,0 +1,88 @@
+{
+  "revision": "2026-11-22 lilun mathematical supplement",
+  "base": {
+    "pdf": "output/pdf/Z01_RAL_Clarified_20261122.pdf",
+    "sha256": "92eff49d6024b70d5766861bd4ddedb3c2b6d4acd2e7c12402a6ddf3940031ef",
+    "pages": 8
+  },
+  "appendix": {
+    "source": "SCI论文草稿/RA-L_Actuator_World_Model/lilun_appendix.tex",
+    "source_sha256": "da8563542eb9fea843f8ae6a5dd0101d2b84efcbe2ec5838b0674c4fa405c373",
+    "pages": 2,
+    "equations": 13
+  },
+  "provenance": {
+    "archived_training_args": "logs/ral_verification/night01_5080_review_import/night01_5080/jobs/s2_B/run/args.json",
+    "args_sha256": "950a935973d1ae7b1cb032b1a0675c51721dd93711d453a677ef5031efcba64b",
+    "response_manifest_sha256": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302",
+    "paired_split_counts_source": "Main manuscript Table I; no locked-test array access"
+  },
+  "derived_quantities": {
+    "control_hz": 50.0,
+    "physics_hz": 200.0,
+    "horizon_ms": {
+      "1": 20,
+      "4": 80,
+      "8": 160,
+      "10": 200,
+      "32": 640
+    },
+    "pre_roll_ms": 400,
+    "vectorized_steps": 2564,
+    "wm_updates": 5000,
+    "perturbation_dimensions": 832,
+    "command_norm_rad": 0.01,
+    "branch_separation_norm_rad": 0.02,
+    "perturbation_rms_mrad": 0.34668762264076824,
+    "entry_expected_square_rad2": 1.2019230769230769e-07,
+    "independent_noise_std_gain_per_rad": 70.71067811865474,
+    "completion_resolution_pp": 0.6134969325153374,
+    "five_seed_mean_resolution_pp": 0.12269938650306748,
+    "response_scalar_terms": {
+      "fit": {
+        "8": 166400,
+        "32": 665600
+      },
+      "cal": {
+        "8": 48256,
+        "32": 193024
+      },
+      "test": {
+        "8": 56576,
+        "32": 226304
+      }
+    },
+    "environment_transitions": 2625536,
+    "environment_physics_substeps": 10502144,
+    "simulated_s_per_environment_slot": 51.28,
+    "wm_batch_items": 1280000,
+    "assigned_actor_rollout_steps": 16384000
+  },
+  "classifications": [
+    "Exact protocol arithmetic",
+    "Conditional global-optimality result for a common fitting loss",
+    "Conditional finite-difference noise and truncation bounds",
+    "Exact D/C-perm assignment-budget invariants",
+    "Ideal lower bounds, not observations"
+  ],
+  "validation": {
+    "main_eight_page_content_streams_byte_identical": true,
+    "main_tex_unchanged": true,
+    "standard_pdf_unchanged": true,
+    "base_pdf_unchanged": true,
+    "arithmetic_checked": true,
+    "appendix_two_pages_visually_inspected": true,
+    "no_overfull_boxes": true,
+    "final_merged_render_check": "All first eight merged page renders pixel-identical to reviewed base; appended pages separately visually inspected.",
+    "first_eight_pages_pixel_identical": true
+  },
+  "locked_test_arrays_accessed": false,
+  "new_training_or_evaluation_started": false,
+  "experimental_cells_replaced_with_theory": false,
+  "output": {
+    "path": "output/pdf/lilun版.pdf",
+    "sha256": "962c58cd415302b300b7cbdf80da7a9885f8763771927874f345ae6476c00636",
+    "pages": 10,
+    "bytes": 626470
+  }
+}

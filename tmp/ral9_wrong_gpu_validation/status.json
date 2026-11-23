@@ -1,0 +1,14 @@
+{
+  "status": "stopped_error",
+  "machine": "5080",
+  "started_unix": 1795445169.1465585,
+  "blocks": [],
+  "backend": [],
+  "prior": [],
+  "formal_results": false,
+  "C_authorized": false,
+  "deadline_unix": 1795477569.1468415,
+  "reason": "Expected RTX 5080; use the matching machine script",
+  "current": null,
+  "finished_unix": 1795445170.5989466
+}

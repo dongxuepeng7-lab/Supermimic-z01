@@ -31,8 +31,8 @@
     {
       "id": "PAIR-01",
       "owner": "3090_eval",
-      "status": "development_backend_screen_failed_1_of_24",
-      "task": "Executed prespecified fit/cal CPU/training-scene GPU check on local 3090: 23/24 blocks passed; cal fightAndSports1_subject4__seg000:2:523 failed. Archived CPU replay and initial-state reconstruction pass; response discrepancy remains. Preserve raw arrays and thresholds; do not remove the block or enable C. See logs/ral_structure/validation_backend_full01 and release/ral/structure_validation_20261122.json. Locked test arrays untouched."
+      "status": "full_fit_cal_backend_failed_in_both_processes",
+      "task": "online_night01_3090 checked all 400 fit + 116 cal blocks in each of two independent processes. Failures: 65/516 and 67/516; cross-process response repeatability failures: 15/516. Saved CPU replay and CPU scene comparisons pass. Raw trajectory arithmetic independently recomputed. Preserve failed blocks and original tolerances; diagnose numerical backend/response repeatability before C. No locked test arrays accessed. See release/ral/online_night01_review_20261123.json."
     },
     {
       "id": "TRAIN-01",
@@ -79,29 +79,50 @@
     {
       "id": "NIGHT-3090",
       "owner": "3090_eval",
-      "status": "structure_review_complete_online_night_ready",
-      "task": "Independent eight-evaluation review completed and both seed 2/4 A+/B control screens passed. Primary completions: 133/132 (seed 2 A+/B) and 131/130 (seed 4 A+/B); repeat checks: 130/130 and 130/129. B cal q32 improves 10.3%/5.3%, without stable response or completion benefit. See release/ral/structure01_review_20261123.json. Next run scripts/ral_3090_online_8h.sh for full 400 fit + 116 cal checks in two independent processes and matched training-randomization/noise evaluations. Preserve old failures; no C, heldout claim or locked response-test access."
+      "status": "eight_hour_evaluation_reviewed_backend_failed",
+      "task": "online_night01_3090 reached its eight-hour cutoff: 115 completed evaluations, 28 balanced four-model cells (112 evaluations; evaluation seeds 101-114). Three completed evaluations from partial seed-115 cell are retained but excluded from balanced aggregation; fourth timed out. Actual old seed 2/4 model hashes and scenario arrays verified. These are 1000-update policies, separate from new 5000-update pairs. No stable B completion benefit; backend failed. Next receive diagnostic pairs s6/s46/s8/s84 for common-device review; do not rerun the old queue or enable C."
     },
     {
       "id": "NIGHT-4090",
       "owner": "4090_train",
-      "status": "online_night_ready",
-      "task": "Previous structure01_4090 seed 4 A+/B models imported and budgets/actual weights verified. Next use scripts/ral_4090_online_8h.sh: fresh paired seeds 8,12,16,... under the same 5000-update protocol as 5080. Preserve historical 8-hour results and old 1000-update models. New budget is reported separately; no favorable-seed selection. Archive generated initial/final model pairs after verification, keep metadata and failures."
+      "status": "online_night01_metadata_reviewed_control_screen_failed",
+      "task": "20 complete A+/B pairs, seeds 8:4:84; 40 models at 5000 policy/25000 WM updates. All metadata budgets and 80 final evaluations checked; actual model archive bytes await transfer. Primary mean completion A+ 89.11%, B 89.85%; include seed 84 negative pair (A+ 152/152, B 142/140 of 163) that triggered the 5pp gate. Preserve all 20 model archives. Transfer s8_models.tar.gz and s84_models.tar.gz first for diagnosis, not favorable-outcome selection. Pause identical replication; keep frozen code/protocol unchanged."
     },
     {
       "id": "NIGHT-5080",
       "owner": "5080_train",
-      "status": "online_night_ready",
-      "task": "Previous structure02_5080 seed 2 A+/B models imported and budgets/actual weights verified. Next use scripts/ral_5080_online_8h.sh: fresh paired seeds 6,10,14,...; fixed 5000 policy/25000 WM/12865536 environment transitions per model. Two final EMA checks and common fit/cal diagnostics. Verified per-pair archive cleanup; stop on control failure, disk limit or eight-hour deadline. Keep negative/partial results. No C or locked test."
+      "status": "online_night01_metadata_reviewed_control_screen_failed",
+      "task": "11 complete A+/B pairs, seeds 6:4:46; 22 models at 5000 policy/25000 WM updates. All metadata budgets and 44 final evaluations checked; actual model archive bytes await transfer. Primary mean completion A+ 88.90%, B 87.79%; include seed 46 negative pair (A+ 150/150, B 140/140 of 163) that triggered the 5pp gate. Preserve all 11 model archives. Transfer s6_models.tar.gz and s46_models.tar.gz first for diagnosis. Pause identical replication; no C/D/C-perm."
     },
     {
       "id": "RECOVERY-01",
       "owner": "5080_train_and_3090_eval",
       "status": "full_budget_recovery_completed_development_gates_passed",
       "task": "recover01 passed all predeclared development gates on 3090: final A+ completed 136/132 clips for seed 2 and 133/136 for seed 4 across two evaluations of 163 clips; A completed 127/131 and 129/129. Online changes data, normalization and the forward objective together, so recovery does not isolate a unique root cause. A/A+ widths and initialization differ; these two-seed development results do not establish benefit, equivalence, or B/C contributions. Online C remains rejected pending validated hybrid supervision; response test remains locked."
+    },
+    {
+      "id": "DIAG9-5080",
+      "owner": "5080_train",
+      "status": "implemented_validated_ready_not_launched",
+      "task": "Fresh paired A+/B x actor horizon 32/8, WM window 8. Seeds 301+4k; four models required per block. Diagnose prior s6/s46 weights first when available. Preserve finite negative results under this new diagnostic protocol."
+    },
+    {
+      "id": "DIAG9-4090",
+      "owner": "4090_train",
+      "status": "implemented_validated_ready_not_launched",
+      "task": "Fresh paired A+/B x WM window 8/32, actor horizon 32. Seeds 303+4k; four models required per block. Diagnose prior s8/s84 weights first when available. Preserve finite negative results under this new diagnostic protocol."
+    },
+    {
+      "id": "DIAG9-3090",
+      "owner": "3090_eval",
+      "status": "implemented_validated_ready_not_launched",
+      "task": "Full fit/cal CPU/GPU response checks in graph batch, eager batch and eager single-world modes, two processes each; then frozen failure-enriched 48-block new-direction diagnostics through 32 steps. Preserve original thresholds, all failed trajectories and independent repeat checks. No C/test."
     }
   ],
-  "current_execution_requirements": "docs/ral_online_night_20261123.md",
-  "current_execution_config": "configs/ral/online_night_v1.json",
-  "current_frozen_protocol": "release/ral/online_night_protocol_v1.json"
+  "current_execution_requirements": "docs/ral_diagnose_9h_20261123.md",
+  "current_execution_config": "configs/ral/diagnose_nine_hour_v1.json",
+  "current_frozen_protocol": "release/ral/diagnose_nine_hour_protocol_v1.json",
+  "current_execution_state": "diagnostic_9h_validated_ready_not_launched",
+  "current_review": "release/ral/online_night01_review_20261123.json",
+  "current_validation": "release/ral/diagnose_nine_hour_validation_20261123.json"
 }

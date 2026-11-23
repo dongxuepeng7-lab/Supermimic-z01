@@ -1,0 +1,24 @@
+\usepackage{amsmath,amssymb,booktabs,graphicx,xcolor,etoolbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\newcommand{\lang}[2]{\ifchinese#2\else#1\fi}
+\newcommand{\wm}{\mathrm{wm}}
+\newcommand{\clip}{\operatorname{clip}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\target}{q^{\mathrm{cmd}}}
+\newcommand{\ER}{E_R}
+\newcommand{\NR}{\lang{Not run}{未运行}}
+\newcommand{\RMS}{\operatorname{RMS}}
+\graphicspath{{figures/}}
+\hypersetup{pdfauthor={},pdftitle={Actuator-Structured World Models for Bipedal Motion Tracking}}
+\ifchinese
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\else
+\makeatletter
+\patchcmd{\@makecaption}{\footnotesize\scshape}{\footnotesize\normalfont\rmfamily}{}{\PackageError{ral-caption}{Caption font patch failed}{}}
+\makeatother
+\fi
+\setlength{\emergencystretch}{1em}

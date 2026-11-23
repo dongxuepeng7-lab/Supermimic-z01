@@ -1,0 +1,14 @@
+{
+  "status": "stopped_error",
+  "machine": "5080",
+  "complete_four_model_blocks": 0,
+  "incomplete_blocks": 0,
+  "results": [],
+  "descriptive_mean_interaction_pp": null,
+  "passing_condition_screens": 0,
+  "negative_interactions": 0,
+  "note": "One primary per training seed; separate GPU/factor cohorts. Equal optimizer updates/environment steps, unequal unroll compute. No superiority inference.",
+  "formal_results": false,
+  "C_authorized": false,
+  "response_test_accessed": false
+}

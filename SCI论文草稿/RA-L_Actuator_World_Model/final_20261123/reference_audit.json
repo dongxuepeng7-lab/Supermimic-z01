@@ -1,0 +1,146 @@
+{
+  "checked_date": "2026-11-23",
+  "entries": [
+    {
+      "bibtex_key": "deepmimic",
+      "venue": "ACM Transactions on Graphics 37(4), 2018",
+      "primary_url": "https://doi.org/10.1145/3197517.3201311",
+      "additional_primary_url": "https://xbpeng.github.io/projects/DeepMimic/index.html",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record",
+      "metadata_file": "evidence/reference_metadata/deepmimic.json"
+    },
+    {
+      "bibtex_key": "amp",
+      "venue": "ACM Transactions on Graphics 40(4), 2021",
+      "primary_url": "https://doi.org/10.1145/3450626.3459670",
+      "additional_primary_url": "https://xbpeng.github.io/projects/AMP/index.html",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record",
+      "metadata_file": "evidence/reference_metadata/amp.json"
+    },
+    {
+      "bibtex_key": "omnih2o",
+      "venue": "CoRL, PMLR 270, 2025",
+      "primary_url": "https://proceedings.mlr.press/v270/he25b.html",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record",
+      "note": "BibTeX year follows PMLR publication year; conference event year may differ."
+    },
+    {
+      "bibtex_key": "supermimic",
+      "venue": "CoRL 2026 (author project citation)",
+      "primary_url": "https://supermimic.github.io/",
+      "additional_primary_url": "",
+      "status": "author-maintained primary project identifies CoRL 2026; formal proceedings volume/pages independently unconfirmed",
+      "note": "Retained because this is the underlying method. Conference and year follow the authors citation; no volume/pages invented. Do not describe all 18 references as publisher-verified."
+    },
+    {
+      "bibtex_key": "hwangbo",
+      "venue": "Science Robotics 4(26), 2019",
+      "primary_url": "https://doi.org/10.1126/scirobotics.aau5872",
+      "additional_primary_url": "https://www.research-collection.ethz.ch/entities/publication/63b8fb50-299f-4995-bd1d-63a9f2b7ba75",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record"
+    },
+    {
+      "bibtex_key": "asap",
+      "venue": "Robotics: Science and Systems, 2025",
+      "primary_url": "https://www.roboticsproceedings.org/rss21/p066.html",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record"
+    },
+    {
+      "bibtex_key": "neuralactuator",
+      "venue": "Robotics: Science and Systems, 2026",
+      "primary_url": "https://www.roboticsproceedings.org/rss22/p159.html",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record"
+    },
+    {
+      "bibtex_key": "rudin",
+      "venue": "CoRL, PMLR 164, 2022",
+      "primary_url": "https://proceedings.mlr.press/v164/rudin22a.html",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record",
+      "note": "BibTeX year follows PMLR publication year; conference event year may differ."
+    },
+    {
+      "bibtex_key": "shac",
+      "venue": "ICLR 2022",
+      "primary_url": "https://openreview.net/forum?id=ZSKRQMvttc",
+      "additional_primary_url": "https://openreview.net/attachment?id=ZSKRQMvttc&name=pdf",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record"
+    },
+    {
+      "bibtex_key": "song",
+      "venue": "CoRL, PMLR 270, 2025",
+      "primary_url": "https://proceedings.mlr.press/v270/song25a.html",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record",
+      "note": "BibTeX year follows PMLR publication year; conference event year may differ."
+    },
+    {
+      "bibtex_key": "schwarke",
+      "venue": "CoRL, PMLR 305, 2025",
+      "primary_url": "https://proceedings.mlr.press/v305/schwarke25a.html",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record"
+    },
+    {
+      "bibtex_key": "sobolev",
+      "venue": "NeurIPS 30, 2017",
+      "primary_url": "https://proceedings.neurips.cc/paper/2017/hash/758a06618c69880a6cee5314ee42d52f-Abstract.html",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record"
+    },
+    {
+      "bibtex_key": "mbmix",
+      "venue": "AAAI 39(21), 2025",
+      "primary_url": "https://ojs.aaai.org/index.php/AAAI/article/view/34419",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record"
+    },
+    {
+      "bibtex_key": "ahac",
+      "venue": "ICML, PMLR 235, 2024",
+      "primary_url": "https://proceedings.mlr.press/v235/georgiev24a.html",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record"
+    },
+    {
+      "bibtex_key": "macura",
+      "venue": "ICML, PMLR 235, 2024",
+      "primary_url": "https://proceedings.mlr.press/v235/frauenknecht24a.html",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record"
+    },
+    {
+      "bibtex_key": "dmo",
+      "venue": "CoRL, PMLR 305, 2025",
+      "primary_url": "https://proceedings.mlr.press/v305/amigo25a.html",
+      "additional_primary_url": "",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record"
+    },
+    {
+      "bibtex_key": "lafan",
+      "venue": "ACM Transactions on Graphics 39(4), 2020",
+      "primary_url": "https://doi.org/10.1145/3386569.3392480",
+      "additional_primary_url": "https://www.ubisoft.com/en-us/studio/laforge/publications",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record",
+      "metadata_file": "evidence/reference_metadata/lafan.json"
+    },
+    {
+      "bibtex_key": "mujoco",
+      "venue": "IEEE/RSJ IROS 2012",
+      "primary_url": "https://doi.org/10.1109/IROS.2012.6386109",
+      "additional_primary_url": "https://api.crossref.org/works/10.1109/IROS.2012.6386109",
+      "status": "formal venue record verified from publisher/proceedings, author paper or institutional record",
+      "metadata_file": "evidence/reference_metadata/mujoco.json"
+    }
+  ],
+  "arxiv_only_entries": 0,
+  "policy": "Prefer formal papers; preserve underlying project attribution without inventing formal publication details.",
+  "removed_or_replaced": [
+    "Unverified accepted-status assertions for RTI/SGAMP",
+    "Preprint/workshop-only entries such as BlinkMimic, Contact-UAN and RWM/RWM-U where no formal journal/main-conference record was verified for this revision"
+  ],
+  "note": "Removal is editorial scope/status verification, not a claim that the work does not exist."
+}

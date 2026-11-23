@@ -1,0 +1,1221 @@
+Actuator-Structured World Models for Bipedal Motion Tracking:
+Prediction, Response, and Control
+
+Abstract— Differentiable world models expose a controller
+to errors in both predicted motion and command sensitivity.
+We study an actuator-structured transition for the 26-joint
+Z01 biped and distinguish these two errors from closedloop performance. The framework combines identiﬁed joint
+parameters, an explicit effort channel, and paired ﬁniteamplitude response diagnostics. An analysis of branch errors
+and perturbation noise explains why improved trajectory ﬁt
+need not yield better response or control. Archived parameterset comparisons improve angle, velocity, and torque prediction
+on seven of eight joint records. A current online study completes
+31 matched training-seed pairs, each with 5000 policy and
+25000 world-model updates. Mean completion on 163 reference
+clips is 89.11%/89.85% for the matched/structured models
+on the 4090 cohort and 88.90%/87.79% on the 5080 cohort.
+Mean paired calibration angle-error reductions are 3.09% and
+5.30%, respectively, without consistent control improvement.
+Full CPU/GPU checks fail on 65 and 67 of 516 response blocks
+in two independent processes. These ﬁndings support a forwardprediction beneﬁt in the studied setting while identifying response validity and policy optimization as unresolved conditions
+for stronger control claims.
+
+channel with explicit actuator effort. The current study
+comprises 62 trained policies in 31 paired seeds. It follows
+an earlier frozen-data failure and a subsequent recovery with
+online world-model ﬁtting. Reporting these stages separately
+prevents an obsolete failure table from describing the current
+controller, while retaining the actual negative evidence.
+The paper makes three contributions. First, it speciﬁes a
+matched actuator-structure comparison with traceable parameter, data, and training budgets. Second, it derives ﬁnitedifference error and noise relations that connect trajectory
+ﬁt to response supervision, and states precisely what such
+supervision can and cannot guarantee. Third, it reports a
+staged empirical assessment: archived joint replay, online
+policy training, independent randomized policy evaluation,
+and full response-backend checks. A response-calibrated
+horizon mechanism is formulated as a conditional extension;
+its controller beneﬁt is not claimed as an executed result.
+
+Index Terms—Humanoid and Bipedal Locomotion, Machine Learning for Robot Control, Dynamics and Control.
+
+A. Actuation and Transfer
+
+I. I NTRODUCTION
+Motion imitation offers a practical route to diverse wholebody behavior: reference tracking, learned motion priors,
+and humanoid teleoperation have substantially expanded the
+skills obtainable from human motion data [1], [2], [3].
+Differentiable world models offer a complementary way to
+train the controller, replacing expensive imagined physical
+rollouts with a learned transition and propagating gradients
+through that transition [4]. The resulting controller depends
+not only on where the model predicts the robot will move,
+but also on how the predicted motion changes when a joint
+command changes.
+This distinction is particularly relevant to positioncontrolled bipeds. Proportional–derivative (PD) gains, effort
+limits, damping, and friction determine the local route from
+action to joint acceleration. A network can ﬁt frequently
+observed motion while assigning an inaccurate derivative to
+this route. Conversely, imposing actuator structure can reduce
+forward error without improving optimization through a long,
+contact-dependent rollout. Joint calibration, response ﬁdelity,
+and closed-loop control therefore require separate evidence.
+We investigate this separation in a local PartyMimic Z01
+implementation, using the differentiable-world-model training paradigm of SuperMimic [4]. Our main comparison holds
+network input width, parameter count, initial actor/critic,
+and update budgets ﬁxed while replacing a raw-action input
+
+II. R ELATED W ORK
+Learned actuator models helped transfer agile locomotion
+to physical quadrupeds [5]. ASAP aligns humanoid simulation and hardware using learned residual actions [6], while
+NeuralActuator models nonlinear actuation and externalforce perception [7]. These approaches motivate representing
+the actuation channel explicitly, but their physical validation
+cannot be inherited by another robot or actuator approximation. Here only veriﬁed entries in an archived parameter
+manifest are enabled; unvalidated delay and load terms
+are excluded from the implemented comparison. Massively
+parallel collection follows the broader locomotion-training
+practice exempliﬁed by Rudin et al. [8].
+B. Differentiable Models and Policy Gradients
+SHAC combines short differentiable rollouts with a
+learned value function [9]. Subsequent studies investigate
+quadrupedal control and deployable locomotion through differentiable simulation [10], [11]. SuperMimic instead learns
+a differentiable predictor of rigid-body simulation and jointly
+trains a motion-tracking policy [4]. Our implementation is
+a local fork with explicit modiﬁcations, not an unmodiﬁed
+reproduction of that system or its reported efﬁciency.
+Sobolev training supplements output targets with derivative information [12]; MB-MIX combines derivative-aware
+model ﬁtting and truncated-window mixing [13]. AHAC
+adapts horizons to avoid stiff contact dynamics [14], whereas
+MACURA adapts synthetic rollouts using uncertainty [15].
+Decoupled backpropagation separates physical trajectory
+
+Hardware and simulation
+
+Differentiable world model
+
+Joint identification
+
+Policy optimization
+
+Structured actuator
+
+π
+target
+
+Command
+
+Command history / delay buffer
+
+Feedback
+
+t−d
+
+φ
+
+···
+
+t−1
+
+t
+
+targets
+
+Actor
+
+Observation history + reference
+
+Action → joint target
+
+Fit joint-specific parameters
+
+Actor gradient
+through model
+
+PD effort + actuator lag
+
+Physics simulator
+
+mjlab
+
+Effort limits and joint friction
+Mean effort over driver substeps
+
+Imagined return
+Rewards + terminal critic value
+over H rollout steps
+
+state, context
+Current pose
+
+Successive poses →
+
+Learned body dynamics
+
+Simulation targets
+Trajectories and pairs
+
+U+
+
+Imagined state sequence
+
+Integrate velocity increment
+
+U−
+
+State and actuator memory advance
+
+predictions
+
+World-model fitting
+
+Optional horizon selector
+
+Trajectory loss + weighted multi-step response loss
+
+Calibration errors → short / long H
+
+A0 / A · simulator parameters
+
+B · structured transition
+
+C · response loss
+
+D · calibrated horizon
+
+Fig. 1. Overall framework retained from the proposed design. The executed A+/B study uses instantaneous actuation, online trajectory ﬁtting, and a ﬁxed
+32-step actor horizon. Delay buffers, actuator lag, response-supervised online training, and calibrated horizon selection are extensions requiring further
+validation. Historical C runs use frozen CPU pairs. The robot panel is illustrative; it is not a photograph of a hardware experiment.
+
+generation from the learned model used for derivatives [16].
+Our response labels are ﬁnite-amplitude measurements from
+paired trajectories, rather than exact simulator derivatives.
+Their validity must therefore be established across perturbation amplitude and numerical backend before they are used
+to justify an actor horizon.
+
+continuous-PD, periodic-PD, and event-PD baselines. Such
+reﬁts are not available in the present evidence.
+The executed structured model uses the instantaneous
+channel
+
+III. ACTUATOR S TRUCTURE AND R ESPONSE A NALYSIS
+
+with vs = 0.01 rad/s. The learned body-dynamics network
+receives τt /ℓ, state, and parameter context; it predicts velocity increments and integrates pose using the base transition.
+Armature is a context feature. The matched model A+
+receives raw at at the same input width, with the same
+network capacity and context. Both models use three 1024unit world-model hidden layers.
+Equation (2) is evaluated once per 20-ms policy step.
+It does not implement hardware command delays, ﬁltered
+effort, asynchronous holds, or load bias. Its smooth Coulomb
+term is an approximation to the simulator’s constraint-based
+friction. A general memory extension could buffer delayed
+targets and ﬁlter effort as mi+1 = (1 − α)mi + αui , with
+α = 1 − exp(−δ/Te ). Validating that extension requires
+causal actuator history and joint replay; the current results
+correspond to zero delay and α = 1.
+
+A. Task, Parameters, and the Supported Transition
+Let xt contain base pose/velocity and joint position/velocity (qt , q̇t ). A policy at = πθ (ot , ct ) receives
+observation history and reference goal. A ﬁxed map gives
+the position target
+qtcmd = q0 + Sat + ∆q(ξ),
+
+(1)
+
+where q0 is the neutral conﬁguration, S contains action
+scales, and ξ is simulator context. The task is referencemotion tracking; it is not a separate velocity-command
+benchmark.
+The identiﬁed plant changes 21 armature, damping, and
+friction entries at seven joints (Table I); all other entries retain
+nominal values. In documented ankle replay, a feedback
+event refreshes a simulated state cache, a command event
+computes saturated PD effort from that cache, and the effort
+is held until the next command. Subsequent feedback uses
+the simulated state rather than resetting to measurements.
+This recorded-event interpretation motivates joint identiﬁcation, but its isolated beneﬁt requires independently reﬁtted
+
+ut = Kp (qtcmd − qt ) − Kd q̇t ,
+τt = clip(ut , −ℓ, ℓ) − bq̇t − fc tanh(q̇t /vs ),
+
+(2)
+
+B. Paired Finite-Amplitude Response
+For a 32-step target sequence U and a direction D normalized over all 32 × 26 entries, construct U ± = U ± ϵD.
+Both physical branches clone the same integration state and
+randomization after shared pre-roll. Model branches start
+
+TABLE I
+All enabled identiﬁed joints. Armature is added joint inertia; a recorded
+zero is neither missing data nor zero rigid-body inertia. L/R denote
+left/right.
+
+Joint
+
+Armature Damping
+(kg m2 ) (N m s/rad)
+
+L knee
+R knee
+L ankle pitch
+R hip yaw
+L hip pitch
+R hip pitch
+L hip roll
+
+0.292000 0.416000 2.505000
+0.205700 0.000790 3.706800
+0.104700
+0 0.638200
+0.010100 0.634100 0.248000
+0 4.840868 1.388000
+0 4.293868 1.330309
+0 13.492700 1.477300
+
+Friction
+(N m)
+
+with arbitrarily large local derivative error as k grows. This
+example is analytical, not a ﬁtted robot response.
+Assume a scalar output has equal, zero-mean branch-noise
+variance σ 2 and correlation ρn . Then
+σ 2 (1 − ρn )
+.
+(7)
+2ϵ2
+For independent noise and ϵ = 0.01 rad, the standarddeviation multiplier is 70.7107 per radian. Neither σ nor ρn
+is estimated by this calculation. GPU numerical differences
+need not follow this stochastic model; the formula illustrates
+the sensitivity of central differences to branch discrepancies.
+Within a smooth regime, a bound M3 on the third directional derivative gives central-difference truncation error at most M3 ϵ2 /6. Decreasing amplitude reduces this
+smooth truncation term but increases noise ampliﬁcation.
+Contact switches and saturation boundaries can invalidate the
+smoothness assumption. We consequently retain the ﬁniteamplitude interpretation and check amplitudes 0.5ϵ, ϵ, and
+2ϵ rather than treating a single response measurement as an
+exact derivative.
+Var(Rnoise ) =
+
+from the corresponding common observed state. Deﬁne
+yhb (U + ) − yhb (U − )
+,
+(3)
+2ϵ
+where yh stacks joint angles and velocities, and b denotes
+the learned model or reference physics. Branches evolve
+without measurement corrections. Output scaling is Wy =
+diag(100I26 , 10I26 ) repeated over angle and speed channels,
+using rad and rad/s.
+A response-supervised candidate C minimizes
+
+
+LC = Ltraj + λR E ρ Wy (Rhwm − Rhref ) ,
+(4)
+Rhb =
+
+averaged over sampled blocks, supervised steps, and channels. The trajectory-only control uses the same ﬁtting labels
+and sets λR = 0. The historical C study uses frozen CPU
+pairs, MSE or Huber loss, and 4- or 8-step response preﬁxes.
+The current online A+/B study uses an 8-step trajectory
+objective and no response penalty. Combining online forward
+ﬁtting with validated response labels is a separate, unexecuted intervention.
+For reporting, the unmodiﬁed squared-error metric is
+v
+u
+N X
+H
+u 1 X
+wm − Rref )∥2 .
+ER (H) = t
+∥Wy (Rn,h
+(5)
+n,h 2
+52N H n=1
+h=1
+
+D. A Conditional Training-Loss Result
+Let F be a common forward ﬁtting loss and G a ﬁxed
+response ﬁtting loss over the same model family and data.
+Assume attained global minima θB ∈ arg min F and θC ∈
+arg min(F + λG), with λ > 0. Optimality implies
+
+
+λ G(θC ) − G(θB ) ≤ F (θB ) − F (θC ) ≤ 0.
+(8)
+The ﬁrst inequality follows by comparing C’s objective to its
+value at θB ; the second follows from B’s optimality. Thus
+response ﬁtting loss cannot increase under these assumptions,
+but forward ﬁtting loss can. Finite optimization, changed
+online data, and changed loss deﬁnitions break the premise.
+In particular, a Huber ﬁtting objective does not guarantee
+a smaller reported MSE, and neither objective guarantees
+calibration error or controller return. This conditional result
+explains a possible ﬁtting trade-off without assigning theoretical values to unmeasured experiments.
+
+It measures projected joint response, not the complete state
+Jacobian. Accurate joint responses alone do not certify
+gradients through base motion, contact transitions, rewards,
+or the terminal critic.
+
+E. Actor Objective and Conditional Horizon Selection
+
+C. Why Forward Fit Does Not Determine Response Fit
+
+JH =
+
+wm,±
+Let e±
+− yhref,± ). Direct substitution yields
+h = Wy (yh
+
+e+ − e−
+h
+Wy (Rhwm − Rhref ) = h
+,
+2ϵ
+
+∥e+ ∥2 + ∥e−
+h ∥2
+∥Wy (Rhwm − Rhref )∥2 ≤ h
+.
+
+(6)
+
+2ϵ
+If both branch errors are bounded by η, the response bound
+is η/ϵ. Lower average forward RMSE does not establish
+this uniform bound or control the difference between branch
+errors. As a simple smooth counterexample, an approximation error e(u) = η sin(ku) has amplitude at most η but
+derivative e′ (0) = ηk. Output accuracy can thus coexist
+
+With model and critic weights ﬁxed during each actor
+update, gradients pass through their inputs to maximize
+H−1
+X
+k=0
+
+γ k Sk rk + γ H SH V (xH , cH ),
+
+Sk =
+
+Y
+
+(1 − pi ),
+
+i<k
+
+(9)
+where pi is predicted termination probability. The executed
+actor horizon is H = 32. At evaluation the frozen policy
+drives the physics simulator directly; the learned world model
+is not the evaluation plant.
+A proposed selector chooses a long window only when
+every response preﬁx passes a prespeciﬁed, above-noise
+calibration criterion for its state regime. Otherwise it uses
+a short window and records unvalidated fallbacks. For a
+sensitivity-error recurrence eh+1 P
+≤ Leh + δ with e0 = 0, reH−1
+peated substitution gives eH ≤ δ k=0 Lk . This conditional
+
+bound motivates checking preﬁxes, but numerical guarantees
+require measured or justiﬁed L and δ.
+In a future D/C-perm comparison, both arms share a frozen
+C model, critic, starting actor, and rollout-start batches.
+C-perm permutes D’s window labels. For ns short and
+nl long windows, both receive the exact assigned budget
+ns Hs + nl Hl . This identity does not imply equal executed
+work or any ordering of policy completion. D/C-perm remain
+unexecuted because the required response validity has not
+been established.
+IV. E XPERIMENTAL P ROTOCOL
+A. Platform, Data, and Derived Quantities
+The platform is the 26-joint Z01 with 163 retargeted reference clips derived from LAFAN1 [17], including locomotion
+and other motion categories. Training uses GPU physics
+based on MuJoCo [18]. The control interval is 20 ms and
+the physics interval is 5 ms. The response dataset contains
+400 ﬁt blocks from 23 source sessions, 116 calibration
+blocks from seven sessions, and 136 locked test blocks from
+seven sessions. Sessions are disjoint across these response
+splits. Policy training uses the full reference library, so
+these partitions do not deﬁne held-out policy motions. Test
+response arrays were not accessed.
+Table II separates executed budgets from derived arithmetic. With Ne = 1024, warm-up W = 64, update-tocollection ratio u = 0.4, and policy iterations I,
+
+Nenv = Ne W + ⌊I/u⌋ , Nimag = I × 512 × 32. (10)
+At I = 5000, these are 12,865,536 environment transitions
+and 81,920,000 assigned actor-rollout steps. They are not
+measured transitions to a target, independent samples, or
+wall-clock speedups. The 8- and 32-step windows span 160
+and 640 ms. A 20-step pre-roll spans 400 ms.
+The direction normalization
+has d = 832 entries. There√
+fore RMS(ϵD) = ϵ/ 832 = 0.346688 mrad and ∥U + −
+U − ∥2 = 0.02 rad. These exact quantities describe the
+input perturbation, not an observed accuracy. One additional
+completion among 163 clips changes a per-seed completion
+rate by 100/163 = 0.613497 percentage points (pp).
+B. Stages, Pairing, and Stopping Rules
+Table III retains the seven-group design but distinguishes
+completed comparisons from proposals. A0/A change nominal versus identiﬁed plant entries. A+/B isolate the currentaction representation at equal input width and capacity. In
+the online comparison, actors and critics have matched initial
+weights by seed and share training hyperparameters. Their
+collected trajectories subsequently depend on the learned
+policy; equal initial seeds do not imply identical online ﬁtting
+labels.
+The earlier frozen-pair study uses 1000 actor updates
+and a 32-step world-model objective on ﬁxed CPU pairs.
+Online recovery simultaneously changes ﬁtting coverage,
+normalization updates, the forward window, and the trainingdata backend. It is a recovery intervention, not an isolated
+test of any one of those factors. The subsequent matched
+
+TABLE II
+Protocol constants and exact budget arithmetic. The two update budgets
+are reported separately.
+
+Quantity
+
+Earlier
+
+Current
+
+Policy updates I
+World-model updates 5I
+Environment transitions
+Assigned imagined steps
+
+1,000
+5,000
+5,000
+25,000
+2,625,536 12,865,536
+16,384,000 81,920,000
+
+Joints / reference clips
+Control / physics interval
+Parallel environments
+WM / actor batch size
+Online WM / actor horizon
+WM / actor precision
+Fit / cal. / locked test pairs
+
+26 / 163
+20 / 5 ms
+1,024
+256 / 512
+8 / 32
+FP32 / BF16
+400 / 116 / 136
+
+TABLE III
+Seven-group design and execution scope. Only A+/B have the current
+5000-update online comparison.
+
+ID
+
+Change
+
+Evidence
+
+A0
+Nominal plant, base WM Earlier
+A
+Identiﬁed plant, base WM Earlier
+A+
+Matched raw-action inputs Online
+B
+Explicit effort channel
+Online
+C
+B + response loss
+Frozen-pair only
+C-perm Shufﬂed window labels
+Not run
+D
+Calibrated window labels Not run
+
+A+/B study uses online 8-step ﬁtting, a 32-step actor horizon,
+ﬁve world-model updates per actor update, and FP32/BF16
+world-model/policy computation. Old 1000-update checkpoints and new 5000-update checkpoints are never pooled.
+For the current study, the 4090 queue assigns seeds
+8, 12, . . . and the 5080 queue assigns 6, 10, . . .. Each seed
+trains A+ then B on the same machine. Only the ﬁnal
+EMA actor at the assigned budget is scored, with two
+full evaluations; the ﬁrst is primary and the second checks
+repeatability. The queue stops if A+ completion is below
+70%, the conservative B completion drop exceeds 5 pp, the
+B/A+ median-duration ratio is below 0.9, or repeat spread
+exceeds 3 pp. The drop compares the highest A+ and lowest
+B completion across repeats. These are engineering screens,
+not equivalence or superiority tests. Negative complete pairs
+remain in every cohort summary.
+C. Metrics and Evidence Provenance
+Each policy evaluation starts every reference clip at its
+ﬁrst frame with evaluation seed 0 and the identiﬁed plant.
+Completion requires reaching the reference end without
+crossing the training termination thresholds: 0.25 m absolute
+root-height error or 0.8 absolute Rzz error relative to the
+reference. These are tracking-termination criteria, not direct
+labels of physical falling. Calibration angle RMSE pools both
+branches, joints, and the 32-step preﬁx; ER is deﬁned by (5).
+Reported standard deviations are across training seeds, not
+individual frames.
+
+Current training ledgers, all 5001 iteration rows per
+model, protocol/data/tool ﬁngerprints, recorded initialmodule hashes, and all 124 evaluation outputs were checked.
+The audit covers 20,212 clip episodes. The returned currentstudy packages contain metadata rather than weights, so actual new checkpoint tensors and common-device reevaluation
+remain unveriﬁed. In contrast, the earlier seed-2/4 models
+and the local 3090 scenario arrays were checked from their
+actual ﬁles. This distinction limits the strength of the current
+evidence.
+V. R ESULTS
+A. Archived Joint Replay
+Table IV reports the eight available archived records. All
+three RMSE channels improve on seven records. Left-knee
+position error decreases from 7.400 to 3.680 mrad; left-hiproll error decreases from 13.861 to 3.192 mrad. Right-anklepitch position error decreases from 4.415 to 2.141 mrad,
+while its speed and torque gains are smaller. Figure 2 uses
+ﬁxed early windows of these records rather than selected best
+intervals.
+Left-ankle-roll position error increases from 7.764 to
+9.116 mrad, accompanied by worse speed and torque prediction. Recorded positions cross the model’s lower limit,
+and an archived limit-disabled diagnostic reduces absolute
+errors without reversing the original/identiﬁed ordering. The
+cause is not established. These are within-record parameter
+comparisons with one record per condition; they do not
+isolate event-timing identiﬁcation or demonstrate learnedpolicy transfer. Raw ﬁtting sessions and matched timing reﬁts
+remain unavailable.
+B. From Frozen-Data Failure to Online Control
+In the historical common-seed evaluation, A0/A attain
+identiﬁed-plant completion of 79.14 ± 2.74% and 79.51 ±
+2.24% over ﬁve training seeds. A+, B, and two C candidates
+each complete none of the 163 clips in every seed, with
+median valid durations approximately 1.00–1.02 s. These are
+genuine observed failures, not missing entries or theoretical
+lower bounds. We retain the result here rather than repeating
+a table of identical zero percentages.
+Online recovery subsequently yields primary A+ completion of 136/163 and 133/163 for seeds 2 and 4, against
+127/163 and 129/163 for A in that recovery experiment.
+A separate matched 1000-update structure experiment yields
+A+/B completion of 133/132 and 131/130 clips on the common 3090. Recovery establishes that the matched-input path
+can support policy learning, but does not identify a unique
+cause of the earlier failure. These small studies motivate,
+rather than substitute for, the larger current comparison.
+C. Current Online A+/B Comparison
+The 4090 completes 20 pairs through seed 84; the
+5080 completes 11 pairs through seed 46. Every recorded
+model reaches 5000 actor and 25000 world-model updates.
+Table V presents all complete pairs, separated by training/evaluation GPU. Mean B-minus-A+ completion is +0.74
+
+pp on the 4090 cohort and −1.12 pp on the 5080 cohort. B
+wins/ties/loses on 12/1/7 and 4/0/7 seeds, respectively. Different seeds and machines prevent interpreting this contrast
+as a GPU effect.
+The 4090 stops after seed 84: A+ completes 152/163
+clips in both evaluations, whereas B completes 142/163
+and 140/163. The conservative drop is 7.36 pp. The 5080
+stops after seed 46: A+ completes 150/163 twice and B
+140/163 twice, a 6.13-pp drop. Both exceed the prespeciﬁed
+5-pp gate. Runs end after approximately 5.97 and 3.78
+hours, respectively, because of these control screens, not
+missing training or disk exhaustion. Since stopping depends
+on observed outcomes, the summaries are descriptive; we do
+not apply a ﬁxed-sample signiﬁcance interpretation.
+On common CPU calibration pairs, B reduces 32-step
+angle RMSE in 14/20 and 10/11 seeds. The mean of paired
+percentage reductions is 3.09% and 5.30%, respectively;
+this is not the ratio of cohort means. Figure 3 shows
+that improved prediction and improved completion do not
+coincide reliably. Even the two stopping seeds have lower
+B calibration angle error. Meanwhile B’s calibration ER (8)
+is on average 0.027% and 0.006% higher than A+’s, and
+only about 0.20% and 0.21% lower than the zero-response
+baseline. Thus the present forward gains do not establish
+useful response ﬁdelity.
+D. Independent Policy and Response Checks
+The 3090 randomized evaluation uses the four earlier
+1000-update models, not the 62 new policies. Fourteen
+complete evaluation seeds under each of two plants produce 28 balanced four-model cells. Training-range dynamics
+randomization and default training observation noise are
+enabled, with matched initial scenario hashes. Table VI
+shows negative mean B-minus-A+ completion in all four
+condition/training-seed combinations. There are still only
+two training seeds. Three additional completed evaluations in
+an incomplete cell are retained but excluded from balanced
+aggregation; its fourth model is interrupted at the eight-hour
+limit. This is training-distribution sensitivity, not held-out
+robustness.
+Two independent 3090 processes check every ﬁt/cal response block at three amplitudes and 4/8-step horizons. The
+engineering tolerances are ﬁxed beforehand: scaled forward
+RMSE at most 0.1; CPU/GPU response discrepancy at most
+the greater of 0.1 and 10% of CPU response RMS; repeat
+discrepancy at most the greater of 0.01 and 1% of CPU
+response RMS. Both CPU scenes match exactly, archived
+CPU replay differs by at most 5.61 × 10−13 , and initial-state
+transfer passes. However, 65/516 and 67/516 blocks fail at
+least one prescribed check (Table VII); 15/516 also fail crossprocess response repeatability. Recalculation from saved raw
+trajectories agrees with these counts.
+This localizes a numerical inconsistency to the backend/repeatability part of the response pipeline, without proving a single solver, precision, or contact cause. The original
+failed blocks are retained and thresholds are not relaxed.
+
+TABLE IV
+Archived joint replay, one record per joint/condition. O/I: original/identiﬁed parameters. All three errors improve on seven records; the adverse
+left-ankle-roll result is retained. These records do not evaluate a learned whole-body policy.
+
+Joint
+
+Scale / period (s)
+
+Angle (mrad)
+O
+I
+
+Speed (rad/s) Torque (N m)
+O
+I
+O
+I
+
+L knee
+R knee
+L hip pitch
+R hip pitch
+L hip roll
+R hip yaw†
+R ankle pitch†
+L ankle roll
+
+0.3 / 2
+0.3 / 2
+0.3 / 2
+0.3 / 2
+0.3 / 3
+0.1 / 2
+0.3 / 3
+0.3 / 2
+
+7.400
+7.196
+10.217
+8.733
+13.861
+1.363
+4.415
+7.764
+
+0.0886
+0.0757
+0.1136
+0.0747
+0.0307
+0.0331
+0.0582
+0.1586
+
+3.680
+5.498
+7.205
+6.694
+3.192
+1.112
+2.141
+9.116
+
+0.0781
+0.0670
+0.0956
+0.0602
+0.0253
+0.0322
+0.0564
+0.1729
+
+1.823
+1.715
+3.356
+2.738
+2.844
+0.445
+0.486
+0.587
+
+0.806
+0.892
+1.764
+1.743
+0.751
+0.424
+0.462
+0.686
+
+† Frozen joint-speciﬁc candidates; other rows use archived rounded sets. Metrics are full-record post-warm-up RMSE, retaining transients, with a
+
+0.5-ms maximum integration step and 2-ms scoring interval. Hardware raw ﬁtting sessions are unavailable for independent re-identiﬁcation.
+
+L knee | 0.3 / 2 s
+
+L hip roll | 0.3 / 3 s
+−0.02
+
+−0.65
+
+Position (rad)
+
+Position (rad)
+
+−0.60
+Measured
+Original model
+Identified set
+
+−0.70
+−0.75
+−0.80
+
+0.60
+
+−0.04
+
+Position (rad)
+
+−0.55
+
+−0.85
+
+R ankle pitch | 0.3 / 3 s
+
+−0.06
+−0.08
+
+0.55
+0.50
+0.45
+0.40
+0.35
+
+0
+
+2
+
+4
+
+6
+
+0
+
+2
+
+4
+
+6
+
+8
+
+−4
+−6
+−8
+−10
+−12
+
+Torque (N m)
+
+2
+
+Torque (N m)
+
+0
+−2
+
+4
+
+6
+
+8
+
+−14
+0
+
+2
+
+4
+
+6
+
+0
+
+2
+
+4
+
+6
+
+8
+
+0
+
+2
+
+4
+
+6
+
+Position residual (mrad)
+
+0
+−1
+
+−3
+
+8
+
+Time from first scored sample (s)
+
+10
+
+1
+
+−2
+
+−4
+
+20
+
+Position residual (mrad)
+
+Torque (N m)
+
+2
+
+2
+
+0
+−2
+
+Position residual (mrad)
+
+0
+
+7.5
+5.0
+
+Fig. 2. Archived measured and predicted joint trajectories 15
+over the ﬁrst three scored periods: left knee, left hip roll, and right ankle pitch. Top: angle;
+5 torque. Black: measured; dashed gray: original parameters; blue: identiﬁed parameters. Full-record statistics are in Table IV. The rightbottom: joint-side
+2.5
+ankle candidate is separate from the enabled whole-body training
+manifest.
+10
+0
+
+5
+
+TABLE V
+
+0.0
+
+−2.5
+
+−5comparison: mean ± sample SD across training seeds. Each ﬁnal EMA actor is evaluated on 163 reference clips; only the ﬁrst evaluation
+Current online
+−5.0
+0
+
+enters this table. CPU calibration metrics are diagnostics, not locked-test results.
+
+−10
+0
+
+2
+
+GPU
+
+−5
+
+n Group Completion (%) Cal. angle RMSE32 (rad)
+
+4
+
+6
+
+Time from first
+scored
+4090
+20sample
+A+ (s)
+
+4090 20 B
+5080 11 A+
+5080 11 B
+
+0
+
+2
+
+4
+
+6
+
+8
+
+scored
+(s)
+89.11 ±Time
+2.56 from first
+0.04384
+±sample
+0.00204
+89.85 ± 2.49
+0.04239 ± 0.00205
+88.90 ± 2.71
+0.04416 ± 0.00138
+87.79 ± 1.95
+0.04180 ± 0.00148
+
+−7.5
+
+−10.0
+
+Cal. ER (8)
+0
+
+2
+
+4
+
+6
+
+8
+
+from first scored sample (s)
+73.726Time
+± 0.021
+73.746 ± 0.025
+73.736 ± 0.019
+73.740 ± 0.031
+
+All 31 complete pairs, including the two screen-failing pairs, are retained. GPU strata have different seeds and are not pooled. Runs stopped at
+the ﬁrst control-screen failure; statistics are descriptive. Current model weights await independent transfer veriﬁcation. Zero-response calibration
+ER (8) = 73.893304.
+
+Response-supervised online C and horizon-based D/C-perm
+
+are therefore not promoted to policy training.
+
+RTX 4090: 20 paired training seeds
+
+RTX 5080: 11 paired training seeds
+
+B minus A+ completion
+(percentage points)
+
+8
+4
+0
+−4
+−8
+
+seed 84
+
+seed 46
+
+−10
+−5
+0
+5
+10
+15
+B reduction in calibration angle RMSE (%)
+
+−10
+−5
+0
+5
+10
+15
+B reduction in calibration angle RMSE (%)
+
+Fig. 3. All 31 current paired seeds. Horizontal: paired reduction in CPU calibration angle RMSE at 32 steps; positive favors B. Vertical: ﬁrst-evaluation
+completion difference; positive favors B. Red crosses mark the two queue-stopping pairs, including their negative results. No regression or causal relationship
+is inferred from this descriptive plot.
+
+TABLE VI
+Old 1000-update policies on the common 3090: mean completion over 14
+evaluation seeds. Only two training seeds; training-distribution
+randomization and observation noise.
+
+Seed A+ (%) B (%) ∆ (pp)
+
+Plant
+Identiﬁed
+Identiﬁed
+Nominal
+Nominal
+
+2
+4
+2
+4
+
+81.99
+79.84
+80.67
+79.45
+
+80.94
+79.45
+77.83
+77.65
+
+−1.05
+−0.39
+−2.85
+−1.80
+
+TABLE VII
+Full ﬁt/cal backend checks on RTX 3090. Each process covers 516 blocks.
+Failure categories overlap.
+
+Check / failed blocks
+
+Pass 1
+
+Pass 2
+
+Forward discrepancy
+CPU/GPU response discrepancy
+Within-process GPU repeat
+Any prescribed check
+
+42
+47
+24
+65
+
+42
+46
+26
+67
+
+Cross-process response repeat
+
+15 / 516
+
+VI. D ISCUSSION AND C ONCLUSION
+The empirical pattern agrees with the scope of the analysis: actuator structure can improve trajectory prediction
+while branch-response error and policy performance remain
+unresolved. In the older frozen-data study, C with MSE
+weight 10−4 reduces mean ﬁtting ER (8) from B’s 69.978 to
+14.014, yet calibration error increases from 75.323 to 76.136.
+A Huber candidate reaches 74.368, still above the zeroresponse calibration baseline 73.893. Equation (8) concerns
+a common ﬁtting objective under global optimization and
+does not predict these calibration outcomes. Equations (6)–
+(7) explain why a small forward error is insufﬁcient; they do
+not identify the experimental failure’s unique cause.
+Several further links require direct tests. In (2), command
+
+derivatives vanish outside the unsaturated PD range, while
+the smooth friction slope is largest near zero velocity. Their
+effect on optimization is a hypothesis requiring measured
+saturation, response, and gradient diagnostics. Shorter or
+calibrated horizons may reduce accumulated sensitivity error,
+but no completion value for D or C-perm follows from an
+equal imagined-step budget. A gradient-swap control with
+ﬁxed forward values could isolate backward-model effects,
+following the decoupling principle in [16]; it has not been
+executed here.
+The current study has traceable budgets and broad seed
+coverage, but remains developmental: calibration data informed screening, current model weights have not been independently transferred, and current evaluations use trainingreference motions. The historical hardware evidence is
+archived joint replay rather than whole-body deployment.
+No matched PPO efﬁciency comparison, held-out actuator
+robustness, event-timing reﬁt advantage, or time-to-target
+beneﬁt is established. Unexecuted outcomes are not entered
+as zeros or replaced with ideal theoretical values.
+In conclusion, identiﬁed parameters improve seven of
+eight archived joint records, and the online structured model
+lowers calibration angle error in 24 of 31 paired seeds.
+Current completion is approximately 88–90%, superseding
+the frozen-data failure as the description of the active implementation. The inconsistent closed-loop difference and
+full response-backend failures prevent a claim of stable
+control improvement. The resulting contribution is a tested
+separation of prediction, response, and control evidence,
+together with conditional analysis that identiﬁes what must
+be validated before response-calibrated policy optimization
+can be supported.
+
+R EFERENCES
+[1] X. B. Peng, P. Abbeel, S. Levine, and M. van de Panne, “DeepMimic:
+Example-guided deep reinforcement learning of physics-based character skills,” ACM Transactions on Graphics, vol. 37, no. 4, pp. 143:1–
+143:14, 2018.
+[2] X. B. Peng, Z. Ma, P. Abbeel, S. Levine, and A. Kanazawa, “AMP:
+Adversarial motion priors for stylized physics-based character control,” ACM Transactions on Graphics, vol. 40, no. 4, pp. 144:1–144:20,
+2021.
+[3] T. He, Z. Luo, X. He, W. Xiao, C. Zhang, W. Zhang, K. M.
+Kitani, C. Liu, and G. Shi, “OmniH2O: Universal and dexterous
+human-to-humanoid whole-body teleoperation and learning,” in Proc.
+Conference on Robot Learning, ser. Proceedings of Machine Learning
+Research, vol. 270, 2025, pp. 1516–1540. [Online]. Available:
+https://proceedings.mlr.press/v270/he25b.html
+[4] Q. Liao, Y. Shao, J. Long, K. Zakka, R. Horowitz, P. Abbeel, and
+K. Sreenath, “SuperMimic: Scaling humanoid whole-body control
+with one differentiable world model,” in Conference on Robot
+Learning, 2026. [Online]. Available: https://supermimic.github.io/
+[5] J. Hwangbo, J. Lee, A. Dosovitskiy, D. Bellicoso, V. Tsounis,
+V. Koltun, and M. Hutter, “Learning agile and dynamic motor skills
+for legged robots,” Science Robotics, vol. 4, no. 26, p. eaau5872, 2019.
+[6] T. He, J. Gao, W. Xiao, Y. Zhang, Z. Wang, J. Wang, Z. Luo, G. He,
+N. Sobanbabu, C. Pan, Z. Yi, G. Qu, K. Kitani, J. K. Hodgins, L. Fan,
+Y. Zhu, C. Liu, and G. Shi, “ASAP: Aligning simulation and realworld physics for learning agile humanoid whole-body skills,” in Proc.
+Robotics: Science and Systems, 2025.
+[7] Z. Dou, J. U. Onyemelukwe, H. Zhang, H. Zhang, M. Guo, Y. Tian,
+M. P. Lipiec, J. Jacob, C. Liu, P. Y. Chen, Y. Ivanov, and W. Matusik,
+“NeuralActuator: Neural actuation modeling for robot dynamics and
+external force perception,” in Proc. Robotics: Science and Systems,
+2026.
+[8] N. Rudin, D. Hoeller, P. Reist, and M. Hutter, “Learning to walk
+in minutes using massively parallel deep reinforcement learning,” in
+Proc. Conference on Robot Learning, ser. Proceedings of Machine
+Learning Research, vol. 164, 2022, pp. 91–100. [Online]. Available:
+https://proceedings.mlr.press/v164/rudin22a.html
+[9] J. Xu, V. Makoviychuk, Y. Narang, F. Ramos, W. Matusik,
+A. Garg, and M. Macklin, “Accelerated policy learning with
+parallel differentiable simulation,” in Proc. International Conference
+on Learning Representations, 2022. [Online]. Available: https:
+//openreview.net/forum?id=ZSKRQMvttc
+
+[10] Y. Song, S. b. Kim, and D. Scaramuzza, “Learning quadruped
+locomotion using differentiable simulation,” in Proc. Conference on
+Robot Learning, ser. Proceedings of Machine Learning Research, vol.
+270, 2025, pp. 258–271. [Online]. Available: https://proceedings.mlr.
+press/v270/song25a.html
+[11] C. Schwarke, V. Klemm, J. Bagajo, J. P. Sleiman, I. Georgiev, J. T.
+Torres, and M. Hutter, “Learning deployable locomotion control via
+differentiable simulation,” in Proc. Conference on Robot Learning,
+ser. Proceedings of Machine Learning Research, vol. 305, 2025, pp.
+3665–3684. [Online]. Available: https://proceedings.mlr.press/v305/
+schwarke25a.html
+[12] W. M. Czarnecki, S. Osindero, M. Jaderberg, G. Świrszcz,
+and R. Pascanu, “Sobolev training for neural networks,” in
+Advances in Neural Information Processing Systems, vol. 30, 2017.
+[Online]. Available: https://proceedings.neurips.cc/paper/2017/hash/
+758a06618c69880a6cee5314ee42d52f-Abstract.html
+[13] X. Zhang, X. Cai, B. Liu, W. Huang, S.-C. Zhu, S. Qi, and
+Y. Yang, “Differentiable information enhanced model-based reinforcement learning,” in Proc. AAAI Conference on Artiﬁcial Intelligence,
+vol. 39, no. 21, 2025, pp. 22 605–22 613.
+[14] I. Georgiev, K. Srinivasan, J. Xu, E. Heiden, and A. Garg,
+“Adaptive horizon actor-critic for policy learning in contactrich differentiable simulation,” in Proc. International Conference
+on Machine Learning, ser. Proceedings of Machine Learning
+Research, vol. 235, 2024, pp. 15 418–15 437. [Online]. Available:
+https://proceedings.mlr.press/v235/georgiev24a.html
+[15] B. Frauenknecht, A. Eisele, D. Subhasish, F. Solowjow, and S. Trimpe,
+“Trust the model where it trusts itself—model-based actor-critic
+with uncertainty-aware rollout adaption,” in Proc. International
+Conference on Machine Learning, ser. Proceedings of Machine
+Learning Research, vol. 235, 2024, pp. 13 973–14 005. [Online].
+Available: https://proceedings.mlr.press/v235/frauenknecht24a.html
+[16] J. Amigo, R. Khorrambakht, E. Chane-Sane, N. Mansard, and
+L. Righetti, “First order model-based RL through decoupled
+backpropagation,” in Proc. Conference on Robot Learning, ser.
+Proceedings of Machine Learning Research, vol. 305, 2025, pp.
+5234–5255. [Online]. Available: https://proceedings.mlr.press/v305/
+amigo25a.html
+[17] F. G. Harvey, M. Yurick, D. Nowrouzezahrai, and C. Pal, “Robust
+motion in-betweening,” ACM Transactions on Graphics, vol. 39, no. 4,
+2020.
+[18] E. Todorov, T. Erez, and Y. Tassa, “MuJoCo: A physics engine for
+model-based control,” in Proc. IEEE/RSJ International Conference on
+Intelligent Robots and Systems, 2012, pp. 5026–5033.
+
+

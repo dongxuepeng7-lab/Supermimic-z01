@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering\small
+\caption{\lang{Protocol constants and exact budget arithmetic. The two update budgets are reported separately.}{协议常数与精确预算计算。两种更新预算分别报告。}}
+\label{tab:settings}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrr@{}}\toprule
+\lang{Quantity}{项目} & \lang{Earlier}{早期} & \lang{Current}{当前}\\\midrule
+\lang{Policy updates $I$}{策略更新次数 $I$} & 1,000 & 5,000\\
+\lang{World-model updates $5I$}{世界模型更新次数 $5I$} & 5,000 & 25,000\\
+\lang{Environment transitions}{环境转移数} & 2,625,536 & 12,865,536\\
+\lang{Assigned imagined steps}{分配的想象步数} & 16,384,000 & 81,920,000\\\midrule
+\lang{Joints / reference clips}{关节数／参考片段数} & \multicolumn{2}{c}{26 / 163}\\
+\lang{Control / physics interval}{控制／物理仿真间隔} & \multicolumn{2}{c}{20 / 5 ms}\\
+\lang{Parallel environments}{并行环境数} & \multicolumn{2}{c}{1,024}\\
+\lang{WM / actor batch size}{世界模型／策略批量大小} & \multicolumn{2}{c}{256 / 512}\\
+\lang{Online WM / actor horizon}{在线世界模型／策略时域} & \multicolumn{2}{c}{8 / 32}\\
+\lang{WM / actor precision}{世界模型／策略精度} & \multicolumn{2}{c}{FP32 / BF16}\\
+\lang{Fit / cal. / locked test pairs}{拟合／校准／锁定测试配对数} & \multicolumn{2}{c}{400 / 116 / 136}\\
+\bottomrule\end{tabular}
+\end{table}

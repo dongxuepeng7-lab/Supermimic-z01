@@ -126,7 +126,7 @@ uv run python tools/play_reference.py \
 
 ## 训练
 
-**当前 RA-L 开发阶段：三机 8 小时在线 A+/B 复核与扩展。** 5080 训练 seed 6/10/14……，4090 训练 seed 8/12/16……，每个种子先 A+ 后 B，每模型固定 5000 次策略更新，同时训练世界模型和价值网络。3090 检查全部 fit/cal 响应块，并评估已收到的 seed 2/4 四模型。入口为 `scripts/ral_5080_online_8h.sh`、`scripts/ral_4090_online_8h.sh`、`scripts/ral_3090_online_8h.sh`；统一判断入口为 `scripts/ral_online_8h_judge.sh`。同步、启动、停止条件与回传见 [当前三机 8 小时操作说明](docs/ral_online_night_20261123.md)。旧队列及 1000 次更新结果保留，不与新预算混合统计；C 暂不启动。
+**当前 RA-L 开发阶段：三机九小时原因诊断。** 已审阅的 62 个在线模型显示预测改善未稳定转化为控制收益，响应后端也未通过。新轮由 5080 检验策略时域 32/8、4090 检验模型窗口 8/32，均执行同初始化 A+/B 四模型对照；3090 定位图执行、批处理和响应重复性。完整分工、同步包、启动及判断命令见 [九小时执行说明](docs/ral_diagnose_9h_20261123.md)。旧 [结果审阅](docs/ral_online_night_20261123.md) 和八小时协议保留；C/D/C-perm 暂不启动。
 
 RA-L 论文的 **A0、A、A+、B、C、C-perm、D 七组**使用独立的实验入口和参数清单，见
 [七组实验执行说明](docs/ral_experiments.md) 与 [任务清单](configs/ral/tasks.json)。
