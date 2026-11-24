@@ -31,8 +31,8 @@
     {
       "id": "PAIR-01",
       "owner": "3090_eval",
-      "status": "full_fit_cal_backend_failed_in_both_processes",
-      "task": "online_night01_3090 checked all 400 fit + 116 cal blocks in each of two independent processes. Failures: 65/516 and 67/516; cross-process response repeatability failures: 15/516. Saved CPU replay and CPU scene comparisons pass. Raw trajectory arithmetic independently recomputed. Preserve failed blocks and original tolerances; diagnose numerical backend/response repeatability before C. No locked test arrays accessed. See release/ral/online_night01_review_20261123.json."
+      "status": "diag01_backend_isolated_repeatability_and_consistency_failures",
+      "task": "diag01 single-world execution has 0/516 cross-process response repeatability failures, but 54/516 overall failures in each of two full processes; graph/eager batch still fail repetition. Keep original thresholds and failure-enriched diagnostics separate from full coverage. Preserve all failures; locked test remains unread."
     },
     {
       "id": "TRAIN-01",
@@ -103,26 +103,26 @@
     {
       "id": "DIAG9-5080",
       "owner": "5080_train",
-      "status": "implemented_validated_ready_not_launched",
-      "task": "Fresh paired A+/B x actor horizon 32/8, WM window 8. Seeds 301+4k; four models required per block. Diagnose prior s6/s46 weights first when available. Preserve finite negative results under this new diagnostic protocol."
+      "status": "diag01_reviewed_9_complete_blocks_output_cap_stop",
+      "task": "36 full-budget models, 9 complete blocks audited. H32→8 reduces A+/B completion by 5.73/6.61 pp. Output 14.16 GiB + 2 GiB reserve exceeded 16 GiB cap despite 375.56 GiB free. Preserve negative results; do not restart identical queue. Reuse baseline WM8/H32 weights for multistep action sensitivity and friction/limit diagnostics."
     },
     {
       "id": "DIAG9-4090",
       "owner": "4090_train",
-      "status": "implemented_validated_ready_not_launched",
-      "task": "Fresh paired A+/B x WM window 8/32, actor horizon 32. Seeds 303+4k; four models required per block. Diagnose prior s8/s84 weights first when available. Preserve finite negative results under this new diagnostic protocol."
+      "status": "diag01_reviewed_8_complete_blocks_plus_2_models_storage_stop",
+      "task": "34 full-budget model records audited; 8 complete four-model blocks included, s335 WM8 pair retained outside balanced analysis. WM8→32 reduces A+/B completion by 32.67/36.43 pp; no nonfinite training. Storage stopped with 16.84 GiB free below 17 GiB start reserve. Preserve results; do not restart identical queue. Diagnose temporal loss normalization/clipping on fixed batches before a new training intervention."
     },
     {
       "id": "DIAG9-3090",
       "owner": "3090_eval",
-      "status": "implemented_validated_ready_not_launched",
-      "task": "Full fit/cal CPU/GPU response checks in graph batch, eager batch and eager single-world modes, two processes each; then frozen failure-enriched 48-block new-direction diagnostics through 32 steps. Preserve original thresholds, all failed trajectories and independent repeat checks. No C/test."
+      "status": "diag01_reviewed_single_world_repeatability_improved_consistency_failed",
+      "task": "Full 516-block pass failures: graph batch 65/64, eager batch 61/66, eager single 54/54. Cross-process repeatability failures 19/22/0 respectively. 18 complete new-direction cells; partial 1019 excluded. Locally recomputed 8280 raw trajectory blocks. Single-world repetition passes do not establish CPU/GPU response validity; no C/test."
     }
   ],
   "current_execution_requirements": "docs/ral_diagnose_9h_20261123.md",
   "current_execution_config": "configs/ral/diagnose_nine_hour_v1.json",
   "current_frozen_protocol": "release/ral/diagnose_nine_hour_protocol_v1.json",
-  "current_execution_state": "diagnostic_9h_validated_ready_not_launched",
-  "current_review": "release/ral/online_night01_review_20261123.json",
+  "current_execution_state": "diag01_reviewed_pause_repeated_horizon_training",
+  "current_review": "release/ral/diag01_review_20261124.json",
   "current_validation": "release/ral/diagnose_nine_hour_validation_20261123.json"
 }
