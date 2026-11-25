@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "stage": "validation_six_hour_v1",
+  "hours": 6,
+  "shutdown_reserve_seconds": 120,
+  "min_free_gib": 15,
+  "max_output_gib": 64,
+  "start_reserve_gib": 8,
+  "job_timeout_minutes": 100,
+  "formal_results": false,
+  "C_authorized": false,
+  "response_test_accessed": false,
+  "new_training_runs": 0,
+  "scope": "Prespecified nominal-to-identified parameter-mismatch stress on the existing reference-motion library. Endpoints are known configurations, NOT estimated uncertainty bounds or unseen-motion/hardware validation.",
+  "scenarios": [
+    {
+      "id": "identified",
+      "identified_fraction": {
+        "armature": 1,
+        "damping": 1,
+        "frictionloss": 1
+      }
+    },
+    {
+      "id": "nominal",
+      "identified_fraction": {
+        "armature": 0,
+        "damping": 0,
+        "frictionloss": 0
+      }
+    },
+    {
+      "id": "midpoint",
+      "identified_fraction": {
+        "armature": 0.5,
+        "damping": 0.5,
+        "frictionloss": 0.5
+      }
+    },
+    {
+      "id": "armature_nominal",
+      "identified_fraction": {
+        "armature": 0,
+        "damping": 1,
+        "frictionloss": 1
+      }
+    },
+    {
+      "id": "damping_nominal",
+      "identified_fraction": {
+        "armature": 1,
+        "damping": 0,
+        "frictionloss": 1
+      }
+    },
+    {
+      "id": "frictionloss_nominal",
+      "identified_fraction": {
+        "armature": 1,
+        "damping": 1,
+        "frictionloss": 0
+      }
+    }
+  ],
+  "primary": "For each of the five paired training seeds, equal-weight mean completion difference B_v005 minus B_ref over the five non-identified stress scenarios, final EMA repeat 0. Aggregate across training seeds only; partial seeds excluded and reported.",
+  "repeats": [
+    0,
+    1
+  ],
+  "training_seeds": [
+    501,
+    505,
+    509,
+    513,
+    517
+  ],
+  "variants": [
+    "Aplus",
+    "B_ref",
+    "B_v005"
+  ],
+  "record_primary_seed": 501,
+  "primary_before_repeat": true,
+  "estimated_eval_seconds": 109.8697312116623,
+  "backend": {
+    "directions": [
+      "original",
+      "direction2001"
+    ],
+    "profiles": [
+      "native",
+      "cold_start",
+      "frictionloss_off",
+      "limits_off",
+      "contacts_off",
+      "constraints_off",
+      "tight_solver"
+    ],
+    "independent_processes": 2,
+    "branches_for_shared_state": [
+      0,
+      3,
+      4
+    ],
+    "scope": "Counterfactual diagnostic physics/solver interventions; keep original labels/thresholds. Disabling contact/friction/limits is never a deployable repair.",
+    "first_deviation_scaled_rmse": 0.1
+  },
+  "source_5080": "logs/ral_3h/intervention01_5080",
+  "source_3090": "logs/ral_3h/precision01_3090",
+  "audit_sha256": "e6310ca3d2bd034ed57fd13c8b756fafab2e25e7ff5504dd03719ca4629dff36"
+}

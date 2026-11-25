@@ -1,0 +1,887 @@
+{
+  "status": "audited",
+  "formal_results": false,
+  "training_seed": 301,
+  "source_status_sha256": "4c6c64c89d1853299133e40516c1294f9267caba05f38339c4ac47dc6da1b139",
+  "wall_seconds": 89.98629355430603,
+  "checkpoint_tensor_bytes_verified_locally": false,
+  "scope": "One frozen A+/B pair; 24 fit + 24 cal blocks each; precisions/amplitudes are repeated measurements, not extra training seeds. Model FD versus own AD, not model versus physics or policy success.",
+  "response_test_accessed": false,
+  "new_training_runs": 0,
+  "models": {
+    "Aplus": {
+      "checkpoint_sha256": "d59856ebbc1688477642c827041790702031e06cd0a0bfeb9df89d320135b3c0",
+      "report_sha256": "0a75d5d9fda4f16ff35128fd49505ca26f54232f3910cf5976e3435fb15bfedf",
+      "summaries": {
+        "fit_float32": {
+          "blocks": 24,
+          "horizons": {
+            "1": {
+              "median_rmse_by_factor": [
+                0.00025152067387852306,
+                0.0005119880509592163,
+                0.0009943376982912214,
+                0.0017539012163218775,
+                0.003816197062474869,
+                0.00691703402400763,
+                0.014850231100570384,
+                0.059131546461855596
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.08977397243255665,
+              "final_relative_error_max": 0.024847979246808743,
+              "final_worst_block": "fallAndGetUp1_subject4__seg000:0:309"
+            },
+            "2": {
+              "median_rmse_by_factor": [
+                0.0003250657385804797,
+                0.0006968038115987261,
+                0.001332761545574426,
+                0.002424705716330371,
+                0.005146644320226587,
+                0.009898421509826616,
+                0.02133742309068358,
+                0.0777060270230793
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.1411304817984556,
+              "final_relative_error_max": 0.03445383339706164,
+              "final_worst_block": "fight1_subject5__seg001:2:269"
+            },
+            "4": {
+              "median_rmse_by_factor": [
+                0.00040944307135250366,
+                0.0008461559099542679,
+                0.0017015177911280945,
+                0.0031135745729730406,
+                0.00669735459425787,
+                0.013411021995607375,
+                0.02635018227395075,
+                0.10432955215244924
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.15827118827406772,
+              "final_relative_error_max": 0.038460859048288755,
+              "final_worst_block": "run2_subject4__seg004:0:2451"
+            },
+            "8": {
+              "median_rmse_by_factor": [
+                0.0004848949602296524,
+                0.000993226486853412,
+                0.0019954193952752657,
+                0.004072124437857637,
+                0.007418255883998669,
+                0.015723625770275043,
+                0.03167185801886346,
+                0.12444218760452076
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.23606673684224394,
+              "final_relative_error_max": 0.047519817751697176,
+              "final_worst_block": "walk1_subject5__seg005:2:682"
+            },
+            "16": {
+              "median_rmse_by_factor": [
+                0.0005652742330259945,
+                0.0010519297556170857,
+                0.00203353103191657,
+                0.004251469104741036,
+                0.008360651802398623,
+                0.01639805398871083,
+                0.03363566130494762,
+                0.1310826427863881
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.21077741557544014,
+              "final_relative_error_max": 0.0413734910787699,
+              "final_worst_block": "fightAndSports1_subject1__seg000:0:15"
+            },
+            "32": {
+              "median_rmse_by_factor": [
+                0.0005822341799903001,
+                0.0010921187485814171,
+                0.0023590814208167355,
+                0.0043491142238928394,
+                0.00934890517322342,
+                0.017494503824626646,
+                0.03562362685132799,
+                0.13392070626403646
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.20587660532677443,
+              "final_relative_error_max": 0.037031250080390245,
+              "final_worst_block": "walk1_subject5__seg005:2:682"
+            }
+          },
+          "channel_medians": {
+            "near_zero_velocity_fraction": 0.01682692300528288,
+            "friction_slope_max": 142.06317138671875,
+            "saturation_fraction": 0.012620192486792803,
+            "near_clamp_boundary_fraction": 0.0
+          }
+        },
+        "fit_float64": {
+          "blocks": 24,
+          "horizons": {
+            "1": {
+              "median_rmse_by_factor": [
+                1.2229593152528573e-05,
+                3.0574286877724624e-06,
+                7.643592623272324e-07,
+                1.9108970702711056e-07,
+                4.777320002436912e-08,
+                1.194347071831611e-08,
+                2.983746111487685e-09,
+                1.9405639967419547e-10
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 6.745545126851142e-10,
+              "final_relative_error_max": 2.0500561966995238e-10,
+              "final_worst_block": "fightAndSports1_subject1__seg004:1:124"
+            },
+            "2": {
+              "median_rmse_by_factor": [
+                4.155625455219461e-05,
+                1.0389202732533926e-05,
+                2.5973090029616746e-06,
+                6.493281626697879e-07,
+                1.6233286650734697e-07,
+                4.0583816328344655e-08,
+                1.0143334813862681e-08,
+                6.699964992846934e-10
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 1.3037094820282425e-09,
+              "final_relative_error_max": 3.104334493908537e-10,
+              "final_worst_block": "fight1_subject5__seg001:2:269"
+            },
+            "4": {
+              "median_rmse_by_factor": [
+                7.329477694582463e-05,
+                1.8324283605789155e-05,
+                4.581107563685664e-06,
+                1.1452778594995422e-06,
+                2.863194054869678e-07,
+                7.157699008246892e-08,
+                1.789769914708662e-08,
+                1.1422969086628675e-09
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 2.3678132461459047e-09,
+              "final_relative_error_max": 4.586319652353106e-10,
+              "final_worst_block": "fight1_subject3__seg002:1:172"
+            },
+            "8": {
+              "median_rmse_by_factor": [
+                9.17474682920875e-05,
+                2.293777011397634e-05,
+                5.734499792743884e-06,
+                1.4336285104991214e-06,
+                3.584082623315341e-07,
+                8.95981192335107e-08,
+                2.239332683997673e-08,
+                1.4222891318300899e-09
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 2.7009234616058966e-09,
+              "final_relative_error_max": 5.178461789023918e-10,
+              "final_worst_block": "fallAndGetUp1_subject4__seg000:0:309"
+            },
+            "16": {
+              "median_rmse_by_factor": [
+                0.00013896009026627984,
+                3.47413071126631e-05,
+                8.68540744163219e-06,
+                2.1713549804894506e-06,
+                5.428398984725187e-07,
+                1.3570918618124642e-07,
+                3.393875113836186e-08,
+                2.1557276796502515e-09
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 1.6784261854256987e-08,
+              "final_relative_error_max": 3.215708142492758e-09,
+              "final_worst_block": "fallAndGetUp1_subject4__seg000:0:309"
+            },
+            "32": {
+              "median_rmse_by_factor": [
+                0.0001450705267198384,
+                3.626888531796014e-05,
+                9.067299894380603e-06,
+                2.2668255161532108e-06,
+                5.667065116071325e-07,
+                1.4168017383945616e-07,
+                3.5435065383539255e-08,
+                2.155184388073921e-09
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 1.4668072507895885e-08,
+              "final_relative_error_max": 2.452731614224498e-09,
+              "final_worst_block": "walk3_subject1__seg007:0:545"
+            }
+          },
+          "channel_medians": {
+            "near_zero_velocity_fraction": 0.01682692300528288,
+            "friction_slope_max": 142.06131874995793,
+            "saturation_fraction": 0.012620192486792803,
+            "near_clamp_boundary_fraction": 0.0
+          }
+        },
+        "cal_float32": {
+          "blocks": 24,
+          "horizons": {
+            "1": {
+              "median_rmse_by_factor": [
+                0.00023438213943374536,
+                0.0005016614171253096,
+                0.0009961454025299488,
+                0.0017971982019432575,
+                0.0036915824865419314,
+                0.0071523418963487136,
+                0.013756632469652773,
+                0.06057772381911308
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.11289945994922314,
+              "final_relative_error_max": 0.028803988302369986,
+              "final_worst_block": "jumps1_subject2__seg006:0:1893"
+            },
+            "2": {
+              "median_rmse_by_factor": [
+                0.00032748985030947694,
+                0.0006322109203069704,
+                0.0012524531541551523,
+                0.0024822893986344284,
+                0.004901914290632213,
+                0.00990759844640594,
+                0.019984791592382374,
+                0.07829901197920314
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.1209885421028019,
+              "final_relative_error_max": 0.02814099921343145,
+              "final_worst_block": "sprint1_subject4__seg004:1:523"
+            },
+            "4": {
+              "median_rmse_by_factor": [
+                0.00043398804845590477,
+                0.0007291032486819731,
+                0.0015996467898559284,
+                0.002902049198508749,
+                0.006139800881280976,
+                0.01233987346461779,
+                0.022551130547031534,
+                0.09687053443549877
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.14425971926329484,
+              "final_relative_error_max": 0.033232245376994596,
+              "final_worst_block": "sprint1_subject4__seg004:1:523"
+            },
+            "8": {
+              "median_rmse_by_factor": [
+                0.0005313869387034361,
+                0.0009166147721319574,
+                0.0019965581655042425,
+                0.0036254005449083775,
+                0.008021645433336076,
+                0.014587178435196396,
+                0.029035382321731844,
+                0.11312208791791514
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.16264419871115854,
+              "final_relative_error_max": 0.03675387697188657,
+              "final_worst_block": "fightAndSports1_subject4__seg000:2:523"
+            },
+            "16": {
+              "median_rmse_by_factor": [
+                0.0005710293460666277,
+                0.0010451124117675835,
+                0.0020883341768844115,
+                0.004030391763871995,
+                0.008785061603127834,
+                0.016454402908671464,
+                0.03463478844022872,
+                0.12659403981023615
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.19551657535209796,
+              "final_relative_error_max": 0.03522513728527953,
+              "final_worst_block": "jumps1_subject2__seg003:2:649"
+            },
+            "32": {
+              "median_rmse_by_factor": [
+                0.0006121665584117423,
+                0.0011303741506418874,
+                0.002290709059593871,
+                0.00442376654284438,
+                0.009113521019236421,
+                0.017904803563000442,
+                0.03662921432161354,
+                0.13842399878678768
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.3044325974163609,
+              "final_relative_error_max": 0.05183811597294059,
+              "final_worst_block": "sprint1_subject4__seg005:2:88"
+            }
+          },
+          "channel_medians": {
+            "near_zero_velocity_fraction": 0.02524038590490818,
+            "friction_slope_max": 213.45858001708984,
+            "saturation_fraction": 0.011418269481509924,
+            "near_clamp_boundary_fraction": 0.0
+          }
+        },
+        "cal_float64": {
+          "blocks": 24,
+          "horizons": {
+            "1": {
+              "median_rmse_by_factor": [
+                1.9827695097235384e-05,
+                4.9569702640636036e-06,
+                1.239245364471227e-06,
+                3.09811699377537e-07,
+                7.745427457325913e-08,
+                1.9362117770898462e-08,
+                4.837889859082444e-09,
+                3.1677737298706157e-10
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 1.5168764654088683e-09,
+              "final_relative_error_max": 3.743200352195539e-10,
+              "final_worst_block": "walk3_subject4__seg000:3:2533"
+            },
+            "2": {
+              "median_rmse_by_factor": [
+                5.195158373251953e-05,
+                1.2988130456923118e-05,
+                3.2470470298288935e-06,
+                8.117631879722167e-07,
+                2.0293969181968695e-07,
+                5.0731333844294446e-08,
+                1.2682934711895607e-08,
+                8.051075836119497e-10
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 1.7312684606230142e-09,
+              "final_relative_error_max": 4.2508464683950896e-10,
+              "final_worst_block": "dance2_subject1__seg000:0:635"
+            },
+            "4": {
+              "median_rmse_by_factor": [
+                6.79659892020092e-05,
+                1.6992363596772742e-05,
+                4.248144815375936e-06,
+                1.062039075171659e-06,
+                2.655109370599328e-07,
+                6.637746644665189e-08,
+                1.6595161806069606e-08,
+                1.0850444446716797e-09
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 3.455035774412429e-09,
+              "final_relative_error_max": 5.525734691231386e-10,
+              "final_worst_block": "walk3_subject4__seg000:3:2533"
+            },
+            "8": {
+              "median_rmse_by_factor": [
+                9.184680595787006e-05,
+                2.296255790165007e-05,
+                5.740692760043162e-06,
+                1.4351769833936466e-06,
+                3.587953579598436e-07,
+                8.96982152811786e-08,
+                2.242336239623578e-08,
+                1.4230723671111285e-09
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 6.991004556430031e-09,
+              "final_relative_error_max": 1.0840550749329299e-09,
+              "final_worst_block": "walk3_subject4__seg000:3:2533"
+            },
+            "16": {
+              "median_rmse_by_factor": [
+                0.00011088869434163341,
+                2.7723294509073303e-05,
+                6.930893758227793e-06,
+                1.7327274043691662e-06,
+                4.3318414375829673e-07,
+                1.0829594896058965e-07,
+                2.7071537147647432e-08,
+                1.6908180103064553e-09
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 5.0571601790643085e-09,
+              "final_relative_error_max": 9.08589005199321e-10,
+              "final_worst_block": "walk3_subject4__seg000:3:2533"
+            },
+            "32": {
+              "median_rmse_by_factor": [
+                0.00014048503483805484,
+                3.512391248609475e-05,
+                8.781144036634138e-06,
+                2.19529604923822e-06,
+                5.488249919161066e-07,
+                1.372084506474976e-07,
+                3.4297561646951724e-08,
+                2.171386457675461e-09
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 4.2853504951275125e-09,
+              "final_relative_error_max": 7.551601198069429e-10,
+              "final_worst_block": "jumps1_subject2__seg003:2:649"
+            }
+          },
+          "channel_medians": {
+            "near_zero_velocity_fraction": 0.02524038590490818,
+            "friction_slope_max": 213.45685530839913,
+            "saturation_fraction": 0.011418269481509924,
+            "near_clamp_boundary_fraction": 0.0
+          }
+        }
+      }
+    },
+    "B": {
+      "checkpoint_sha256": "84d2376e09a1c3256629386df6ad98bc580a4edc94738887a8fdfe4a8d42db1d",
+      "report_sha256": "c81860cdf143dd8c1111bae2eb4206f5281a7e7918d2063203d7448f493e0ea9",
+      "summaries": {
+        "fit_float32": {
+          "blocks": 24,
+          "horizons": {
+            "1": {
+              "median_rmse_by_factor": [
+                0.00025012407724006044,
+                0.0005173951495067676,
+                0.0009564493977223063,
+                0.0020108185937947956,
+                0.004325318015340141,
+                0.007181820029156073,
+                0.016679487016422766,
+                0.05796484691941052
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.1198392149997202,
+              "final_relative_error_max": 0.029855933987442976,
+              "final_worst_block": "walk2_subject1__seg003:0:1156"
+            },
+            "2": {
+              "median_rmse_by_factor": [
+                0.016417741768140093,
+                0.004070668318959755,
+                0.0018188320988247473,
+                0.002521374293702656,
+                0.004908315958658143,
+                0.009957715661746323,
+                0.021714256977378714,
+                0.07041003547597174
+              ],
+              "final_error_lower_count": 2,
+              "final_error_max": 0.14204100752430457,
+              "final_relative_error_max": 0.03706544356197411,
+              "final_worst_block": "fightAndSports1_subject1__seg004:1:124"
+            },
+            "4": {
+              "median_rmse_by_factor": [
+                0.03976272872019618,
+                0.012155592067844827,
+                0.0034915363173064077,
+                0.003538447459620124,
+                0.0065780643852639325,
+                0.013582506298056983,
+                0.025393240858830095,
+                0.09980014945560016
+              ],
+              "final_error_lower_count": 8,
+              "final_error_max": 0.1567123410863779,
+              "final_relative_error_max": 0.03446826832066098,
+              "final_worst_block": "fightAndSports1_subject1__seg004:1:124"
+            },
+            "8": {
+              "median_rmse_by_factor": [
+                0.12297421806258842,
+                0.03526409116900575,
+                0.011283360151753888,
+                0.005514026885610016,
+                0.008645565821096365,
+                0.015897610313479388,
+                0.031893740357347045,
+                0.12167694317400878
+              ],
+              "final_error_lower_count": 13,
+              "final_error_max": 0.2014172495720866,
+              "final_relative_error_max": 0.03927749301656723,
+              "final_worst_block": "fightAndSports1_subject1__seg004:1:124"
+            },
+            "16": {
+              "median_rmse_by_factor": [
+                0.300380527764991,
+                0.10205655131851182,
+                0.030043943025366934,
+                0.009946421739720036,
+                0.01271694066087442,
+                0.01782487868915897,
+                0.03568589830169801,
+                0.12930421628299224
+              ],
+              "final_error_lower_count": 18,
+              "final_error_max": 0.20274366145746212,
+              "final_relative_error_max": 0.046987799639804234,
+              "final_worst_block": "jumps1_subject5__seg003:2:607"
+            },
+            "32": {
+              "median_rmse_by_factor": [
+                0.7514939057204353,
+                0.2669538857636509,
+                0.11286142366745508,
+                0.04202644984277239,
+                0.014385675630611373,
+                0.01898985786738818,
+                0.03978056429715262,
+                0.1400204046096839
+              ],
+              "final_error_lower_count": 19,
+              "final_error_max": 0.42344089231149623,
+              "final_relative_error_max": 0.055716989433222765,
+              "final_worst_block": "walk2_subject1__seg003:0:1156"
+            }
+          },
+          "channel_medians": {
+            "near_zero_velocity_fraction": 0.013822115957736969,
+            "friction_slope_max": 137.42523193359375,
+            "saturation_fraction": 0.011418269481509924,
+            "near_clamp_boundary_fraction": 0.0
+          }
+        },
+        "fit_float64": {
+          "blocks": 24,
+          "horizons": {
+            "1": {
+              "median_rmse_by_factor": [
+                1.4556700900737903e-05,
+                3.639191276023486e-06,
+                9.097990323147041e-07,
+                2.274496973034586e-07,
+                5.686221521923493e-08,
+                1.4211775730788579e-08,
+                3.5454060578993817e-09,
+                3.1373347850014433e-10
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 8.092995519741938e-10,
+              "final_relative_error_max": 2.2409654019008652e-10,
+              "final_worst_block": "dance2_subject2__seg001:2:801"
+            },
+            "2": {
+              "median_rmse_by_factor": [
+                0.01643020503657891,
+                0.004016283708443363,
+                0.0009949947800654193,
+                0.0002465925880764952,
+                6.151383370417456e-05,
+                1.537007158884032e-05,
+                3.841989979757762e-06,
+                2.401076673228828e-07
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 3.0156345936550957e-06,
+              "final_relative_error_max": 6.696470639570154e-07,
+              "final_worst_block": "dance2_subject2__seg001:2:801"
+            },
+            "4": {
+              "median_rmse_by_factor": [
+                0.03974047510938118,
+                0.012197688112736171,
+                0.0032185136302598422,
+                0.0007977603785946757,
+                0.00019901423731620577,
+                4.972699654101159e-05,
+                1.2430092711689967e-05,
+                7.768370431854608e-07
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 2.2415730877180556e-05,
+              "final_relative_error_max": 3.250373915985584e-06,
+              "final_worst_block": "dance1_subject2__seg000:0:483"
+            },
+            "8": {
+              "median_rmse_by_factor": [
+                0.12297826350548788,
+                0.03527942420045586,
+                0.011166206570466877,
+                0.0030022936239224394,
+                0.0007506794943243696,
+                0.00018767714247450938,
+                4.6919752915040883e-05,
+                2.932486774150754e-06
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 0.0002910609330419386,
+              "final_relative_error_max": 4.0473566230296365e-05,
+              "final_worst_block": "walk2_subject1__seg003:0:1156"
+            },
+            "16": {
+              "median_rmse_by_factor": [
+                0.30040341445161156,
+                0.10199808149079065,
+                0.03006161385962306,
+                0.00784265183742471,
+                0.0019815567558159803,
+                0.0004967005402520575,
+                0.0001242571864091449,
+                7.767658220267449e-06
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 0.0012407906561751315,
+              "final_relative_error_max": 0.0001885759191668211,
+              "final_worst_block": "sprint1_subject2__seg006:2:492"
+            },
+            "32": {
+              "median_rmse_by_factor": [
+                0.7516371030829415,
+                0.26693476411887823,
+                0.11270378545375727,
+                0.041412015203577394,
+                0.007493554431614952,
+                0.0011626524325806728,
+                0.00029083750699392564,
+                1.8180797125281278e-05
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 0.36411741802295516,
+              "final_relative_error_max": 0.012532359474242166,
+              "final_worst_block": "walk2_subject1__seg003:0:1156"
+            }
+          },
+          "channel_medians": {
+            "near_zero_velocity_fraction": 0.013822115957736969,
+            "friction_slope_max": 137.43575632973443,
+            "saturation_fraction": 0.011418269481509924,
+            "near_clamp_boundary_fraction": 0.0
+          }
+        },
+        "cal_float32": {
+          "blocks": 24,
+          "horizons": {
+            "1": {
+              "median_rmse_by_factor": [
+                0.0002534798008371283,
+                0.0004965207287437872,
+                0.0010009831090124367,
+                0.0020708262909690236,
+                0.0034625812801389283,
+                0.007793530163156391,
+                0.015070245446747097,
+                0.06220640076014763
+              ],
+              "final_error_lower_count": 0,
+              "final_error_max": 0.10154640295368461,
+              "final_relative_error_max": 0.025365098938542645,
+              "final_worst_block": "jumps1_subject2__seg003:2:649"
+            },
+            "2": {
+              "median_rmse_by_factor": [
+                0.019431705695598052,
+                0.005186988832823174,
+                0.0017174586257141253,
+                0.0027217532322837195,
+                0.005179131942855014,
+                0.00984738934026942,
+                0.019720781461184618,
+                0.07468134196136128
+              ],
+              "final_error_lower_count": 7,
+              "final_error_max": 0.120639248189621,
+              "final_relative_error_max": 0.030559033885785847,
+              "final_worst_block": "walk3_subject4__seg004:2:888"
+            },
+            "4": {
+              "median_rmse_by_factor": [
+                0.12655798676217142,
+                0.04180302670188511,
+                0.010581497001081089,
+                0.003915056135667424,
+                0.0064433112707373025,
+                0.012161341913760523,
+                0.026171232348249456,
+                0.0995321613083889
+              ],
+              "final_error_lower_count": 13,
+              "final_error_max": 0.14837685881223853,
+              "final_relative_error_max": 0.03373851165496737,
+              "final_worst_block": "sprint1_subject4__seg001:3:252"
+            },
+            "8": {
+              "median_rmse_by_factor": [
+                0.2674563937198182,
+                0.081739733318716,
+                0.020302548002214385,
+                0.006117972261861562,
+                0.009449574613154946,
+                0.01679614514101787,
+                0.030499835756464186,
+                0.1279990753353929
+              ],
+              "final_error_lower_count": 18,
+              "final_error_max": 0.29965892235409036,
+              "final_relative_error_max": 0.060124592356381165,
+              "final_worst_block": "dance2_subject1__seg000:0:635"
+            },
+            "16": {
+              "median_rmse_by_factor": [
+                0.5053230113319784,
+                0.18994725200162782,
+                0.05238773896824875,
+                0.01430665444462681,
+                0.012445847182211173,
+                0.0201721847988654,
+                0.038868004231812386,
+                0.17043100889785875
+              ],
+              "final_error_lower_count": 19,
+              "final_error_max": 0.2521893815490461,
+              "final_relative_error_max": 0.04864053988243391,
+              "final_worst_block": "sprint1_subject4__seg004:1:523"
+            },
+            "32": {
+              "median_rmse_by_factor": [
+                1.3064721942588644,
+                0.5452006455463198,
+                0.1052215747146536,
+                0.0320554012759517,
+                0.021847146119056783,
+                0.025937506752370595,
+                0.04268204572683307,
+                0.16623774477475464
+              ],
+              "final_error_lower_count": 22,
+              "final_error_max": 0.2611674620157998,
+              "final_relative_error_max": 0.04795119678017791,
+              "final_worst_block": "jumps1_subject1__seg000:3:794"
+            }
+          },
+          "channel_medians": {
+            "near_zero_velocity_fraction": 0.020432693883776665,
+            "friction_slope_max": 230.07302856445312,
+            "saturation_fraction": 0.010216346476227045,
+            "near_clamp_boundary_fraction": 0.0
+          }
+        },
+        "cal_float64": {
+          "blocks": 24,
+          "horizons": {
+            "1": {
+              "median_rmse_by_factor": [
+                2.2774781043428733e-05,
+                5.693721234909893e-06,
+                1.4234320116844352e-06,
+                3.5585808045184383e-07,
+                8.896503692100964e-08,
+                2.2236751636900398e-08,
+                5.563114323313197e-09,
+                3.8103287066025235e-10
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 2.4553308155462337e-09,
+              "final_relative_error_max": 6.843898612311517e-10,
+              "final_worst_block": "sprint1_subject4__seg003:0:462"
+            },
+            "2": {
+              "median_rmse_by_factor": [
+                0.01947280176247777,
+                0.005043063223765019,
+                0.001290045222497438,
+                0.00032479048712553765,
+                8.134778527188787e-05,
+                2.034645309535496e-05,
+                5.087208412859762e-06,
+                3.1800279770687424e-07
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 1.205633698628142e-05,
+              "final_relative_error_max": 2.2111347139499114e-06,
+              "final_worst_block": "walk3_subject4__seg002:0:815"
+            },
+            "4": {
+              "median_rmse_by_factor": [
+                0.12661513800780533,
+                0.04182500766503938,
+                0.010398455410496821,
+                0.002567763391816367,
+                0.0006399312393200183,
+                0.00015985692679746066,
+                3.995636084072606e-05,
+                2.497106054328556e-06
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 3.208668838490873e-05,
+              "final_relative_error_max": 7.293815080539623e-06,
+              "final_worst_block": "sprint1_subject4__seg009:1:464"
+            },
+            "8": {
+              "median_rmse_by_factor": [
+                0.2674847948174172,
+                0.08171482080066547,
+                0.020326960420392025,
+                0.004910992101439273,
+                0.0012165304012122318,
+                0.00030342284398558647,
+                7.58111505312448e-05,
+                4.737476701101511e-06
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 0.01010776967594896,
+              "final_relative_error_max": 0.0006673488660154425,
+              "final_worst_block": "sprint1_subject4__seg006:3:587"
+            },
+            "16": {
+              "median_rmse_by_factor": [
+                0.5053007138137462,
+                0.18947817061983857,
+                0.0526822364324894,
+                0.013566148632779535,
+                0.0034177120572089757,
+                0.0008560889850183742,
+                0.00021412647048839957,
+                1.3384911422805232e-05
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 0.046486860558174324,
+              "final_relative_error_max": 0.0024667506401568305,
+              "final_worst_block": "walk3_subject4__seg003:1:972"
+            },
+            "32": {
+              "median_rmse_by_factor": [
+                1.3065034443506307,
+                0.5449661138774171,
+                0.10468527996387093,
+                0.03175614819986064,
+                0.00846534835732942,
+                0.0021504097529992014,
+                0.0005397493369548509,
+                3.377637412874075e-05
+              ],
+              "final_error_lower_count": 24,
+              "final_error_max": 0.03338620908094305,
+              "final_relative_error_max": 0.002396443254809447,
+              "final_worst_block": "walk3_subject4__seg003:1:972"
+            }
+          },
+          "channel_medians": {
+            "near_zero_velocity_fraction": 0.020432693883776665,
+            "friction_slope_max": 230.03781115296565,
+            "saturation_fraction": 0.010216346476227045,
+            "near_clamp_boundary_fraction": 0.0
+          }
+        }
+      }
+    }
+  },
+  "interpretation": [
+    "FP64 errors decrease at every sampled block for h8/h32; supports finite-amplitude nonlinearity rather than a pervasive AD implementation failure. Worst blocks remain reported.",
+    "FP32 very small central differences suffer roundoff; smaller epsilon alone is not a remedy.",
+    "Friction smoothing is a prespecified candidate ablation, not an established cause or fix. Keep the physical plant and clamp unchanged.",
+    "No new policy evaluation, no superiority claim, no automatic C. 4090 archived weights reported deleted; its fixed-batch loss task is cancelled, historical metadata retained."
+  ]
+}

@@ -126,7 +126,9 @@ uv run python tools/play_reference.py \
 
 ## 训练
 
-**当前 RA-L 开发阶段：diag01 已审阅，暂停重复时域训练。** 4090/5080 共70个新模型，68个构成完整四模型对照；策略时域32→8和模型窗口8→32均降低完成率。3090单世界执行改善重复性，但CPU/GPU响应一致性仍未通过。详见[最新结果及后续诊断](docs/ral_diagnose_9h_20261123.md)与[审计记录](release/ral/diag01_review_20261124.json)。保留WM8/H32作为对照，先定位响应与长窗口优化问题；原九小时命令仅保留复现，C/D/C-perm不启动。
+**当前 RA-L 开发阶段：5080/3090 两机六小时验证。** intervention01 已完成五个种子的 15 个策略，参考完成率约 90%，平滑 B 的平均优势仍不确定；CPU/GPU 差异尚未解决。新增 `scripts/ral_5080_validation_6h.sh`（复用 15 个模型、六个固定参数失配工况）与 `scripts/ral_3090_validation_6h.sh`（同状态单步及约束消融诊断）。本轮不新增策略训练，4090 不参与。启动、判断和回传见[两机六小时说明](docs/ral_six_hour_20261125.md)，上一轮结果见[三小时回传审阅](docs/ral_three_hour_20261124.md#2026-11-25-回传审阅)。
+
+**diag01 结果保留：** 4090/5080 共70个新模型，68个构成完整四模型对照；策略时域32→8和模型窗口8→32均降低完成率。3090单世界执行改善重复性，但CPU/GPU响应一致性仍未通过。详见[最新结果及后续诊断](docs/ral_diagnose_9h_20261123.md)与[审计记录](release/ral/diag01_review_20261124.json)。保留WM8/H32作为对照，先定位响应与长窗口优化问题；原九小时命令仅保留复现，C/D/C-perm不启动。
 
 RA-L 论文的 **A0、A、A+、B、C、C-perm、D 七组**使用独立的实验入口和参数清单，见
 [七组实验执行说明](docs/ral_experiments.md) 与 [任务清单](configs/ral/tasks.json)。

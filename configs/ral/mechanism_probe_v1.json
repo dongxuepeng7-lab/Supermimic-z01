@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "stage": "mechanism_probe_v1",
+  "formal_results": false,
+  "C_authorized": false,
+  "locked_response_test_access": false,
+  "params": "release/ral/params.csv",
+  "responses": "data/ral_pairs_v1/manifest.json",
+  "blocks_per_split": 24,
+  "min_free_gib": 15,
+  "inputs": {
+    "code_sha256": "10a2a80692337a2d151741f911d94e23cb7cdb1106d4500a7400ed61423f95d5",
+    "asset_sha256": "e75ac10a0f1d3aae0eac1ed885d51eace444bc1ff72342a95f2a9ddd14006baf",
+    "params_sha256": "c9c808a17b24fe5f47a2fa6ed4b4f22a71a9ce1808885c71e817c1ce60998c43",
+    "response_sha256": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302"
+  },
+  "machines": {
+    "5080": {
+      "task": "derivative",
+      "archives": [
+        {
+          "name": "horizon32",
+          "seed": 301,
+          "condition_path": "blocks/s301/horizon32",
+          "retention_file": "horizon32_retention.json",
+          "retention": {
+            "archive": "models/horizon32_models.tar.gz",
+            "archive_sha256": "466eda8855dac70fe8c904f097183b40cdf7acecd6d6a3a17ea2213ade8360c0",
+            "members": {
+              "jobs/s301_Aplus/run/train_metrics.csv": "d5b2235b6002ca05b9620610489845008ee59ca939ec0b50fc7946eb11067a3a",
+              "jobs/s301_Aplus/run/checkpoints.csv": "c140c4724404498eff7c3c64bdd11ef21fbd005abac3325279c17dd094fb001b",
+              "jobs/s301_Aplus/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+              "jobs/s301_Aplus/run/run.json": "8ec26ac3cf057a070bf972f1c4c88f2bcfbab5e26c9ee018d42fcc0e3e76119d",
+              "jobs/s301_Aplus/run/args.json": "d37abce554c18361610e243685be0faaa79ab036f42ecf14aff2f975448233ec",
+              "jobs/s301_Aplus/run/ckpt_005000.pt": "d59856ebbc1688477642c827041790702031e06cd0a0bfeb9df89d320135b3c0",
+              "jobs/s301_Aplus/run/initial.pt": "b8bdf0776420b33e5e564ece9e877c75e4d75e50416888a0aa29a64d93cd89a0",
+              "jobs/s301_Aplus/run/train_log.csv": "349112974215d8c9f6659de2f96110c8ffd7360cc3a6b96e04713eb201d92325",
+              "jobs/s301_Aplus/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+              "jobs/s301_Aplus/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239",
+              "jobs/s301_B/run/train_metrics.csv": "013645547b743b36957cf7f806af2e2d69ac1d9477b36f25ab59271cbdb0203d",
+              "jobs/s301_B/run/checkpoints.csv": "710b9f9a661e69caa6eca64069459854546a5ef56dfbbd6cbc86f9f92ff6f8ae",
+              "jobs/s301_B/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+              "jobs/s301_B/run/run.json": "d65d8ba769e6863fe8a3edaea972fe41421c2ad396533929b24e89c86876adc5",
+              "jobs/s301_B/run/args.json": "449d45f019943cf3302f373ef598c6407a575b84383c3d9ed8496c21b4ad5077",
+              "jobs/s301_B/run/ckpt_005000.pt": "84d2376e09a1c3256629386df6ad98bc580a4edc94738887a8fdfe4a8d42db1d",
+              "jobs/s301_B/run/initial.pt": "699bbdd42ac1229b2f5c34be7f005cec5f2e2c558264003ae6a38f80be918dd8",
+              "jobs/s301_B/run/train_log.csv": "a6e23eb29b514c4e31549a124e0b817bd6601a11fc9466ffc0caa3fc5e0e2ed2",
+              "jobs/s301_B/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+              "jobs/s301_B/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+            },
+            "discarded_optimizer_files": [
+              {
+                "path": "jobs/s301_Aplus/run/last.pt",
+                "sha256": "ab654fe8529da7834e4cf36157ea93ce08b61ad398d3fe9bd119e6cec486e0ac",
+                "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+              },
+              {
+                "path": "jobs/s301_B/run/last.pt",
+                "sha256": "c80d41c190977fbd823a4ba802ba8c2ffe974a89918617c7e10a64308a4bc815",
+                "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+              }
+            ],
+            "verified_before_cleanup": true
+          },
+          "condition_protocol_sha256": "05b8cd2ee0a35699fd526c2a77d9abd758208420992a3681aa68ae59585a30c6"
+        }
+      ]
+    },
+    "4090": {
+      "task": "loss",
+      "archives": [
+        {
+          "name": "wm_window8",
+          "seed": 303,
+          "condition_path": "blocks/s303/wm_window8",
+          "retention_file": "wm_window8_retention.json",
+          "retention": {
+            "archive": "models/wm_window8_models.tar.gz",
+            "archive_sha256": "0f1d719103bd4ba61f8b1918d7b3951b8fb57a3a2b2fa29dd6dc03eea3b4f2f2",
+            "members": {
+              "jobs/s303_Aplus/run/train_metrics.csv": "2aebb9921584b73ff084b3fcfa24dd4d4d2d181217b1f5762bc0f9daf33158a5",
+              "jobs/s303_Aplus/run/ckpt_005000.pt": "44c499c1af32e3178d8f84edce0fb8ea2085f73cfa347f2acc3e50f274fd703b",
+              "jobs/s303_Aplus/run/checkpoints.csv": "bbd58b722324a8c26f7be1a866a0d5011c00154255b270afc5d1f318aee87627",
+              "jobs/s303_Aplus/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+              "jobs/s303_Aplus/run/run.json": "536e51384b30a90ab54ea06652866ce200a50804f4cd86eec4483e7dcd2650f8",
+              "jobs/s303_Aplus/run/args.json": "de5680f08d2c542c9339cab701ece57e675a9607c65bb649d5ea0e74ca2ab928",
+              "jobs/s303_Aplus/run/train_log.csv": "ee2dd47a19af99994897d0726652f80a2883c7f59d59d59ce1b1cc133775a7e0",
+              "jobs/s303_Aplus/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239",
+              "jobs/s303_Aplus/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+              "jobs/s303_Aplus/run/initial.pt": "98118a75e3f9d07c881a35dd42660ce1e87a6e582de7b16997036990f3b82730",
+              "jobs/s303_B/run/train_metrics.csv": "3d677a57d0de2fd4707d7dc942be1ec79dc7daea4c9ab78dd81b8405b907dc2f",
+              "jobs/s303_B/run/ckpt_005000.pt": "11036394da59c8da15e1d0d4d12ba975d2c1ffb5a3e6a568a932c8a7f1cda795",
+              "jobs/s303_B/run/checkpoints.csv": "42078f621c51e5f87434a0bace76a831e6f098cae8d5d17c60df9ea3526bbef9",
+              "jobs/s303_B/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+              "jobs/s303_B/run/run.json": "0a29877635877ad0bd176282e81a7aa894f085d297199cd176822958cb485bc5",
+              "jobs/s303_B/run/args.json": "f41dae51318396abc58e126e81e07f7e317287d7e6f0010e14b445d92a3792a2",
+              "jobs/s303_B/run/train_log.csv": "e368622681917e3837303fafb223ecbd0a417d1986f047e1775ced7bda3c216e",
+              "jobs/s303_B/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239",
+              "jobs/s303_B/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+              "jobs/s303_B/run/initial.pt": "32380bd9bfacf025ce6df1fae30d164444e3d7eabddbac1ec3c29344af70ea2b"
+            },
+            "discarded_optimizer_files": [
+              {
+                "path": "jobs/s303_Aplus/run/last.pt",
+                "sha256": "33a1bed52a887b3362d16b024d149695fdab1215408e71746d420d729af6b73b",
+                "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+              },
+              {
+                "path": "jobs/s303_B/run/last.pt",
+                "sha256": "0398bfa88aa648af319350b3620d28c551a81dc08eb5b68bad4f25e4a671d843",
+                "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+              }
+            ],
+            "verified_before_cleanup": true
+          },
+          "condition_protocol_sha256": "dea9903fa2ed3739734800b6121b7598d57f226360c41ad7a88e14b01acba908"
+        },
+        {
+          "name": "wm_window32",
+          "seed": 303,
+          "condition_path": "blocks/s303/wm_window32",
+          "retention_file": "wm_window32_retention.json",
+          "retention": {
+            "archive": "models/wm_window32_models.tar.gz",
+            "archive_sha256": "acd66099ec29fe8fd15b4e10adf3530881eacef81a46f0111dd304c0adfd8026",
+            "members": {
+              "jobs/s303_Aplus/run/train_metrics.csv": "823ba7ea42da9be4e6b4106fea4943b068870565d0a9ccbf57464d183e4323fa",
+              "jobs/s303_Aplus/run/ckpt_005000.pt": "25b9233d9127354da0d48ea4200b1472a29c8e7ef3b0e78e997cad554b506253",
+              "jobs/s303_Aplus/run/checkpoints.csv": "941dad08b00210cb9342e29c034147796dd5bdfe8e2dcd7aa269bd129496ff69",
+              "jobs/s303_Aplus/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+              "jobs/s303_Aplus/run/run.json": "0097e684c67cc1c2c02de3830c50d4275d79ed0e8b672858c154fe74f040fcfe",
+              "jobs/s303_Aplus/run/args.json": "f578f4d387b5c22c439ba59356e888eb66a77db00bf5423f22524cbf03e7beee",
+              "jobs/s303_Aplus/run/train_log.csv": "1ffa7040c41f39048dc26a7d3d663ee2f7d467ae5e0f59e4fe77d1f815b016ba",
+              "jobs/s303_Aplus/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239",
+              "jobs/s303_Aplus/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+              "jobs/s303_Aplus/run/initial.pt": "3bb25f666086ac0e378b90279542ed9cc066dba2c06330d8cc440424b750c30d",
+              "jobs/s303_B/run/train_metrics.csv": "74e88e1e683b85ede7aa8199e93ba7823355d89143c0c1aee624c602d367deae",
+              "jobs/s303_B/run/ckpt_005000.pt": "eab8a2266b79291ae381a22cb34ab3ed73008dd4333ef32cdcfbed59134ca6c5",
+              "jobs/s303_B/run/checkpoints.csv": "85b2b8b303182216f9f4680d08506268b66bb07f3577806ea63b1a847a8e6548",
+              "jobs/s303_B/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+              "jobs/s303_B/run/run.json": "5d28e5170931be97da70a7e2d2c71716e31572a896d2e107f21b726ecdd5a678",
+              "jobs/s303_B/run/args.json": "389d2c4d2099d0c0eb37c7c2dc2b909a97f82df68d85cfeecd69c3f3bfc65fc7",
+              "jobs/s303_B/run/train_log.csv": "f3f65527d3a7fb2a49c37a0ca3ba78d040655926264c611caf5b642d4b48340f",
+              "jobs/s303_B/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239",
+              "jobs/s303_B/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+              "jobs/s303_B/run/initial.pt": "b411079f7b7cb55811d2ee7a060f906afbceced13b63f137cc9365c87afdb187"
+            },
+            "discarded_optimizer_files": [
+              {
+                "path": "jobs/s303_Aplus/run/last.pt",
+                "sha256": "c38d7e8a0457e31597017d5a718a27d97074716c4fd5b2db24568349de165a70",
+                "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+              },
+              {
+                "path": "jobs/s303_B/run/last.pt",
+                "sha256": "ebc7b035c955dc9524710df2d4d4dcfa6de47a378365ac066f4e76a79c8316fa",
+                "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+              }
+            ],
+            "verified_before_cleanup": true
+          },
+          "condition_protocol_sha256": "dd6a1c3624dc06b8253d6befaf0a8ff01a163785912cba29c239c2ac3658487c"
+        }
+      ]
+    },
+    "3090": {
+      "task": "backend",
+      "archives": [],
+      "source_status_sha256": "500dc8f1cf204cfcfc428e83d3742516cbd8c91bba8ea0628a6c4decad3e8ee9"
+    }
+  }
+}

@@ -1,0 +1,591 @@
+{
+  "source_status_sha256": "2459e280c77ec55746d1159409ab4d48a1121bc879b2605be09e14a6ab0f0019",
+  "directions": {
+    "original": {
+      "summary_sha256": "c7d24e20c32271dac88c98b57c3efdd3d109f03615c309840a4aaf1fee6159f7",
+      "blocks": [
+        {
+          "block_id": "dance1_subject3__seg002:2:490",
+          "split": "fit",
+          "file": "fit_0014_trajectories.npz",
+          "trajectory_sha256": "88ca24d7233474bed7ce84245360d457c1d27ee5ac86728e94065b23af43c27a"
+        },
+        {
+          "block_id": "fight1_subject5__seg001:2:269",
+          "split": "fit",
+          "file": "fit_0086_trajectories.npz",
+          "trajectory_sha256": "f20e025a229730fc71604b7b460678dda048598ae88e11edd82ae4e9e3890ebc"
+        },
+        {
+          "block_id": "jumps1_subject5__seg007:2:478",
+          "split": "fit",
+          "file": "fit_0154_trajectories.npz",
+          "trajectory_sha256": "41eca4e2b24b3d494dc22d9fa03e101a42ca485087f117b11d257c224912436e"
+        },
+        {
+          "block_id": "run2_subject1__seg001:0:69",
+          "split": "fit",
+          "file": "fit_0176_trajectories.npz",
+          "trajectory_sha256": "f9076c1f1c05c565fa046996e237cac003e4b79a3c9da1bd8e7c0ad921e83ad0"
+        },
+        {
+          "block_id": "run2_subject4__seg001:1:974",
+          "split": "fit",
+          "file": "fit_0197_trajectories.npz",
+          "trajectory_sha256": "1cf3067eca47b38320676fd625b64b76b0cdedc1ff1e396a60cfaa8b74a311a9"
+        },
+        {
+          "block_id": "sprint1_subject2__seg002:0:844",
+          "split": "fit",
+          "file": "fit_0224_trajectories.npz",
+          "trajectory_sha256": "1af9f3996317e113c25d1ae2cdcb6536c9707edc1b130f41b13ee0c5e89b9711"
+        },
+        {
+          "block_id": "sprint1_subject2__seg008:2:96",
+          "split": "fit",
+          "file": "fit_0250_trajectories.npz",
+          "trajectory_sha256": "e76187ba9d17d4a13be0820e16467864ba0157fa796eb1e45a62ed6e4bf6becc"
+        },
+        {
+          "block_id": "walk1_subject5__seg006:3:3688",
+          "split": "fit",
+          "file": "fit_0299_trajectories.npz",
+          "trajectory_sha256": "1501da6becda2ae254cd98d8bb4866e334b8035200f6b055c90c1761077bfbfb"
+        },
+        {
+          "block_id": "walk2_subject1__seg003:0:1156",
+          "split": "fit",
+          "file": "fit_0312_trajectories.npz",
+          "trajectory_sha256": "af4e24ca62fb744113bd7e8ea8279a6eec3dd9e32072fd848baf8602309aad3f"
+        },
+        {
+          "block_id": "walk3_subject1__seg001:0:328",
+          "split": "fit",
+          "file": "fit_0340_trajectories.npz",
+          "trajectory_sha256": "69f90b5698da2bbdb969dc2c21dd5b66805e76cdcbe182d58afd082c58bf693f"
+        },
+        {
+          "block_id": "walk3_subject1__seg005:3:164",
+          "split": "fit",
+          "file": "fit_0359_trajectories.npz",
+          "trajectory_sha256": "beb399dd8cb7f640d0d96341075e929d8edab29418129383c88f4658b228108b"
+        },
+        {
+          "block_id": "walk3_subject2__seg003:3:1221",
+          "split": "fit",
+          "file": "fit_0383_trajectories.npz",
+          "trajectory_sha256": "f1e960728c165c36c079c383f0717113bbd2a8d576a8d1571dca8f8ba7c4eb30"
+        },
+        {
+          "block_id": "dance1_subject2__seg000:0:483",
+          "split": "fit",
+          "file": "fit_0000_trajectories.npz",
+          "trajectory_sha256": "b78d89880e378cf5a306ae1d2ea92fe9e675190dc27946cc75429ee986b235b4"
+        },
+        {
+          "block_id": "dance2_subject2__seg001:2:801",
+          "split": "fit",
+          "file": "fit_0034_trajectories.npz",
+          "trajectory_sha256": "6b49b76c234f345253bff1955bdbb990dd536f9552e5eaa21c57ed6607dc8a46"
+        },
+        {
+          "block_id": "fight1_subject3__seg002:0:325",
+          "split": "fit",
+          "file": "fit_0068_trajectories.npz",
+          "trajectory_sha256": "11a1cdbce5682a9b4e238ae678c732dfebf0674d4f8ed6f64fbfa5c28e52f9f3"
+        },
+        {
+          "block_id": "fight1_subject5__seg005:3:219",
+          "split": "fit",
+          "file": "fit_0103_trajectories.npz",
+          "trajectory_sha256": "b7dce13b4cfb6a8a2b2fbf3def6b60df209ae533a0816bd1104d029c727fca5d"
+        },
+        {
+          "block_id": "jumps1_subject5__seg003:0:279",
+          "split": "fit",
+          "file": "fit_0136_trajectories.npz",
+          "trajectory_sha256": "62bedae9f40725f3390c2be04cb1e88492bc0b11a3a68cafb19ec112935289be"
+        },
+        {
+          "block_id": "run1_subject2__seg003:3:365",
+          "split": "fit",
+          "file": "fit_0171_trajectories.npz",
+          "trajectory_sha256": "31be72649b2d782a106c00a5d566d001714548126834ef1bbfe6393d32971896"
+        },
+        {
+          "block_id": "run2_subject4__seg005:0:91",
+          "split": "fit",
+          "file": "fit_0212_trajectories.npz",
+          "trajectory_sha256": "9ffdaeb7e0713401ebffdc68d118b80f5659c45a1dfeb1c1a307ae75aaf3462d"
+        },
+        {
+          "block_id": "sprint1_subject2__seg007:3:223",
+          "split": "fit",
+          "file": "fit_0247_trajectories.npz",
+          "trajectory_sha256": "a048908490d423923b1d36adc97fe4efe489abd2d40bff204eb17f1a08b33242"
+        },
+        {
+          "block_id": "walk1_subject5__seg003:0:661",
+          "split": "fit",
+          "file": "fit_0284_trajectories.npz",
+          "trajectory_sha256": "d141405bfd9eb28fbe48807a956c7347d5d2f0193ca5389b2b0fe87f4e4e73a0"
+        },
+        {
+          "block_id": "walk2_subject3__seg001:0:163",
+          "split": "fit",
+          "file": "fit_0324_trajectories.npz",
+          "trajectory_sha256": "3910a5d9e771945979fd3a20c88892028e183ed5b992f098aba73fb440e8e44d"
+        },
+        {
+          "block_id": "walk3_subject1__seg006:2:685",
+          "split": "fit",
+          "file": "fit_0362_trajectories.npz",
+          "trajectory_sha256": "445e54399c897b6528c86fe0270e8f35422d70604db62c399a1ab01f2ea4db8f"
+        },
+        {
+          "block_id": "walk4_subject1__seg000:3:1413",
+          "split": "fit",
+          "file": "fit_0399_trajectories.npz",
+          "trajectory_sha256": "397d7e216c3f556f4bacd2abcff0d31b2065fac1c51cb7cda507edf99259a600"
+        },
+        {
+          "block_id": "fightAndSports1_subject4__seg000:2:523",
+          "split": "cal",
+          "file": "cal_0010_trajectories.npz",
+          "trajectory_sha256": "bf072f8b067595d8c4ae4a364d6c48f9b88dbdc52256774a62d91fc083f97dcf"
+        },
+        {
+          "block_id": "jumps1_subject1__seg000:1:616",
+          "split": "cal",
+          "file": "cal_0013_trajectories.npz",
+          "trajectory_sha256": "283c603e01b77185059b20bde488da6fedc8de38ae5ecd1b5e49c52941f8f03a"
+        },
+        {
+          "block_id": "jumps1_subject1__seg000:2:368",
+          "split": "cal",
+          "file": "cal_0014_trajectories.npz",
+          "trajectory_sha256": "29a1570e66945159029065243b898b5be3562e912529cdbc833753abc22ea006"
+        },
+        {
+          "block_id": "jumps1_subject2__seg000:1:762",
+          "split": "cal",
+          "file": "cal_0017_trajectories.npz",
+          "trajectory_sha256": "aae0c6719c09db5b55fa703bb2e83dfb9b2dd98f356b6dff5ca04d520ad129e9"
+        },
+        {
+          "block_id": "jumps1_subject2__seg006:2:1057",
+          "split": "cal",
+          "file": "cal_0042_trajectories.npz",
+          "trajectory_sha256": "0b2183c82f25f0428cf4fceb00bb170f1e464e03f4b6a95a2857daa20799899f"
+        },
+        {
+          "block_id": "jumps1_subject2__seg007:1:126",
+          "split": "cal",
+          "file": "cal_0045_trajectories.npz",
+          "trajectory_sha256": "f26c26dbf3585acbd67dd1f1122c80e01a0bc06d041fae97279a487aecce8a25"
+        },
+        {
+          "block_id": "sprint1_subject4__seg000:0:59",
+          "split": "cal",
+          "file": "cal_0048_trajectories.npz",
+          "trajectory_sha256": "b8b8271a1c708f27d9017d2f6b7e1977170620e7e877f1eb2cbde0918e4eb0fc"
+        },
+        {
+          "block_id": "sprint1_subject4__seg003:3:163",
+          "split": "cal",
+          "file": "cal_0063_trajectories.npz",
+          "trajectory_sha256": "62b3dfb52b7b9e0172cb13ec82878b6750eaf8274743bce9b8238aced63ef3a1"
+        },
+        {
+          "block_id": "sprint1_subject4__seg004:1:523",
+          "split": "cal",
+          "file": "cal_0065_trajectories.npz",
+          "trajectory_sha256": "11a002939a10558acf31d1f1e4aac326cd2a5f0851f06c7bc13aef635bc16609"
+        },
+        {
+          "block_id": "sprint1_subject4__seg009:2:177",
+          "split": "cal",
+          "file": "cal_0086_trajectories.npz",
+          "trajectory_sha256": "776158ce24d77c6cf65db59ccc44eb6d9a3554f9dca40a96580baef39cfff19d"
+        },
+        {
+          "block_id": "walk3_subject4__seg001:3:375",
+          "split": "cal",
+          "file": "cal_0099_trajectories.npz",
+          "trajectory_sha256": "0601fb8a0fc81413bc36e794c5e1ea93b0f211ef73faee6ca038400131421136"
+        },
+        {
+          "block_id": "walk3_subject4__seg004:3:404",
+          "split": "cal",
+          "file": "cal_0111_trajectories.npz",
+          "trajectory_sha256": "02b64a3a8d6b9feb86ca7093d4ee7d255e340b97926cdcaa12b0e5a5c0d34107"
+        },
+        {
+          "block_id": "dance2_subject1__seg000:0:635",
+          "split": "cal",
+          "file": "cal_0000_trajectories.npz",
+          "trajectory_sha256": "e329902d75a3e672b99ca7251b4225e04519ba9e795d87b3ed0fb6481448443a"
+        },
+        {
+          "block_id": "fightAndSports1_subject4__seg000:1:530",
+          "split": "cal",
+          "file": "cal_0009_trajectories.npz",
+          "trajectory_sha256": "36321714a331d9dc30d919cb6c55c9ac4d643ca2aba2550116866c90a017887f"
+        },
+        {
+          "block_id": "jumps1_subject2__seg001:2:261",
+          "split": "cal",
+          "file": "cal_0022_trajectories.npz",
+          "trajectory_sha256": "6bf9b0acc72563ce58c7d00142ed6409508cad838fb7475a17cd244583a8b2a8"
+        },
+        {
+          "block_id": "jumps1_subject2__seg003:3:46",
+          "split": "cal",
+          "file": "cal_0031_trajectories.npz",
+          "trajectory_sha256": "06e78e9aad2dcc2b287c08bc58a1d5c3f3d09553e1f2820d88854fa7d9824bb8"
+        },
+        {
+          "block_id": "jumps1_subject2__seg006:1:738",
+          "split": "cal",
+          "file": "cal_0041_trajectories.npz",
+          "trajectory_sha256": "9b07834d4fce7711938c719d68956c3f85738a7971e04031ab0bb6ae863d2821"
+        },
+        {
+          "block_id": "sprint1_subject4__seg001:1:714",
+          "split": "cal",
+          "file": "cal_0053_trajectories.npz",
+          "trajectory_sha256": "324862fc89d93fcbd74b62dfeb93fa9e005c6f08e0048337ee7df4560b145520"
+        },
+        {
+          "block_id": "sprint1_subject4__seg003:2:593",
+          "split": "cal",
+          "file": "cal_0062_trajectories.npz",
+          "trajectory_sha256": "53c7828c2316f3b415b63c64f81640fe472e39ecd7eb4826526ffbd454e58a39"
+        },
+        {
+          "block_id": "sprint1_subject4__seg006:1:240",
+          "split": "cal",
+          "file": "cal_0073_trajectories.npz",
+          "trajectory_sha256": "1317f4a053b45f33488f3d37532c928a0db6f7a6615dfe0273d4b018e29653dd"
+        },
+        {
+          "block_id": "sprint1_subject4__seg008:3:184",
+          "split": "cal",
+          "file": "cal_0083_trajectories.npz",
+          "trajectory_sha256": "d47aa15b6382112472e967db8deacd2beb3fcf07f1299a4f8d15f400d6bd5309"
+        },
+        {
+          "block_id": "walk3_subject4__seg000:1:1542",
+          "split": "cal",
+          "file": "cal_0093_trajectories.npz",
+          "trajectory_sha256": "4d2d279462ccdda96990b65b211b4dde409eda99b861258d6c81fbc50fc3ffc9"
+        },
+        {
+          "block_id": "walk3_subject4__seg002:3:837",
+          "split": "cal",
+          "file": "cal_0103_trajectories.npz",
+          "trajectory_sha256": "97da3daa0b7d90b0e8980b69a118e013d912f84929dfee9d28df1c448702d3c5"
+        },
+        {
+          "block_id": "walk3_subject5__seg000:3:8117",
+          "split": "cal",
+          "file": "cal_0115_trajectories.npz",
+          "trajectory_sha256": "39bf6bcfa448d41d9658752ee910c76a96375e969a96c371ca0548db64fb8680"
+        }
+      ]
+    },
+    "direction2001": {
+      "summary_sha256": "ba5c0eb542e08fe10ec581f8d97b2af969b98edd9dee0a3f71515e2ed126c72f",
+      "blocks": [
+        {
+          "block_id": "dance1_subject3__seg002:2:490",
+          "split": "fit",
+          "file": "fit_0014_trajectories.npz",
+          "trajectory_sha256": "3f0d65292787f194f78a13c1aa20a9a5eb54a2de46fa8ebe889b607c5444644b"
+        },
+        {
+          "block_id": "fight1_subject5__seg001:2:269",
+          "split": "fit",
+          "file": "fit_0086_trajectories.npz",
+          "trajectory_sha256": "674dfdc371c13fa1daadca5ea1e83898f5e9522961cfe29dc5acfb8a30944830"
+        },
+        {
+          "block_id": "jumps1_subject5__seg007:2:478",
+          "split": "fit",
+          "file": "fit_0154_trajectories.npz",
+          "trajectory_sha256": "78ed0e3b91793ff7596f918e49b2ff79aba209601843199b369abeb2f73dcce3"
+        },
+        {
+          "block_id": "run2_subject1__seg001:0:69",
+          "split": "fit",
+          "file": "fit_0176_trajectories.npz",
+          "trajectory_sha256": "4168a33b63fab13cb556de98ac7931bfc3c58757c1d70f5a6b7b1c7732a1b5a0"
+        },
+        {
+          "block_id": "run2_subject4__seg001:1:974",
+          "split": "fit",
+          "file": "fit_0197_trajectories.npz",
+          "trajectory_sha256": "d96514772734f20936f3694633797c141e27287c89b281f522a52817306caff2"
+        },
+        {
+          "block_id": "sprint1_subject2__seg002:0:844",
+          "split": "fit",
+          "file": "fit_0224_trajectories.npz",
+          "trajectory_sha256": "e67ede1520a1c7581a51207573a02374544d31ab5b4ea3c6846bb7cc7cbfd735"
+        },
+        {
+          "block_id": "sprint1_subject2__seg008:2:96",
+          "split": "fit",
+          "file": "fit_0250_trajectories.npz",
+          "trajectory_sha256": "b4f43782e00562760ce59b4688463def72f460112699f8cf96b5ad6462629da2"
+        },
+        {
+          "block_id": "walk1_subject5__seg006:3:3688",
+          "split": "fit",
+          "file": "fit_0299_trajectories.npz",
+          "trajectory_sha256": "33d1790667f62a41c7bfaadd5fdf5a342a89046ea19efcf9a128f2b87fa5b024"
+        },
+        {
+          "block_id": "walk2_subject1__seg003:0:1156",
+          "split": "fit",
+          "file": "fit_0312_trajectories.npz",
+          "trajectory_sha256": "a7df7fbff7aad162ee90a97b682b40ff079a7429dba465972949d7c15427118b"
+        },
+        {
+          "block_id": "walk3_subject1__seg001:0:328",
+          "split": "fit",
+          "file": "fit_0340_trajectories.npz",
+          "trajectory_sha256": "c0a3355f374441e5904afbc9190e829d2264dec8b6e4cca439ad37344e8a1ffc"
+        },
+        {
+          "block_id": "walk3_subject1__seg005:3:164",
+          "split": "fit",
+          "file": "fit_0359_trajectories.npz",
+          "trajectory_sha256": "46a8f86dc8922fa1e1bf3a3f1f1e5eb25daf564770edf43d3241e78f42df7238"
+        },
+        {
+          "block_id": "walk3_subject2__seg003:3:1221",
+          "split": "fit",
+          "file": "fit_0383_trajectories.npz",
+          "trajectory_sha256": "a86530e18bc33d6c96123eddc683c1f4a82998a9e0426806960505e6d9a678cf"
+        },
+        {
+          "block_id": "dance1_subject2__seg000:0:483",
+          "split": "fit",
+          "file": "fit_0000_trajectories.npz",
+          "trajectory_sha256": "65cbcce7ae26f3d17879ab8b9f3655e8a814f023116b5592cceeb5f4a293211d"
+        },
+        {
+          "block_id": "dance2_subject2__seg001:2:801",
+          "split": "fit",
+          "file": "fit_0034_trajectories.npz",
+          "trajectory_sha256": "166a294c2d4bb4c70a81fa11c5f1277a39c0494ec332cad93481f64a474d4e1b"
+        },
+        {
+          "block_id": "fight1_subject3__seg002:0:325",
+          "split": "fit",
+          "file": "fit_0068_trajectories.npz",
+          "trajectory_sha256": "1d8a7c865faa718af134b6bdc8e0b19edaec0180506b32bb694ce96e015ed5d6"
+        },
+        {
+          "block_id": "fight1_subject5__seg005:3:219",
+          "split": "fit",
+          "file": "fit_0103_trajectories.npz",
+          "trajectory_sha256": "1334852486d9ca1b3c7d540c1610763056381c8fae701e04968eb7a6e4f0c2ab"
+        },
+        {
+          "block_id": "jumps1_subject5__seg003:0:279",
+          "split": "fit",
+          "file": "fit_0136_trajectories.npz",
+          "trajectory_sha256": "b4c36f6d40ecd5102d443b46fd5e1aaeb204f2f36d36c29d34c326474cbc24b1"
+        },
+        {
+          "block_id": "run1_subject2__seg003:3:365",
+          "split": "fit",
+          "file": "fit_0171_trajectories.npz",
+          "trajectory_sha256": "60ae474bd52b44b9e7e0f93a289d3c281fb084543560c9f56fe0047717d5a539"
+        },
+        {
+          "block_id": "run2_subject4__seg005:0:91",
+          "split": "fit",
+          "file": "fit_0212_trajectories.npz",
+          "trajectory_sha256": "9661b969471d6ddda5df527c2d6b8761b96a61f3d899cf6c3492389ae634ddaf"
+        },
+        {
+          "block_id": "sprint1_subject2__seg007:3:223",
+          "split": "fit",
+          "file": "fit_0247_trajectories.npz",
+          "trajectory_sha256": "8acfd405174045ff5db5dce5e98b240361df3b18f8b092faea3d32c671f43f91"
+        },
+        {
+          "block_id": "walk1_subject5__seg003:0:661",
+          "split": "fit",
+          "file": "fit_0284_trajectories.npz",
+          "trajectory_sha256": "85b4ac06a695b2f77d08337f113a7558253ed8cbe85c146556ff180ab996f9af"
+        },
+        {
+          "block_id": "walk2_subject3__seg001:0:163",
+          "split": "fit",
+          "file": "fit_0324_trajectories.npz",
+          "trajectory_sha256": "f70fcaaac133bf6cba3b905701dfc95d3c641216f2fe710a167b5b4c26ede9ed"
+        },
+        {
+          "block_id": "walk3_subject1__seg006:2:685",
+          "split": "fit",
+          "file": "fit_0362_trajectories.npz",
+          "trajectory_sha256": "6571bc1578474543979ba2dd80e112cf98c74ccd7a16f35673c2415b36e53421"
+        },
+        {
+          "block_id": "walk4_subject1__seg000:3:1413",
+          "split": "fit",
+          "file": "fit_0399_trajectories.npz",
+          "trajectory_sha256": "56d7d8d39a9381ca88ec656ed908963211b9d276efcc084ed93a56a705dba74a"
+        },
+        {
+          "block_id": "fightAndSports1_subject4__seg000:2:523",
+          "split": "cal",
+          "file": "cal_0010_trajectories.npz",
+          "trajectory_sha256": "540bfccf53f4819138ccea6c4ce01d264373444ee3b54d8880acbcd37f371c1b"
+        },
+        {
+          "block_id": "jumps1_subject1__seg000:1:616",
+          "split": "cal",
+          "file": "cal_0013_trajectories.npz",
+          "trajectory_sha256": "8d124bec3aa383b89f786d27d94be2edd77b2ca80bf3307c69a5e64085b8cba2"
+        },
+        {
+          "block_id": "jumps1_subject1__seg000:2:368",
+          "split": "cal",
+          "file": "cal_0014_trajectories.npz",
+          "trajectory_sha256": "10886cacae15b4fd58ad32540210b3516fb0731474452fe2392df1d3b4c429a5"
+        },
+        {
+          "block_id": "jumps1_subject2__seg000:1:762",
+          "split": "cal",
+          "file": "cal_0017_trajectories.npz",
+          "trajectory_sha256": "62ee012680ee87da11a463a3d40029fc049e4d1e8b65c31490c5e17a1a944a84"
+        },
+        {
+          "block_id": "jumps1_subject2__seg006:2:1057",
+          "split": "cal",
+          "file": "cal_0042_trajectories.npz",
+          "trajectory_sha256": "63abd1d4e1e23be75c4968c3a3d6d3fa03b41ad9a5a5e913e940603cccf246b6"
+        },
+        {
+          "block_id": "jumps1_subject2__seg007:1:126",
+          "split": "cal",
+          "file": "cal_0045_trajectories.npz",
+          "trajectory_sha256": "0db16d9570233ddbcbf704e5eddaea7e7f65a76c46b7e02e46d5e10802fac5a0"
+        },
+        {
+          "block_id": "sprint1_subject4__seg000:0:59",
+          "split": "cal",
+          "file": "cal_0048_trajectories.npz",
+          "trajectory_sha256": "76f6ad6609cca936d307d2e9c380189ae7363e8678cd829f597bba9790ab9df2"
+        },
+        {
+          "block_id": "sprint1_subject4__seg003:3:163",
+          "split": "cal",
+          "file": "cal_0063_trajectories.npz",
+          "trajectory_sha256": "39883a2770faa72a96f592355e788b587d6bc2e4f554d97921748d581ddf1e5d"
+        },
+        {
+          "block_id": "sprint1_subject4__seg004:1:523",
+          "split": "cal",
+          "file": "cal_0065_trajectories.npz",
+          "trajectory_sha256": "14dd0ca30a7b2242a39bc33140ea25231d1acb11f3badc75caaec2a9448d17a3"
+        },
+        {
+          "block_id": "sprint1_subject4__seg009:2:177",
+          "split": "cal",
+          "file": "cal_0086_trajectories.npz",
+          "trajectory_sha256": "5e2dc07069cc8aec92183bebb6ed4fbf33f703e2198d047c38c4720301680afa"
+        },
+        {
+          "block_id": "walk3_subject4__seg001:3:375",
+          "split": "cal",
+          "file": "cal_0099_trajectories.npz",
+          "trajectory_sha256": "c6ee99dfdcbfd114576598e94d0706262e41dc0cbfe5f522da650e7253ed47b0"
+        },
+        {
+          "block_id": "walk3_subject4__seg004:3:404",
+          "split": "cal",
+          "file": "cal_0111_trajectories.npz",
+          "trajectory_sha256": "4b6627d3bdea187a1d4d76ca307bd825e16a238517f32a061ff7987e8d3c8b84"
+        },
+        {
+          "block_id": "dance2_subject1__seg000:0:635",
+          "split": "cal",
+          "file": "cal_0000_trajectories.npz",
+          "trajectory_sha256": "abfa2b9d4db5000c684df8a76f9fb887ddfdc8bfb1d67643e1a6b8a7952a0813"
+        },
+        {
+          "block_id": "fightAndSports1_subject4__seg000:1:530",
+          "split": "cal",
+          "file": "cal_0009_trajectories.npz",
+          "trajectory_sha256": "761477525ee0841cd992d5868b8f20a3604a8c156e0216bc7ea60e6d069f8ccb"
+        },
+        {
+          "block_id": "jumps1_subject2__seg001:2:261",
+          "split": "cal",
+          "file": "cal_0022_trajectories.npz",
+          "trajectory_sha256": "71a07d7004adcc4eb7e4d7c62bd9f010de183c1ac106fd9920b98f7c49dcf7b8"
+        },
+        {
+          "block_id": "jumps1_subject2__seg003:3:46",
+          "split": "cal",
+          "file": "cal_0031_trajectories.npz",
+          "trajectory_sha256": "1574c324d6584407d9eea06ee119a2e4383ccbb0a407d35e165edb9073817a61"
+        },
+        {
+          "block_id": "jumps1_subject2__seg006:1:738",
+          "split": "cal",
+          "file": "cal_0041_trajectories.npz",
+          "trajectory_sha256": "3b0d9339d3f1e5a7616aa2c25219e95b057b8c49424e4dc44c8fe51511fe55fe"
+        },
+        {
+          "block_id": "sprint1_subject4__seg001:1:714",
+          "split": "cal",
+          "file": "cal_0053_trajectories.npz",
+          "trajectory_sha256": "8d193abf4c554a8148701dbc283d441956d5491fcece44971ad0df99c9c4647f"
+        },
+        {
+          "block_id": "sprint1_subject4__seg003:2:593",
+          "split": "cal",
+          "file": "cal_0062_trajectories.npz",
+          "trajectory_sha256": "a52f8b95c66a37213776bd2a14d3467e31bcb264b5e249ecb6c1705212b014f4"
+        },
+        {
+          "block_id": "sprint1_subject4__seg006:1:240",
+          "split": "cal",
+          "file": "cal_0073_trajectories.npz",
+          "trajectory_sha256": "5ce5e2524784fa6378a9c74af69041c057b9d58a5d95c647f152d5bc57ec8086"
+        },
+        {
+          "block_id": "sprint1_subject4__seg008:3:184",
+          "split": "cal",
+          "file": "cal_0083_trajectories.npz",
+          "trajectory_sha256": "2635e6cc45d20d3ea461621651f19cda39cb4a4cbd51a975d0aca42f46e7fbbd"
+        },
+        {
+          "block_id": "walk3_subject4__seg000:1:1542",
+          "split": "cal",
+          "file": "cal_0093_trajectories.npz",
+          "trajectory_sha256": "ce52e7180e4c794ed859f7a25d8363dc0f494e68d4b0dca9e9ed3f12f06e694a"
+        },
+        {
+          "block_id": "walk3_subject4__seg002:3:837",
+          "split": "cal",
+          "file": "cal_0103_trajectories.npz",
+          "trajectory_sha256": "e2d7e7a0f1676ef6da0b7f1765a659059bcddc3a1e1197c9440c9d6143801f0b"
+        },
+        {
+          "block_id": "walk3_subject5__seg000:3:8117",
+          "split": "cal",
+          "file": "cal_0115_trajectories.npz",
+          "trajectory_sha256": "d12ce946362cefc9455770d2d3ebe5f08f25dbe4ec0fe740690c4ca0c49e0cae"
+        }
+      ]
+    }
+  }
+}

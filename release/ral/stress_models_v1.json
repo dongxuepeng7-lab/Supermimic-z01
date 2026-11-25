@@ -1,0 +1,575 @@
+{
+  "source_status_sha256": "e3a93ae0c0c4da57710f41f9b6449e589e85501c0f6069e5780adaedca70f544",
+  "models": [
+    {
+      "seed": 501,
+      "variant": "Aplus",
+      "group": "A+",
+      "folder": "blocks/s501/Aplus",
+      "retention": {
+        "archive": "models/Aplus_models.tar.gz",
+        "archive_sha256": "07dd75d6c65193df53868b984ba8de9bd3a5dba328cdc852486782bc3b07f106",
+        "members": {
+          "jobs/s501_Aplus/run/train_metrics.csv": "e0feaf18bcd15e37d9cf61cd15158117901ee7825fbec36ad5e533c2fb13ac72",
+          "jobs/s501_Aplus/run/checkpoints.csv": "f25215cf6acf26584b73e2d274342d1914551074ae3622652af9938e98d16353",
+          "jobs/s501_Aplus/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s501_Aplus/run/run.json": "cc24df1908b101cf8fcff880c91797f7b839cb50ac1503827b41ed03abcac65c",
+          "jobs/s501_Aplus/run/args.json": "3345ee8052c4b1e3e1e35a5581b38ff4279562cff5b1c9e322f5bc3ef8361c73",
+          "jobs/s501_Aplus/run/ckpt_005000.pt": "d0d900df4206393d6b448400b80f141ba3f2736f49cd90adaacd0c44a47e7015",
+          "jobs/s501_Aplus/run/initial.pt": "8eab364fe39df77bf285f7b142a5205ae18e5fba0a3db602fba4c849e027cc8b",
+          "jobs/s501_Aplus/run/train_log.csv": "cd61a674c8fce629b346237caafaea436798d5e5410b79ce525916b264dd4bc4",
+          "jobs/s501_Aplus/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s501_Aplus/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s501_Aplus/run/last.pt",
+            "sha256": "e94f2315f60b61ac6c8d66664f34807cca9a1e9d679a5368336fc97eeae24406",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "0aa6ec123c75014adb1118aad4ef83313e00e367adfd547997abd43914cef8b8",
+      "initial_module_sha256": {
+        "wm": "ca00983154d21b9903990b927fbc2bbcc3a5bab7424056fb6b5a8b3b25ff985b",
+        "pi": "84ac156ab3b21b99bcdd124d7770f072d0529030114bb71e87d70c6aa7650708",
+        "critic": "497b86a8afd2b9405799ea66189e8a5894aad02d2c68b7a486bd03c82e6947f6"
+      },
+      "checkpoint_sha256": "d0d900df4206393d6b448400b80f141ba3f2736f49cd90adaacd0c44a47e7015",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 501,
+      "variant": "B_ref",
+      "group": "B",
+      "folder": "blocks/s501/B_ref",
+      "retention": {
+        "archive": "models/B_ref_models.tar.gz",
+        "archive_sha256": "31654aaa4a37758aa320437094f472da233f6049eefb828f9a1e06b01fd3933e",
+        "members": {
+          "jobs/s501_B_ref/run/train_metrics.csv": "40a4c91039baf15f4b70357e9ec2858398fc47fbcfcff12d229992244b56f88c",
+          "jobs/s501_B_ref/run/checkpoints.csv": "d4e22b512cec798103e6fd5ef32cae707fb69a06138ede9e0f8bbb6fa3be3253",
+          "jobs/s501_B_ref/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s501_B_ref/run/run.json": "f2fcb0535237376f8c47409144b9afc367557f6130caa20d2edfa1398072dee1",
+          "jobs/s501_B_ref/run/args.json": "5f97660a403757c5edb6ec84c5c2e074766b5ef7660356afaf5955a8d36d960e",
+          "jobs/s501_B_ref/run/ckpt_005000.pt": "4df92d1eace910911f4d82d29bcd802caf01daa6680c6f665be8062462027c18",
+          "jobs/s501_B_ref/run/initial.pt": "cd88e46813d3055f158e32a732ebf38eca72ccc3a6591df01c8dc93dc4e301f2",
+          "jobs/s501_B_ref/run/train_log.csv": "fa774ce5731fc2d89238d17b1ddfa0c7c41dc542dbeacdf64501a55dbaf75973",
+          "jobs/s501_B_ref/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s501_B_ref/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s501_B_ref/run/last.pt",
+            "sha256": "3fbccb44b694cd1b5c3ac6ead7dc9bfb17d805eb4d1168047dcc5f192a32ccc5",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "d3c80f59027494070719a9e2a90c6ba4cd09ddc4a8e792afaf8572e49d198027",
+      "initial_module_sha256": {
+        "wm": "ca00983154d21b9903990b927fbc2bbcc3a5bab7424056fb6b5a8b3b25ff985b",
+        "pi": "84ac156ab3b21b99bcdd124d7770f072d0529030114bb71e87d70c6aa7650708",
+        "critic": "497b86a8afd2b9405799ea66189e8a5894aad02d2c68b7a486bd03c82e6947f6"
+      },
+      "checkpoint_sha256": "4df92d1eace910911f4d82d29bcd802caf01daa6680c6f665be8062462027c18",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 501,
+      "variant": "B_v005",
+      "group": "B",
+      "folder": "blocks/s501/B_v005",
+      "retention": {
+        "archive": "models/B_v005_models.tar.gz",
+        "archive_sha256": "3f6958b03f6fe59b2a25b79d2f8acaa2acd5c4f5f0229e3e44c56cc8ee00ea04",
+        "members": {
+          "jobs/s501_B_v005/run/train_metrics.csv": "15bf9efc31ee1f9bd3efa72561087ebfd90dba637ca707a0f531ad64df16b7e5",
+          "jobs/s501_B_v005/run/checkpoints.csv": "307f2c682da1e2c81e1ae8ef4457dcc097f1b413acd52f3e785502dbe86f7c7d",
+          "jobs/s501_B_v005/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s501_B_v005/run/run.json": "f9b12b8a084f932a7172e471904cad6ec8d9fead11b3f1dba1ad63a7baed391a",
+          "jobs/s501_B_v005/run/args.json": "dc55a6522b624e4e84fb7c4acd4f8c1eb842c258a00abb88bd7030074f0032e7",
+          "jobs/s501_B_v005/run/ckpt_005000.pt": "9e381ac13e8be96386bb060a4a80a9e5d51c02c2f5dc7ea4ca4d48ca21da98e2",
+          "jobs/s501_B_v005/run/initial.pt": "a015f22b52d1cf1e3d03e7012c8bdd10a2f56b431bb8e67c9ecf65ff26187903",
+          "jobs/s501_B_v005/run/train_log.csv": "18123724e9faf87014e4fee0a0e73d6ca250816132a41eea04f798ad35272e6a",
+          "jobs/s501_B_v005/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s501_B_v005/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s501_B_v005/run/last.pt",
+            "sha256": "63eec05c0cad1011caddecb320b977e0f69c90d0925ede98032d8990529269aa",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "441ba8b6cf84cd6bd799950506967c46491de0400fd449be188f49541d8c9850",
+      "initial_module_sha256": {
+        "wm": "ca00983154d21b9903990b927fbc2bbcc3a5bab7424056fb6b5a8b3b25ff985b",
+        "pi": "84ac156ab3b21b99bcdd124d7770f072d0529030114bb71e87d70c6aa7650708",
+        "critic": "497b86a8afd2b9405799ea66189e8a5894aad02d2c68b7a486bd03c82e6947f6"
+      },
+      "checkpoint_sha256": "9e381ac13e8be96386bb060a4a80a9e5d51c02c2f5dc7ea4ca4d48ca21da98e2",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 505,
+      "variant": "B_ref",
+      "group": "B",
+      "folder": "blocks/s505/B_ref",
+      "retention": {
+        "archive": "models/B_ref_models.tar.gz",
+        "archive_sha256": "5cb5cc39d20aa2b200fcec6a2c4a7625307979538e5be4aced593322f414e186",
+        "members": {
+          "jobs/s505_B_ref/run/train_metrics.csv": "c4bee49aea3843b333aafd5f8c6df54d056bbf7b60a5fe56b342a5511f99d0eb",
+          "jobs/s505_B_ref/run/checkpoints.csv": "2fd0d0ba95eab2c585bc2ce300fff4031b820b31ada21fa1f070c61cfdd8eac5",
+          "jobs/s505_B_ref/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s505_B_ref/run/run.json": "e67baffb3a988ebd3771fd6df9f67d1fdcecc126661df3f205fc66eefb342f55",
+          "jobs/s505_B_ref/run/args.json": "d5f06ef18d761a2eb7de3b7553eeaba9a8c56713d726f5155828e66cca9fed07",
+          "jobs/s505_B_ref/run/ckpt_005000.pt": "6c6800b6e1e2ddc6f95dd6ba336147f340810739098bdcdbda0997d16da50278",
+          "jobs/s505_B_ref/run/initial.pt": "1de8a303812e1b1c3a982b50d9ebd7f469b2368097ac9d5f5c8b29178d8503a1",
+          "jobs/s505_B_ref/run/train_log.csv": "04e989fde05df8d17911059f3ecee2f8aa783146619e259b52059316f45d73d6",
+          "jobs/s505_B_ref/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s505_B_ref/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s505_B_ref/run/last.pt",
+            "sha256": "b33c1e67b125e0c25c7568c48e90a2bbcf2f080a8110102f88971d87fb1f3304",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "941479b47370130137abe2cb1513c371ef39cf777c5c4718f41248423f0bb47b",
+      "initial_module_sha256": {
+        "wm": "ded412cae0440ab14e736d1823cd7e74de9e229e876140523f6fd0dca4c476cb",
+        "pi": "adebf29faf073b6a2391a9126bb46ced3bb3c8e44e67765ea85cf89a8103e014",
+        "critic": "6958ecd126ba8b7eb6e1e88de99fcac9a62883ca5a901d1f5934d093e1a16429"
+      },
+      "checkpoint_sha256": "6c6800b6e1e2ddc6f95dd6ba336147f340810739098bdcdbda0997d16da50278",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 505,
+      "variant": "B_v005",
+      "group": "B",
+      "folder": "blocks/s505/B_v005",
+      "retention": {
+        "archive": "models/B_v005_models.tar.gz",
+        "archive_sha256": "19983ed3dc099bb0736c522a199c951676fd2c3ccf93bd3629e41f5f4bc2e20b",
+        "members": {
+          "jobs/s505_B_v005/run/train_metrics.csv": "d783906041491a8f9b9ebc8810569a7446141ba59fe88b4f6c9dade0fef8eb5a",
+          "jobs/s505_B_v005/run/checkpoints.csv": "a5bbac8efdff82fcdd3fdc07022336d5f75a2d9134adf89f4feaeea3bab67a93",
+          "jobs/s505_B_v005/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s505_B_v005/run/run.json": "80d967eae071ca1f6823447d3a0ae50eb1f7f66fbb7ee32ed5ed382a59eec1fe",
+          "jobs/s505_B_v005/run/args.json": "ea146466774a63595af32f7cf833c36485ab369fe9a988c88c733c058157f530",
+          "jobs/s505_B_v005/run/ckpt_005000.pt": "f9db62c2592d2cae55499dd4892d8d0731522478b3d3092125c405c491448ce3",
+          "jobs/s505_B_v005/run/initial.pt": "f402ed12539bea57bf70231940b27a79011f2691dd5c4dfa1520ef42fe12a97b",
+          "jobs/s505_B_v005/run/train_log.csv": "cae6d86ed2c90e2240eb9a99fc7ab9ca09c5a1b6aaff364cebfa6e95ee62426d",
+          "jobs/s505_B_v005/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s505_B_v005/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s505_B_v005/run/last.pt",
+            "sha256": "c009b59238ecd578b1997da0ff42052a89bbac176ab248652c55ea15b381591e",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "2ae45c3be37a71c0f0a510101c8ee26ae019a9a395aec05786ab59eb2d228f21",
+      "initial_module_sha256": {
+        "wm": "ded412cae0440ab14e736d1823cd7e74de9e229e876140523f6fd0dca4c476cb",
+        "pi": "adebf29faf073b6a2391a9126bb46ced3bb3c8e44e67765ea85cf89a8103e014",
+        "critic": "6958ecd126ba8b7eb6e1e88de99fcac9a62883ca5a901d1f5934d093e1a16429"
+      },
+      "checkpoint_sha256": "f9db62c2592d2cae55499dd4892d8d0731522478b3d3092125c405c491448ce3",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 505,
+      "variant": "Aplus",
+      "group": "A+",
+      "folder": "blocks/s505/Aplus",
+      "retention": {
+        "archive": "models/Aplus_models.tar.gz",
+        "archive_sha256": "420bf6ba722ccee7622c122b13f8b949dae3391839ffe4c00c541e7dd80bed24",
+        "members": {
+          "jobs/s505_Aplus/run/train_metrics.csv": "e07e29be32fdc211b89e4242f14a5201b51330b17cbb8814749096a89e226b4f",
+          "jobs/s505_Aplus/run/checkpoints.csv": "a8ac2624ef28abbd0bd4aa4f6dbfc31acf98a746510fbbe3fe14e099481a671f",
+          "jobs/s505_Aplus/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s505_Aplus/run/run.json": "0321be5b084382682f1fccb7ab88915921f5b5eb7f0b18309628e6c0eeb0f012",
+          "jobs/s505_Aplus/run/args.json": "9d6eb90bf785ceafd963ace6c66f0d3dea21e9350fefd4f33143954b483e5279",
+          "jobs/s505_Aplus/run/ckpt_005000.pt": "80dabe04f1001b05bd4447909e26e706caedb2ba48ffae39ad77d0063abcc1cf",
+          "jobs/s505_Aplus/run/initial.pt": "e2bb8431514c60bdececc1c5f92a9ba69427c6f9e9ffd16a64a9d2db04f50dd7",
+          "jobs/s505_Aplus/run/train_log.csv": "d3bf2a96086f926f9350156eb6c23a80357dc8bbd19054d7fec94fffeaaaea9a",
+          "jobs/s505_Aplus/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s505_Aplus/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s505_Aplus/run/last.pt",
+            "sha256": "a4991ea6840e8e4c96fb1271405d283cbd721626edb857ab5cf8b5d1456adbbe",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "a88c1bfeda639a6177e4f93950e9536953a12bd70b1f8179271df37e6fceafbe",
+      "initial_module_sha256": {
+        "wm": "ded412cae0440ab14e736d1823cd7e74de9e229e876140523f6fd0dca4c476cb",
+        "pi": "adebf29faf073b6a2391a9126bb46ced3bb3c8e44e67765ea85cf89a8103e014",
+        "critic": "6958ecd126ba8b7eb6e1e88de99fcac9a62883ca5a901d1f5934d093e1a16429"
+      },
+      "checkpoint_sha256": "80dabe04f1001b05bd4447909e26e706caedb2ba48ffae39ad77d0063abcc1cf",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 509,
+      "variant": "B_v005",
+      "group": "B",
+      "folder": "blocks/s509/B_v005",
+      "retention": {
+        "archive": "models/B_v005_models.tar.gz",
+        "archive_sha256": "470ec54a27ec1e649a1026cee7096a7cb24814cf447a29aa552ceecb21b2f9e2",
+        "members": {
+          "jobs/s509_B_v005/run/train_metrics.csv": "179f1a15d8f15d1c7bd111461746e3e95d4d3894f83178bb8a2bd77c8c76ef2e",
+          "jobs/s509_B_v005/run/checkpoints.csv": "c309b32fb64d0b020204cfaac77db8db42992a0e1466b7246f1665e24920fd7d",
+          "jobs/s509_B_v005/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s509_B_v005/run/run.json": "7b3d9ac92bf4b28632475ca4540affb631d55e61006ab1dbd1dfa89e6c95ef2c",
+          "jobs/s509_B_v005/run/args.json": "f5759de08f21ffc80485d98c4b938a084fa5fc69973d0156242275c20e009d9b",
+          "jobs/s509_B_v005/run/ckpt_005000.pt": "189e5e3022d1a3181ab3deb757dfa3128020109fee452c7a93e766ed938b3e75",
+          "jobs/s509_B_v005/run/initial.pt": "6880ee229543de204355b3b317b68a747c6295c57551e22b9c023698fa1ac7f1",
+          "jobs/s509_B_v005/run/train_log.csv": "a0f240ba1eb6a4c88ba5c8e66c1785ca6699f25e1762776b1ec02d9cf6afbaa3",
+          "jobs/s509_B_v005/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s509_B_v005/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s509_B_v005/run/last.pt",
+            "sha256": "f91dba4988e85bbd54886f5368994695f2ef1211a7e15b2edd6060b1451416ed",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "0e16ff78f58ce4e561b369ed3c5d56e7f0d2c79f83a800d5b8e9a0af82339c9a",
+      "initial_module_sha256": {
+        "wm": "c8555e1da719e31f589f764ebe76e657565848ddc078373572408f69980289af",
+        "pi": "16597d3ce765fcb064111253a9fb2694a067a43fe540376ddd7fbd3b26480c77",
+        "critic": "ec4c8bcd7b481e09d7232961af57aac3b0d420860dbdb897bb36e4c9075cf2ed"
+      },
+      "checkpoint_sha256": "189e5e3022d1a3181ab3deb757dfa3128020109fee452c7a93e766ed938b3e75",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 509,
+      "variant": "Aplus",
+      "group": "A+",
+      "folder": "blocks/s509/Aplus",
+      "retention": {
+        "archive": "models/Aplus_models.tar.gz",
+        "archive_sha256": "2c72271444448f59f6c37f272dd03e53cefbd818cc4fd607dec8fe4c6b1fde72",
+        "members": {
+          "jobs/s509_Aplus/run/train_metrics.csv": "d8b56dbd05e1d61d2d924b7ae3dff13cac1976846efdef66913d1fb3163df92e",
+          "jobs/s509_Aplus/run/checkpoints.csv": "2149ff643e6121b444e46fa3880ac14da78f951b03c0afe9d3cb06f242f43b45",
+          "jobs/s509_Aplus/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s509_Aplus/run/run.json": "b74eb086368254fe0714d03c943291d9204bb911d62767a332bcbffb106763b3",
+          "jobs/s509_Aplus/run/args.json": "241fb6ed4e6670786ec7134c34a1bb92dd4d3bbd5e90adadad56ae8463c94b03",
+          "jobs/s509_Aplus/run/ckpt_005000.pt": "c2daf0bdff6e10d66f3f0dd001bbd473cee0189da308891a133f7311a8dbb17b",
+          "jobs/s509_Aplus/run/initial.pt": "c11edbc6d4466b46113ba4f15c898fdec796bbef2714d5b91d54297203f82e1e",
+          "jobs/s509_Aplus/run/train_log.csv": "7c1f5b4bfb3de4e560e7d8e32bd3c38388d26012638bb5dc5f16f3d21205bb0c",
+          "jobs/s509_Aplus/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s509_Aplus/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s509_Aplus/run/last.pt",
+            "sha256": "87992803fd07298facf45bbbd041543c7abde8057b77cc73debd3d318e38ac94",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "0841f568e6f67135d28437f8c6248c50c25f5bf2de4204aaac71b9764e26f40c",
+      "initial_module_sha256": {
+        "wm": "c8555e1da719e31f589f764ebe76e657565848ddc078373572408f69980289af",
+        "pi": "16597d3ce765fcb064111253a9fb2694a067a43fe540376ddd7fbd3b26480c77",
+        "critic": "ec4c8bcd7b481e09d7232961af57aac3b0d420860dbdb897bb36e4c9075cf2ed"
+      },
+      "checkpoint_sha256": "c2daf0bdff6e10d66f3f0dd001bbd473cee0189da308891a133f7311a8dbb17b",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 509,
+      "variant": "B_ref",
+      "group": "B",
+      "folder": "blocks/s509/B_ref",
+      "retention": {
+        "archive": "models/B_ref_models.tar.gz",
+        "archive_sha256": "efa7182439997d763427e5e0087a28d9b55fb4fa9e0a7d3adb2ab4a18872b346",
+        "members": {
+          "jobs/s509_B_ref/run/train_metrics.csv": "6e7349e693d62cde37fbdedfcc3abf752b7edc619b1761ba28a2def2d73d20d2",
+          "jobs/s509_B_ref/run/checkpoints.csv": "4a6afe95c32639019be462d00f6a46b11e9c4cfb819bf05adabf8f8e65fc722d",
+          "jobs/s509_B_ref/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s509_B_ref/run/run.json": "60de47bd11b1ba6cd5ca81fcecec1cea56ed57e4d5b44c7f06b9ae33279bbb79",
+          "jobs/s509_B_ref/run/args.json": "1dda3af7b8611c2058f0f44e8d492b552224a60dcaef2ab2f8e1635c5559132d",
+          "jobs/s509_B_ref/run/ckpt_005000.pt": "1064dbd59ef8b18540cd9e09e0e8482d5a5bfdf714841c892e3b9930c06cb1f7",
+          "jobs/s509_B_ref/run/initial.pt": "9d23026a52027088c6e6ec6d52cdcfc8ffed49822763271eb91f8505955268a8",
+          "jobs/s509_B_ref/run/train_log.csv": "3bdbebd991e6c935c6a600448efd327a8b1ae9dae356131c66b6658bf2653132",
+          "jobs/s509_B_ref/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s509_B_ref/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s509_B_ref/run/last.pt",
+            "sha256": "75073fa9ea37f6f3e76bef8aaa555a2f8b94ff67d69c30205e557c95909d8152",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "b951c435c2c86d76fc09365c222037f65b8ecd1e692f6cf2d539ee862070f9f2",
+      "initial_module_sha256": {
+        "wm": "c8555e1da719e31f589f764ebe76e657565848ddc078373572408f69980289af",
+        "pi": "16597d3ce765fcb064111253a9fb2694a067a43fe540376ddd7fbd3b26480c77",
+        "critic": "ec4c8bcd7b481e09d7232961af57aac3b0d420860dbdb897bb36e4c9075cf2ed"
+      },
+      "checkpoint_sha256": "1064dbd59ef8b18540cd9e09e0e8482d5a5bfdf714841c892e3b9930c06cb1f7",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 513,
+      "variant": "Aplus",
+      "group": "A+",
+      "folder": "blocks/s513/Aplus",
+      "retention": {
+        "archive": "models/Aplus_models.tar.gz",
+        "archive_sha256": "b584051ed15feb9452c9dca0bcf22849dd6a9f2a9f96ac037d5407a64260da97",
+        "members": {
+          "jobs/s513_Aplus/run/train_metrics.csv": "4e85b5618e7642468d76ce78e7793b5567b2537e7c64fe92ac74ae8910911d27",
+          "jobs/s513_Aplus/run/checkpoints.csv": "c3f531a40d0ab83624de86861fe57e10a857f2fe24fc257918d3b147fff42156",
+          "jobs/s513_Aplus/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s513_Aplus/run/run.json": "49530aa2e57f2c967104932f5d7cdc8f60b4fd6ec7bb2321731b1d0749f3092a",
+          "jobs/s513_Aplus/run/args.json": "f9f3f6930a6694eb4c4047fc0fb75e0669659396ffef29f28cf02fa939fc4426",
+          "jobs/s513_Aplus/run/ckpt_005000.pt": "bea4e140d02701f6863c34a9e1b0011794325dc772acca6126a4608c973d38fb",
+          "jobs/s513_Aplus/run/initial.pt": "42399df51c453864ba46d4fbc69cf6385de062f9b1ccf89db9e3fc8692c172fb",
+          "jobs/s513_Aplus/run/train_log.csv": "a900fb005977d117fe1bd196792e794685d965a321e4251e21f0034f50300526",
+          "jobs/s513_Aplus/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s513_Aplus/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s513_Aplus/run/last.pt",
+            "sha256": "be862a1ec05db8db510aabc89e12829eddcbee7cb5ec02435a59b7aec37faaf2",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "5a01c9ce289adc9456db3c52ec5b8be55bf2340ead9665794eaff787d3785a2d",
+      "initial_module_sha256": {
+        "wm": "496f6110ea76c22956559e83286d5589e047e000d9dc8495578ab493d134895a",
+        "pi": "58775bbd4091a4eaba75c894a3763619690284ad1f1a3de701a2203a3a5c9105",
+        "critic": "d4cd19d480b914ddd365516ad5c221e18b1ad6eee742c5cab854cd9cfb5ab1e3"
+      },
+      "checkpoint_sha256": "bea4e140d02701f6863c34a9e1b0011794325dc772acca6126a4608c973d38fb",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 513,
+      "variant": "B_ref",
+      "group": "B",
+      "folder": "blocks/s513/B_ref",
+      "retention": {
+        "archive": "models/B_ref_models.tar.gz",
+        "archive_sha256": "0938343646980ed4fa9de0876c8cd5d2644794aae40a5759fba8b4dc64b134b7",
+        "members": {
+          "jobs/s513_B_ref/run/train_metrics.csv": "afa139f1bdd098c3f69dfa48de476d1e8755e5a4e5881a6a40da6f611881f1d1",
+          "jobs/s513_B_ref/run/checkpoints.csv": "4126cb4fc078ecc9f01351ed7736c57f8e3ef097a0b63327b58fda7ee327334a",
+          "jobs/s513_B_ref/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s513_B_ref/run/run.json": "5b4d471a6d9703ed8dd632bc0639acf146c63fa33a79b2c7f9ca616741c50f6f",
+          "jobs/s513_B_ref/run/args.json": "393b3ece4a4d306472c8e1814f230106fc86518367454dd388128d98f190624f",
+          "jobs/s513_B_ref/run/ckpt_005000.pt": "2d52c8b33d60f7c9717b83bbbc6d4aaf2bf8b762974a95ac4488601d1dfe2eb6",
+          "jobs/s513_B_ref/run/initial.pt": "8773de05f52ff4abc0bc9bf33180492767a5817a9166e3aaa70fa57fa5b7a2ff",
+          "jobs/s513_B_ref/run/train_log.csv": "a324b72359fa2c2d336eb2052c4bacd8351b4bed2c907bd7a505736c6e73760e",
+          "jobs/s513_B_ref/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s513_B_ref/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s513_B_ref/run/last.pt",
+            "sha256": "a8f510dfa0ff551275767d15db19c1d7ec207502b2d3518864431fa837592c95",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "a1f48ff280ebd5e87e0b424f54a2f9c094cdea077dff317b6f6563b919d54ba9",
+      "initial_module_sha256": {
+        "wm": "496f6110ea76c22956559e83286d5589e047e000d9dc8495578ab493d134895a",
+        "pi": "58775bbd4091a4eaba75c894a3763619690284ad1f1a3de701a2203a3a5c9105",
+        "critic": "d4cd19d480b914ddd365516ad5c221e18b1ad6eee742c5cab854cd9cfb5ab1e3"
+      },
+      "checkpoint_sha256": "2d52c8b33d60f7c9717b83bbbc6d4aaf2bf8b762974a95ac4488601d1dfe2eb6",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 513,
+      "variant": "B_v005",
+      "group": "B",
+      "folder": "blocks/s513/B_v005",
+      "retention": {
+        "archive": "models/B_v005_models.tar.gz",
+        "archive_sha256": "9a9b32e0c56c62a9572e5ab20aeab5d18171d25285860640d6d85ccc9acdf6d9",
+        "members": {
+          "jobs/s513_B_v005/run/train_metrics.csv": "c759867d094da4f2b9c23619697f7ba1a80ef72df187f262b35f460817659b1e",
+          "jobs/s513_B_v005/run/checkpoints.csv": "4d13c05f13c6c80404d11873a86873b5b5016dffc9cae487090a2c58096e9708",
+          "jobs/s513_B_v005/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s513_B_v005/run/run.json": "afa1dc8403d79467056a936a1c8f59bc7629282085048e4ffdba6980347d3665",
+          "jobs/s513_B_v005/run/args.json": "4d473ed6c099d4521f0e3317b6bb10e3e2585157035dace44fb09d75972b8b33",
+          "jobs/s513_B_v005/run/ckpt_005000.pt": "3702ef4ed56fd4bae0ec2f988f96889e634c08c9e0d78ef650d81fe38649601d",
+          "jobs/s513_B_v005/run/initial.pt": "d28da5b2df96affe054167c28ac2e8b16192e4a303d654453753bcbf4df0dd90",
+          "jobs/s513_B_v005/run/train_log.csv": "071acd7fc62f93fbd35888e60b3e977d37bea308fb98cd1717641840f4ef16be",
+          "jobs/s513_B_v005/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s513_B_v005/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s513_B_v005/run/last.pt",
+            "sha256": "83c3874faec30641c7012a20622d80407fcf09773ccaf3338d6eb7bc5b35bc20",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "dd4ed2c8e7becc66655a084167a2228b62de20501042cd4b98de7dc49584981a",
+      "initial_module_sha256": {
+        "wm": "496f6110ea76c22956559e83286d5589e047e000d9dc8495578ab493d134895a",
+        "pi": "58775bbd4091a4eaba75c894a3763619690284ad1f1a3de701a2203a3a5c9105",
+        "critic": "d4cd19d480b914ddd365516ad5c221e18b1ad6eee742c5cab854cd9cfb5ab1e3"
+      },
+      "checkpoint_sha256": "3702ef4ed56fd4bae0ec2f988f96889e634c08c9e0d78ef650d81fe38649601d",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 517,
+      "variant": "B_ref",
+      "group": "B",
+      "folder": "blocks/s517/B_ref",
+      "retention": {
+        "archive": "models/B_ref_models.tar.gz",
+        "archive_sha256": "d51198e2d32d5b6fc0f1e70133f24731616d546dff8bd6880e78666f13f9d815",
+        "members": {
+          "jobs/s517_B_ref/run/train_metrics.csv": "274cd0c672095113837665c3f91ffc23b59416a4a1aaaaf164f55864df37f1db",
+          "jobs/s517_B_ref/run/checkpoints.csv": "5929234cfb238ff21e908726971bb7c5487b8b74cf47d56a85e66db1eba9f84b",
+          "jobs/s517_B_ref/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s517_B_ref/run/run.json": "a17028a3a611b620343aed4a84787cf19313d80807762552aa03a2467c1e41ec",
+          "jobs/s517_B_ref/run/args.json": "5291330c117c17cdfb0a50e0ac7d9774a0f776da25f3423a5dc4da9b7ea54b7e",
+          "jobs/s517_B_ref/run/ckpt_005000.pt": "ec9a505ace3fa14939415afb99f25cdbd4533ae54d5756dbabb85d3f9608020f",
+          "jobs/s517_B_ref/run/initial.pt": "2aed27d9c04d010245b05b44fcb12218c9d6fbec1cb22c471bbf72de3183661a",
+          "jobs/s517_B_ref/run/train_log.csv": "b629d5fe13f74d2d0ac50a5ce1a6dd43420d20d5307c2ae64514ddcbf69118d4",
+          "jobs/s517_B_ref/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s517_B_ref/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s517_B_ref/run/last.pt",
+            "sha256": "69a5ac93485a27e6edf516e0ae47af3666fa39024b649a1c7e7fc02f1c18e6eb",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "3cde001270f1cb5eacc0e4f0d2a587bd5e29ea5fb40922138401f47441be0e93",
+      "initial_module_sha256": {
+        "wm": "6992e0706fdad78fff8e2d0d02e76b9ec48d9d0378f8b26b4bde5abe9e6515d1",
+        "pi": "60b4c3c0dcb60af4e8740ec1efc4b778f690355a6b8dca1c80a8d0777ab44b4e",
+        "critic": "14dd8701ed0f1ec7a48ce28b43a537d5f18434c5f17f6e3e20aee7674b46f5ad"
+      },
+      "checkpoint_sha256": "ec9a505ace3fa14939415afb99f25cdbd4533ae54d5756dbabb85d3f9608020f",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 517,
+      "variant": "B_v005",
+      "group": "B",
+      "folder": "blocks/s517/B_v005",
+      "retention": {
+        "archive": "models/B_v005_models.tar.gz",
+        "archive_sha256": "b1621e3801a171910c22779d915a3a4ac2e6b93b4a8ace53b7b530e56182b80b",
+        "members": {
+          "jobs/s517_B_v005/run/train_metrics.csv": "7da53a9fbcbc3a774374e0b80052295543c674a561242d57c2202cad039a56b9",
+          "jobs/s517_B_v005/run/checkpoints.csv": "67e514546e88711686b45a5a42885afe43d0541ad0f4d03f6884e77f7c9955c0",
+          "jobs/s517_B_v005/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s517_B_v005/run/run.json": "86882bc7ab1c788917cb7514b41a31e3a881c1d2b52bebb1817b2ea68748c911",
+          "jobs/s517_B_v005/run/args.json": "271136e44d0054838bd69638c0da4da662853ff5e2bb6c4d1221fbaa0d8607cb",
+          "jobs/s517_B_v005/run/ckpt_005000.pt": "20efa624f62048e72a321a7f16bd3112bad02ed0bde40cb23ce133f31efcf4d4",
+          "jobs/s517_B_v005/run/initial.pt": "8d86fbbbcb898a121bdebb685ccd54603ccc953d58fa74f4a109670ae0f9eb4d",
+          "jobs/s517_B_v005/run/train_log.csv": "afa496c0e50f65f8ecaaaeb87ff66a4192a464bc3e3d0fe42392c19ff33d943f",
+          "jobs/s517_B_v005/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s517_B_v005/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s517_B_v005/run/last.pt",
+            "sha256": "1f38b5a2f679b021e3539e6a345b93d2d4adb58ebca8bb011f2410afb36e4376",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "c88e074f1cc9af2a836b62fea96a765bc12a27fbbb3bfabc3f2f8cdcb5e0dbe9",
+      "initial_module_sha256": {
+        "wm": "6992e0706fdad78fff8e2d0d02e76b9ec48d9d0378f8b26b4bde5abe9e6515d1",
+        "pi": "60b4c3c0dcb60af4e8740ec1efc4b778f690355a6b8dca1c80a8d0777ab44b4e",
+        "critic": "14dd8701ed0f1ec7a48ce28b43a537d5f18434c5f17f6e3e20aee7674b46f5ad"
+      },
+      "checkpoint_sha256": "20efa624f62048e72a321a7f16bd3112bad02ed0bde40cb23ce133f31efcf4d4",
+      "final_iteration": 5000
+    },
+    {
+      "seed": 517,
+      "variant": "Aplus",
+      "group": "A+",
+      "folder": "blocks/s517/Aplus",
+      "retention": {
+        "archive": "models/Aplus_models.tar.gz",
+        "archive_sha256": "a8f9b405d807e0df7769ddb36afa286714d29e3008d97d12dca9d060f9dd1c33",
+        "members": {
+          "jobs/s517_Aplus/run/train_metrics.csv": "91b49cb6aa45b27b42b2931c89c3beed82d5f9a56b9ad06e6215ef7eda316e62",
+          "jobs/s517_Aplus/run/checkpoints.csv": "2793db99974c073ca3e02f82f1d3af627a5181535c9ab0f4006b957e47e19a87",
+          "jobs/s517_Aplus/run/input_inventory.json": "33efbc912ad2e0bdfcbdae19af18fa0d466970fb6406b122c16e0fa860c361bf",
+          "jobs/s517_Aplus/run/run.json": "731542703cbf87ad0be9fee249f5a205f96a59faa5e26cb1065744b3a021b3c4",
+          "jobs/s517_Aplus/run/args.json": "72440530540a2ef170814a4021a5b49fcc2879155ac7d4594525125387d8e49a",
+          "jobs/s517_Aplus/run/ckpt_005000.pt": "1f45149bd79f9c13a99422c5998aea214a71ceca2f2728b2f5b33e70efa1451c",
+          "jobs/s517_Aplus/run/initial.pt": "d70efaf718d7c022d076258db67312f81cd2040250ff4e4643f97577f808bf59",
+          "jobs/s517_Aplus/run/train_log.csv": "80e25b83599c8894ac841e3cb5db1ce5844dba5d96499e7fcc0fc9d711c79ee0",
+          "jobs/s517_Aplus/run/effective_params.csv": "c1b5c5b3941cd778a7c00b19c9e7ac30989ad098855b823ecc34b0347aad3663",
+          "jobs/s517_Aplus/run/config_diff.json": "065f776d188bf6e884bc1611fc8c67479cb1fd9774a919632a3b25c78fcc0239"
+        },
+        "discarded_optimizer_files": [
+          {
+            "path": "jobs/s517_Aplus/run/last.pt",
+            "sha256": "3296b56bb32198f363c9951f2a1c73c5311e772d8bd751e270b79281537bb2ad",
+            "reason": "Verified final tensors retained; no optimizer-resume in this protocol"
+          }
+        ],
+        "verified_before_cleanup": true
+      },
+      "protocol_sha256": "1cfa1c8a4d4ab9b89e55908db9908892e278c4ad90b382d6b517b8bef77936f0",
+      "initial_module_sha256": {
+        "wm": "6992e0706fdad78fff8e2d0d02e76b9ec48d9d0378f8b26b4bde5abe9e6515d1",
+        "pi": "60b4c3c0dcb60af4e8740ec1efc4b778f690355a6b8dca1c80a8d0777ab44b4e",
+        "critic": "14dd8701ed0f1ec7a48ce28b43a537d5f18434c5f17f6e3e20aee7674b46f5ad"
+      },
+      "checkpoint_sha256": "1f45149bd79f9c13a99422c5998aea214a71ceca2f2728b2f5b33e70efa1451c",
+      "final_iteration": 5000
+    }
+  ]
+}

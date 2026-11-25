@@ -117,12 +117,59 @@
       "owner": "3090_eval",
       "status": "diag01_reviewed_single_world_repeatability_improved_consistency_failed",
       "task": "Full 516-block pass failures: graph batch 65/64, eager batch 61/66, eager single 54/54. Cross-process repeatability failures 19/22/0 respectively. 18 complete new-direction cells; partial 1019 excluded. Locally recomputed 8280 raw trajectory blocks. Single-world repetition passes do not establish CPU/GPU response validity; no C/test."
+    },
+    {
+      "id": "MECHANISM-5080",
+      "owner": "5080",
+      "status": "completed_audited",
+      "task": "89.99s, two frozen models seed301. FP64 FD-vs-AD discrepancies shrink on all sampled fit/cal h8/h32 blocks; FP32 tiny differences roundoff-limited. Not policy improvement, physics agreement or unique friction cause. See mechanism01_5080_review_20261124.json."
+    },
+    {
+      "id": "MECHANISM-4090",
+      "owner": "4090",
+      "status": "cancelled_weights_deleted_machine_reassigned",
+      "task": "User reports 4090 weights accidentally deleted and machine repurposed. Do not restore/retrain old models or claim fixed-batch loss diagnosis completed. Historical metadata retained; next tasks exclude 4090."
+    },
+    {
+      "id": "MECHANISM-3090",
+      "owner": "3090",
+      "status": "completed_locally",
+      "task": "Existing eager_single r0 516 full plus 18x48 direction trajectories stratified; no new simulator rollouts. Retain all 54 original failures; constraints counts are not contact identities."
+    },
+    {
+      "id": "TRI3-5080",
+      "owner": "5080_train",
+      "status": "reviewed_complete_5_triplets_plus_partial",
+      "task": "15 full-budget policies on five paired seeds; Aplus/B_ref 89.82%, B_v005 91.17%; +1.35pp paired interval spans zero. Retain s521 incomplete and all archives. See intervention01_review_20261125.json."
+    },
+    {
+      "id": "TRI3-3090",
+      "owner": "3090_eval",
+      "status": "reviewed_6_complete_direction_cells_plus_partial",
+      "task": "Input rounding leaves 35/48 original-direction failures versus native36/48; constraint differences need localization. Six complete two-process directions; direction2006 partial. No automatic C."
+    },
+    {
+      "id": "VALID6-5080",
+      "owner": "5080_eval",
+      "status": "ready_pending_source_preflight",
+      "task": "Reuse all15 final EMA models; six nominal/identified endpoint/interpolation stress plants, 163clips, two independent evaluations. All90 primary jobs before90 repeats, six-hour cap. Not hardware uncertainty bounds; no new training."
+    },
+    {
+      "id": "VALID6-3090",
+      "owner": "3090_eval",
+      "status": "ready_pending_source_preflight",
+      "task": "48 fixed blocks each from original/direction2001; seven native/constraint/solver conditions x two independent processes. Shared native CPU states at first deviations plus free paired rollouts. Six-hour cap; counterfactuals are localization, not deployable repairs."
     }
   ],
-  "current_execution_requirements": "docs/ral_diagnose_9h_20261123.md",
-  "current_execution_config": "configs/ral/diagnose_nine_hour_v1.json",
-  "current_frozen_protocol": "release/ral/diagnose_nine_hour_protocol_v1.json",
-  "current_execution_state": "diag01_reviewed_pause_repeated_horizon_training",
-  "current_review": "release/ral/diag01_review_20261124.json",
-  "current_validation": "release/ral/diagnose_nine_hour_validation_20261123.json"
+  "current_execution_requirements": "docs/ral_six_hour_20261125.md",
+  "current_execution_config": "configs/ral/validation_six_hour_v1.json",
+  "current_frozen_protocol": "release/ral/validation_six_hour_protocol_v1.json",
+  "current_execution_state": "two_machine_six_hour_validation_ready_4090_excluded",
+  "current_review": "release/ral/intervention01_review_20261125.json",
+  "current_validation": "release/ral/validation_six_hour_validation_20261125.json",
+  "current_machine_availability": {
+    "5080": "frozen_actor_stress_evaluation",
+    "3090": "shared_state_constraint_diagnosis",
+    "4090": "excluded_user_reassigned_and_old_weights_deleted"
+  }
 }
