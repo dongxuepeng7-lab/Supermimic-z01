@@ -151,25 +151,39 @@
     {
       "id": "VALID6-5080",
       "owner": "5080_eval",
-      "status": "ready_pending_source_preflight",
-      "task": "Reuse all15 final EMA models; six nominal/identified endpoint/interpolation stress plants, 163clips, two independent evaluations. All90 primary jobs before90 repeats, six-hour cap. Not hardware uncertainty bounds; no new training."
+      "status": "completed_reviewed_180_evaluations",
+      "task": "All180 evaluations and29340 episode records audited. Prespecified five-stress paired-seed B_v005-minus-B_ref mean +0.908pp, exploratory95% interval [-3.240,+5.056]. Positive point estimate, no established superiority. Keep all15 models; do not repeat this queue or start C automatically."
     },
     {
       "id": "VALID6-3090",
       "owner": "3090_eval",
-      "status": "ready_pending_source_preflight",
-      "task": "48 fixed blocks each from original/direction2001; seven native/constraint/solver conditions x two independent processes. Shared native CPU states at first deviations plus free paired rollouts. Six-hour cap; counterfactuals are localization, not deployable repairs."
+      "status": "completed_reviewed_28_diagnostics",
+      "task": "All28 jobs and1344 raw rollouts audited. Native failure counts36/48 and33/48 become1/48 and0/48 with contacts disabled, in both processes. Contact-related path localized; no concrete implementation fix yet. Preserve real contacts for subsequent minimal reproduction and repair validation."
+    },
+    {
+      "id": "CD-NATIVE-5080",
+      "owner": "5080_train",
+      "status": "implemented_static_checks_only_not_run",
+      "task": "User authorized native GPU C implementation. Reuse all five B_v005 parents (501,505,509,513,517), generate GPU fit/cal pairs with preserved contacts and session split, run matched B_continue/C weight-only branches at 2000 iterations (100 WM-only then 1900 actor), and export per-seed handoffs. Do not rerun diagnostic queues or claim superiority."
+    },
+    {
+      "id": "CD-NATIVE-3090",
+      "owner": "3090_train_eval",
+      "status": "implemented_waiting_native_C_handoffs",
+      "task": "Receive each native C handoff; calibrate speed/support proxy bins on cal, capture shared fit starts, train fixed8/fixed32 and nondegenerate D/C-perm frozen-model actor branches. Record unsupported fallbacks and dense Hmax compute honestly; keep missing/blocked outcomes distinct from zero. Common known-parameter evaluation follows; no new heldout/hardware claim."
     }
   ],
-  "current_execution_requirements": "docs/ral_six_hour_20261125.md",
-  "current_execution_config": "configs/ral/validation_six_hour_v1.json",
-  "current_frozen_protocol": "release/ral/validation_six_hour_protocol_v1.json",
-  "current_execution_state": "two_machine_six_hour_validation_ready_4090_excluded",
-  "current_review": "release/ral/intervention01_review_20261125.json",
-  "current_validation": "release/ral/validation_six_hour_validation_20261125.json",
+  "current_execution_requirements": "docs/ral_cd_native_20261125.md",
+  "current_execution_config": "configs/ral/cd_native_v1.json",
+  "current_frozen_protocol": null,
+  "current_execution_state": "native_C_D_implemented_static_checks_only_no_training_started",
+  "current_review": "release/ral/stress01_5080_review_20261125.json",
+  "current_backend_review": "release/ral/constraint01_3090_review_20261125.json",
+  "current_validation": "release/ral/cd_native_implementation_20261125.json",
   "current_machine_availability": {
-    "5080": "frozen_actor_stress_evaluation",
-    "3090": "shared_state_constraint_diagnosis",
+    "5080": "native_GPU_pairs_and_matched_B_C_continuation",
+    "3090": "receive_native_C_calibrate_and_train_frozen_window_branches",
     "4090": "excluded_user_reassigned_and_old_weights_deleted"
-  }
+  },
+  "current_protocol_creation": "Runtime status.json contract freezes code/data/assets/dependency versions; each handoff carries the same contract."
 }

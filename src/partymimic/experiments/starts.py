@@ -10,7 +10,8 @@ from .parameters import sha256
 
 @torch.no_grad()
 def capture_starts(
-    ck, robot, layout, wm, motion, mdp, checkpoint, output, steps, horizon, device
+    ck, robot, layout, wm, motion, mdp, checkpoint, output, steps, horizon, device,
+    native=False,
 ):
     from partymimic.env import TrackingSim, make_sim
     from partymimic.networks import Policy, policy_kwargs
@@ -24,7 +25,7 @@ def capture_starts(
     clips = [i for i, n in enumerate(motion.names) if n.split("__seg")[0] in fit]
     if not clips:
         raise ValueError("No fit-split motions for actor starts")
-    N = len(clips)
+    N = a["num_envs"] if native else len(clips)
     K = a["goal_frames"]
     hist_len = a["hist"]
     widths = lambda k: tuple(int(x) for x in a[k].split(","))
@@ -40,10 +41,12 @@ def capture_starts(
     pi.load_state_dict(ck.get("pi_live", ck["pi"]))
     pi.eval()
     env = TrackingSim(
-        make_sim(robot), N, robot, motion, mdp, device, eval_mode=True, randomize=False
+        make_sim(robot), N, robot, motion, mdp, device, eval_mode=True, randomize=native
     )
     ids = torch.arange(N, device=device)
-    clip_ids = torch.tensor(clips, device=device)
+    clip_ids = torch.tensor([clips[i % len(clips)] for i in range(N)], device=device)
+    if native:
+        env.reset_noise = True
     env.reset(ids, motion.clip_start[clip_ids])
     hist = None
     stored = []
@@ -91,5 +94,8 @@ def capture_starts(
         motion_hashes=motion.input_hashes,
         session_ids=sorted(fit),
         horizon=horizon,
+        num_envs=N,
+        randomized=native,
+        gpu=torch.cuda.get_device_name() if str(device).startswith("cuda") else "cpu",
     )
     (output / "manifest.json").write_text(json.dumps(meta, indent=2))

@@ -86,6 +86,13 @@ class ResponseData:
                 raise ValueError(f"Nonfinite response data: {k}")
         if np.any(arrays["epsilon"] <= 0):
             raise ValueError("Response epsilon must be positive (joint-target radians)")
+        if meta.get("backend") == "TrackingSim/mujoco_warp/native_pairs_v1":
+            if meta.get("status") != "completed":
+                raise ValueError("Incomplete native response generation")
+            for key, shape in (("noise_prefix", (B, H)), ("signal_prefix", (B, H)),
+                               ("terminated_at_start", (B,))):
+                if key not in arrays or arrays[key].shape != shape or np.any(arrays[key] < 0):
+                    raise ValueError(f"Invalid native response quality field: {key}")
         # Perturbations are normalized over the complete joint-target sequence.
         delta = (arrays["a_plus"] - arrays["a_minus"]) * np.asarray(
             robot.action_scale_list()
@@ -113,10 +120,13 @@ class ResponseData:
         if not np.isfinite([self.q_scale, self.v_scale]).all():
             raise ValueError("Finite response output scales required")
 
-    def sample(self, count, generator=None):
+    def sample(self, count, generator=None, indices=None):
         ids = torch.randint(
-            self.count, (count,), device=self.data["s0"].device, generator=generator
+            self.count if indices is None else len(indices), (count,),
+            device=self.data["s0"].device, generator=generator
         )
+        if indices is not None:
+            ids = indices[ids]
         return {k: v[ids] for k, v in self.data.items()}
 
 

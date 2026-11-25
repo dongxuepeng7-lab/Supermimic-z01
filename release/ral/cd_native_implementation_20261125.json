@@ -1,0 +1,31 @@
+{
+  "stage": "cd_native_v1",
+  "status": "implemented_static_checks_only_not_executed",
+  "checks": [
+    "Python syntax compilation for 8 modified/new modules without importing them",
+    "10 B/C CLI argument sets inspected against argparse and archived parent args",
+    "JSON parsing of new configuration and updated task list",
+    "bash -n for both launchers",
+    "git diff --check"
+  ],
+  "gpu_smoke_run": false,
+  "research_tests_run": false,
+  "training_started": false,
+  "reason": "User requested implementation and commands without additional testing/experiments.",
+  "limitations": [
+    "GPU execution has not been validated in this change.",
+    "C/D gains and runtime remain unmeasured.",
+    "D/C-perm can be blocked by degenerate calibration.",
+    "Dense D/C-perm implementation does not claim compute savings from masked horizons."
+  ],
+  "files": {
+    "src/partymimic/train.py": "d2da1d6426c7431331ebb74f6e190a55ed92f3ec5c0577a08578923a69947b0d",
+    "src/partymimic/experiments/continuation.py": "486832dbfa04799f74abfc643a7e72a3b7dc8a23752711fefc5594a1f15805d5",
+    "src/partymimic/experiments/native_pairs.py": "d39fd599617ad40555b29b2183743a9c2cc4b99634eb19b0dfac9bcec98ec557",
+    "src/partymimic/experiments/response.py": "b291539db520b862d16cb0020453b24cbe82d7de5cfb9a67efe8e94006a10c9a",
+    "src/partymimic/experiments/windows.py": "6bbc0083ec52c9d0523b1431403cf4b6ef22fba1c1ec5ec654c5345d59a7a998",
+    "src/partymimic/experiments/starts.py": "56f19f2d457982b6a36662c6ac12a3d37badc03d693040a96a97e6ab081ec6b9",
+    "tools/ral_cd.py": "c849f9f41e566aa955f1b2a3717d37b9915539d51ec3a40e6000bbad190edc80",
+    "tools/ral_cd_worker.py": "30dce398bee66273767075dfd7786f03dec0906006d62838951316b097ca657c"
+  }
+}

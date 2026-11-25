@@ -25,7 +25,15 @@ parser.add_argument("--parameter_manifest", default=None)
 parser.add_argument("--response_manifest", default=None)
 parser.add_argument("--protocol", default=None)
 parser.add_argument("--wm_fit_source", choices=("legacy", "online"), default="legacy",
-                    help="legacy preserves frozen pairs for A+/B/C; online diagnoses A+/B with the base online objective and normalizers")
+                    help="legacy fits frozen pairs; online keeps replay forward fitting and optionally adds native GPU responses")
+parser.add_argument("--paired_parent", default=None,
+                    help="matched B -> B/C weight-only continuation; fresh optimizers, replay and schedule")
+parser.add_argument("--online_response", action="store_true",
+                    help="native GPU response branch for both B control and C; C alone receives its gradient")
+parser.add_argument("--response_batch", type=int, default=128)
+parser.add_argument("--response_every", type=int, default=5, help="one response batch per this many WM updates")
+parser.add_argument("--response_ramp_iters", type=int, default=250)
+parser.add_argument("--response_grad_ratio", type=float, default=0.1)
 parser.add_argument("--response_weight", type=float, default=1.)
 parser.add_argument("--response_horizon", type=int, default=0,
                     help="response-supervision prefix; 0 uses all recorded steps; forward labels remain full-span")
@@ -153,8 +161,21 @@ parser.add_argument("--paired_initial_reference", default=None,
 args = parser.parse_args()
 if args.paired_initial_reference and not args.paired_initialization:
     parser.error("--paired_initial_reference requires --paired_initialization")
-if args.wm_fit_source == "online" and args.experiment_group not in ("A0", "A", "A+", "B"):
-    parser.error("--wm_fit_source online is a new A0/A/A+/B diagnostic; C hybrid supervision is not implemented")
+if args.wm_fit_source == "online" and args.experiment_group == "C" and not args.online_response:
+    parser.error("Online C requires --online_response and new native GPU pairs")
+if args.online_response:
+    if args.wm_fit_source != "online" or args.experiment_group not in ("B", "C") or not args.paired_parent:
+        parser.error("--online_response requires online paired-parent B/C continuation")
+    if args.wm_amp != "none" or min(args.response_batch, args.response_every, args.response_ramp_iters) < 1:
+        parser.error("Native responses require FP32 WM and positive batch/frequency/ramp")
+    if not math.isfinite(args.response_grad_ratio) or not 0 < args.response_grad_ratio <= 1:
+        parser.error("response_grad_ratio must lie in (0,1]")
+    if args.experiment_group == "B" and args.response_weight != 0:
+        parser.error("Paired B control must have response_weight=0")
+    if args.experiment_group == "C" and args.response_weight <= 0:
+        parser.error("Online C must have positive response_weight")
+if args.paired_parent and (not args.online_response or not args.paired_initialization):
+    parser.error("--paired_parent requires --online_response and --paired_initialization")
 args.experiment_model = "base"
 if args.experiment_group:
     from partymimic.experiments import GROUPS
@@ -257,7 +278,7 @@ from partymimic.experiments.initialization import model_rng, stream_seeds, check
 with model_rng(args.seed, "wm", args.paired_initialization):
     wm = make_world_model(robot, layout, vars(args)).to(dev)
 response_data = None
-if args.experiment_model != "base" and args.wm_fit_source == "legacy":
+if args.experiment_model != "base" and (args.wm_fit_source == "legacy" or args.online_response):
     from partymimic.experiments.response import (
         ResponseData, paired_losses, initialize_pair_normalizers, validate_response_objective,
     )
@@ -267,6 +288,21 @@ if args.experiment_model != "base" and args.wm_fit_source == "legacy":
     if response_data.meta["source_type"] == "synthetic_test" and not args.synthetic_test:
         raise ValueError("Synthetic response fixtures require --synthetic_test")
     response_generator = torch.Generator(device=dev).manual_seed(args.seed + 7301)
+    if args.online_response:
+        from partymimic.experiments.continuation import validate_native_pairs
+        validate_native_pairs(response_data.meta, args)
+        if not 1 <= args.response_horizon <= response_data.horizon:
+            raise ValueError("Native response prefix must be explicit and within recorded horizon")
+        signal = torch.as_tensor(response_data.arrays["signal_prefix"], device=dev)
+        noise = torch.as_tensor(response_data.arrays["noise_prefix"], device=dev)
+        eligible = (signal[:, args.response_horizon - 1] >= .01) & (
+            signal[:, args.response_horizon - 1] >= 3 * noise[:, args.response_horizon - 1])
+        eligible &= ~torch.as_tensor(response_data.arrays["terminated_at_start"], device=dev).bool()
+        response_indices = eligible.nonzero().flatten()
+        if not len(response_indices):
+            raise ValueError("No fit response blocks exceed the fixed signal/noise floor; labels retained, training stopped")
+        args.response_fit_eligible_blocks = len(response_indices)
+        args.response_fit_total_blocks = response_data.count
 with model_rng(args.seed, "pi", args.paired_initialization):
     pi = Policy(mdp.obs_dim, GOAL_DIM, J, hist=Hh, enc_hidden=widths(args.enc_hidden), dec_hidden=widths(args.dec_hidden),
                 **policy_kwargs(vars(args), robot)).to(dev)
@@ -309,10 +345,10 @@ if args.kp_skip:
 pi_l = copy.deepcopy(pi).to(ldev) if args.pipeline else pi  # --pipeline: the trained policy; pi acts with its copy
 with model_rng(args.seed, "critic", args.paired_initialization):
     critic = Critic(CRITIC_IN).to(ldev)
-if args.paired_initial_reference:
+if args.paired_initial_reference and not args.paired_parent:
     check_initial_reference({"pi": pi, "critic": critic}, args.paired_initial_reference)
 ledger = None
-if args.experiment_group:
+if args.experiment_group and not args.paired_parent:
     from partymimic.experiments.runtime import RunLedger
     ledger = RunLedger(args, robot, {"wm": wm, "pi": pi, "critic": critic})
     torch.save({"wm": wm.state_dict(), "pi": pi.state_dict(), "critic": critic.state_dict(),
@@ -393,6 +429,34 @@ elif args.init:
         pi_avg.module.load_state_dict(ck["pi"])
         pi_avg.n_averaged.fill_(1)
     print(f"--init: weights of {args.init} (it {ck['iteration']})", flush=True)
+    del ck
+
+if args.paired_parent:
+    from partymimic.experiments.continuation import validate_parent
+    from partymimic.experiments.runtime import RunLedger
+    ck = validate_parent(args.paired_parent, args)
+    wm.load_state_dict(ck["wm"])
+    pi.load_state_dict(ck["pi_live"])
+    critic.load_state_dict(ck["critic"])
+    if pi_avg is not None:
+        pi_avg.module.load_state_dict(ck["pi"])
+        pi_avg.n_averaged.fill_(1)
+    args.parent_checkpoint_sha256 = sha256(args.paired_parent)
+    args.inherited_env_steps = int(ck["sim_steps"])
+    args.inherited_iterations = int(ck["iteration"])
+    args.continuation_semantics = "weight-only paired branch; optimizers/replay/reset statistics/schedule reset; new counters start at zero"
+    if args.paired_initial_reference:
+        check_initial_reference({"pi": pi, "critic": critic}, args.paired_initial_reference)
+    json.dump(vars(args), open(os.path.join(args.log_dir, "args.json"), "w"), indent=2)
+    ledger = RunLedger(args, robot, {"wm": wm, "pi": pi, "critic": critic})
+    ledger.data.update(parent_checkpoint_sha256=args.parent_checkpoint_sha256,
+                       inherited_env_steps=args.inherited_env_steps,
+                       inherited_iterations=args.inherited_iterations,
+                       resume_semantics=args.continuation_semantics)
+    ledger.write()
+    torch.save({"wm": wm.state_dict(), "pi": pi.state_dict(), "critic": critic.state_dict(),
+                "pi_ema": pi_avg.module.state_dict() if pi_avg is not None else pi.state_dict(),
+                "args": vars(args), "iteration": 0, "sim_steps": 0}, os.path.join(args.log_dir, "initial.pt"))
     del ck
 
 
@@ -526,7 +590,7 @@ def _mirror_windows(w: dict, n: int) -> dict:
 
 
 def wm_update():
-    if response_data is not None:
+    if response_data is not None and not args.online_response:
         # A+/B/C fit exactly the same frozen data stream, independent of each policy's
         # online collection. Normalizers are also initialized from this dataset only.
         batch = response_data.sample(args.wm_batch, response_generator)
@@ -548,8 +612,38 @@ def wm_update():
     S_hat = wm_rollout(w["s"], w["a"], w["a_prev"], w["xi"])
     loss, e_last = wm_err(S_hat, w["s1"], w["mask"])
     opt_wm.zero_grad(set_to_none=True)
-    loss.backward()
-    nn.utils.clip_grad_norm_(wm.parameters(), 1.0)
+    if args.online_response:
+        RESPONSE_COUNTER[0] += 1
+    if args.online_response and RESPONSE_COUNTER[0] % args.response_every == 0:
+        from partymimic.experiments.continuation import bounded_response_backward
+        batch = response_data.sample(args.response_batch, response_generator, response_indices)
+        # The stored H=32 pairs also serve later calibration; training differentiates
+        # only through this prefix, preserving the online forward objective/window.
+        batch = {k: v[:, :args.response_horizon] if k in ("a_plus", "a_minus", "s_plus", "s_minus") else v
+                 for k, v in batch.items()}
+        with torch.set_grad_enabled(args.experiment_group == "C"):
+            _, response, errors = paired_losses(
+                wm, batch, normalize_xi, response_data.q_scale, response_data.v_scale,
+                response_horizon=args.response_horizon, response_loss=args.response_loss,
+                response_huber_delta=args.response_huber_delta)
+        RESPONSE_DIAG.copy_(response.detach())
+        RESPONSE_RAW_MSE.copy_(errors.square().mean().detach())
+        weight = args.response_weight * min(1., (it + 1) / args.response_ramp_iters)
+        if args.experiment_group == "C":
+            effective, nf, nr = bounded_response_backward(
+                loss, response, wm.parameters(), args.wm_window * weight, args.response_grad_ratio)
+            RESPONSE_WEIGHTED.copy_(effective * response.detach() / args.wm_window)
+        else:
+            loss.backward()
+            effective = nf = nr = loss.new_zeros(())
+            RESPONSE_WEIGHTED.zero_()
+        RESPONSE_LOG.write(f"{it+1},{RESPONSE_COUNTER[0]},{weight},{float(effective)/args.wm_window},"
+                           f"{float(loss.detach())/args.wm_window},{float(response.detach())},"
+                           f"{float(RESPONSE_RAW_MSE)},{float(nf)},{float(nr)}\n")
+        RESPONSE_LOG.flush()
+    else:
+        loss.backward()
+    nn.utils.clip_grad_norm_(wm.parameters(), 1.0, error_if_nonfinite=args.online_response)
     opt_wm.step()
     m = w["mask"][:, -1]
     return loss.detach() / args.wm_window, (e_last.detach() * m).sum() / m.sum().clamp(min=1)
@@ -877,7 +971,7 @@ def _collect_core():
     buffer.add_device(out)
     S0, S1 = unflatten_state(out["s"]), unflatten_state(out["s1"])
     wm_in, wm_out, wm_inc = wm_norm_data_c(S0, S1, out["a"], out["a_prev"], out["xi"])
-    if response_data is None:
+    if response_data is None or args.online_response:
         wm.in_norm.update(wm_in)
         wm.out_norm.update(wm_out)
         wm.inc_norm.update(wm_inc)
@@ -1144,7 +1238,12 @@ class Pipe:
 
 RESPONSE_DIAG = torch.zeros((), device=dev)
 RESPONSE_RAW_MSE = torch.zeros((), device=dev)
-if response_data is not None:
+RESPONSE_WEIGHTED = torch.zeros((), device=dev)
+RESPONSE_COUNTER = [0]
+if args.online_response:
+    RESPONSE_LOG = open(os.path.join(args.log_dir, "native_response_metrics.csv"), "w")
+    RESPONSE_LOG.write("iteration,wm_update,scheduled_weight,effective_weight,forward_loss,response_loss,response_raw_mse,forward_grad_norm,response_grad_norm\n")
+if response_data is not None and not args.online_response:
     initialize_pair_normalizers(wm, response_data, normalize_xi)
 wm_update_g = Graphed(wm_update, lambda: True)
 _ready = lambda: int(pi_avg.n_averaged if pi_avg is not None else 1) > 0  # noqa: E731
@@ -1294,8 +1393,8 @@ for it in range(start_it, args.iterations):
                       p_updates * args.horizon * args.pi_batch, float(l),
                       float(RESPONSE_DIAG) if response_data is not None else None,
                       float(pl) if p_updates else None,
-                      forward_loss=float(e8) if response_data is not None else None,
-                      weighted_response_loss=(args.response_weight * float(RESPONSE_DIAG)
+                      forward_loss=(float(l) if args.online_response else float(e8)) if response_data is not None else None,
+                      weighted_response_loss=(float(RESPONSE_WEIGHTED) if args.online_response else args.response_weight * float(RESPONSE_DIAG)
                                               if args.experiment_group == "C" else 0.) if response_data is not None else None,
                       response_raw_mse=float(RESPONSE_RAW_MSE) if response_data is not None else None)
     out_of_time = args.max_hours is not None and wall >= args.max_hours * 3600

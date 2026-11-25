@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import json
+import time
 
 import numpy as np
 import torch
@@ -31,6 +32,20 @@ def speed_bins(state, edges):
     return torch.bucketize(unflatten_state(state)[5].square().mean(-1).sqrt(), edges)
 
 
+def state_bins(state, edges, mode="speed", kin=None, feet=None):
+    bins = speed_bins(state, edges)
+    if mode == "speed":
+        return bins
+    if mode != "speed_support" or kin is None or feet is None or len(feet) != 2:
+        raise ValueError("speed_support requires kinematics and two ankle bodies")
+    from partymimic.mdp import CONTACT_Z
+    positions = kin.forward(*unflatten_state(state))[0]
+    near_ground = positions[:, feet, 2] <= CONTACT_Z
+    # Current-state foot-height proxy, NOT future contact events or contact-force truth.
+    support = near_ground[:, 0].long() + 2 * near_ground[:, 1].long()
+    return bins + (len(edges) + 1) * support
+
+
 def calibrate_windows(
     wm,
     dataset,
@@ -43,6 +58,10 @@ def calibrate_windows(
     quantile=0.9,
     min_blocks=10,
     signal_floor=0.01,
+    binning="speed",
+    kin=None,
+    feet=None,
+    relative=False,
 ):
     from .response import paired_losses
 
@@ -60,7 +79,7 @@ def calibrate_windows(
             "Speed bin edges must be strictly increasing positive rad/s values"
         )
     device = dataset.data["s0"].device
-    bins = speed_bins(dataset.data["s0"], torch.tensor(edges, device=device))
+    bins = state_bins(dataset.data["s0"], torch.tensor(edges, device=device), binning, kin, feet)
     errors = []
     with torch.no_grad():
         for i in range(0, dataset.count, 128):
@@ -81,10 +100,26 @@ def calibrate_windows(
         ),
         -1,
     )
-    signal = signal.square().mean(-1).sqrt().amax(-1).cpu().numpy()
+    signal_steps = signal.square().mean(-1).cpu().numpy()
+    signal = np.sqrt(signal_steps).max(-1)
+    if relative:
+        if dataset.meta.get("backend") != "TrackingSim/mujoco_warp/native_pairs_v1":
+            raise ValueError("Relative/noise-aware window calibration requires native GPU labels")
+        denom = np.arange(1, dataset.horizon + 1)
+        signal_prefix = np.sqrt(np.cumsum(signal_steps, axis=1) / denom)
+        error_prefix = np.sqrt(np.cumsum(errors ** 2, axis=1) / denom)
+        noise = dataset.arrays["noise_prefix"]
+        if noise.shape != errors.shape:
+            raise ValueError("GPU response repeat-noise dimensions differ")
+        valid = (signal_prefix >= signal_floor) & (signal_prefix >= 3 * noise)
+        valid &= ~dataset.arrays["terminated_at_start"].astype(bool)[:, None]
+        # Unreliable labels fail calibration rather than disappearing from its denominator.
+        errors = np.where(valid, error_prefix / np.maximum(signal_prefix, 1e-12), 1e30)
     rows = []
-    for b in range(len(edges) + 1):
-        mask = (bins.cpu().numpy() == b) & (signal >= signal_floor)
+    for b in range((len(edges) + 1) * (4 if binning == "speed_support" else 1)):
+        mask = bins.cpu().numpy() == b
+        if not relative:
+            mask &= signal >= signal_floor
         n = int(mask.sum())
         # Aggregate within sessions first; many windows from one record are not independent evidence.
         session_errors = []
@@ -106,6 +141,8 @@ def calibrate_windows(
                 independent_sessions=len(session_errors),
                 horizon=long if valid_long else short,
                 short_validated=valid_short,
+                long_validated=valid_long,
+                total_blocks=n,
                 prefix_error=[float(x) if np.isfinite(x) else None for x in q],
             )
         )
@@ -121,6 +158,11 @@ def calibrate_windows(
         quantile=quantile,
         min_blocks=min_blocks,
         signal_floor=signal_floor,
+        binning=binning,
+        support_definition="ankle origin height <= existing CONTACT_Z; observable proxy, not force contact" if binning == "speed_support" else None,
+        error_mode="relative_prefix_rmse" if relative else "absolute_per_step_rmse",
+        noise_multiplier=3 if relative else None,
+        tolerance_interpretation="prespecified engineering threshold, not a certified policy-return bound",
         bins=rows,
     )
 
@@ -140,6 +182,7 @@ def train_windows(
     seed=1,
     lr=1e-4,
     device="cuda:0",
+    fixed_horizon=None,
 ):
     """D/C-perm update only the actor using the same frozen C model/critic and start pool."""
     from partymimic.networks import Policy, Critic, policy_kwargs
@@ -192,6 +235,8 @@ def train_windows(
     ):
         raise ValueError("Actor start dimensions mismatch")
     H, K = cal["long"], args["goal_frames"]
+    if fixed_horizon is not None and fixed_horizon not in (cal["short"], cal["long"]):
+        raise ValueError("Fixed-window control must use one of the prespecified horizons")
     frames = pool["f"]
     if not len(frames) or bool(((frames < 0) | (frames >= motion.num_frames)).any()):
         raise ValueError("Invalid actor-start reference frames")
@@ -226,10 +271,13 @@ def train_windows(
     initial_hash = state_hash({"pi": pi, "wm": wm, "critic": critic})
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
-    args = dict(args, experiment_group=group)
+    args = dict(args, experiment_group=group if fixed_horizon is None else "C",
+                window_variant=group if fixed_horizon is None else f"C-fixed{fixed_horizon}",
+                window_iterations=iterations, window_batch_size=batch_size,
+                window_short=cal["short"], window_long=cal["long"])
     (output / "args.json").write_text(json.dumps(args, indent=2))
     run = dict(
-        group=group,
+        group=args["experiment_group"],
         status="running",
         checkpoint_sha256=sha256(checkpoint),
         calibration_sha256=sha256(calibration),
@@ -242,6 +290,9 @@ def train_windows(
         frozen_world_model=True,
         frozen_critic=True,
         formal_results=False,
+        window_variant=args["window_variant"],
+        fixed_horizon=fixed_horizon,
+        actor_weights="live (same initial actor for all window branches)",
         fallback_bins=[r["bin"] for r in cal["bins"] if not r["short_validated"]],
     )
     from .protocol import code_hash, asset_hash
@@ -252,7 +303,7 @@ def train_windows(
         params_sha256=args.get("parameter_manifest_sha256"),
         response_sha256=response_hash,
         motion_sha256=object_hash(motion.input_hashes),
-        inherited_env_steps=ck["sim_steps"],
+        inherited_env_steps=ck["sim_steps"] + ck["args"].get("inherited_env_steps", 0),
         new_env_steps=0,
         implementation="PartyMimic Z01 frozen-C actor window ablation",
     )
@@ -262,17 +313,27 @@ def train_windows(
     perm_rng = torch.Generator(device=device).manual_seed(seed + 9001)
     edges = torch.tensor(cal["speed_edges_rad_s"], device=device)
     lookup = torch.tensor([r["horizon"] for r in cal["bins"]], device=device)
+    pool_bins = state_bins(pool["s"], edges, cal.get("binning", "speed"), mdp.kin, mdp.feet)
+    supported = torch.tensor([r["short_validated"] for r in cal["bins"]], device=device)
+    run["start_pool_unvalidated_fraction"] = float((~supported[pool_bins]).float().mean())
+    assigned_pool = lookup[pool_bins]
+    run["nondegenerate_window_assignment"] = bool((assigned_pool == cal["short"]).any() and (assigned_pool == cal["long"]).any())
+    if fixed_horizon is None and not run["nondegenerate_window_assignment"]:
+        run.update(status="blocked_degenerate_calibration", reason="No short/long variation on actual fit starts; D equals permutation control")
+        (output / "run.json").write_text(json.dumps(run, indent=2))
+        raise ValueError(run["reason"])
     import csv
 
     rows, sampling = [], []
+    started = time.time()
     try:
         for it in range(iterations):
             ids = torch.randint(
                 len(frames), (batch_size,), generator=sample_rng, device=device
             )
             data = {k: v[ids] for k, v in pool.items()}
-            horizons = lookup[speed_bins(data["s"], edges)]
-            if group == "C-perm":
+            horizons = lookup[pool_bins[ids]] if fixed_horizon is None else torch.full_like(ids, fixed_horizon)
+            if group == "C-perm" and fixed_horizon is None:
                 horizons = horizons[
                     torch.randperm(batch_size, generator=perm_rng, device=device)
                 ]
@@ -284,9 +345,12 @@ def train_windows(
             )
             xi, xi_n = data["xi"], layout.normalize(data["xi"])
             rewards, dones, values = [], [], []
-            for t in range(H):
-                action = pi(hist, motion.goal(f, K))
+            # Fixed controls do only their actual H work. D/C-perm both execute
+            # the dense long graph, even when some samples stop early: report it.
+            computed_horizon = H if fixed_horizon is None else fixed_horizon
+            for t in range(computed_horizon):
                 active = t < horizons
+                action = torch.where(active[:, None], pi(hist, motion.goal(f, K)), previous)
                 prediction = wm.step(S, action, previous, xi_n)
                 S = tuple(
                     torch.where(active.reshape(-1, *([1] * (x.ndim - 1))), y, x)
@@ -311,10 +375,11 @@ def train_windows(
                         )
                     )
                 )
-                hist = torch.cat(
+                next_hist = torch.cat(
                     (hist[:, 1:], mdp.obs(S, action, xi, f).unsqueeze(1)), 1
                 )
-                previous = action
+                hist = torch.where(active[:, None, None], next_hist, hist)
+                previous = torch.where(active[:, None], action, previous)
             loss = -variable_objective(
                 torch.stack(rewards),
                 torch.stack(dones),
@@ -335,16 +400,19 @@ def train_windows(
                     iteration=it + 1,
                     loss=float(loss.detach()),
                     assigned_steps=int(horizons.sum()),
-                    computed_steps=H * batch_size,
+                    computed_steps=computed_horizon * batch_size,
                     short_count=int((horizons == cal["short"]).sum()),
                 )
             )
             sampling.append(ids.cpu().numpy())
         if state_hash({"wm": wm, "critic": critic}) != frozen_hash:
             raise RuntimeError("Frozen model/critic changed")
+        if any(not bool(torch.isfinite(p).all()) for p in pi.parameters()):
+            raise FloatingPointError("Nonfinite final window actor")
         torch.save(
             dict(
                 pi=pi.state_dict(),
+                pi_live=pi.state_dict(),
                 wm=wm.state_dict(),
                 critic=critic.state_dict(),
                 args=args,
@@ -371,6 +439,8 @@ def train_windows(
             start_schedule_sha256=object_hash(np.asarray(sampling).tolist()),
             assigned_imagined_steps=sum(r["assigned_steps"] for r in rows),
             computed_imagined_steps=sum(r["computed_steps"] for r in rows),
+            wall_seconds=time.time() - started,
+            nondegenerate_executed_histogram=0 < sum(r["short_count"] for r in rows) < iterations * batch_size,
         )
     except BaseException:
         run["status"] = "interrupted_or_failed"
