@@ -1,0 +1,13 @@
+{
+  "review_date": "2026-11-26",
+  "status": "completed_with_blocked_windows",
+  "completed_evaluations": 150,
+  "episodes": 24450,
+  "blocked_window_branches": 10,
+  "eval_file_hashes_checked": 150,
+  "nonfinite_evaluation_steps": 0,
+  "all_executable_evaluations_finished": true,
+  "all_original_groups_finished": false,
+  "note": "D/C-perm blocked by original calibration; not zero performance. Separate from cd02_3090 missing26 evaluations.",
+  "source": "/home/zoyi/Projects/Supermimic-z01/logs/ral_cd/cd01_3090/status.json"
+}

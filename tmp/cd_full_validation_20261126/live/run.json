@@ -1,0 +1,9 @@
+{
+  "status": "completed",
+  "kind": "live_parent_export",
+  "source_checkpoint_sha256": "96a6330d4c962ab1fa9fc4fd3280ca8dc8811a6628f225bf7b6c8b65e3212096",
+  "checkpoint_sha256": "e59be35f5319a6f1560faa741152179809c7788346e188b4efcaf37ecfefe91f",
+  "actor_weights": "live",
+  "new_training_updates": 0,
+  "formal_results": false
+}

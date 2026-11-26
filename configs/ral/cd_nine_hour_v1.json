@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "stage": "cd_native_9h_v1",
+  "hours": 9,
+  "shutdown_reserve_seconds": 120,
+  "max_output_gib": 60,
+  "min_free_gib": 15,
+  "job_timeout_hours": 2,
+  "seeds": [501, 505, 509, 513, 517],
+  "source_session": "cd01",
+  "scope": "development intervention after cd01; matched incremental updates, no superiority guarantee; machines are separate within-device comparisons",
+  "source_archive_sha256": {
+    "501": "2e26e58e1fb1cc5ba6ac91682e46c4ecde9c0d3a3690f2af3ac904eedc285732",
+    "505": "86a6db1150f5dcc287584b376755bb1dd191d7a14f4dd087525cef1be2f44b15",
+    "509": "e155113c617d6f5be3c4fb4f966cbb812586639b496319cac0507044db4458e8",
+    "513": "588b5f0051296e21df6cedd8b4159077ade63cda7d06732dd482bae62bfee56b",
+    "517": "ed7497c9f3d6a5c026af35629dbef6e6828f701bbb85bdeb20aea5cf16d60e96"
+  },
+  "training_overrides": {
+    "iterations": 6000,
+    "wm_only_iters": 100,
+    "ckpt_every": 1000,
+    "ckpt_minutes": 0,
+    "log_every": 25,
+    "lr": 0.0001,
+    "lr_decay_iters": 6000,
+    "online_response": true,
+    "response_batch": 128,
+    "response_every": 5,
+    "response_ramp_iters": 250,
+    "response_grad_ratio": 0.1,
+    "response_loss": "huber",
+    "response_huber_delta": 1.0
+  },
+  "machines": {
+    "5080": {
+      "candidates": [
+        {"name": "B", "group": "B", "response_horizon": 8, "response_weight": 0},
+        {"name": "C_h4", "group": "C", "response_horizon": 4, "response_weight": 0.01},
+        {"name": "C_h8", "group": "C", "response_horizon": 8, "response_weight": 0.01}
+      ],
+      "window_parent": "C_h8"
+    },
+    "3090": {
+      "candidates": [
+        {"name": "B", "group": "B", "response_horizon": 32, "response_weight": 0},
+        {"name": "C_h32", "group": "C", "response_horizon": 32, "response_weight": 0.01}
+      ],
+      "window_parent": "C_h32"
+    }
+  },
+  "pairs": {"horizon": 32, "blocks_per_clip": 8, "epsilon": 0.01, "pre_roll": 20},
+  "windows": {
+    "short": 8, "long": 32, "edges": [0.5, 1.0, 2.0],
+    "binning": "speed_support", "relative": true,
+    "tolerance": 0.5, "quantile": 0.9, "min_blocks": 10, "signal_floor": 0.01,
+    "capture_steps": 64, "iterations": 200, "batch_size": 64, "lr": 0.0001,
+    "fixed_controls": [8, 32]
+  },
+  "evaluation": {
+    "priority_scenarios": ["identified", "nominal"],
+    "remaining_scenarios": ["midpoint", "armature_nominal", "damping_nominal", "frictionloss_nominal"],
+    "primary": "only complete five-nonreference-scenario paired cells; first mean within seed, then across seeds; preserve negatives and missing values",
+    "scope": "known actuator endpoints and seen reference motions, not unseen-motion or hardware validation"
+  },
+  "response_test_accessed": false,
+  "formal_results": false
+}

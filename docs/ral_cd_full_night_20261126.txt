@@ -1,0 +1,83 @@
+C/D 今晚九小时完整矩阵安排（2026-11-26，cd04_full）
+
+已确认的旧任务
+cd01_3090：150 项可执行评估全部完成，逐文件哈希和每项163条记录已核对；D/C-perm共10支被校准阻止，因此不能称原七组全部完成。
+cd02_3090：10个模型训练完成，34/60项评估完成，尚缺26项。今晚用旧权重补齐，结果写入新会话，不改旧记录、不重训旧模型。
+cd03_strength_5080：15模型/90评估全部完成。实际梯度中位数10%→17.96%，32步cal误差仅改善0.014%；不能再把长时响应不足仅解释为上限太小。
+旧cd01的冻结模型窗口更新，六条件完成率均值为C 92.76%、固定8步86.65%、固定32步90.10%。这属于同一队列的描述性结果，提示actor改动可能过大；EMA C与live窗口分支又有权重差异，不能直接全归因于窗口。因此新队列加入同一父模型的live actor基准。
+
+今晚的范围
+完成当前C/D主线的预先声明仿真矩阵。不是一夜重跑原论文所有A0/A/A+/B/C/C-perm/D组，也不等于完成真机或未见动作验证。原严格D失败完整保留；经验风险窗口为新探索协议D_emp，不能直接冒充原论文有误差保证的D。
+五种子固定501、505、509、513、517；统一六条件identified、nominal、midpoint、armature_nominal、damping_nominal、frictionloss_nominal；每条件163个动作。每台机器内配对，跨机器分别报告，不混成十个同分布种子。
+
+3090：九小时上限，预计8–9小时
+阶段1，约0–2小时：补cd02缺少的26项评估，旧34项先核验后复用。完成后旧矩阵达到60/60；完成记录在新会话summary.json的legacy_matrix中，旧status.json保持原预算结束状态。
+阶段2，约2–4小时：从每种子cd02最终B检查点重新采集本机原生fit/cal响应标签，保留原session划分。训练B_refresh、C_h4_w05，各5种子，共10支模型。
+阶段3，约4–8.5小时：完成新10支模型×6条件=60项评估。
+剩余时间用于收尾和打包。预计耗时按旧评估中位数261.7秒和旧训练速度估算，硬件负载会影响实际完成时间。
+
+5080：九小时上限，预计8–9小时
+阶段1，约0–1.5小时：同样从本机cd02最终B出发，采集新原生标签；训练B_refresh、C_h4_w01、C_h4_w05，各5种子，共15支。
+阶段2，约1.5–2.5小时：固定使用C_h4_w05最终模型作为窗口父模型，不根据结果挑选。保存5个父模型live actor导出；完成严格8/32校准并另生成经验风险映射；训练D_emp、C_perm_emp、C_fixed16、C_fixed32，各5种子，共20支窗口模型。
+阶段3，约2.5–9小时：8种策略×5种子×6条件=240项评估，先覆盖identified/nominal，再覆盖其余四条件。包含三个联合训练组、四个窗口组、一个未更新的live actor基准。
+历史单项评估约96.1秒，240项约6小时24分；所有训练和准备需控制在剩余预算内。九小时硬上限，不承诺机器异常时仍能补全。
+
+共同B/C配置
+从同种子的cd02最终B权重开始，重置优化器和replay；不是精确续训。B/C共享同一初始WM/actor/critic和新标签。
+每支2000轮，前100轮仅世界模型，合计10000次世界模型更新、1900次策略更新；actor窗口32、在线WM窗口8、1024环境、FP32世界模型保持原样。
+响应前缀4步，Huber delta=1，batch128，每5次WM更新加入一次响应损失，250轮渐入，响应梯度上限10%。
+B_refresh：响应权重0。
+C_h4_w01：权重0.01，仅5080。
+C_h4_w05：权重0.05，两机。
+选择依据：已有4步响应误差比32步更能改善；以最新B策略状态重新生成标签，减小旧父模型分布滞后的可能影响。五倍权重用于增强短期目标，仍受10%梯度上限约束；这是待检验候选，不是已证实最优值。
+
+经验风险窗口协议（5080）
+原严格8/32校准：相对前缀误差门槛0.5、0.9分位、至少10块/2session及原噪声条件均不变；结果单独保留。
+新D_emp采用16/32步：在cal中，按各速度/支撑状态区间的32步最大相对前缀误差排序；样本足够、无不可靠标签大数标记的区间中，误差较低的一半（向下取整，平局按区间编号）分配32步，其他分配16步。
+这是基于校准误差排序的经验分配，不声称这些窗口通过0.5门槛或具有理论回报保证。全部原验证布尔值按真实误差保留，不把失败改成通过。
+D_emp/C_perm_emp逐更新共享起点批次和完全一致的长短窗口数量，C_perm_emp只打乱起点与窗口的对应关系。两者均执行密集32步图，不能宣称节省实际计算。
+四个窗口组共同冻结WM和critic，共用初始live actor、起点及采样顺序；仅actor更新100次，batch64，学习率1e-5，降低旧200次/1e-4的大幅改动风险。固定16/32组做各自实际窗口计算，不声称四组计算量相等。
+若经验映射在真实起点上退化为单一窗口，仍执行对应固定窗口的具名经验对照，明确标记empirical_assignment_identifiable=false；该种子不支持状态依赖窗口的机制结论，不隐去、不填零、不伪造混合。
+加入C_parent_live基准，用同一未更新live actor评估六条件。它不算新训练模型。
+
+判断与完整性
+C主比较：C_h4_w05−B_refresh；5080另报告C_h4_w01及两档权重差值。每种子先平均五个非参考条件，再跨五个配对种子汇总。
+窗口主比较：D_emp对C_perm_emp、固定16、固定32及C_parent_live。只有优于打乱且与固定/未更新基准的比较合理，才能讨论状态选择价值；原严格D保证仍需另有证据。
+报告全部种子、所有条件、配对差值与波动，保留不利结果。cal误差下降不自动等于策略优势；探索性5种子区间不替代独立确认实验。
+summary.json列出完整预期矩阵和缺项；complete_for_declared_campaign只有全部模型检查、cal响应、校准、配对和评估齐全时才为true。budget_exhausted、失败或缺项不能叫全部完成。
+严重数值/完整性/磁盘错误停止队列；普通独立子任务失败保留日志并继续其他独立任务。续跑保留原九小时已用预算，不暗中延长或覆盖旧结果。
+
+安装5080（需保留完整cd02_5080模型目录）
+将ral_cd_full_night_20261126.tar.gz和同名.sha256放入Downloads。
+该机已有项目路径记录为/home/zoyi/project/Supermimic-z01；若实际路径不同，使用含pyproject.toml的真实仓库，不新建空目录。
+
+cd "$HOME/Downloads" &&
+sha256sum -c ral_cd_full_night_20261126.tar.gz.sha256 &&
+cd "$HOME/project/Supermimic-z01" &&
+tar -xzf "$HOME/Downloads/ral_cd_full_night_20261126.tar.gz" &&
+bash scripts/ral_5080_cd_full.sh --check-inputs
+
+确认ready:true后启动：
+mkdir -p logs/ral_cd9
+nohup bash scripts/ral_5080_cd_full.sh --session cd04_full >> logs/ral_cd9/cd04_full_5080_console.log 2>&1 &
+
+3090启动（如果本地助手已启动，不要重复执行）：
+cd /home/zoyi/Projects/Supermimic-z01
+bash scripts/ral_3090_cd_full.sh --check-inputs
+nohup bash scripts/ral_3090_cd_full.sh --session cd04_full >> logs/ral_cd9/cd04_full_3090_console.log 2>&1 &
+
+检查进度：
+bash scripts/ral_3090_cd_full.sh --session cd04_full --status
+bash scripts/ral_5080_cd_full.sh --session cd04_full --status
+上述两条在对应机器运行。不会占用GPU。
+如cd02目录不在默认logs/ral_cd9/cd02_机器名，可在检查和启动时同样加入--source 实际目录。
+断电后用同一session加--continue-session，仅使用剩余原预算；未完成训练另开attempt从共同父模型开始，不能宣称精确恢复优化器。
+
+完成回传
+logs/ral_cd9/cd04_full_机器名_console.log
+logs/ral_cd9/cd04_full_机器名_review.tar.gz
+logs/ral_cd9/cd04_full_机器名_review.tar.gz.sha256
+完整模型、原生标签和起点池留在各机。review是轻量元数据包，不含模型权重。
+
+文件范围
+只新增本轮入口、经验窗口worker、配置、脚本、测试与说明。不修改src训练/模拟代码和旧队列；旧实验源代码哈希与模型合同保持不变。

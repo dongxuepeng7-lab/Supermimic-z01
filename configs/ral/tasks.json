@@ -163,27 +163,74 @@
     {
       "id": "CD-NATIVE-5080",
       "owner": "5080_train",
-      "status": "implemented_static_checks_only_not_run",
+      "status": "completed_reviewed_5_paired_seeds_no_superiority_established",
       "task": "User authorized native GPU C implementation. Reuse all five B_v005 parents (501,505,509,513,517), generate GPU fit/cal pairs with preserved contacts and session split, run matched B_continue/C weight-only branches at 2000 iterations (100 WM-only then 1900 actor), and export per-seed handoffs. Do not rerun diagnostic queues or claim superiority."
     },
     {
       "id": "CD-NATIVE-3090",
       "owner": "3090_train_eval",
-      "status": "implemented_waiting_native_C_handoffs",
-      "task": "Receive each native C handoff; calibrate speed/support proxy bins on cal, capture shared fit starts, train fixed8/fixed32 and nondegenerate D/C-perm frozen-model actor branches. Record unsupported fallbacks and dense Hmax compute honestly; keep missing/blocked outcomes distinct from zero. Common known-parameter evaluation follows; no new heldout/hardware claim."
+      "status": "completed_reviewed_150_executable_evaluations_original_D_and_perm_blocked",
+      "task": "Receive each native C handoff; calibrate speed/support proxy bins on cal, capture shared fit starts, train fixed8/fixed32 and nondegenerate D/C-perm frozen-model actor branches. Record unsupported fallbacks and dense Hmax compute honestly; keep missing/blocked outcomes distinct from zero. Common known-parameter evaluation follows; no new heldout/hardware claim.",
+      "completion_record": "logs/ral_cd/cd01_3090/status.json",
+      "review": "release/ral/cd01_3090_completion_20261126.json"
+    },
+    {
+      "id": "CD9-5080",
+      "owner": "5080_train_eval",
+      "status": "completed_reviewed_5_seeds_D_blocked_no_completion_advantage",
+      "task": "Nine active wall hours; five fixed B_v005 seeds; matched 6000-iteration B/C_h4/C_h8 continuation with C weight 0.01 and 10% raw-gradient cap; native labels on own GPU. Prespecified C_h8 window parent, original 8/32 and 0.5 calibration gate. Common evaluations, preserve incomplete/negative results.",
+      "review": "release/ral/cd02_5080_review_20261126.json",
+      "result": "15 full-budget models, 90 evaluations/14670 episodes audited; 5h12m29s active. Five-nonreference mean completion B 93.8405%, C_h4 93.6933%, C_h8 93.5215%. C improves short cal response modestly but not closed-loop aggregate completion. No validated 8/32 bins for any seed; D/C_perm/fixed-window controls not launched. Preserve models and negative evidence."
+    },
+    {
+      "id": "CD9-3090",
+      "owner": "3090_train_eval",
+      "status": "budget_exhausted_10_models_trained_34_of_60_evaluations_complete",
+      "task": "Wait for successful cd01_3090 and released GPU lock, then nine active wall hours; five fixed seeds, matched 6000-iteration B/C_h32 continuation with newly generated 3090-native labels. Original D gate unchanged; no transfer dependency on new 5080 runs. Waiting excluded; unexpected predecessor failure blocks without taking GPU.",
+      "execution_record": "logs/ral_cd9/cd02_3090/status.json",
+      "review": "release/ral/cd02_3090_review_20261126.json",
+      "result": "10 full-budget models and final file hashes verified. 34 evaluations complete; 26 missing including one budget-interrupted evaluation. No complete five-condition seed pairs. Original nine-hour budget exhausted; estimated 1h53m net evaluation needed from existing weights in separately budgeted supplement. D blocked for all 5 seeds; no new GPU job launched in this review."
+    },
+    {
+      "id": "CD-CAP-5080",
+      "owner": "5080_train_eval",
+      "status": "completed_reviewed_5_seeds_no_cap_benefit_D_blocked",
+      "config": "configs/ral/cd_strength_v1.json",
+      "task": "Nine-hour ceiling, seeds501/505/509/513/517. On-device B/C_h32_cap10/C_h32_cap30, same6000 iterations and originalBparents/native labels; C weight0.01 and cap is the sole C/C difference. Complete all90 primary evaluations before any eligibleD/permuted/fixed controls. Preserve blocked/partial outcomes; no cross-device causal contrast. Sourcefiles frozen by running3090 remain unchanged.",
+      "evidence": "release/ral/cd_strength_design_20261126.json",
+      "review": "release/ral/cd03_strength_5080_review_20261126.json",
+      "result": "15 full-budget models, 90 evaluations/14670 episodes. Actual weighted response-gradient median 10.00% vs 17.962%. Cap30 vs cap10: five-condition completion -0.26994pp; paired cal response32 change -0.01412%. No established superiority. All 5 seeds have zero validated 8/32 bins; D/C_perm/fixed-window controls not launched."
+    },
+    {
+      "id": "CD-FULL-3090",
+      "owner": "3090_train_eval",
+      "status": "running_legacy_completion_first",
+      "config": "configs/ral/cd_full_night_v1.json",
+      "task": "Nine-hour separate campaign; complete declared five-seed six-condition matrix. Reuse34 old evaluations, finish26, then10 refreshed B/C models and60 new evaluations.",
+      "evidence": "release/ral/cd_full_night_design_20261126.json"
+    },
+    {
+      "id": "CD-FULL-5080",
+      "owner": "5080_train_eval",
+      "status": "packaged_awaiting_remote_launch",
+      "config": "configs/ral/cd_full_night_v1.json",
+      "task": "Nine-hour separate campaign; complete declared five-seed six-condition matrix. 15 B/C models,20 empirical-risk/permuted/fixed16/fixed32 actor branches,5 exact live-parent exports;240 evaluations. Empirical D is not original certified D.",
+      "evidence": "release/ral/cd_full_night_design_20261126.json"
     }
   ],
-  "current_execution_requirements": "docs/ral_cd_native_20261125.md",
-  "current_execution_config": "configs/ral/cd_native_v1.json",
+  "current_execution_requirements": "docs/ral_cd_full_night_20261126.txt",
+  "current_execution_config": "configs/ral/cd_full_night_v1.json",
   "current_frozen_protocol": null,
-  "current_execution_state": "native_C_D_implemented_static_checks_only_no_training_started",
-  "current_review": "release/ral/stress01_5080_review_20261125.json",
+  "current_execution_state": "3090_cd04_full_running_5080_cd04_full_packaged",
+  "current_review": "release/ral/cd03_strength_5080_review_20261126.json",
   "current_backend_review": "release/ral/constraint01_3090_review_20261125.json",
-  "current_validation": "release/ral/cd_native_implementation_20261125.json",
+  "current_validation": "release/ral/cd_full_night_implementation_20261126.json",
   "current_machine_availability": {
-    "5080": "native_GPU_pairs_and_matched_B_C_continuation",
-    "3090": "receive_native_C_calibrate_and_train_frozen_window_branches",
+    "5080": "cd04_full_package_ready_requires_remote_launch",
+    "3090": "cd04_full_running_since_20261126_2335_ceiling_20261127_0835",
     "4090": "excluded_user_reassigned_and_old_weights_deleted"
   },
-  "current_protocol_creation": "Runtime status.json contract freezes code/data/assets/dependency versions; each handoff carries the same contract."
+  "current_protocol_creation": "Runtime status.json contract freezes code/data/assets/dependency versions; each handoff carries the same contract.",
+  "current_5080_execution_config": "configs/ral/cd_full_night_v1.json",
+  "current_3090_review": "release/ral/cd02_3090_review_20261126.json"
 }

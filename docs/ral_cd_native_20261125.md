@@ -117,3 +117,62 @@ logs/ral_cd/cd01_3090_review.tar.gz（以及 .sha256）
 ```
 
 回传这两个轻量 review 包、校验文件及各自 console.log 即可。两机保留原模型和交接包。`summary.json` 只汇总完整的种子内对照，负结果保留；没有 D 数据时不填零。
+
+## cd02：两机各九小时的后续训练（2026-11-25）
+
+现有 cd01 的 5080 已完成五种子 B/C；训练末段响应 Huber 的种子均值为 B 1.959470、C 1.958539。实际加权响应梯度相对前向梯度的中位数为 0.03288%，没有触发 10% 上限。3090 首个种子 501 的 cal 响应 RMSE4 为 B 4.955837、C 4.964022；16 个箱都未通过 8/32 校准，D/C-perm 明确 blocked。其余种子仍在运行，不能把第一种子当成五种子结论。
+
+新轮固定为开发实验 `cd02`，独立保存，不能替换 cd01 或宣称优势已成立。
+
+- **5080：** 种子 501/505/509/513/517，每种子 B、C_h4、C_h8 三支，最多 15 个增量训练模型。B 的响应诊断跨度是 8，C_h4/C_h8 的监督跨度分别是 4/8。B 是公共同起点、同更新次数的对照，不声称三支反向计算量或 wall time 相同；质量筛选随响应跨度变化，合格块数保留在 args.json。
+- **3090：** 当前 cd01 正常完成后，同五种子训练 B、C_h32 两支，最多 10 个增量训练模型。使用 3090 本机重新生成的响应标签，不使用 5080 的原始响应数值训练 3090。
+- **公共设置：** 从原 intervention01 的 B_v005 父模型开始，每支 6000 轮、30000 次 WM 更新、5900 次策略更新；前 100 轮 WM-only。WM8、actor32、1024 环境不变。C 的 Huber 权重 0.01，250 轮升温，响应梯度仍最多为前向梯度的 10%，每 5 次 WM 更新施加一次。该设置是基于 cd01 的下一项开发假设，不是经过验证的最优权重。
+- **D：** 预先指定 5080 使用 C_h8、3090 使用 C_h32，不能事后挑选更有利的 C。保持 8/32、0.5 容差、90% 分位和原分箱规则。校准全短/全长时记录 blocked，跳过这一轮没有信息量的窗口训练；校准有变化时仍检查实际 fit 起点池。条件通过才训练 D/C_perm/C_fixed8/C_fixed32，每支 200 次更新。四支从同一 C live actor 开始，WM/critic 冻结，D/C_perm 每步窗口直方图配对。
+- **评价顺序：** 每种子先完成所有 C/B 训练、cal 与 identified/nominal 配对评价；所有种子走完后执行符合条件的窗口分支及其 identified/nominal 评价。剩余预算扩展到 midpoint 和三个单参数条件。只汇总完整配对单元；五非参考条件均值必须五条件齐全。部分种子、部分条件、blocked 和负结果全部保留。
+- **时限：** 九小时包含获得 GPU 后的数据准备、训练、校准和评价，预留两分钟收尾。等待旧队列与 GPU 锁的时间不计入九小时。九小时是上限，不保证完成上面所有模型和评价；提前完成清单则结束，不重复训练凑时长。`--continue-session` 仅使用本轮剩余的累计运行预算，不额外赠送九小时；失败训练另建 attempt 从共同父模型重新开始，不是优化器精确续训。
+
+当前 cd01 的代码、配置和依赖不能修改。附加包仅增加新工具/配置/脚本并更新说明；新启动脚本直接使用已有 `.venv`，不会在 cd01 运行中执行 `uv sync`。
+
+### 5080 安装与启动
+
+在 5080 **现有完整仓库目录**打开终端。附加包与校验文件放在 Downloads；需已有本次 cd01 原版代码、资产和 5 份原始 handoff 包。
+
+```bash
+test -f pyproject.toml && \
+(cd "$HOME/Downloads" && sha256sum -c ral_cd9_addon_20261125.tar.gz.sha256) && \
+tar -xzf "$HOME/Downloads/ral_cd9_addon_20261125.tar.gz" -C "$PWD"
+
+mkdir -p logs/ral_cd9
+nohup bash scripts/ral_5080_cd9.sh --session cd02 \
+  --inbox logs/ral_cd/cd01_5080/handoff \
+  > logs/ral_cd9/cd02_5080_console.log 2>&1 &
+```
+
+新任务不需要重新传真实动作、旧训练日志或全部模型。使用已经生成的五个 cd01_s*.tar.gz 和各自校验文件，且校对本轮审阅记录中的固定哈希。
+
+### 3090 自动接续
+
+本地已按用户要求登记自动接续时，不要重复启动。对应命令如下，便于在 launcher 意外退出后恢复：
+
+```bash
+mkdir -p logs/ral_cd9
+nohup bash scripts/ral_3090_cd9.sh --session cd02 \
+  --after logs/ral_cd/cd01_3090/status.json \
+  --inbox data/ral_cd_inbox \
+  > logs/ral_cd9/cd02_3090_console.log 2>&1 &
+```
+
+旧队列 `completed` 或 `completed_with_blocked_windows` 且 GPU 锁释放后才开始。旧队列 `stopped` 时 launcher 保持 `blocked_by_predecessor`，不抢占 GPU；修复并完成原 cd01 后会自动继续。没有取消或重启 cd01。
+
+### 状态与回传
+
+```bash
+bash scripts/ral_3090_cd9.sh --session cd02 --status
+bash scripts/ral_5080_cd9.sh --session cd02 --status
+tail -n 30 logs/ral_cd9/cd02_3090_console.log
+tail -n 30 logs/ral_cd9/cd02_5080_console.log
+```
+
+等待状态在 `logs/ral_cd9/launchers/cd02_3090.json`；实际获得 GPU 后创建 `logs/ral_cd9/cd02_3090/status.json`。5080 同理。停止或完成后自动生成 `logs/ral_cd9/cd02_机器_review.tar.gz` 及校验文件；回传轻量 review 包与 console.log，原训练模型留在各机器。
+
+完整 C/B 模型在 `logs/ral_cd9/cd02_机器/jobs/s种子_train_分组/attemptXX/run/ckpt_006000.pt`，窗口模型为相应 `s种子_window_分组/attemptXX/run/last.pt`。中途截止可能只有中间检查点，不能将它视作 6000 轮最终结果。最低磁盘余量 15 GiB，本轮输出上限 60 GiB。

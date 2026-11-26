@@ -1,0 +1,57 @@
+5080 下一轮：32 步响应梯度上限对照（2026-11-26）
+
+为什么做这一轮
+cd02_5080 的五种非参考参数条件平均完成率为 B 93.84%、C-4步93.69%、C-8步93.52%。短期 cal 响应误差略降，32 步误差未改善。
+3090 的 cd02 仍在运行。截至本设计时，仅种子501完成了B/C-32步及参考、名义条件评估；其C的6000次响应更新有4968次（82.8%）触发10%原始梯度比例上限，32步cal误差仅下降约0.13%。这是探索线索，不是所有种子的结论，也不能证明上限是唯一瓶颈。
+提高response_weight未必能改变已经受上限约束的更新。因此本轮固定权重0.01，只改变C的梯度上限，直接比较10%和30%。该比例在共同梯度裁剪及Muon变换之前计算，不等于实际参数更新比例。
+
+三组（在同一台5080上重新配对，不用3090结果充当5080对照）
+B：response_weight=0，response_horizon=32（仅记录响应诊断）。
+C_h32_cap10：response_weight=0.01，response_horizon=32，response_grad_ratio=0.1。
+C_h32_cap30：response_weight=0.01，response_horizon=32，response_grad_ratio=0.3。
+每组固定种子501、505、509、513、517；每支从同种子的原始B_v005父模型出发，权重分支初始化相同，优化器/replay/计数器重置；不在cd02最终C上继续多训练一段。
+每支6000轮、30000次世界模型更新、5900次策略更新；在线世界模型窗口8、actor窗口32、1024环境等保持原样。每种子三支共享同一份5080原生fit/cal标签。
+不选择最好的中间检查点：统一评价第6000轮EMA actor。全部不利结果保留。
+
+顺序与预算
+1. 五种子三组训练，每种子完成后做cal响应评价、固定C_h32_cap30窗口校准、参考和名义两条件策略评价。
+2. 补齐midpoint、armature_nominal、damping_nominal、frictionloss_nominal，构成15模型、90评估，每评估163动作。
+3. 只有全部上述主对照完成后，才在剩余预算内尝试D/C-perm/固定8/固定32：原校准0.5门槛和实际起点长短混合条件保持不变。父模型预先固定为C_h32_cap30，不按结果挑模型。
+九小时为主动工作时间上限，预留两分钟收尾。按现有运行速度粗估主B/C任务约6–8小时，尚未实测5080上的这组H32耗时；D可使用剩余预算。全部可执行工作完成会提前退出，不为了凑时长重复训练。
+D若只有默认回退8步，仍记blocked，不记完成率0。九小时内未完成的配对注明缺失，不能填0或称作五种子完成。
+
+判断标准
+机制：逐种子比较cap30/cap10的最终模型cal response_rmse32相对变化，同时报告4/8步响应误差、32步轨迹位置/速度误差，以及实际梯度比例和上限触发率。
+任务：五种非参考条件先在每个种子内平均，再比较cap30−cap10和cap30−B完成率。报告所有配对种子及波动，只有完整5种子才能称为完整主比较。
+cal误差下降但完成率不升，说明预测改善尚未转化为任务收益；若30%也没有改善，不应继续仅靠放大上限。任何筛选结果都只是开发证据，不能代替独立验证、未见动作测试或真机结果。
+本轮不读取锁定的response test，不混合3090/5080统计。
+
+安装（只在5080执行）
+下载ral_cd_strength_20261126.tar.gz及同名.sha256到Downloads。
+5080上一次日志记录的仓库路径为/home/zoyi/project/Supermimic-z01；使用该实际仓库，不在Downloads内执行训练，也不要新建空仓库。
+
+cd "$HOME/Downloads" &&
+sha256sum -c ral_cd_strength_20261126.tar.gz.sha256 &&
+cd "$HOME/project/Supermimic-z01" &&
+tar -xzf "$HOME/Downloads/ral_cd_strength_20261126.tar.gz" &&
+bash scripts/ral_5080_cd_strength.sh --check-inputs
+
+输入检查通过后启动：
+mkdir -p logs/ral_cd9
+nohup bash scripts/ral_5080_cd_strength.sh --session cd03_strength > logs/ral_cd9/cd03_strength_5080_console.log 2>&1 &
+
+查看进度：
+bash scripts/ral_5080_cd_strength.sh --session cd03_strength --status
+tail -n 40 logs/ral_cd9/cd03_strength_5080_console.log
+
+若原始交接包不在默认logs/ral_cd/cd01_5080/handoff，可在检查和启动两条命令中都加 --inbox 实际目录；不要用review包代替交接包。
+断电/错误后续队列可用相同session加--continue-session。它复用哈希核实的已完成任务，并保留原主动预算；未完成训练从共同父模型开始新attempt，不是精确恢复优化器。禁止并发重复启动同一session。
+
+完成后传回：
+logs/ral_cd9/cd03_strength_5080_console.log
+logs/ral_cd9/cd03_strength_5080_review.tar.gz
+logs/ral_cd9/cd03_strength_5080_review.tar.gz.sha256
+保留本机所有模型和原生数据，不用先上传全部权重。
+
+包的范围
+只新增专用入口/配置/启动脚本/本说明与设计、验证记录，不覆盖src或现有cd02入口。3090继续原任务，不安装或运行此队列。代码/命令、配对汇总与任务先后顺序已做不占GPU的检查，尚未在5080运行本轮训练。

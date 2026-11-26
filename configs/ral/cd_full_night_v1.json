@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "hours": 9,
+  "shutdown_reserve_seconds": 120,
+  "max_output_gib": 60,
+  "min_free_gib": 15,
+  "job_timeout_hours": 2,
+  "seeds": [
+    501,
+    505,
+    509,
+    513,
+    517
+  ],
+  "pairs": {
+    "horizon": 32,
+    "blocks_per_clip": 8,
+    "epsilon": 0.01,
+    "pre_roll": 20
+  },
+  "required_existing_files_sha256": {
+    "tools/ral_cd.py": "c849f9f41e566aa955f1b2a3717d37b9915539d51ec3a40e6000bbad190edc80",
+    "tools/ral_cd_worker.py": "30dce398bee66273767075dfd7786f03dec0906006d62838951316b097ca657c",
+    "tools/ral_stress_eval.py": "6a1db6a31ba6dd4f778190f4bfa474c40314a3d1af58b5d7bdb404a450c7194b",
+    "tools/ral_eight_hour.py": "d870640d156fd83555799e46610c4bd09cbd4e74e2c07ef0711ac331bacc738e",
+    "tools/ral_eight_hour_worker.py": "44e7b15d8418858340e461c57173603e0b22314bb54252e74a1640d02c5bf21d",
+    "tools/ral_policy_diagnose.py": "413e44d9cbf19dea3dcc2224b8c44199b3ce7d7639e3feb2f1e76d72623ddd6b",
+    "tools/ral_prior_diagnose.py": "6d935a4ae15ccccaa34bab0d5d2561909fd0129bbfa3d8adb27dde1ab42c779f",
+    "tools/ral_structure.py": "037601aa99db7204d8ae351c894501ca08497cd030a55664adaf6ead8bdebee0",
+    "tools/ral_recovery.py": "cc63c154acebb3e1cdc5e1be4f68a2822cb208da7db736da40a5fb6bc70892ba",
+    "tools/ral_validation_six_hour.py": "70e0fff97292eadb2da3fdc82a2af7e9376a1129e1fc2dae1da231621959ca5c",
+    "tools/ral_intervention.py": "837be33425ae117ecbd1de5e895d62ad497aaf9b74bea303d702caf6874b3651",
+    "tools/ral_online_night.py": "2aacb6a438a5f5d94ca8878c1171cf5c644a6f13e8c05bb13f9bd19c72d41b48",
+    "configs/ral/cd_native_v1.json": "f97072cc5ef39e557747bc158fc855f7d722f214f87765a6292f0679ce20ad04",
+    "configs/ral/validation_six_hour_v1.json": "eed0b9e96903abb66173b2f225983a69344ed70f1ee33d7c97e4682c5414a497",
+    "release/ral/stress_models_v1.json": "70315056d864682d88c7f3751da91ab995122648c8f86b9132896b5f64fc9dc8",
+    "pyproject.toml": "8317603450caa277cf36f3255bcfceaa1725029125d56a237dbaea4e7f404075",
+    "uv.lock": "5115525597b58cfadaeae1885fc66ec977bda1e96dd15966bd2f8fa82f956565",
+    "tools/ral_cd_nine_hour.py": "4ad2009d5dadc47378da7eb0627fb1a493ac43dc1f7d4c1b2f1b3b01b2c6beac",
+    "configs/ral/cd_nine_hour_v1.json": "e1712701fe3fce79cb54e8dc849e3625c7201d0cd222dce0bc03c622505e84f9",
+    "scripts/ral_3090_cd9.sh": "21c997c5533c03dd58019de4a083995661bc63787be032d1976448df8936cd9e",
+    "scripts/ral_5080_cd9.sh": "ae6f45de88a7ea23ddb23c5700270c0283210c71a8a2a51b7c8508efd01fc758"
+  },
+  "required_code_sha256": "074066ce1317a622cf62ba636836bae1a314bdc9138dcda6b4ca04704950b69d",
+  "stage": "cd_full_night_v1",
+  "scope": "Development only: refreshed native labels from frozen cd02 B; local-prefix response supervision; empirical risk-ranked actor windows. Original certified D failures preserved. No superiority guarantee.",
+  "sources": {
+    "3090": {
+      "session": "cd02_3090",
+      "status_sha256": "1ef4c8f45ab384db056ec448d0d55f5dff18fbf29655fafc55fa41d3346ad501",
+      "parents": {
+        "501": {
+          "run": "jobs/s501_train_B/attempt01/run",
+          "checkpoint_sha256": "0706a7a4a6a7e9421dae0a86389821c31b88457fe1d7cb0e898978cd8ebdede7",
+          "split_manifest": "jobs/s501_native_pairs/attempt01/pairs/manifest.json",
+          "split_manifest_sha256": "454d03a90707cf6c6a59cf5297d28add16c6a19af0dc2f61875cc83ce8790d76"
+        },
+        "505": {
+          "run": "jobs/s505_train_B/attempt01/run",
+          "checkpoint_sha256": "5f3e24647a3851e26c93f38af5921c36d485e14d8470237e162b4cc279736f7d",
+          "split_manifest": "jobs/s505_native_pairs/attempt01/pairs/manifest.json",
+          "split_manifest_sha256": "22079cbf4fed66b0be177dbe9ac780d231e266aaa11be8eb9b6aa39a440940bf"
+        },
+        "509": {
+          "run": "jobs/s509_train_B/attempt01/run",
+          "checkpoint_sha256": "d21914fd328f82fdf442eceb1997e0387364cb1fdd9f487171680e4cde429696",
+          "split_manifest": "jobs/s509_native_pairs/attempt01/pairs/manifest.json",
+          "split_manifest_sha256": "ed1e5cd74b22336fa8564cb0d6e0400b6ae2724606b6d7ebd1eb7e32153d40ad"
+        },
+        "513": {
+          "run": "jobs/s513_train_B/attempt01/run",
+          "checkpoint_sha256": "e4598a0740bdfb3b901e093088d05b6cfca5e9e7a1ce9313e2a2e439ffac185e",
+          "split_manifest": "jobs/s513_native_pairs/attempt01/pairs/manifest.json",
+          "split_manifest_sha256": "e38a5384c25fae94dd8cf51661c23e484be5779b5fbed7ea47ece7388bcfda70"
+        },
+        "517": {
+          "run": "jobs/s517_train_B/attempt01/run",
+          "checkpoint_sha256": "634748bb0c7076d52c82316c80087de9e2c840e6a3ee30f7bea879c5c821171a",
+          "split_manifest": "jobs/s517_native_pairs/attempt01/pairs/manifest.json",
+          "split_manifest_sha256": "ee52e9475d9a3332c94f9436e29d33ca87aaf1aeb96e93e1e4ebb49fdf800995"
+        }
+      }
+    },
+    "5080": {
+      "session": "cd02_5080",
+      "status_sha256": "937ea773b764b77d1436b4f4cbfb5a80116d94b69fc69d7876cf62a0779cf881",
+      "parents": {
+        "501": {
+          "run": "jobs/s501_train_B/attempt01/run",
+          "checkpoint_sha256": "4e0a97c3730c8d051bd7c1879175350a15391e85f6f10dd7eabaf07ab5f79f36",
+          "split_manifest": "jobs/s501_native_pairs/attempt01/pairs/manifest.json",
+          "split_manifest_sha256": "ba5874cc377c608dfae8592f1632ee0c207e2d7e8826bf4254022f9de835c8ff"
+        },
+        "505": {
+          "run": "jobs/s505_train_B/attempt01/run",
+          "checkpoint_sha256": "a70673a51f91b8d5c3f11f737cd9680d70c693e0c64860b1e179dde2adf38fe1",
+          "split_manifest": "jobs/s505_native_pairs/attempt01/pairs/manifest.json",
+          "split_manifest_sha256": "0f6aa27ed3211e7a0002426ad9f59a3ed1a248f1de34249d83b233a70245c04c"
+        },
+        "509": {
+          "run": "jobs/s509_train_B/attempt01/run",
+          "checkpoint_sha256": "be79db633e3c4491fd0f72b2ae4818721688d113501dae37ba0478f92a812cfd",
+          "split_manifest": "jobs/s509_native_pairs/attempt01/pairs/manifest.json",
+          "split_manifest_sha256": "8b948abedfa97d163d092864d31e5c71e7878b7ad49b58c8d1dd89cd8e8fed20"
+        },
+        "513": {
+          "run": "jobs/s513_train_B/attempt01/run",
+          "checkpoint_sha256": "d23d3a14cde6ed34f3a4948d1dd265780a459d00d3f95c6016b71ab5dc47164b",
+          "split_manifest": "jobs/s513_native_pairs/attempt01/pairs/manifest.json",
+          "split_manifest_sha256": "fd5117d6d741196f44e557dd7c68ae7a6d4dc560417ff808e52aed61ecb11f51"
+        },
+        "517": {
+          "run": "jobs/s517_train_B/attempt01/run",
+          "checkpoint_sha256": "26937100575247ca3c3a9a08e7e4ead7659b9bf3be86708fa6f43547990fbc54",
+          "split_manifest": "jobs/s517_native_pairs/attempt01/pairs/manifest.json",
+          "split_manifest_sha256": "6282c7f942e6667f1b848ec2a42d2c622a053366c24285d231163cb09179e92a"
+        }
+      }
+    }
+  },
+  "C_response_weight": 0.05,
+  "training_overrides": {
+    "iterations": 2000,
+    "wm_only_iters": 100,
+    "ckpt_every": 1000,
+    "ckpt_minutes": 0,
+    "log_every": 25,
+    "lr": 0.0001,
+    "lr_decay_iters": 2000,
+    "online_response": true,
+    "response_batch": 128,
+    "response_every": 5,
+    "response_ramp_iters": 250,
+    "response_grad_ratio": 0.1,
+    "response_loss": "huber",
+    "response_huber_delta": 1.0,
+    "response_horizon": 4
+  },
+  "windows": {
+    "short": 8,
+    "long": 32,
+    "edges": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "binning": "speed_support",
+    "relative": true,
+    "tolerance": 0.5,
+    "quantile": 0.9,
+    "min_blocks": 10,
+    "signal_floor": 0.01,
+    "capture_steps": 64,
+    "iterations": 100,
+    "batch_size": 64,
+    "lr": 1e-05,
+    "fixed_controls": [
+      16,
+      32
+    ]
+  },
+  "machines": {
+    "3090": {
+      "candidates": [
+        {
+          "name": "B_refresh",
+          "group": "B",
+          "response_weight": 0.0
+        },
+        {
+          "name": "C_h4_w05",
+          "group": "C",
+          "response_weight": 0.05
+        }
+      ],
+      "legacy_completion": true,
+      "window_experiment": false
+    },
+    "5080": {
+      "candidates": [
+        {
+          "name": "B_refresh",
+          "group": "B",
+          "response_weight": 0.0
+        },
+        {
+          "name": "C_h4_w01",
+          "group": "C",
+          "response_weight": 0.01
+        },
+        {
+          "name": "C_h4_w05",
+          "group": "C",
+          "response_weight": 0.05
+        }
+      ],
+      "legacy_completion": false,
+      "window_experiment": true
+    }
+  },
+  "window_parent": "C_h4_w05",
+  "window_variants": [
+    "D_emp",
+    "C_perm_emp",
+    "C_fixed16",
+    "C_fixed32"
+  ],
+  "empirical_windows": {
+    "short": 16,
+    "long": 32,
+    "risk": "maximum relative prefix RMSE over first 32 steps",
+    "long_fraction_of_reliable_bins": 0.5,
+    "selection": "lower half of sample-sufficient, finite-risk bins (floor), ties broken by bin id; all others short",
+    "unreliable_sentinel": 1e+20,
+    "interpretation": "Empirical cal-risk ranking, NOT validated/certified horizons or original paper D. Original validation booleans remain truthful.",
+    "degenerate": "Run named empirical branches using the actual constant horizon; mark nonidentifiable, no D mechanism claim."
+  },
+  "evaluation": {
+    "scenarios": [
+      "identified",
+      "nominal",
+      "midpoint",
+      "armature_nominal",
+      "damping_nominal",
+      "frictionloss_nominal"
+    ],
+    "primary_scenarios": [
+      "nominal",
+      "midpoint",
+      "armature_nominal",
+      "damping_nominal",
+      "frictionloss_nominal"
+    ],
+    "episodes_per_cell": 163,
+    "weights": {
+      "joint": "EMA",
+      "window": "live",
+      "window_parent_control": "live"
+    },
+    "scope": "Known actuator endpoints/interpolation, seen training motions; not hardware/unseen motion validation"
+  },
+  "formal_results": false,
+  "response_test_accessed": false,
+  "decision_rules": {
+    "primary_C": "C_h4_w05 minus B_refresh within each GPU, five nonreference scenarios averaged per seed, all five paired seeds. Also report C_h4_w01 on 5080.",
+    "primary_D_emp": "D_emp minus C_perm_emp and fixed16/fixed32 on 5080, and change from identical parent live actor. All seeds/conditions; degenerate mapping is not evidence for state selection.",
+    "calibration": "Preserve strict 8/32 relative0.5 results. Empirical16/32 ranking is a distinct exploratory protocol, never overwrite or claim strict D success.",
+    "stop": "Nine active hours with two-minute reserve, low disk, nonfinite/integrity error, interrupted process. No selecting favorable seeds, early success pruning or fabricated complete matrices.",
+    "cross_device": "Separate replications; never pool raw response magnitudes or treat hardware differences as intervention effects.",
+    "completion": "Complete means every declared cell and response/calibration/paired-run check exists; otherwise enumerate missing cells."
+  },
+  "budget_estimates": {
+    "3090": {
+      "legacy_evaluations": 26,
+      "new_evaluations": 60,
+      "new_joint_models": 10,
+      "expected_hours_range": [
+        8,
+        9
+      ],
+      "basis": "26+60 cells at observed261.7sec, ten2000-iteration continuations, shorter-response cost no greater than observed H32 estimate; no guarantee."
+    },
+    "5080": {
+      "new_evaluations": 240,
+      "new_joint_models": 15,
+      "new_window_models": 20,
+      "live_parent_exports": 5,
+      "expected_hours_range": [
+        8,
+        9
+      ],
+      "basis": "240 cells at observed96.1sec plus15 short2000-iteration continuations and20 conservative100-update windows."
+    }
+  }
+}
