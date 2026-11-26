@@ -1,0 +1,16 @@
+{
+  "files": {
+    "tools/ral_cd_full_night.py": "a7f7b4685568b0618bc94520e865034a43682264f2686487ac6eff0f152627ed",
+    "tools/ral_cd_full_worker.py": "b7748640864563d6350033055a14d94dbc7419ba1e3fed7ef1ef594cc4f5203e",
+    "configs/ral/cd_full_night_v1.json": "29b894298d50292bbc037ab50db6191ceba67ffa9fe34f25aa4eb786291de185",
+    "scripts/ral_3090_cd_full.sh": "167f6522bebee0fc4efce0c070329f0b11434e85d450145f47b93cb6ccd8c302",
+    "scripts/ral_5080_cd_full.sh": "df4b92059e46d3ebc1908936894c0a3688521583c3611e580116f93f06a2f2cd",
+    "tests/test_ral_cd_full_night.py": "a652c4178d158e1af77ceeca2322efb5a4224f0300c5016774065cf4a606b3cf",
+    "docs/ral_cd_full_night_20261126.txt": "2b085e8d44ffc7bed7c84d36370dafc7e7f953120599915c91601a81f3557155",
+    "release/ral/cd_full_night_design_20261126.json": "efcfafc5499d385355101a41258415fe1ddfcff520217b391f43fc71f1b6558e",
+    "release/ral/cd_full_night_implementation_20261126.json": "1f67c543a9181b664ae0b3ae7a158f815d61fd711f4438223d3296b94055c45f"
+  },
+  "contains_model_weights": false,
+  "existing_cd02_checkout_required": true,
+  "does_not_replace_existing_src_or_old_queues": true
+}

@@ -1,0 +1,17 @@
+quantity,symbol,unit,provenance,used_in,simulator_destination
+motor torque constant,k_t,N m/A,manufacturer or driver specification,current-to-output-torque conversion,MuJoCo and IsaacGym actuator interface
+transmission ratio,N,-,manufacturer or URDF specification,current-to-output-torque conversion,MuJoCo and IsaacGym actuator interface
+effective transmission efficiency,eta_g,-,identified/calibrated from hardware logs in tested operating regime,joint-output-equivalent torque conversion,MuJoCo and IsaacGym actuator interface
+zero-current offset,i_0,A,calibrated from walking logs,current offset removal,log preprocessing and simulator conversion scripts
+continuous current limit,i_cont,A,driver/manufacturer specification,actuator limit documentation,saturation and safety checks
+peak current limit,i_peak,A,driver/manufacturer specification,current saturation model,saturation and safety checks
+continuous output torque,tau_cont,N m,derived from K_tau and i_cont,actuator margin in RTI bound,saturation and safety checks
+peak output torque,tau_peak,N m,derived from K_tau and i_peak,actuator margin in RTI bound,saturation and safety checks
+current-loop bandwidth,f_c,Hz,driver test/engineering specification used in simulation,current-loop model,MuJoCo and IsaacGym actuator interface
+Coulomb-friction magnitude,tau_c,N m,identified from quasi-static hysteresis loops,Real2Sim actuator-loss model,MuJoCo and IsaacGym actuator-loss table
+effective viscous damping,B_eff,N m s/rad,identified from sinusoidal sweeps,Real2Sim actuator-loss model,MuJoCo and IsaacGym actuator-loss table
+torque bias,tau_bias,N m,identified from hardware logs,Real2Sim actuator-loss model,MuJoCo and IsaacGym actuator-loss table
+reflected armature,J_arm,kg m^2,manufacturer or URDF specification; randomized during training,actuator/inertia randomization,MuJoCo and IsaacGym model manifest
+PD proportional gain,K_p,N m/rad,"fixed controller setting, not fitted by friction/damping identification",low-level controller,"MuJoCo, IsaacGym, hardware controller"
+PD derivative gain,K_d,N m s/rad,"fixed controller setting, not fitted by friction/damping identification",low-level controller,"MuJoCo, IsaacGym, hardware controller"
+RTI residual bound,sigma_lim,N m,derived from held-out residual percentile and actuator safety margins,training-time residual torque perturbation,IsaacGym training only

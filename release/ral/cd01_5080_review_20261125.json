@@ -1,0 +1,430 @@
+{
+  "schema_version": 1,
+  "session": "cd01_5080",
+  "source": "/home/zoyi/Downloads/cd01_5080_review.tar.gz",
+  "source_sha256": "580960e96ef4e60b3a46a976d23718cefe60c30da24a2936d3e9ac7750e90bc8",
+  "mode": "read-only analysis of existing logs; no model execution or new experiments",
+  "source_code_sha256": "074066ce1317a622cf62ba636836bae1a314bdc9138dcda6b4ca04704950b69d",
+  "status": "completed",
+  "archive_members": 188,
+  "verified_job_metadata_files": 110,
+  "omitted_binary_files": 60,
+  "binary_weights_locally_verified": false,
+  "wall_seconds": 2217.5379650592804,
+  "formal_results": false,
+  "seeds": [
+    {
+      "seed": 501,
+      "fit_blocks": 800,
+      "cal_blocks": 232,
+      "fit_sessions": 23,
+      "cal_sessions": 7,
+      "test_sessions": 7,
+      "test_status": "locked_not_generated",
+      "generation_env_transitions": 306176,
+      "branches": {
+        "B_continue": {
+          "iterations": 2000,
+          "wm_updates": 10000,
+          "policy_updates": 1900,
+          "env_steps": 5185536,
+          "elapsed_seconds": 199.52430081367493,
+          "nonfinite_logged": 0,
+          "response_fit_eligible": 800,
+          "response_evaluations": 2000,
+          "tail_iterations": [
+            1501,
+            2000
+          ],
+          "training_only_tail_means": {
+            "response_loss": 2.3999420495033266,
+            "response_raw_mse": 2222.0598397369386,
+            "forward_loss": 0.15594834442436695,
+            "ep_len": 213.7255,
+            "ep_ret_norm": -2.4097285,
+            "sim_rew": 0.5087728,
+            "velocity_over_frac": 0.07418157,
+            "term_frac": 0.17604665
+          }
+        },
+        "C": {
+          "iterations": 2000,
+          "wm_updates": 10000,
+          "policy_updates": 1900,
+          "env_steps": 5185536,
+          "elapsed_seconds": 217.2801957130432,
+          "nonfinite_logged": 0,
+          "response_fit_eligible": 800,
+          "response_evaluations": 2000,
+          "tail_iterations": [
+            1501,
+            2000
+          ],
+          "training_only_tail_means": {
+            "response_loss": 2.3969816181659698,
+            "response_raw_mse": 2221.653016845703,
+            "forward_loss": 0.14692891608178615,
+            "ep_len": 213.2678,
+            "ep_ret_norm": -2.681788,
+            "sim_rew": 0.50308865,
+            "velocity_over_frac": 0.072936715,
+            "term_frac": 0.17179795
+          },
+          "response_gradient_ratio": {
+            "formula": "wm_window * logged_effective_weight * response_grad_norm / forward_grad_norm",
+            "median": 0.0003047071048252329,
+            "max": 0.002438343326435855,
+            "cap": 0.1,
+            "cap_active_updates": 0,
+            "stage": "before common clipping and optimizer transformation; not parameter-update or policy-effect ratio"
+          }
+        }
+      },
+      "initial_wm_actor_critic_hashes_match": true,
+      "training_response_C_minus_B": -0.0029604313373567948,
+      "training_response_C_relative_change_pct": -0.1233542842407176
+    },
+    {
+      "seed": 505,
+      "fit_blocks": 800,
+      "cal_blocks": 232,
+      "fit_sessions": 23,
+      "cal_sessions": 7,
+      "test_sessions": 7,
+      "test_status": "locked_not_generated",
+      "generation_env_transitions": 306176,
+      "branches": {
+        "B_continue": {
+          "iterations": 2000,
+          "wm_updates": 10000,
+          "policy_updates": 1900,
+          "env_steps": 5185536,
+          "elapsed_seconds": 199.199777841568,
+          "nonfinite_logged": 0,
+          "response_fit_eligible": 799,
+          "response_evaluations": 2000,
+          "tail_iterations": [
+            1501,
+            2000
+          ],
+          "training_only_tail_means": {
+            "response_loss": 2.0311839369535445,
+            "response_raw_mse": 3559.2404942474363,
+            "forward_loss": 0.13526591245830058,
+            "ep_len": 226.85705000000002,
+            "ep_ret_norm": -2.8239900000000002,
+            "sim_rew": 0.50916585,
+            "velocity_over_frac": 0.058494775,
+            "term_frac": 0.119190165
+          }
+        },
+        "C": {
+          "iterations": 2000,
+          "wm_updates": 10000,
+          "policy_updates": 1900,
+          "env_steps": 5185536,
+          "elapsed_seconds": 217.0418176651001,
+          "nonfinite_logged": 0,
+          "response_fit_eligible": 799,
+          "response_evaluations": 2000,
+          "tail_iterations": [
+            1501,
+            2000
+          ],
+          "training_only_tail_means": {
+            "response_loss": 2.0313632179498673,
+            "response_raw_mse": 3559.5437370758054,
+            "forward_loss": 0.13265566021203995,
+            "ep_len": 226.3044,
+            "ep_ret_norm": -1.1705605,
+            "sim_rew": 0.50162685,
+            "velocity_over_frac": 0.05908683,
+            "term_frac": 0.100351625
+          },
+          "response_gradient_ratio": {
+            "formula": "wm_window * logged_effective_weight * response_grad_norm / forward_grad_norm",
+            "median": 0.0003371532529466537,
+            "max": 0.003334493915908791,
+            "cap": 0.1,
+            "cap_active_updates": 0,
+            "stage": "before common clipping and optimizer transformation; not parameter-update or policy-effect ratio"
+          }
+        }
+      },
+      "initial_wm_actor_critic_hashes_match": true,
+      "training_response_C_minus_B": 0.00017928099632280592,
+      "training_response_C_relative_change_pct": 0.008826428422414878
+    },
+    {
+      "seed": 509,
+      "fit_blocks": 800,
+      "cal_blocks": 232,
+      "fit_sessions": 23,
+      "cal_sessions": 7,
+      "test_sessions": 7,
+      "test_status": "locked_not_generated",
+      "generation_env_transitions": 306176,
+      "branches": {
+        "B_continue": {
+          "iterations": 2000,
+          "wm_updates": 10000,
+          "policy_updates": 1900,
+          "env_steps": 5185536,
+          "elapsed_seconds": 199.18669199943542,
+          "nonfinite_logged": 0,
+          "response_fit_eligible": 795,
+          "response_evaluations": 2000,
+          "tail_iterations": [
+            1501,
+            2000
+          ],
+          "training_only_tail_means": {
+            "response_loss": 1.828837047457695,
+            "response_raw_mse": 3336.881940261841,
+            "forward_loss": 0.1497528082281351,
+            "ep_len": 207.6093,
+            "ep_ret_norm": -2.1850005,
+            "sim_rew": 0.5059942,
+            "velocity_over_frac": 0.061571715,
+            "term_frac": 0.16615165
+          }
+        },
+        "C": {
+          "iterations": 2000,
+          "wm_updates": 10000,
+          "policy_updates": 1900,
+          "env_steps": 5185536,
+          "elapsed_seconds": 217.19996309280396,
+          "nonfinite_logged": 0,
+          "response_fit_eligible": 795,
+          "response_evaluations": 2000,
+          "tail_iterations": [
+            1501,
+            2000
+          ],
+          "training_only_tail_means": {
+            "response_loss": 1.8315491794347762,
+            "response_raw_mse": 3336.72273513031,
+            "forward_loss": 0.1473030574172735,
+            "ep_len": 206.0552,
+            "ep_ret_norm": -1.7883805,
+            "sim_rew": 0.51885765,
+            "velocity_over_frac": 0.0589121,
+            "term_frac": 0.16793355
+          },
+          "response_gradient_ratio": {
+            "formula": "wm_window * logged_effective_weight * response_grad_norm / forward_grad_norm",
+            "median": 0.0003289795999390455,
+            "max": 0.0016737122522557308,
+            "cap": 0.1,
+            "cap_active_updates": 0,
+            "stage": "before common clipping and optimizer transformation; not parameter-update or policy-effect ratio"
+          }
+        }
+      },
+      "initial_wm_actor_critic_hashes_match": true,
+      "training_response_C_minus_B": 0.0027121319770813113,
+      "training_response_C_relative_change_pct": 0.1482981756549373
+    },
+    {
+      "seed": 513,
+      "fit_blocks": 800,
+      "cal_blocks": 232,
+      "fit_sessions": 23,
+      "cal_sessions": 7,
+      "test_sessions": 7,
+      "test_status": "locked_not_generated",
+      "generation_env_transitions": 306176,
+      "branches": {
+        "B_continue": {
+          "iterations": 2000,
+          "wm_updates": 10000,
+          "policy_updates": 1900,
+          "env_steps": 5185536,
+          "elapsed_seconds": 199.412615776062,
+          "nonfinite_logged": 0,
+          "response_fit_eligible": 799,
+          "response_evaluations": 2000,
+          "tail_iterations": [
+            1501,
+            2000
+          ],
+          "training_only_tail_means": {
+            "response_loss": 1.7850437891483306,
+            "response_raw_mse": 1694.7915316543579,
+            "forward_loss": 0.15540269303321838,
+            "ep_len": 236.11939999999998,
+            "ep_ret_norm": -2.7019345,
+            "sim_rew": 0.50198455,
+            "velocity_over_frac": 0.06349899,
+            "term_frac": 0.10916101
+          }
+        },
+        "C": {
+          "iterations": 2000,
+          "wm_updates": 10000,
+          "policy_updates": 1900,
+          "env_steps": 5185536,
+          "elapsed_seconds": 217.09147930145264,
+          "nonfinite_logged": 0,
+          "response_fit_eligible": 799,
+          "response_evaluations": 2000,
+          "tail_iterations": [
+            1501,
+            2000
+          ],
+          "training_only_tail_means": {
+            "response_loss": 1.7786755270957946,
+            "response_raw_mse": 1694.7458576087952,
+            "forward_loss": 0.13282651549577712,
+            "ep_len": 231.6821,
+            "ep_ret_norm": -1.9965665,
+            "sim_rew": 0.5115814,
+            "velocity_over_frac": 0.058945735,
+            "term_frac": 0.12596274
+          },
+          "response_gradient_ratio": {
+            "formula": "wm_window * logged_effective_weight * response_grad_norm / forward_grad_norm",
+            "median": 0.00034181051680221247,
+            "max": 0.001895550315771802,
+            "cap": 0.1,
+            "cap_active_updates": 0,
+            "stage": "before common clipping and optimizer transformation; not parameter-update or policy-effect ratio"
+          }
+        }
+      },
+      "initial_wm_actor_critic_hashes_match": true,
+      "training_response_C_minus_B": -0.0063682620525360445,
+      "training_response_C_relative_change_pct": -0.3567566292350999
+    },
+    {
+      "seed": 517,
+      "fit_blocks": 800,
+      "cal_blocks": 232,
+      "fit_sessions": 23,
+      "cal_sessions": 7,
+      "test_sessions": 7,
+      "test_status": "locked_not_generated",
+      "generation_env_transitions": 306176,
+      "branches": {
+        "B_continue": {
+          "iterations": 2000,
+          "wm_updates": 10000,
+          "policy_updates": 1900,
+          "env_steps": 5185536,
+          "elapsed_seconds": 199.71427369117737,
+          "nonfinite_logged": 0,
+          "response_fit_eligible": 798,
+          "response_evaluations": 2000,
+          "tail_iterations": [
+            1501,
+            2000
+          ],
+          "training_only_tail_means": {
+            "response_loss": 1.7523452841043472,
+            "response_raw_mse": 2668.3345691833497,
+            "forward_loss": 0.13332087801396847,
+            "ep_len": 234.93609999999998,
+            "ep_ret_norm": -2.2617885,
+            "sim_rew": 0.51927155,
+            "velocity_over_frac": 0.05863097,
+            "term_frac": 0.10153291
+          }
+        },
+        "C": {
+          "iterations": 2000,
+          "wm_updates": 10000,
+          "policy_updates": 1900,
+          "env_steps": 5185536,
+          "elapsed_seconds": 225.67238664627075,
+          "nonfinite_logged": 0,
+          "response_fit_eligible": 798,
+          "response_evaluations": 2000,
+          "tail_iterations": [
+            1501,
+            2000
+          ],
+          "training_only_tail_means": {
+            "response_loss": 1.754125408768654,
+            "response_raw_mse": 2668.7026259155273,
+            "forward_loss": 0.1533329856544733,
+            "ep_len": 233.35505,
+            "ep_ret_norm": -2.129527,
+            "sim_rew": 0.5056417,
+            "velocity_over_frac": 0.06528603,
+            "term_frac": 0.10363144
+          },
+          "response_gradient_ratio": {
+            "formula": "wm_window * logged_effective_weight * response_grad_norm / forward_grad_norm",
+            "median": 0.0003321473676366729,
+            "max": 0.0021289676023916095,
+            "cap": 0.1,
+            "cap_active_updates": 0,
+            "stage": "before common clipping and optimizer transformation; not parameter-update or policy-effect ratio"
+          }
+        }
+      },
+      "initial_wm_actor_critic_hashes_match": true,
+      "training_response_C_minus_B": 0.0017801246643067703,
+      "training_response_C_relative_change_pct": 0.10158526863708328
+    }
+  ],
+  "handoffs": {
+    "501": {
+      "file": "handoff/cd01_s501.tar.gz",
+      "sha256": "2e26e58e1fb1cc5ba6ac91682e46c4ecde9c0d3a3690f2af3ac904eedc285732"
+    },
+    "505": {
+      "file": "handoff/cd01_s505.tar.gz",
+      "sha256": "86a6db1150f5dcc287584b376755bb1dd191d7a14f4dd087525cef1be2f44b15"
+    },
+    "509": {
+      "file": "handoff/cd01_s509.tar.gz",
+      "sha256": "e155113c617d6f5be3c4fb4f966cbb812586639b496319cac0507044db4458e8"
+    },
+    "513": {
+      "file": "handoff/cd01_s513.tar.gz",
+      "sha256": "588b5f0051296e21df6cedd8b4159077ade63cda7d06732dd482bae62bfee56b"
+    },
+    "517": {
+      "file": "handoff/cd01_s517.tar.gz",
+      "sha256": "ed7497c9f3d6a5c026af35629dbef6e6828f701bbb85bdeb20aea5cf16d60e96"
+    }
+  },
+  "start_Asia_Shanghai": "2026-11-25T21:05:02.410430+08:00",
+  "finish_Asia_Shanghai": "2026-11-25T21:41:59.948395+08:00",
+  "aggregates": {
+    "completed_training_branches": 10,
+    "completed_label_jobs": 5,
+    "total_new_wm_updates": 100000,
+    "total_new_policy_updates": 19000,
+    "total_new_training_env_transitions": 51855360,
+    "total_label_env_transitions": 1530880,
+    "gradient_ratio_pooled_median": 0.00032877715587144795,
+    "gradient_ratio_pooled_max": 0.003334493915908791,
+    "cap_active_updates": 0,
+    "gradient_diagnostic_updates": 10000,
+    "B_continue_tail_response_huber": {
+      "seed_mean": 1.9594704214334489,
+      "sample_sd": 0.26904861754104775,
+      "n_seeds": 5
+    },
+    "C_tail_response_huber": {
+      "seed_mean": 1.9585389902830124,
+      "sample_sd": 0.2682338046540206,
+      "n_seeds": 5
+    },
+    "C_relative_response_change_pct": -0.04753484105950445
+  },
+  "limits": [
+    "Training fit-batch losses across changing checkpoints, not fixed-final-model calibration or test metrics.",
+    "Online forward losses use diverging branch replay distributions and cannot establish causal improvement.",
+    "GPU-native generation completed; this metadata-only package cannot independently measure raw label repeatability or signal distributions.",
+    "Review archive omits checkpoints and fit/cal NPZ; five separate handoff archives are required on RTX 3090.",
+    "No C vs B completion results or D calibration/training results are present; missing values are not zeros.",
+    "Small response-to-forward raw-gradient ratio suggests weak intervention but does not prove its cause or predict Muon updates.",
+    "D/C-perm eligibility remains contingent on nondegenerate calibrated windows on the fit-start pool."
+  ],
+  "next_step": "Preserve all five seeds; use existing 3090 queue for planned calibration, fixed-window/D/C-perm branches and common evaluation. No 5080 retraining is indicated by completion status alone.",
+  "local_source_code_matches_recorded_hash": true
+}

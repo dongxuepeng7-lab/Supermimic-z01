@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-26",
+  "cpu_unit_tests": {
+    "count": 8,
+    "passed": 8,
+    "command": ".venv/bin/python -m unittest discover -s tests -p test_ral_cd_full_night.py -v"
+  },
+  "py_compile": "passed",
+  "bash_syntax": "passed",
+  "actual_parent_cli": {
+    "parent": "cd02_3090 s501 B final6000",
+    "iterations": 2000,
+    "response_horizon": 4,
+    "response_grad_ratio": 0.1,
+    "actor_horizon": 32,
+    "wm_window": 8,
+    "B_to_C_only_differences": [
+      "experiment_group",
+      "response_weight",
+      "log_dir"
+    ],
+    "passed": true
+  },
+  "local_preflight": {
+    "input_files_verified": 16,
+    "legacy_missing": 26,
+    "new_policy_cells": 60,
+    "passed": true
+  },
+  "GPU_smoke": {
+    "device": "RTX3090",
+    "iterations_per_branch": 2,
+    "branches": [
+      "D_emp",
+      "C_perm_emp",
+      "C_fixed16"
+    ],
+    "same_initial_hash": true,
+    "same_start_schedule": true,
+    "D_perm_assigned_steps_equal": true,
+    "D_perm_computed_steps_equal": true,
+    "frozen_model_and_critic_checks": "passed",
+    "finite_final_actor": "passed",
+    "live_export_exact_tensor_check": "passed",
+    "empirical_assignment_identifiable": true,
+    "experimental_evidence": false,
+    "full_5080_campaign_tested": false
+  },
+  "untouched_training_source_hash": "074066ce1317a622cf62ba636836bae1a314bdc9138dcda6b4ca04704950b69d",
+  "notes": [
+    "GPU smoke is code verification only, not a training result or evidence for the paper.",
+    "5080 full execution and performance remain to be measured."
+  ]
+}

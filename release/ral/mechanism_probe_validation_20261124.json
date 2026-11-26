@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-24",
+  "formal_results": false,
+  "unit_tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -p test_ral_mechanism.py -v",
+    "passed": 5
+  },
+  "gpu": "RTX 3090",
+  "gpu_smoke_only": true,
+  "production_remote_models_tested": false,
+  "fullsize_test_model": "3x1024 WM, only 2 training updates; tool smoke only",
+  "smokes": [
+    {
+      "report": "logs/ral_mechanism/validation_Aplus_derivative_20261124.json",
+      "sha256": "c4ef61be44f768812f160977a400da8a7188fdfc38185b8afa17323d4f1ebc1e",
+      "task": "derivative",
+      "model": "matched",
+      "rows": 4,
+      "checkpoint_sha256": "3ab6f246d863aeeb3ab7906feb773b48fe5afd3f3c03b69861bc55dd912e12a4"
+    },
+    {
+      "report": "logs/ral_mechanism/validation_B_derivative_20261124.json",
+      "sha256": "7d0fa4022bd29a3f0686ae45bb4e00c155a5090809bc1305dc2f1f287fbaf580",
+      "task": "derivative",
+      "model": "actuator",
+      "rows": 4,
+      "checkpoint_sha256": "bce58f9d71d40559f56a69bc8af1139d6fb4a7bc534f908ac9ec2d53e583a088"
+    },
+    {
+      "report": "logs/ral_mechanism/validation_B_loss_20261124.json",
+      "sha256": "77b1ffa712170f06b76ca723708704c45019cd33c1b0725689020c0106c76f00",
+      "task": "loss",
+      "model": "actuator",
+      "rows": 2,
+      "checkpoint_sha256": "bce58f9d71d40559f56a69bc8af1139d6fb4a7bc534f908ac9ec2d53e583a088"
+    },
+    {
+      "report": "logs/ral_mechanism/validation_final_fullsize_derivative_20261124.json",
+      "sha256": "47e641a8ac5f87b810165406b0d70bccc39bd5a131adffa47f64c1fd2d7b4274",
+      "task": "derivative",
+      "model": "actuator",
+      "rows": 4,
+      "checkpoint_sha256": "486655ff3c26471ec34d725973a98dea4e30665ac1b59255a34f6820b4dcc520"
+    },
+    {
+      "report": "logs/ral_mechanism/validation_final_fullsize_loss_20261124.json",
+      "sha256": "66b6e0049a179417574db9a1eda477d1e2d0f74eb0fe1f7a56aaa1f18dabfe87",
+      "task": "loss",
+      "model": "actuator",
+      "rows": 2,
+      "checkpoint_sha256": "486655ff3c26471ec34d725973a98dea4e30665ac1b59255a34f6820b4dcc520"
+    }
+  ],
+  "missing_remote_archive_rejected_before_output_creation": true,
+  "local_3090": {
+    "status": "completed",
+    "original_blocks": 516,
+    "new_direction_cells": 18,
+    "blocks_per_new_direction": 48,
+    "raw_files_recomputed": 1380,
+    "original_failed": 54,
+    "source_summary_sha256": "5fd92372fd8e609d359a5832f545facfa9bed29667c84848367d87b4ab38727a",
+    "seconds": 8.747531414031982,
+    "new_simulator_rollouts": 0
+  },
+  "source_and_legacy_protocol_unchanged": true,
+  "locked_test_accessed": false
+}

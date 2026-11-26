@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "scope": "all_seven_groups",
+  "canonical_requirements": "docs/ral_experiments.md",
+  "implementation": "PartyMimic Z01 local fork",
+  "tasks": [
+    {
+      "id": "DATA-01",
+      "owner": "data_source_machine",
+      "status": "ready",
+      "task": "163 real NPZ arrays imported and validated from z01_lafan_v2_clean_data.tar.gz. Preserve selection.json and hashes; see release/ral/data_readiness.json. The earlier ZIP remains a broken-symlink archive."
+    },
+    {
+      "id": "ID-01",
+      "owner": "3090_eval",
+      "status": "snapshot_imported_raw_logs_missing",
+      "task": "Audit parameter provenance and collect raw fit/cal/test sessions. Resolve left hip yaw exact version and right ankle new candidate; retain failed/copied joints separately."
+    },
+    {
+      "id": "ID-02",
+      "owner": "3090_eval",
+      "status": "requires_raw_logs",
+      "task": "Independently refit continuous PD, fixed-period holds and recorded-event holds with equal budget; known-parameter timing experiment and hold ablations. Do not infer this contribution from A0/A."
+    },
+    {
+      "id": "PLANT-01",
+      "owner": "shared_code",
+      "status": "implemented",
+      "task": "A0/original equivalence, actual compiled parameter readback, identified wiring response; shared PD/limits/action scales and explicit unsupported-delay/load exclusions."
+    },
+    {
+      "id": "PAIR-01",
+      "owner": "3090_eval",
+      "status": "diag01_backend_isolated_repeatability_and_consistency_failures",
+      "task": "diag01 single-world execution has 0/516 cross-process response repeatability failures, but 54/516 overall failures in each of two full processes; graph/eager batch still fail repetition. Keep original thresholds and failure-enriched diagnostics separate from full coverage. Preserve all failures; locked test remains unread."
+    },
+    {
+      "id": "TRAIN-01",
+      "owner": "4090_train",
+      "status": "pilot02_completed_audited",
+      "task": "Imported all five seed 1 pilot02 runs from logs_4090_v2.zip. Each completed 200 iterations, 1000 WM updates and 200 policy updates; checkpoint hashes, frozen inputs and paired initialization verified. Preserve pilot01/pilot02. No further full rerun scheduled until the response generalization diagnostic selects a justified new setting."
+    },
+    {
+      "id": "TRAIN-02",
+      "owner": "5080_train",
+      "status": "pilot02_completed_audited",
+      "task": "Imported all five seed 2 pilot02 runs from logs_5080_v2.zip with the same verified budget, source/config/protocol and paired initialization as seed 1. Preserve original archives and all run records; see release/ral/pilot02_training_review.json."
+    },
+    {
+      "id": "MODEL-01",
+      "owner": "3090_eval",
+      "status": "forward_restored_response_generalization_unresolved",
+      "task": "Full pilot02 restores cal C joint RMSE32 to 0.05548/0.05551 rad, near B 0.05570/0.05576. Fit response RMSE8 improves 13.58/8.33 percent versus B, but cal worsens 0.072/0.977 percent; all four stored iterations show no cal response8 benefit on either seed. This is consistent with response overfitting, not a proven single cause. Next validate 4/8-step amplitude stability and CPU/GPU response consistency, then test a limited matched generalization intervention on fit/cal. Keep raw metrics and common forward labels/normalization. Preserve the original setting selection record; full-training review is release/ral/pilot02_training_review.json."
+    },
+    {
+      "id": "WINDOW-01",
+      "owner": "3090_eval",
+      "status": "waiting_response_validation_and_tolerance",
+      "task": "Pilot02 C checkpoints are available and audited, but response generalization benefit is not demonstrated. Resolve model/data validity and prespecify an application-justified tolerance before D/C-perm. Candidates remain 4/8 steps; the >2 rad/s cal bin has only four blocks. Do not turn diagnostic quantiles into a permissive tolerance solely to obtain long windows. Then freeze shared fit starts and C model/critic, preserve per-update histogram/budgets, and report unvalidated fallbacks."
+    },
+    {
+      "id": "EVAL-01",
+      "owner": "3090_eval",
+      "status": "development_common_5080_imported_formal_pending",
+      "task": "Imported ral_closed_loop.zip: 24 pilot and 60 common evaluations, six configurations x five common training seeds x nominal/identified plants. Episode arithmetic, commands and console JSON agree. A0/A complete about 80 percent; A+/B/two C variants complete zero clips. This is development on the training-reference library, not independent heldout robustness. Remote result archive lacks evaluation-time input/checkpoint hashes; preserve provenance limits. D/C-perm, repeatability and formal heldout/time-to-target tests remain pending. See release/ral/closed_loop_5080_review_20261122.json."
+    },
+    {
+      "id": "RELEASE-01",
+      "owner": "shared_code",
+      "status": "pilot02_audited_formal_pending",
+      "task": "protocol_v2.json and its frozen source/config/assets/params/motions/responses are unchanged and match all ten imported pilot02 runs. The training review records 60 verified checkpoint hashes and fit/cal diagnosis. Preserve both protocols and attempts; any new source/config/data requires a fresh protocol/attempt. Formal budgets, seed counts, tolerances and justified heldout scenarios still need separate freezing."
+    },
+    {
+      "id": "PAPER-01",
+      "owner": "paper",
+      "status": "development_closed_loop_results_filled_formal_pending",
+      "task": "Updated manuscript with the five-seed common development table, retaining original replay and world-model evidence. Nominal/identified plants are not heldout tests. Velocity is world-XYZ root-origin per-component RMSE, and early-failure duration differs. Report mixed A/A0 differences and shared A+/B/C failure honestly. Independent timing, heldout robustness, D/C-perm and efficiency claims remain pending."
+    },
+    {
+      "id": "NIGHT-3090",
+      "owner": "3090_eval",
+      "status": "eight_hour_evaluation_reviewed_backend_failed",
+      "task": "online_night01_3090 reached its eight-hour cutoff: 115 completed evaluations, 28 balanced four-model cells (112 evaluations; evaluation seeds 101-114). Three completed evaluations from partial seed-115 cell are retained but excluded from balanced aggregation; fourth timed out. Actual old seed 2/4 model hashes and scenario arrays verified. These are 1000-update policies, separate from new 5000-update pairs. No stable B completion benefit; backend failed. Next receive diagnostic pairs s6/s46/s8/s84 for common-device review; do not rerun the old queue or enable C."
+    },
+    {
+      "id": "NIGHT-4090",
+      "owner": "4090_train",
+      "status": "online_night01_metadata_reviewed_control_screen_failed",
+      "task": "20 complete A+/B pairs, seeds 8:4:84; 40 models at 5000 policy/25000 WM updates. All metadata budgets and 80 final evaluations checked; actual model archive bytes await transfer. Primary mean completion A+ 89.11%, B 89.85%; include seed 84 negative pair (A+ 152/152, B 142/140 of 163) that triggered the 5pp gate. Preserve all 20 model archives. Transfer s8_models.tar.gz and s84_models.tar.gz first for diagnosis, not favorable-outcome selection. Pause identical replication; keep frozen code/protocol unchanged."
+    },
+    {
+      "id": "NIGHT-5080",
+      "owner": "5080_train",
+      "status": "online_night01_metadata_reviewed_control_screen_failed",
+      "task": "11 complete A+/B pairs, seeds 6:4:46; 22 models at 5000 policy/25000 WM updates. All metadata budgets and 44 final evaluations checked; actual model archive bytes await transfer. Primary mean completion A+ 88.90%, B 87.79%; include seed 46 negative pair (A+ 150/150, B 140/140 of 163) that triggered the 5pp gate. Preserve all 11 model archives. Transfer s6_models.tar.gz and s46_models.tar.gz first for diagnosis. Pause identical replication; no C/D/C-perm."
+    },
+    {
+      "id": "RECOVERY-01",
+      "owner": "5080_train_and_3090_eval",
+      "status": "full_budget_recovery_completed_development_gates_passed",
+      "task": "recover01 passed all predeclared development gates on 3090: final A+ completed 136/132 clips for seed 2 and 133/136 for seed 4 across two evaluations of 163 clips; A completed 127/131 and 129/129. Online changes data, normalization and the forward objective together, so recovery does not isolate a unique root cause. A/A+ widths and initialization differ; these two-seed development results do not establish benefit, equivalence, or B/C contributions. Online C remains rejected pending validated hybrid supervision; response test remains locked."
+    },
+    {
+      "id": "DIAG9-5080",
+      "owner": "5080_train",
+      "status": "diag01_reviewed_9_complete_blocks_output_cap_stop",
+      "task": "36 full-budget models, 9 complete blocks audited. H32→8 reduces A+/B completion by 5.73/6.61 pp. Output 14.16 GiB + 2 GiB reserve exceeded 16 GiB cap despite 375.56 GiB free. Preserve negative results; do not restart identical queue. Reuse baseline WM8/H32 weights for multistep action sensitivity and friction/limit diagnostics."
+    },
+    {
+      "id": "DIAG9-4090",
+      "owner": "4090_train",
+      "status": "diag01_reviewed_8_complete_blocks_plus_2_models_storage_stop",
+      "task": "34 full-budget model records audited; 8 complete four-model blocks included, s335 WM8 pair retained outside balanced analysis. WM8→32 reduces A+/B completion by 32.67/36.43 pp; no nonfinite training. Storage stopped with 16.84 GiB free below 17 GiB start reserve. Preserve results; do not restart identical queue. Diagnose temporal loss normalization/clipping on fixed batches before a new training intervention."
+    },
+    {
+      "id": "DIAG9-3090",
+      "owner": "3090_eval",
+      "status": "diag01_reviewed_single_world_repeatability_improved_consistency_failed",
+      "task": "Full 516-block pass failures: graph batch 65/64, eager batch 61/66, eager single 54/54. Cross-process repeatability failures 19/22/0 respectively. 18 complete new-direction cells; partial 1019 excluded. Locally recomputed 8280 raw trajectory blocks. Single-world repetition passes do not establish CPU/GPU response validity; no C/test."
+    },
+    {
+      "id": "MECHANISM-5080",
+      "owner": "5080",
+      "status": "completed_audited",
+      "task": "89.99s, two frozen models seed301. FP64 FD-vs-AD discrepancies shrink on all sampled fit/cal h8/h32 blocks; FP32 tiny differences roundoff-limited. Not policy improvement, physics agreement or unique friction cause. See mechanism01_5080_review_20261124.json."
+    },
+    {
+      "id": "MECHANISM-4090",
+      "owner": "4090",
+      "status": "cancelled_weights_deleted_machine_reassigned",
+      "task": "User reports 4090 weights accidentally deleted and machine repurposed. Do not restore/retrain old models or claim fixed-batch loss diagnosis completed. Historical metadata retained; next tasks exclude 4090."
+    },
+    {
+      "id": "MECHANISM-3090",
+      "owner": "3090",
+      "status": "completed_locally",
+      "task": "Existing eager_single r0 516 full plus 18x48 direction trajectories stratified; no new simulator rollouts. Retain all 54 original failures; constraints counts are not contact identities."
+    },
+    {
+      "id": "TRI3-5080",
+      "owner": "5080_train",
+      "status": "reviewed_complete_5_triplets_plus_partial",
+      "task": "15 full-budget policies on five paired seeds; Aplus/B_ref 89.82%, B_v005 91.17%; +1.35pp paired interval spans zero. Retain s521 incomplete and all archives. See intervention01_review_20261125.json."
+    },
+    {
+      "id": "TRI3-3090",
+      "owner": "3090_eval",
+      "status": "reviewed_6_complete_direction_cells_plus_partial",
+      "task": "Input rounding leaves 35/48 original-direction failures versus native36/48; constraint differences need localization. Six complete two-process directions; direction2006 partial. No automatic C."
+    },
+    {
+      "id": "VALID6-5080",
+      "owner": "5080_eval",
+      "status": "completed_reviewed_180_evaluations",
+      "task": "All180 evaluations and29340 episode records audited. Prespecified five-stress paired-seed B_v005-minus-B_ref mean +0.908pp, exploratory95% interval [-3.240,+5.056]. Positive point estimate, no established superiority. Keep all15 models; do not repeat this queue or start C automatically."
+    },
+    {
+      "id": "VALID6-3090",
+      "owner": "3090_eval",
+      "status": "completed_reviewed_28_diagnostics",
+      "task": "All28 jobs and1344 raw rollouts audited. Native failure counts36/48 and33/48 become1/48 and0/48 with contacts disabled, in both processes. Contact-related path localized; no concrete implementation fix yet. Preserve real contacts for subsequent minimal reproduction and repair validation."
+    },
+    {
+      "id": "CD-NATIVE-5080",
+      "owner": "5080_train",
+      "status": "completed_reviewed_5_paired_seeds_no_superiority_established",
+      "task": "User authorized native GPU C implementation. Reuse all five B_v005 parents (501,505,509,513,517), generate GPU fit/cal pairs with preserved contacts and session split, run matched B_continue/C weight-only branches at 2000 iterations (100 WM-only then 1900 actor), and export per-seed handoffs. Do not rerun diagnostic queues or claim superiority."
+    },
+    {
+      "id": "CD-NATIVE-3090",
+      "owner": "3090_train_eval",
+      "status": "completed_reviewed_150_executable_evaluations_original_D_and_perm_blocked",
+      "task": "Receive each native C handoff; calibrate speed/support proxy bins on cal, capture shared fit starts, train fixed8/fixed32 and nondegenerate D/C-perm frozen-model actor branches. Record unsupported fallbacks and dense Hmax compute honestly; keep missing/blocked outcomes distinct from zero. Common known-parameter evaluation follows; no new heldout/hardware claim.",
+      "completion_record": "logs/ral_cd/cd01_3090/status.json",
+      "review": "release/ral/cd01_3090_completion_20261126.json"
+    },
+    {
+      "id": "CD9-5080",
+      "owner": "5080_train_eval",
+      "status": "completed_reviewed_5_seeds_D_blocked_no_completion_advantage",
+      "task": "Nine active wall hours; five fixed B_v005 seeds; matched 6000-iteration B/C_h4/C_h8 continuation with C weight 0.01 and 10% raw-gradient cap; native labels on own GPU. Prespecified C_h8 window parent, original 8/32 and 0.5 calibration gate. Common evaluations, preserve incomplete/negative results.",
+      "review": "release/ral/cd02_5080_review_20261126.json",
+      "result": "15 full-budget models, 90 evaluations/14670 episodes audited; 5h12m29s active. Five-nonreference mean completion B 93.8405%, C_h4 93.6933%, C_h8 93.5215%. C improves short cal response modestly but not closed-loop aggregate completion. No validated 8/32 bins for any seed; D/C_perm/fixed-window controls not launched. Preserve models and negative evidence."
+    },
+    {
+      "id": "CD9-3090",
+      "owner": "3090_train_eval",
+      "status": "budget_exhausted_10_models_trained_34_of_60_evaluations_complete",
+      "task": "Wait for successful cd01_3090 and released GPU lock, then nine active wall hours; five fixed seeds, matched 6000-iteration B/C_h32 continuation with newly generated 3090-native labels. Original D gate unchanged; no transfer dependency on new 5080 runs. Waiting excluded; unexpected predecessor failure blocks without taking GPU.",
+      "execution_record": "logs/ral_cd9/cd02_3090/status.json",
+      "review": "release/ral/cd02_3090_review_20261126.json",
+      "result": "10 full-budget models and final file hashes verified. 34 evaluations complete; 26 missing including one budget-interrupted evaluation. No complete five-condition seed pairs. Original nine-hour budget exhausted; estimated 1h53m net evaluation needed from existing weights in separately budgeted supplement. D blocked for all 5 seeds; no new GPU job launched in this review."
+    },
+    {
+      "id": "CD-CAP-5080",
+      "owner": "5080_train_eval",
+      "status": "completed_reviewed_5_seeds_no_cap_benefit_D_blocked",
+      "config": "configs/ral/cd_strength_v1.json",
+      "task": "Nine-hour ceiling, seeds501/505/509/513/517. On-device B/C_h32_cap10/C_h32_cap30, same6000 iterations and originalBparents/native labels; C weight0.01 and cap is the sole C/C difference. Complete all90 primary evaluations before any eligibleD/permuted/fixed controls. Preserve blocked/partial outcomes; no cross-device causal contrast. Sourcefiles frozen by running3090 remain unchanged.",
+      "evidence": "release/ral/cd_strength_design_20261126.json",
+      "review": "release/ral/cd03_strength_5080_review_20261126.json",
+      "result": "15 full-budget models, 90 evaluations/14670 episodes. Actual weighted response-gradient median 10.00% vs 17.962%. Cap30 vs cap10: five-condition completion -0.26994pp; paired cal response32 change -0.01412%. No established superiority. All 5 seeds have zero validated 8/32 bins; D/C_perm/fixed-window controls not launched."
+    },
+    {
+      "id": "CD-FULL-3090",
+      "owner": "3090_train_eval",
+      "status": "running_legacy_completion_first",
+      "config": "configs/ral/cd_full_night_v1.json",
+      "task": "Nine-hour separate campaign; complete declared five-seed six-condition matrix. Reuse34 old evaluations, finish26, then10 refreshed B/C models and60 new evaluations.",
+      "evidence": "release/ral/cd_full_night_design_20261126.json"
+    },
+    {
+      "id": "CD-FULL-5080",
+      "owner": "5080_train_eval",
+      "status": "packaged_awaiting_remote_launch",
+      "config": "configs/ral/cd_full_night_v1.json",
+      "task": "Nine-hour separate campaign; complete declared five-seed six-condition matrix. 15 B/C models,20 empirical-risk/permuted/fixed16/fixed32 actor branches,5 exact live-parent exports;240 evaluations. Empirical D is not original certified D.",
+      "evidence": "release/ral/cd_full_night_design_20261126.json"
+    }
+  ],
+  "current_execution_requirements": "docs/ral_cd_full_night_20261126.txt",
+  "current_execution_config": "configs/ral/cd_full_night_v1.json",
+  "current_frozen_protocol": null,
+  "current_execution_state": "3090_cd04_full_running_5080_cd04_full_packaged",
+  "current_review": "release/ral/cd03_strength_5080_review_20261126.json",
+  "current_backend_review": "release/ral/constraint01_3090_review_20261125.json",
+  "current_validation": "release/ral/cd_full_night_implementation_20261126.json",
+  "current_machine_availability": {
+    "5080": "cd04_full_package_ready_requires_remote_launch",
+    "3090": "cd04_full_running_since_20261126_2335_ceiling_20261127_0835",
+    "4090": "excluded_user_reassigned_and_old_weights_deleted"
+  },
+  "current_protocol_creation": "Runtime status.json contract freezes code/data/assets/dependency versions; each handoff carries the same contract.",
+  "current_5080_execution_config": "configs/ral/cd_full_night_v1.json",
+  "current_3090_review": "release/ral/cd02_3090_review_20261126.json"
+}

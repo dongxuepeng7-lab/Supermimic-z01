@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="244.8pt" height="133.2pt" viewBox="0 0 244.8 133.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-22T14:11:42.482468</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.5.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 133.2 
+L 244.8 133.2 
+L 244.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 5.9004 71.568 
+L 113.4756 71.568 
+Q 115.8876 71.568 115.8876 69.408 
+L 115.8876 27.072 
+Q 115.8876 24.912 113.4756 24.912 
+L 5.9004 24.912 
+Q 3.4884 24.912 3.4884 27.072 
+L 3.4884 69.408 
+Q 3.4884 71.568 5.9004 71.568 
+z
+" clip-path="url(#p4264410575)" style="fill: #edf3f7; stroke: #32638a; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 59.688 23.243906 
+Q 59.688 23.399971 59.688 22.717511 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: round"/>
+    <path d="M 60.888 20.317511 
+L 59.688 22.717511 
+L 58.488 20.317511 
+L 60.888 20.317511 
+z
+" clip-path="url(#p4264410575)" style="fill: #516d7b; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 131.3244 71.568 
+L 238.8996 71.568 
+Q 241.3116 71.568 241.3116 69.408 
+L 241.3116 27.072 
+Q 241.3116 24.912 238.8996 24.912 
+L 131.3244 24.912 
+Q 128.9124 24.912 128.9124 27.072 
+L 128.9124 69.408 
+Q 128.9124 71.568 131.3244 71.568 
+z
+" clip-path="url(#p4264410575)" style="fill: #edf3f7; stroke: #32638a; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 185.112 23.243906 
+Q 185.112 23.399971 185.112 22.717511 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: round"/>
+    <path d="M 186.312 20.317511 
+L 185.112 22.717511 
+L 183.912 20.317511 
+L 186.312 20.317511 
+z
+" clip-path="url(#p4264410575)" style="fill: #516d7b; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 5.9004 129.888 
+L 238.8996 129.888 
+Q 241.3116 129.888 241.3116 127.728 
+L 241.3116 89.712 
+Q 241.3116 87.552 238.8996 87.552 
+L 5.9004 87.552 
+Q 3.4884 87.552 3.4884 89.712 
+L 3.4884 127.728 
+Q 3.4884 129.888 5.9004 129.888 
+z
+" clip-path="url(#p4264410575)" style="fill: #eef7f4; stroke: #00796b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 122.4 81.563906 
+Q 122.4 83.882327 122.4 85.362222 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: round"/>
+    <path d="M 123.6 82.962222 
+L 122.4 85.362222 
+L 121.2 82.962222 
+L 123.6 82.962222 
+z
+" clip-path="url(#p4264410575)" style="fill: #516d7b; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 122.4 81.563906 
+Q 122.4 83.882327 122.4 85.362222 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: round"/>
+    <path d="M 123.6 82.962222 
+L 122.4 85.362222 
+L 121.2 82.962222 
+L 123.6 82.962222 
+z
+" clip-path="url(#p4264410575)" style="fill: #516d7b; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 122.4 14.76 
+L 122.4 21.24 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 122.4 21.24 
+L 59.688 21.24 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 122.4 14.76 
+L 122.4 21.24 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 122.4 21.24 
+L 185.112 21.24 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 59.688 70.92 
+L 59.688 79.56 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 59.688 79.56 
+L 122.4 79.56 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_7">
+    <path d="M 185.112 70.92 
+L 185.112 79.56 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_8">
+    <path d="M 185.112 79.56 
+L 122.4 79.56 
+" clip-path="url(#p4264410575)" style="fill: none; stroke: #516d7b; stroke-width: 0.75; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="fill: #183849; font: 700 8px 'DejaVu Sans'; text-anchor: middle" x="122.4" y="8.28" transform="rotate(-0, 122.4, 8.28)">Matched state after shared pre-roll</text>
+   </g>
+   <g id="text_2">
+    <text style="fill: #183849; font: 700 8px 'DejaVu Sans'; text-anchor: start" x="10.242" y="38.52" transform="rotate(-0, 10.242, 38.52)">Positive command</text>
+   </g>
+   <g id="text_3">
+    <text style="fill: #183849; font: 8px 'DejaVu Sans'; text-anchor: start" x="10.242" y="52.56" transform="rotate(-0, 10.242, 52.56)">U + εD</text>
+   </g>
+   <g id="text_4">
+    <text style="fill: #183849; font: 6.9px 'DejaVu Sans'; text-anchor: start" x="10.242" y="65.52" transform="rotate(-0, 10.242, 65.52)">Physics and model rollouts</text>
+   </g>
+   <g id="text_5">
+    <text style="fill: #183849; font: 700 8px 'DejaVu Sans'; text-anchor: start" x="135.666" y="38.52" transform="rotate(-0, 135.666, 38.52)">Negative command</text>
+   </g>
+   <g id="text_6">
+    <text style="fill: #183849; font: 8px 'DejaVu Sans'; text-anchor: start" x="135.666" y="52.56" transform="rotate(-0, 135.666, 52.56)">U − εD</text>
+   </g>
+   <g id="text_7">
+    <text style="fill: #183849; font: 6.9px 'DejaVu Sans'; text-anchor: start" x="135.666" y="65.52" transform="rotate(-0, 135.666, 65.52)">Physics and model rollouts</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #00796b; font: 700 8px 'DejaVu Sans'; text-anchor: start" x="11.448" y="101.16" transform="rotate(-0, 11.448, 101.16)">Response loss at each supervised step</text>
+   </g>
+   <g id="text_9">
+    <text style="fill: #183849; font: 7px 'DejaVu Sans'; text-anchor: start" x="11.448" y="113.472" transform="rotate(-0, 11.448, 113.472)">Form the plus/minus difference in each system.</text>
+   </g>
+   <g id="text_10">
+    <text style="fill: #183849; font: 7px 'DejaVu Sans'; text-anchor: start" x="11.448" y="124.92" transform="rotate(-0, 11.448, 124.92)">Penalize disagreement between model and physics.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p4264410575">
+   <rect x="1.8" y="1.8" width="241.2" height="129.6"/>
+  </clipPath>
+ </defs>
+</svg>

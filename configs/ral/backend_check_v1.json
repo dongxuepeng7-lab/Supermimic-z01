@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "splits": ["fit", "cal"],
+  "blocks_per_split": 12,
+  "selection": "Evenly spaced indices of lexically sorted block IDs; fixed before outcomes",
+  "epsilon_factors": [0.5, 1.0, 2.0],
+  "horizons": [4, 8],
+  "repeats": 2,
+  "cpu_reconstruction_max_abs": 1e-8,
+  "cpu_repeat_max_abs": 1e-10,
+  "initial_state_transfer_max_abs": 1e-5,
+  "forward_scaled_rmse_max": 0.1,
+  "response_relative_rmse_max": 0.1,
+  "response_absolute_scaled_rmse_floor": 0.1,
+  "gpu_repeat_relative_rmse_max": 0.01,
+  "gpu_repeat_absolute_scaled_rmse_floor": 0.01,
+  "justification": "Engineering screening budgets fixed before this check: forward error <=10% of existing 0.01 rad/0.1 rad/s output scales; response discrepancy <=10% of CPU response RMS (absolute scaled floor 0.1); repeat noise <=1% (floor 0.01). CPU reconstruction must recover archived labels to 1e-8. These are development screens, not task-derived acceptance tolerances or formal equivalence. Negative outcomes remain negative; no automatic C or window calibration.",
+  "formal_results": false,
+  "locked_response_test_access": false
+}

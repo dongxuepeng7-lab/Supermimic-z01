@@ -1,0 +1,131 @@
+{
+  "date": "2026-11-25",
+  "protocol_sha256": "ec760c802c3bfdec3f25b1d399e71203b22d76535ccccef70715abf48a535dd4",
+  "config_sha256": "eed0b9e96903abb66173b2f225983a69344ed70f1ee33d7c97e4682c5414a497",
+  "formal_queues_started": false,
+  "new_training_runs": 0,
+  "implementation_tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -p test_ral_validation_six_hour.py",
+    "passed": 6,
+    "coverage": [
+      "nominal/identified interpolation preserving true zeros",
+      "180 jobs, primary first, 18 trajectory records",
+      "paired complete-seed aggregation, retain negatives and unstarted jobs",
+      "mismatched physics rejected",
+      "constraint interventions isolated from native model",
+      "archived first-deviation probe selection"
+    ]
+  },
+  "static_checks": {
+    "python_compile": true,
+    "shell_syntax": true,
+    "git_diff_check": true
+  },
+  "integration": {
+    "stress_smoke02": {
+      "status": "planned_work_completed",
+      "jobs": 6,
+      "judgment": "logs/ral_6h/stress_smoke02/judgment.json",
+      "judgment_sha256": "be52052bfbbb4387bb27329bd43f0b98ca6a53b5fa89a3a6058ef9497e5cf67c",
+      "elapsed_seconds": 47.91138553619385
+    },
+    "constraint_smoke02": {
+      "status": "planned_work_completed",
+      "jobs": 4,
+      "judgment": "logs/ral_6h/constraint_smoke02/judgment.json",
+      "judgment_sha256": "5320da3de428826001f27d33d12ca228f5e1e623fe1aec9a21345c5d0cc41604",
+      "elapsed_seconds": 121.12185311317444
+    }
+  },
+  "additional_constraint_profiles": [
+    {
+      "direction": "direction2001",
+      "profile": "native",
+      "blocks": 2,
+      "source": "logs/ral_6h/profile_smoke01/direction2001_native/summary.json",
+      "sha256": "6773023c01204320dedd56d4ba76106acee6ab004c9f6c39fc77faa4d13158c0"
+    },
+    {
+      "direction": "original",
+      "profile": "cold_start",
+      "blocks": 2,
+      "source": "logs/ral_6h/profile_smoke01/original_cold_start/summary.json",
+      "sha256": "1fb72895575938497ab904fc91d828299e7d496f262652351b7f028d785610cd"
+    },
+    {
+      "direction": "original",
+      "profile": "contacts_off",
+      "blocks": 2,
+      "source": "logs/ral_6h/profile_smoke01/original_contacts_off/summary.json",
+      "sha256": "42d65565d34908444e0d4d837301d57c013aaf16bbad7dd18459e799719ae6ca"
+    },
+    {
+      "direction": "original",
+      "profile": "frictionloss_off",
+      "blocks": 2,
+      "source": "logs/ral_6h/profile_smoke01/original_frictionloss_off/summary.json",
+      "sha256": "e5a480c4457392ca3beb2b0bb10f0a6fa683e0c2a5387ee40d3d422d609984c0"
+    },
+    {
+      "direction": "original",
+      "profile": "limits_off",
+      "blocks": 2,
+      "source": "logs/ral_6h/profile_smoke01/original_limits_off/summary.json",
+      "sha256": "bd9723180ea81780b3ebe63035b46eb7e188616c856f2b3c0958b97a840cf39c"
+    },
+    {
+      "direction": "original",
+      "profile": "tight_solver",
+      "blocks": 2,
+      "source": "logs/ral_6h/profile_smoke01/original_tight_solver/summary.json",
+      "sha256": "f0d94f55071fa0052f83a826560f17ad0acbceeb2f9c69d3ea4e5290aaf8183d"
+    }
+  ],
+  "additional_stress_scenarios": [
+    {
+      "scenario": "armature_nominal",
+      "parameter_entries": 21,
+      "source": "logs/ral_6h/scenario_smoke01/armature_nominal.json",
+      "sha256": "4a35f9a55cceefa014995fa56d3bce478537af6a17306de6a6f196ea99e70cf6"
+    },
+    {
+      "scenario": "damping_nominal",
+      "parameter_entries": 21,
+      "source": "logs/ral_6h/scenario_smoke01/damping_nominal.json",
+      "sha256": "246e469d541e0b0412926573c7e09bc8db66803888898ff59b4d234243862de1"
+    },
+    {
+      "scenario": "frictionloss_nominal",
+      "parameter_entries": 21,
+      "source": "logs/ral_6h/scenario_smoke01/frictionloss_nominal.json",
+      "sha256": "34d7e974405da7b27614d3d6c594e1866ef1041c1748953654708158ae61924c"
+    },
+    {
+      "scenario": "midpoint",
+      "parameter_entries": 21,
+      "source": "logs/ral_6h/scenario_smoke01/midpoint.json",
+      "sha256": "08b197229b1b96da602085192df6eefe8d9397ad51acbe07b6fe6dbd593ebbae"
+    }
+  ],
+  "source_3090": {
+    "verified_raw_blocks": 96,
+    "preflight_passed": true
+  },
+  "historical_runtime_unchanged": true,
+  "complete_probe_conditions_verified": [
+    "native",
+    "cold_start",
+    "frictionloss_off",
+    "limits_off",
+    "contacts_off",
+    "constraints_off",
+    "tight_solver"
+  ],
+  "all_six_stress_parameter_readbacks_verified": true,
+  "scope": "Short integration validation on local RTX3090. These are not six-hour scientific results.",
+  "limitations": [
+    "Actual 15 full-budget 5080 weight archives are on the source machine and must pass preflight and extraction/tensor checks there. Local pipeline used the separate 6-update three-policy fixture.",
+    "Only two fit/cal blocks per standalone diagnostic smoke; full 48-block conditions and 163-clip production evaluations are scheduled, not completed.",
+    "Six-hour budget may stop before every job. Pending and incomplete jobs are explicitly preserved; no completion or benefit claimed from smoke outcomes."
+  ]
+}

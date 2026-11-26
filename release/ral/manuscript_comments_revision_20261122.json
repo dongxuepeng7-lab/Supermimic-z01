@@ -1,0 +1,107 @@
+{
+  "revision": "PDF comments 1-9, 2026-11-22",
+  "base": "Latest closed-loop update, including all 5080 results; not the older annotated PDF.",
+  "inputs": {
+    "/home/zoyi/Downloads/Z01_RAL_Draft_20261122.pdf": "c253295fdafd60475ea63c6cb50ae9834ad44074f4079229abc0e822b41d7876",
+    "output/pdf/Z01_RAL_Revised_20261122.pdf": "ded1b4e3edceb53b7c6a4808a9bca51aa19556b57b0b76f8add58707aa275da1",
+    "output/pdf/Z01_RAL_ClosedLoop_Update_20261122.pdf": "9da5b6816cc4acbe7b9c075dc0132bbd2d2a0db7d71cf507eca93654e306576e",
+    "logs/ral_verification/manuscript_before_comments_20261122/manuscript.tex": "c821d72c0061b4dbb538a65ff8d871af880ea7ba9337df6ea43b3a256b3ca027",
+    "logs/ral_verification/manuscript_before_comments_20261122/RA-L_English_Draft.pdf": "9da5b6816cc4acbe7b9c075dc0132bbd2d2a0db7d71cf507eca93654e306576e",
+    "logs/ral_verification/manuscript_before_comments_20261122/中文修改说明.txt": "ef3593f69726f25ffc7518dbdb79747c17051e19c7ed764a1cdc01e29a114658",
+    "release/ral/manuscript_closed_loop_revision_20261122.json": "8ba15d272be718b9acba7688553887ddc0bf394a567eb583a1769874acde1a01",
+    "release/ral/params.csv": "c9c808a17b24fe5f47a2fa6ed4b4f22a71a9ce1808885c71e817c1ce60998c43"
+  },
+  "comments": [
+    {
+      "ids": [
+        1
+      ],
+      "action": "Restored the original full framework as Fig. 2 from user-supplied PDF page 3; vector Form XObject /Im2, object 112, BBox [0,0,600,326], extracted without altering content; placed at 0.95 text width. Caption distinguishes general delay/lag/window architecture from completed instantaneous fixed-window runs and identifies the robot panel as illustrative."
+    },
+    {
+      "ids": [
+        2
+      ],
+      "action": "Removed redundant paired-response illustration from main text; retained equations and shared-start positive/negative branch explanation; old figure source files preserved."
+    },
+    {
+      "ids": [
+        3
+      ],
+      "action": "Filled documented coverage: 7 joints, 21 enabled armature/damping/friction entries from archived summary and training manifest. Narrowed remaining evidence request to original hardware fit/test records and identifiers, timestamp/clock definitions, and independently refitted timing baselines."
+    },
+    {
+      "ids": [
+        4,
+        6,
+        7,
+        8,
+        9
+      ],
+      "action": "Patched table-caption prose from small caps to upright Roman in manuscript preamble; vendor class unchanged. Applies to all 6 current tables. Old Table VII was already merged into prose by the preceding closed-loop revision."
+    },
+    {
+      "ids": [
+        5
+      ],
+      "action": "Removed SHA-256 prefix literal from main text; retained readable reproducibility sentence and the full frozen-source fingerprint in historical audit records."
+    }
+  ],
+  "layout_edits": "Condensed repetitive table notes without dropping experimental scope or validation limits; moved wide-table declarations before discussion. No body font size or page-margin reduction.",
+  "source_code_inventory_sha256_from_prior_training_audit": "9e552a2b3e9234fbb534e55733ca1b93a284053dfd406c5dc279c9dc396e44c2",
+  "validation": {
+    "pages": 8,
+    "caption_fonts": {
+      "Executed development settings.": {
+        "page": 5,
+        "font": "/IHAIZV+NimbusRomNo9L-Regu",
+        "size": 7.970112
+      },
+      "Enabled identified joint parameters": {
+        "page": 5,
+        "font": "/IHAIZV+NimbusRomNo9L-Regu",
+        "size": 7.970112
+      },
+      "Main variants.": {
+        "page": 5,
+        "font": "/IHAIZV+NimbusRomNo9L-Regu",
+        "size": 7.970112
+      },
+      "Closed-loop development results:": {
+        "page": 6,
+        "font": "/IHAIZV+NimbusRomNo9L-Regu",
+        "size": 7.970112
+      },
+      "Archived full-record hardware replay:": {
+        "page": 7,
+        "font": "/IHAIZV+NimbusRomNo9L-Regu",
+        "size": 7.970112
+      },
+      "Development diagnostics from the 5080 session;": {
+        "page": 7,
+        "font": "/IHAIZV+NimbusRomNo9L-Regu",
+        "size": 7.970112
+      }
+    },
+    "six_table_bodies_unchanged": true,
+    "math_abstract_bibliography_unchanged": true,
+    "framework_original_form_stream_sha256": "538152eb08462b6cc069a8043126665166585c1a8532e1505b938081db60d5ff",
+    "framework_form_stream_byte_identical": true,
+    "no_overfull_boxes": true,
+    "references_resolved": true,
+    "visual_review": "All eight final 120-dpi page renders inspected; workflow, captions, tables, equations and references have no overlaps or clipping.",
+    "nonfatal_warnings": "Existing class initialization TU/ptm font fallback notices; final body and all six table captions use embedded Nimbus Roman. Underfull spacing notices remain."
+  },
+  "outputs": {
+    "output/pdf/Z01_RAL_Comments_20261122.pdf": "21148be9a7e6a5bb594534e95bf290b228603766b6103aae007a1f6dfb79963e",
+    "SCI论文草稿/RA-L_Actuator_World_Model/RA-L_English_Draft.pdf": "21148be9a7e6a5bb594534e95bf290b228603766b6103aae007a1f6dfb79963e",
+    "SCI论文草稿/RA-L_Actuator_World_Model/manuscript.tex": "d47473133695a912f6e40c0d0c41d38496592e9b3df38962e47d44e62b899fe2",
+    "SCI论文草稿/RA-L_Actuator_World_Model/中文修改说明.txt": "ba06701feeca264ff3abdac5b73452aeb06d5ea2631d71b383521d528f002545",
+    "SCI论文草稿/RA-L_Actuator_World_Model/figures/provided_framework.pdf": "b768e20b3feecedf37ce2b9b44174a7a7f990f1ada9fd59c963a0b5ee577d547",
+    "SCI论文草稿/RA-L_Actuator_World_Model/figures/provided_framework.svg": "a884ec89b3e370c5acaf12d111a9c5de1df9e5917c6c9793b2641d116a8aa049"
+  },
+  "backup_directory": "logs/ral_verification/manuscript_before_comments_20261122",
+  "qa_directory": "logs/ral_verification/manuscript_comments_20261122_pdf_qa",
+  "new_training_started": false,
+  "experimental_data_or_training_code_modified": false
+}

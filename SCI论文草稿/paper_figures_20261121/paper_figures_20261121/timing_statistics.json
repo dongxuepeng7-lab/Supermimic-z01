@@ -1,0 +1,14 @@
+{
+  "record": "right_ankle_pitch_scale0.3_T3",
+  "interval_s": [
+    6.55070177,
+    358.39670177
+  ],
+  "command_hz": 399.87482909841657,
+  "feedback_hz": 495.08925026170635,
+  "command_max_interval_ms": 10.993202999998175,
+  "feedback_max_interval_ms": 21.19555600000922,
+  "feedback_age_mean_ms": 1.0455760475785023,
+  "feedback_age_p99_ms": 3.872912279998681,
+  "age_assumption": "Recorded receipt timestamps; zero extra command delay; strict earlier feedback on ties; not physical sensor age."
+}

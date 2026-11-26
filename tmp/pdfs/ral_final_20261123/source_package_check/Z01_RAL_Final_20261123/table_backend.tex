@@ -1,0 +1,13 @@
+\begin{table}[t]
+\centering\small
+\caption{\lang{Full fit/cal backend checks on RTX 3090. Each process covers 516 blocks. Failure categories overlap.}{RTX 3090上的完整拟合／校准后端检查。每个进程覆盖516个数据块，失败类别可重叠。}}
+\label{tab:backend}
+\begin{tabular}{@{}lrr@{}}\toprule
+\lang{Check / failed blocks}{检查项／失败块数}&\lang{Pass 1}{第1次}&\lang{Pass 2}{第2次}\\\midrule
+\lang{Forward discrepancy}{前向偏差}&42&42\\
+\lang{CPU/GPU response discrepancy}{CPU/GPU响应偏差}&47&46\\
+\lang{Within-process GPU repeat}{进程内GPU重复性}&24&26\\
+\lang{Any prescribed check}{任一规定检查}&65&67\\\midrule
+\lang{Cross-process response repeat}{跨进程响应重复性}&\multicolumn{2}{c}{15 / 516}\\
+\bottomrule\end{tabular}
+\end{table}

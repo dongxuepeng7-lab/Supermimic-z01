@@ -1,0 +1,42 @@
+{
+  "as_of": "2026-11-26T12:36:26.328007+08:00",
+  "stage": "5080_cap_intervention_design",
+  "scope": "cd02_5080 five complete seeds; cd02_3090 ONLY seed501 complete for two priority policy scenarios, other seeds ongoing",
+  "3090_status": {
+    "status": "running",
+    "current": "s505_train_C_h32",
+    "started_unix": 1795661271.8105793,
+    "updated_unix": 1795667770.560125,
+    "budget_used_seconds": 6499.812828390044
+  },
+  "3090_seed501": {
+    "response_updates": 6000,
+    "cap_active": 4968,
+    "weighted_gradient_ratio_median": 0.100000000825595,
+    "B_cal_response": {
+      "q_rmse32_rad": 0.013345538950992022,
+      "qd_rmse32_rad_s": 0.3793098641880001,
+      "zero_response_rmse4": 7.663775444030762,
+      "response_rmse4": 5.044549050138563,
+      "response_rmse8": 8.456372814731939,
+      "response_rmse32": 36.81721453986965
+    },
+    "C_h32_cal_response": {
+      "q_rmse32_rad": 0.012866474328734218,
+      "qd_rmse32_rad_s": 0.3676417451421428,
+      "zero_response_rmse4": 7.663775444030762,
+      "response_rmse4": 4.970694167007293,
+      "response_rmse8": 8.387139418039036,
+      "response_rmse32": 36.769439029379136
+    },
+    "response32_relative_change_pct": -0.12976405490637832,
+    "short_validated_bins": 0,
+    "long_validated_bins": 0,
+    "completed_file_hashes_verified": 43
+  },
+  "rationale": "Single-seed evidence suggests cap saturation, not proof of a causal bottleneck. Test 0.1 vs0.3 on same5080 with all else matched; fixed seeds and complete reporting. Weight increase alone can have no effect on cap-saturated updates.",
+  "plan": "configs/ral/cd_strength_v1.json",
+  "deployment": "prepared_only_not_started_remotely",
+  "runtime_estimate": "Primary B/C work roughly6-8h using observed timings across devices as a rough extrapolation, not a measured5080H32 benchmark. Hard active budget9h; eligibleD may use remainder.",
+  "no_new_gpu_tests_or_training_started_here": true
+}

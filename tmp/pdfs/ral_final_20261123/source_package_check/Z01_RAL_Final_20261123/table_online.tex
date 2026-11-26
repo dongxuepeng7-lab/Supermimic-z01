@@ -1,0 +1,14 @@
+\begin{table*}[t]
+\centering\small
+\caption{\lang{Current online comparison: mean $\pm$ sample SD across training seeds. Each final EMA actor is evaluated on 163 reference clips; only the first evaluation enters this table. CPU calibration metrics are diagnostics, not locked-test results.}{当前在线对照：跨训练种子的均值$\pm$样本标准差。每个最终EMA策略评估163条参考动作，本表仅采用首次评估。CPU校准指标是诊断结果，不是锁定测试结果。}}
+\label{tab:online}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}rrlccc@{}}\toprule
+GPU & $n$ & \lang{Group}{组别} & \lang{Completion (\%)}{完成率(\%)} & \lang{Cal. angle RMSE$_{32}$ (rad)}{校准角度RMSE$_{32}$(rad)} & \lang{Cal. $E_R(8)$}{校准$E_R(8)$}\\\midrule
+4090 & 20 & A+ & $89.11\pm2.56$ & $0.04384\pm0.00204$ & $73.726\pm0.021$ \\
+4090 & 20 & B & $89.85\pm2.49$ & $0.04239\pm0.00205$ & $73.746\pm0.025$ \\
+5080 & 11 & A+ & $88.90\pm2.71$ & $0.04416\pm0.00138$ & $73.736\pm0.019$ \\
+5080 & 11 & B & $87.79\pm1.95$ & $0.04180\pm0.00148$ & $73.740\pm0.031$ \\
+\bottomrule\end{tabular}
+\par\vspace{3pt}\parbox{0.96\textwidth}{\footnotesize\lang{All 31 complete pairs, including the two screen-failing pairs, are retained. GPU strata have different seeds and are not pooled. Runs stopped at the first control-screen failure; statistics are descriptive. Current model weights await independent transfer verification. Zero-response calibration $E_R(8)=73.893304$.}{保留全部31对完整结果，包括两对触发门槛的负结果。不同GPU使用不同种子，不合并统计。队列在首次控制检查失败时停止，因此仅作描述性统计。当前模型权重仍待回传后独立核验。零响应预测器的校准$E_R(8)=73.893304$。}}
+\end{table*}

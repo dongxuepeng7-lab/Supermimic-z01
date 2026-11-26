@@ -1,0 +1,19 @@
+{
+  "purpose": "Pilot02 objective diagnosis, fit training and cal review only",
+  "seeds": [1, 2],
+  "updates": 120,
+  "batch_size": 128,
+  "wm_hidden": "1024,1024,1024",
+  "lr": 0.0004,
+  "selection_rule": "Candidate must keep cal forward MSE and q RMSE32 within 1.10x the same-seed weight-zero control on both seeds. Prefer lower cal raw response RMSE8; report RMSE32 too. No passing candidate means no accepted response setting.",
+  "candidates": [
+    {"name":"B_control","response_weight":0.0,"response_horizon":32,"response_loss":"mse","response_huber_delta":1.0,"wm_amp":"none"},
+    {"name":"C_w1e4_h32","response_weight":0.0001,"response_horizon":32,"response_loss":"mse","response_huber_delta":1.0,"wm_amp":"none"},
+    {"name":"C_w1e3_h32","response_weight":0.001,"response_horizon":32,"response_loss":"mse","response_huber_delta":1.0,"wm_amp":"none"},
+    {"name":"C_w1e2_h32","response_weight":0.01,"response_horizon":32,"response_loss":"mse","response_huber_delta":1.0,"wm_amp":"none"},
+    {"name":"C_w1_h32","response_weight":1.0,"response_horizon":32,"response_loss":"mse","response_huber_delta":1.0,"wm_amp":"none"},
+    {"name":"C_w1e4_h8","response_weight":0.0001,"response_horizon":8,"response_loss":"mse","response_huber_delta":1.0,"wm_amp":"none"},
+    {"name":"C_w1e3_h8","response_weight":0.001,"response_horizon":8,"response_loss":"mse","response_huber_delta":1.0,"wm_amp":"none"},
+    {"name":"C_w1e2_h8","response_weight":0.01,"response_horizon":8,"response_loss":"mse","response_huber_delta":1.0,"wm_amp":"none"}
+  ]
+}

@@ -1,0 +1,348 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-11-21",
+  "attempt": "pilot01",
+  "formal_results": false,
+  "purpose": "Checkpoint intake and fit/cal diagnosis before window training; not final method comparison",
+  "archives": [
+    {
+      "path": "/home/zoyi/Downloads/logs_4090.zip",
+      "sha256": "994a87bfb24285a95511afc7e362049d1fe9d6ab64071d90b0b8472c4e1e9c09"
+    },
+    {
+      "path": "/home/zoyi/Downloads/logs_5080.zip",
+      "sha256": "af38b019fc63d8ff6f3bfc5bfcba75150e9619fbe61d0a160fa0655a875b739f"
+    }
+  ],
+  "protocol_sha256": "42ea471e8361856704dc1c4627beedd6246a3652f714ab19c74c411831a3a195",
+  "completed_runs": 10,
+  "checkpoint_hashes_verified": 60,
+  "local_inputs_match_protocol": true,
+  "paired_initialization_verified": true,
+  "iterations_per_run": 200,
+  "env_steps_per_run": 577536,
+  "wm_updates_per_run": 1000,
+  "policy_updates_per_run": 200,
+  "runs": [
+    {
+      "run_id": "ral_A0_s1_pilot01",
+      "group": "A0",
+      "seed": 1,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "elapsed_s": 295.74564695358276,
+      "final_checkpoint_sha256": "d8486db6d31b1d2059e25184c89a9a14a4c1aed5493cfd5006894938b45c4a1e",
+      "final_weights_finite": true
+    },
+    {
+      "run_id": "ral_A_s1_pilot01",
+      "group": "A",
+      "seed": 1,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "elapsed_s": 37.723227977752686,
+      "final_checkpoint_sha256": "51946e35fe9a7df5bd4ec0d70084d2550ce464360a2824784d5ff13d2dcee0e0",
+      "final_weights_finite": true
+    },
+    {
+      "run_id": "ral_Aplus_s1_pilot01",
+      "group": "A+",
+      "seed": 1,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "elapsed_s": 167.33635449409485,
+      "final_checkpoint_sha256": "10b65573506f930e4070f0a95f8ef878a335d8de3c88199dbdc9de87f6bdcd00",
+      "final_weights_finite": true
+    },
+    {
+      "run_id": "ral_B_s1_pilot01",
+      "group": "B",
+      "seed": 1,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "elapsed_s": 177.1700258255005,
+      "final_checkpoint_sha256": "034c241e2ac48100119682dceb3e9643f81adc8d4d607e43dcd814ec9571381e",
+      "final_weights_finite": true
+    },
+    {
+      "run_id": "ral_C_s1_pilot01",
+      "group": "C",
+      "seed": 1,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "elapsed_s": 168.15441966056824,
+      "final_checkpoint_sha256": "915171ff6daaeaff022dcfb5890f032c595300767bbedfe7f1eb8770f144320d",
+      "final_weights_finite": true
+    },
+    {
+      "run_id": "ral_A0_s2_pilot01",
+      "group": "A0",
+      "seed": 2,
+      "gpu": "NVIDIA GeForce RTX 5080",
+      "elapsed_s": 38.30614447593689,
+      "final_checkpoint_sha256": "6c4544354039d777330d8e40dbe0b9e19a8f59ca0a4825fd15a58d1d719a1756",
+      "final_weights_finite": true
+    },
+    {
+      "run_id": "ral_A_s2_pilot01",
+      "group": "A",
+      "seed": 2,
+      "gpu": "NVIDIA GeForce RTX 5080",
+      "elapsed_s": 44.55646276473999,
+      "final_checkpoint_sha256": "99cf797b60fbcb1e8fbe560d6d47447cf451f6dc9e68ad0bba347fa92f935d25",
+      "final_weights_finite": true
+    },
+    {
+      "run_id": "ral_Aplus_s2_pilot01",
+      "group": "A+",
+      "seed": 2,
+      "gpu": "NVIDIA GeForce RTX 5080",
+      "elapsed_s": 167.90266942977905,
+      "final_checkpoint_sha256": "24a33db2202a4d45eef5ee0cb7cd73d66360221cef3023d4c28879face5544b2",
+      "final_weights_finite": true
+    },
+    {
+      "run_id": "ral_B_s2_pilot01",
+      "group": "B",
+      "seed": 2,
+      "gpu": "NVIDIA GeForce RTX 5080",
+      "elapsed_s": 174.76048159599304,
+      "final_checkpoint_sha256": "05a3464679120085bed6ec8ee6afdc7ed4006884fffcc0fb982cb34366a2e446",
+      "final_weights_finite": true
+    },
+    {
+      "run_id": "ral_C_s2_pilot01",
+      "group": "C",
+      "seed": 2,
+      "gpu": "NVIDIA GeForce RTX 5080",
+      "elapsed_s": 168.15546798706055,
+      "final_checkpoint_sha256": "2fdbe8ba51fac2724e5e889384ebf54345290df87046605344d222c02b2b188f",
+      "final_weights_finite": true
+    }
+  ],
+  "cal_diagnostic": [
+    {
+      "run_id": "ral_Aplus_s1_pilot01",
+      "seed": 1,
+      "group": "Aplus",
+      "precision": "fp32",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 14.002881050109863,
+      "q_rmse_rad": 0.10132792592048645,
+      "qd_rmse_rad_s": 1.0303034782409668,
+      "response_rmse": 112.86717224121094,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_Aplus_s1_pilot01",
+      "seed": 1,
+      "group": "Aplus",
+      "precision": "bf16",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 13.996706008911133,
+      "q_rmse_rad": 0.10132268071174622,
+      "qd_rmse_rad_s": 1.0302537679672241,
+      "response_rmse": 112.9103775024414,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_B_s1_pilot01",
+      "seed": 1,
+      "group": "B",
+      "precision": "fp32",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 9.576101303100586,
+      "q_rmse_rad": 0.061737220734357834,
+      "qd_rmse_rad_s": 0.922378659248352,
+      "response_rmse": 116.21961212158203,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_B_s1_pilot01",
+      "seed": 1,
+      "group": "B",
+      "precision": "bf16",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 9.57345962524414,
+      "q_rmse_rad": 0.06172528862953186,
+      "qd_rmse_rad_s": 0.9221988916397095,
+      "response_rmse": 116.04328155517578,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_C_s1_pilot01",
+      "seed": 1,
+      "group": "C",
+      "precision": "fp32",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 32.89766311645508,
+      "q_rmse_rad": 0.19276994466781616,
+      "qd_rmse_rad_s": 2.2056546211242676,
+      "response_rmse": 113.34209442138672,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_C_s1_pilot01",
+      "seed": 1,
+      "group": "C",
+      "precision": "bf16",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 32.915531158447266,
+      "q_rmse_rad": 0.19280852377414703,
+      "qd_rmse_rad_s": 2.2065863609313965,
+      "response_rmse": 113.48104095458984,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_Aplus_s2_pilot01",
+      "seed": 2,
+      "group": "Aplus",
+      "precision": "fp32",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 14.386136054992676,
+      "q_rmse_rad": 0.10214454680681229,
+      "qd_rmse_rad_s": 1.0240514278411865,
+      "response_rmse": 112.87654113769531,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_Aplus_s2_pilot01",
+      "seed": 2,
+      "group": "Aplus",
+      "precision": "bf16",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 14.391079902648926,
+      "q_rmse_rad": 0.10216352343559265,
+      "qd_rmse_rad_s": 1.0240222215652466,
+      "response_rmse": 112.96791076660156,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_B_s2_pilot01",
+      "seed": 2,
+      "group": "B",
+      "precision": "fp32",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 9.543941497802734,
+      "q_rmse_rad": 0.06031830608844757,
+      "qd_rmse_rad_s": 0.9136151075363159,
+      "response_rmse": 114.31434631347656,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_B_s2_pilot01",
+      "seed": 2,
+      "group": "B",
+      "precision": "bf16",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 9.543140411376953,
+      "q_rmse_rad": 0.06031937524676323,
+      "qd_rmse_rad_s": 0.9134554266929626,
+      "response_rmse": 114.51892852783203,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_C_s2_pilot01",
+      "seed": 2,
+      "group": "C",
+      "precision": "fp32",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 25.059797286987305,
+      "q_rmse_rad": 0.1511966735124588,
+      "qd_rmse_rad_s": 1.8881113529205322,
+      "response_rmse": 113.08731842041016,
+      "zero_response_predictor_rmse": 112.90487670898438
+    },
+    {
+      "run_id": "ral_C_s2_pilot01",
+      "seed": 2,
+      "group": "C",
+      "precision": "bf16",
+      "blocks": 116,
+      "sessions": 7,
+      "horizon": 32,
+      "forward_mse": 25.046825408935547,
+      "q_rmse_rad": 0.15116611123085022,
+      "qd_rmse_rad_s": 1.8886916637420654,
+      "response_rmse": 113.13243865966797,
+      "zero_response_predictor_rmse": 112.90487670898438
+    }
+  ],
+  "findings": [
+    "All ten 200-iteration pilot runs completed and all 60 indexed checkpoint hashes matched. Local frozen inputs and paired initialization hashes matched.",
+    "On the same 116 cal blocks, 32-step C joint-angle RMSE was 0.19277/0.15120 rad versus B 0.06174/0.06032 rad (seeds 1/2, FP32 inference). These are offline multi-step prediction errors, not policy tracking errors.",
+    "C normalized cal response RMSE was 113.342/113.087, versus 112.905 for a zero-response predictor. This pilot does not establish useful calibrated response prediction.",
+    "FP32 and BF16 inference produced similar errors. This is an inference sensitivity check and does not rule out precision effects during optimization.",
+    "The >2 rad/s initial joint-speed bin has four cal blocks, below the existing minimum of ten. No numerical calibration tolerance has been chosen.",
+    "A0/A training losses use a different objective/data stream from A+/B/C; do not rank all five groups using wm_loss. Cold compilation and GPU differences also prevent raw elapsed-time ranking."
+  ],
+  "test_outcomes_inspected": false,
+  "window_calibration_frozen": false,
+  "window_groups_started": false,
+  "closed_loop_evaluation_run": false,
+  "next_actions": [
+    "On fit/cal only, diagnose the response/forward loss balance, paired-response signal and perturbation stability. Compare any proposed remedy at matched initialization and update budget; current response_weight=1.0 is not accepted as a formal setting.",
+    "Use a new pilot attempt and new protocol if training code/settings change; retain all pilot01 checkpoints. Do not overwrite protocol_v1.json or report a warm restart as exact continuation.",
+    "After fixing the pilot model issue, specify response tolerance and check short/long coverage, then freeze C and a common fit-start pool for D/C-perm.",
+    "Freeze formal training budgets, seeds and justified heldout conditions before final testing. Run common nominal/identified closed-loop evaluation after prerequisites are met; retain failed or truncated episodes."
+  ],
+  "detailed_audit": "logs/ral_verification/imported_pilot01_audit.json",
+  "detailed_fit_cal": "logs/ral_verification/imported_pilot01_fit_cal.json",
+  "response_objective_diagnosis": {
+    "date": "2026-11-21",
+    "assessment": "Primary evidence points to response/forward gradient imbalance compounded by amplitude-sensitive long-horizon response targets. Controlled retraining is still needed to establish an effective remedy.",
+    "scope": "All 400 fit blocks for gradients at B/C final checkpoints; five selected fit blocks for CPU replay; no test data, no optimizer updates.",
+    "C_bf16_full_fit_gradient_norm_ratios": [
+      535.5867875559225,
+      569.8628422675429
+    ],
+    "C_bf16_forward_response_gradient_cosines": [
+      -0.12258444726467133,
+      -0.01593364030122757
+    ],
+    "C_fp32_full_fit_gradient_norm_ratios": [
+      574.1791031049402,
+      538.34007688841
+    ],
+    "response_target_energy_fraction_top10percent": 0.7791217322064057,
+    "replayed_fit_blocks": 5,
+    "saved_pair_replay_max_abs_joint_state_error": 8.810729923425242e-13,
+    "repeated_identical_action_max_abs_error": 0.0,
+    "highest_energy_fit_block_half_epsilon_32step_response": {
+      "relative_difference": 1.1065459517604264,
+      "cosine": -0.21351875965437417
+    },
+    "precision_note": "Inference error similarity does not establish gradient equivalence. C response gradients differ by approximately 15% between BF16 and FP32 at the final checkpoints, while large gradient imbalance remains in both precisions.",
+    "code_locations": {
+      "loss_weight": "configs/ral/common.json:24",
+      "loss_combination_and_joint_clipping": "src/partymimic/train.py:506",
+      "response_normalization_and_mse": "src/partymimic/experiments/response.py:153",
+      "paired_generator": "src/partymimic/experiments/data.py:234"
+    },
+    "remedy_validation_order": [
+      "Compare response weights 0, 0.0001, 0.001, 0.01 and 1 with common initialization/data/update budget in a new diagnostic attempt; these are candidate values, not chosen formal settings. Judge forward and response quality together on fit/cal.",
+      "Validate perturbation amplitude and horizon sensitivity with enough independent fit/cal sessions. Define and report a consistent validity/robust-loss rule; retain excluded or invalid counts rather than silently removing difficult cases. Any shared-data change also applies to A+/B.",
+      "Use FP32 for a controlled response-training precision ablation; inference precision checks alone cannot diagnose optimization.",
+      "Freeze a new pilot protocol after selecting justified settings. Preserve all pilot01 artifacts; do not merely increase iterations under the same objective imbalance."
+    ],
+    "detailed_gradients": "logs/ral_verification/pilot01_response_gradients.json",
+    "detailed_amplitude_replay": "logs/ral_verification/pilot01_pair_amplitudes.json"
+  }
+}

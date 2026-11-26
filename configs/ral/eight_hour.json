@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "purpose": "Eight-hour development experiments; fit/cal only, not formal paper results",
+  "base_config": "configs/ral/pilot02.json",
+  "hours": 8,
+  "shutdown_reserve_seconds": 30,
+  "job_timeout_minutes": 60,
+  "max_consecutive_failures": 3,
+  "min_free_gib": 15,
+  "max_output_gib": 120,
+  "max_rounds": 512,
+  "policy": {
+    "iterations": 1000,
+    "ckpt_every": 250,
+    "ckpt_minutes": 5,
+    "log_every": 25,
+    "wm_batch": 256
+  },
+  "world_model": {
+    "updates": 1000,
+    "checkpoint_every": 250,
+    "batch_size": 128,
+    "wm_hidden": "1024,1024,1024",
+    "lr": 0.0004
+  },
+  "machines": {
+    "3090": {"mode": "world_model", "seed_start": 10001, "seed_stride": 1, "amplitude_blocks": 12},
+    "4090": {"mode": "policy", "seed_start": 1, "seed_stride": 2, "baseline_order": ["A0", "A", "A+", "B"]},
+    "5080": {"mode": "policy", "seed_start": 2, "seed_stride": 2, "baseline_order": ["A", "A0", "A+", "B"]}
+  },
+  "candidates": [
+    {"name": "C_reference", "response_weight": 0.0001, "response_horizon": 8, "response_loss": "mse", "response_huber_delta": 1.0},
+    {"name": "C_small_weight", "response_weight": 0.00001, "response_horizon": 8, "response_loss": "mse", "response_huber_delta": 1.0},
+    {"name": "C_short", "response_weight": 0.0001, "response_horizon": 4, "response_loss": "mse", "response_huber_delta": 1.0},
+    {"name": "C_huber_1e3", "response_weight": 0.001, "response_horizon": 8, "response_loss": "huber", "response_huber_delta": 1.0},
+    {"name": "C_huber_1e2", "response_weight": 0.01, "response_horizon": 8, "response_loss": "huber", "response_huber_delta": 1.0}
+  ],
+  "judgment": {
+    "forward_ratio_max": 1.1,
+    "q_rmse_ratio_max": 1.1,
+    "response8_ratio_max": 0.99,
+    "zero_response8_ratio_max": 0.99,
+    "response32_ratio_max": 1.1,
+    "session_win_fraction_min": 0.5,
+    "minimum_confirming_seeds": 2,
+    "note": "Development screening thresholds, not window calibration tolerances or statistical significance. No automatic D/C-perm, heldout evaluation or publication."
+  }
+}

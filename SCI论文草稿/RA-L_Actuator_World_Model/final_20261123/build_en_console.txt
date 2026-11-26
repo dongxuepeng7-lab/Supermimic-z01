@@ -1,0 +1,28 @@
+note: Running TeX ...
+note: downloading t1lmr.fd
+note: downloading ec-lmr10.tfm
+warning: body_en:11: Underfull \hbox (badness 2662) in paragraph at lines 10--11
+warning: body_en:29: Underfull \hbox (badness 1824) in paragraph at lines 28--29
+warning: body_en:35: Underfull \hbox (badness 3849) in paragraph at lines 34--35
+warning: body_en:153: Underfull \hbox (badness 5519) in paragraph at lines 152--153
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: body_en:199: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: body_en:201: Underfull \vbox (badness 10000) has occurred while \output is active
+note: Running BibTeX on manuscript_en.aux ...
+note: Rerunning TeX because bibtex was run ...
+warning: body_en:11: Underfull \hbox (badness 2662) in paragraph at lines 10--11
+warning: body_en:29: Underfull \hbox (badness 1824) in paragraph at lines 28--29
+warning: body_en:35: Underfull \hbox (badness 3849) in paragraph at lines 34--35
+warning: body_en:153: Underfull \hbox (badness 5519) in paragraph at lines 152--153
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: body_en:199: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: body_en:201: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
+note: Running xdvipdfmx ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+note: Writing `manuscript_en.pdf` (446.095703125 KiB)
+note: Writing `manuscript_en.aux` (12.0341796875 KiB)
+note: Writing `manuscript_en.blg` (388 B)
+note: Writing `manuscript_en.log` (16.6474609375 KiB)
+note: Writing `manuscript_en.out` (4.3603515625 KiB)
+note: Writing `manuscript_en.bbl` (7 KiB)

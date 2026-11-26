@@ -126,6 +126,24 @@ uv run python tools/play_reference.py \
 
 ## 训练
 
+**当前 RA-L 开发阶段：已按用户要求实现 GPU 原生响应 C/D 增量训练入口，尚未启动 GPU 试跑或训练。** 5080 执行五种子的 B_continue/C 配对继续训练；3090 接收交接包后执行固定窗口、D/C-perm 策略更新与统一评价。安装包、启动命令、数据需求与继续机制见 [C/D 两机执行说明](docs/ral_cd_native_20261125.md)。本轮已明确授权，历史“暂不启动 C/D”记录仅对应旧数据与旧协议。
+
+**历史六小时验证已完成并核验。** 5080 的180次评估显示，五种参数失配工况中平滑 B 相对原 B 的配对平均增益为0.91个百分点，探索性95%区间为[−3.24,+5.06]，稳定优势尚未确立。3090 的28项诊断将主要 CPU/GPU 偏差缩小到接触相关计算：原方向失败36/48，关闭接触后1/48；这是定位线索，不能关闭接触作为修复。保留15个模型，不重复相同队列；本轮采用上面的新 C/D 协议，4090仍不参与。设计、核验与后续重点见[两机六小时回传审阅](docs/ral_six_hour_20261125.md#2026-11-25-回传审阅)。
+
+**diag01 结果保留：** 4090/5080 共70个新模型，68个构成完整四模型对照；策略时域32→8和模型窗口8→32均降低完成率。3090单世界执行改善重复性，但CPU/GPU响应一致性仍未通过。详见[最新结果及后续诊断](docs/ral_diagnose_9h_20261123.md)与[审计记录](release/ral/diag01_review_20261124.json)。保留WM8/H32作为对照；原九小时命令仅保留历史复现，当前 C/D 使用新的 GPU 原生响应入口。
+
+RA-L 论文的 **A0、A、A+、B、C、C-perm、D 七组**使用独立的实验入口和参数清单，见
+[七组实验执行说明](docs/ral_experiments.md) 与 [任务清单](configs/ral/tasks.json)。
+入口为 `uv run python tools/ral.py --help`。当前已导入 2026-11-20 辨识快照；
+论文实验保留本仓库 PartyMimic Z01 实现名称，动作库、配对数据和校准检查通过后才启动对应组。
+历史 pilot02 入口使用 `configs/ral/pilot02.json`、`release/ral/protocol_v2.json` 和独立的 `pilot02` 输出目录。
+`pilot01` 模型及 `protocol_v1.json` 保留归档。pilot02 的十次训练已完成并通过完整性核验；C 的前向预测恢复，但响应收益未泛化到校准集，D/C-perm 暂未启动。复核见 [pilot02_training_review.json](release/ral/pilot02_training_review.json)，后续安排见执行说明末尾。
+
+历史三机 **8 小时无人值守开发实验**入口为：`bash scripts/ral_3090_8h.sh --session night01`、
+`bash scripts/ral_4090_8h.sh --session night01`、`bash scripts/ral_5080_8h.sh --session night01`，在对应机器各执行一条。
+每轮自动检查并切换候选/种子，默认包含编译、训练和检查的总时限为 8 小时；输出保存在 `logs/ral_8h/`。
+分工、后台启动和三份判断脚本见 [8 小时执行说明](docs/ral_experiments.md#三台机器的-8-小时任务队列)。
+
 所有入口默认使用 `z01`；默认动作目录为 `data/motions/z01_lafan_v2_clean`。以下是 16 GB 显存的起始配置，建议先完成 200 次迭代检查，确认显存、数值和速度指标后再进行完整训练：
 
 ```bash

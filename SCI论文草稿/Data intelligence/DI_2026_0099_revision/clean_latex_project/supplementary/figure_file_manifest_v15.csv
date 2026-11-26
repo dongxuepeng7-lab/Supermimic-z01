@@ -1,0 +1,22 @@
+expected_figure_number_after_compile,label,filename,caption,body_reference_count_in_tex_source
+1,fig:pipeline,fig8.jpg,"Real2Sim-calibrated training and deployment pipeline for ZOYI Z01 locomotion. The pipeline separates current-to-output-torque conversion for identification, identification-informed DR around a centered simulator, and training-time RTI as a bounded residual robustness perturbation.",5
+2,fig:friction,fig1.jpg,"Quasi-static hysteresis-loop identification. The final submission reports raw position--torque samples, the transient-removal window, selected extrema, and the resulting Coulomb-friction estimate with uncertainty.",4
+3,fig:damping,fig2.jpg,"Equivalent viscous damping identification. The revised figure reports the regression line, confidence interval of the slope, residual distribution, and $R^2$ on held-out sweep data.",4
+4,fig:alignment,fig3.jpg,"Closed-loop command replay after Real2Sim identification. Hardware and simulation are compared for joint position, velocity, and joint-output-equivalent torque/current, with phase lag and amplitude attenuation quantified.",5
+5,fig:rti_residuals,fig_rfi_residuals.jpg,"Residual-torque analysis used to justify RTI. The final figure includes (a) measured residual torque distribution, (b) RTI sample distribution, (c) residual torque versus velocity/tracking error, and (d) PSD or magnitude-squared coherence over the control-relevant frequency range.",7
+6,fig:hardware_joint,fig9.jpg,Representative joint-current and tracking traces. The figure is retained as qualitative evidence only and paired with the repeated-trial statistics in \cref{tab:hardware_success.,3
+7,fig:training,fig7.jpg,"Training curves over repeated seeds. The final figure shows mean return with shaded 95\% confidence intervals for all ablations, not only representative curves.",3
+8,fig:hardware_pitch,fig12.jpg,Representative IMU pitch traces at 0.5 m/s. The final figure includes all trial traces or mean with confidence bands in addition to a representative example.,5
+9,fig:robot_overview_full,fig20.jpg,Overall Real2Sim-to-hardware deployment workflow and ZOYI Z01 platform overview.,2
+10,fig:pos_zoom_full,fig4.jpg,Zoomed-in position-tracking comparison from command replay.,3
+11,fig:tau_zoom_full,fig5.jpg,Zoomed-in effort/current comparison from command replay.,3
+12,fig:vel_zoom_full,fig6.jpg,Zoomed-in velocity-tracking comparison from command replay.,3
+13,fig:knee_pitch_full,fig10.jpg,Hardware comparison at 0.5 m/s for the left knee pitch joint.,5
+14,fig:ankle_pitch_full,fig11.jpg,Hardware comparison at 0.5 m/s for the left ankle pitch joint.,5
+15,fig:imu_extra_full,fig13.jpg,Additional IMU-based stability comparison at 0.5 m/s.,4
+16,fig:baseline_stand_full,fig14.jpg,Baseline hardware deployment snapshot at $v=0.0$ m/s.,2
+17,fig:ours_stand_full,fig15.jpg,Hybrid-RTI hardware deployment snapshot at $v=0.0$ m/s.,2
+18,fig:baseline_02_full,fig16.jpg,Baseline hardware deployment snapshot at $v=0.2$ m/s.,2
+19,fig:ours_02_full,fig17.jpg,Hybrid-RTI hardware deployment snapshot at $v=0.2$ m/s.,2
+20,fig:baseline_05_full,fig18.jpg,Baseline hardware deployment snapshot at $v=0.5$ m/s.,5
+21,fig:ours_05_full,fig19.jpg,Hybrid-RTI hardware deployment snapshot at $v=0.5$ m/s.,5

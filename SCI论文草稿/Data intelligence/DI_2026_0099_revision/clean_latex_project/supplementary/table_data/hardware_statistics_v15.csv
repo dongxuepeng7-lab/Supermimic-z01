@@ -1,0 +1,6 @@
+metric,DR_only_mean,DR_only_SD,Hybrid_RTI_mean,Hybrid_RTI_SD,CI_half_width_DR_only,CI_half_width_Hybrid_RTI,reduction_percent
+Peak current (A),16.28,0.68,11.14,0.52,0.49,0.37,31.6
+Pitch RMS (deg),3.75,0.16,1.01,0.12,0.11,0.09,73.1
+Pitch variance (deg^2),14.09,1.19,1.03,0.24,0.85,0.17,92.7
+Pitch peak (deg),6.1,0.08,1.01,0.12,0.06,0.09,83.4
+Joint-position RMSE (rad),0.0996,0.0113,0.02,0.0026,0.0081,0.0018,79.9

@@ -1,0 +1,816 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        11,
+        22
+      ]
+    ],
+    "date-time": "2026-11-22T15:54:15Z",
+    "timestamp": 1795362855380,
+    "version": "4.10.3"
+  },
+  "reference-count": 92,
+  "publisher": "Association for Computing Machinery (ACM)",
+  "issue": "4",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2021,
+            7,
+            19
+          ]
+        ],
+        "date-time": "2021-07-19T00:00:00Z",
+        "timestamp": 1626652800000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://www.acm.org/publications/policies/copyright_policy#Background"
+    }
+  ],
+  "funder": [
+    {
+      "name": "NSERC Postgraduate Scholarship"
+    },
+    {
+      "name": "Berkeley Fellowship for Graduate Study"
+    }
+  ],
+  "content-domain": {
+    "domain": [
+      "dl.acm.org"
+    ],
+    "crossmark-restriction": true
+  },
+  "short-container-title": [
+    "ACM Trans. Graph."
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2021,
+        8,
+        31
+      ]
+    ]
+  },
+  "abstract": "<jats:p>Synthesizing graceful and life-like behaviors for physically simulated characters has been a fundamental challenge in computer animation. Data-driven methods that leverage motion tracking are a prominent class of techniques for producing high fidelity motions for a wide range of behaviors. However, the effectiveness of these tracking-based methods often hinges on carefully designed objective functions, and when applied to large and diverse motion datasets, these methods require significant additional machinery to select the appropriate motion for the character to track in a given scenario. In this work, we propose to obviate the need to manually design imitation objectives and mechanisms for motion selection by utilizing a fully automated approach based on adversarial imitation learning. High-level task objectives that the character should perform can be specified by relatively simple reward functions, while the low-level style of the character's behaviors can be specified by a dataset of unstructured motion clips, without any explicit clip selection or sequencing. For example, a character traversing an obstacle course might utilize a task-reward that only considers forward progress, while the dataset contains clips of relevant behaviors such as running, jumping, and rolling. These motion clips are used to train an adversarial motion prior, which specifies style-rewards for training the character through reinforcement learning (RL). The adversarial RL procedure automatically selects which motion to perform, dynamically interpolating and generalizing from the dataset. Our system produces high-quality motions that are comparable to those achieved by state-of-the-art tracking-based techniques, while also being able to easily accommodate large datasets of unstructured motion clips. Composition of disparate skills emerges automatically from the motion prior, without requiring a high-level motion planner or other task-specific annotations of the motion clips. We demonstrate the effectiveness of our framework on a diverse cast of complex simulated characters and a challenging suite of motor control tasks.</jats:p>",
+  "DOI": "10.1145/3450626.3459670",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2021,
+        7,
+        19
+      ]
+    ],
+    "date-time": "2021-07-19T20:04:27Z",
+    "timestamp": 1626725067000
+  },
+  "page": "1-20",
+  "update-policy": "https://doi.org/10.1145/crossmark-policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 473,
+  "title": [
+    "AMP"
+  ],
+  "prefix": "10.1145",
+  "volume": "40",
+  "author": [
+    {
+      "given": "Xue Bin",
+      "family": "Peng",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "University of California"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Ze",
+      "family": "Ma",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Shanghai Jiao Tong University, China"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Pieter",
+      "family": "Abbeel",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "University of California"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Sergey",
+      "family": "Levine",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "University of California"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Angjoo",
+      "family": "Kanazawa",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "University of California"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    }
+  ],
+  "member": "320",
+  "published-online": {
+    "date-parts": [
+      [
+        2021,
+        7,
+        19
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "e_1_2_2_1_1",
+      "unstructured": "Martín Abadi Ashish Agarwal Paul Barham Eugene Brevdo Zhifeng Chen Craig Citro Greg S. Corrado Andy Davis Jeffrey Dean Matthieu Devin Sanjay Ghemawat Ian Goodfellow Andrew Harp Geoffrey Irving Michael Isard Yangqing Jia Rafal Jozefowicz Lukasz Kaiser Manjunath Kudlur Josh Levenberg Dan Mané Rajat Monga Sherry Moore Derek Murray Chris Olah Mike Schuster Jonathon Shlens Benoit Steiner Ilya Sutskever Kunal Talwar Paul Tucker Vincent Vanhoucke Vijay Vasudevan Fernanda Viégas Oriol Vinyals Pete Warden Martin Wattenberg Martin Wicke Yuan Yu and Xiaoqiang Zheng. 2015. TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems. http://tensorflow.org/ Software available from tensorflow.org.  Martín Abadi Ashish Agarwal Paul Barham Eugene Brevdo Zhifeng Chen Craig Citro Greg S. Corrado Andy Davis Jeffrey Dean Matthieu Devin Sanjay Ghemawat Ian Goodfellow Andrew Harp Geoffrey Irving Michael Isard Yangqing Jia Rafal Jozefowicz Lukasz Kaiser Manjunath Kudlur Josh Levenberg Dan Mané Rajat Monga Sherry Moore Derek Murray Chris Olah Mike Schuster Jonathon Shlens Benoit Steiner Ilya Sutskever Kunal Talwar Paul Tucker Vincent Vanhoucke Vijay Vasudevan Fernanda Viégas Oriol Vinyals Pete Warden Martin Wattenberg Martin Wicke Yuan Yu and Xiaoqiang Zheng. 2015. TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems. http://tensorflow.org/ Software available from tensorflow.org."
+    },
+    {
+      "key": "e_1_2_2_2_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1015330.1015430"
+    },
+    {
+      "key": "e_1_2_2_3_1",
+      "volume-title": "Task-based Locomotion. ACM Transactions on Graphics (Proc. SIGGRAPH 2016)",
+      "author": "Agrawal Shailen",
+      "year": "2016",
+      "unstructured": "Shailen Agrawal and Michiel van de Panne. 2016 . Task-based Locomotion. ACM Transactions on Graphics (Proc. SIGGRAPH 2016) 35, 4 ( 2016 ). Shailen Agrawal and Michiel van de Panne. 2016. Task-based Locomotion. ACM Transactions on Graphics (Proc. SIGGRAPH 2016) 35, 4 (2016)."
+    },
+    {
+      "key": "e_1_2_2_4_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TVCG.2012.325"
+    },
+    {
+      "key": "e_1_2_2_5_1",
+      "volume-title": "International Convention Centre",
+      "author": "Arjovsky Martin",
+      "year": "2017",
+      "unstructured": "Martin Arjovsky , Soumith Chintala , and Léon Bottou . 2017 . Wasserstein Generative Adversarial Networks (Proceedings of Machine Learning Research, Vol. 70), Doina Precup and Yee Whye Teh (Eds.). PMLR , International Convention Centre , Sydney, Australia, 214--223. http://proceedings.mlr.press/v70/arjovsky17a.html Martin Arjovsky, Soumith Chintala, and Léon Bottou. 2017. Wasserstein Generative Adversarial Networks (Proceedings of Machine Learning Research, Vol. 70), Doina Precup and Yee Whye Teh (Eds.). PMLR, International Convention Centre, Sydney, Australia, 214--223. http://proceedings.mlr.press/v70/arjovsky17a.html"
+    },
+    {
+      "key": "e_1_2_2_6_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3355089.3356536"
+    },
+    {
+      "key": "e_1_2_2_7_1",
+      "volume-title": "BEGAN: Boundary Equilibrium Generative Adversarial Networks. CoRR abs/1703.10717",
+      "author": "Berthelot David",
+      "year": "2017",
+      "unstructured": "David Berthelot , Tom Schumm , and Luke Metz . 2017 . BEGAN: Boundary Equilibrium Generative Adversarial Networks. CoRR abs/1703.10717 (2017). arXiv:1703.10717 http://arxiv.org/abs/1703.10717 David Berthelot, Tom Schumm, and Luke Metz. 2017. BEGAN: Boundary Equilibrium Generative Adversarial Networks. CoRR abs/1703.10717 (2017). arXiv:1703.10717 http://arxiv.org/abs/1703.10717"
+    },
+    {
+      "key": "e_1_2_2_8_1",
+      "volume-title": "Davide Del Testa",
+      "author": "Bojarski Mariusz",
+      "year": "2016",
+      "unstructured": "Mariusz Bojarski , Davide Del Testa , Daniel Dworakowski, Bernhard Firner , Beat Flepp, Prasoon Goyal, Lawrence D. Jackel, Mathew Monfort, Urs Muller, Jiakai Zhang, Xin Zhang, Jake Zhao, and Karol Zieba. 2016 . End to End Learning for Self-Driving Cars. CoRR abs/1604.07316 (2016). arXiv:1604.07316 http://arxiv.org/abs/1604.07316 Mariusz Bojarski, Davide Del Testa, Daniel Dworakowski, Bernhard Firner, Beat Flepp, Prasoon Goyal, Lawrence D. Jackel, Mathew Monfort, Urs Muller, Jiakai Zhang, Xin Zhang, Jake Zhao, and Karol Zieba. 2016. End to End Learning for Self-Driving Cars. CoRR abs/1604.07316 (2016). arXiv:1604.07316 http://arxiv.org/abs/1604.07316"
+    },
+    {
+      "key": "e_1_2_2_9_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "W. Burgard O. Brock and C. Stachniss. 2008. Learning Omnidirectional Path Following Using Dimensionality Reduction. 257--264.  W. Burgard O. Brock and C. Stachniss. 2008. Learning Omnidirectional Path Following Using Dimensionality Reduction. 257--264.",
+      "DOI": "10.7551/mitpress/7830.003.0034"
+    },
+    {
+      "key": "e_1_2_2_10_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3274247.3274506"
+    },
+    {
+      "key": "e_1_2_2_11_1",
+      "unstructured": "CMU. [n.d.]. CMU Graphics Lab Motion Capture Database. http://mocap.cs.cmu.edu/.  CMU. [n.d.]. CMU Graphics Lab Motion Capture Database. http://mocap.cs.cmu.edu/."
+    },
+    {
+      "key": "e_1_2_2_12_1",
+      "unstructured": "Erwin Coumans et al. 2013. Bullet physics library. Open source: bulletphysics. org 15 49 (2013) 5.  Erwin Coumans et al. 2013. Bullet physics library. Open source: bulletphysics. org 15 49 (2013) 5."
+    },
+    {
+      "key": "e_1_2_2_13_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1467-8659.2008.01134.x"
+    },
+    {
+      "key": "e_1_2_2_14_1",
+      "volume-title": "Proceedings of the International Conference on Learning Representations (ICLR).",
+      "author": "Florensa Carlos",
+      "year": "2017",
+      "unstructured": "Carlos Florensa , Yan Duan , and Pieter Abbeel . 2017 . Stochastic Neural Networks for Hierarchical Reinforcement Learning . In Proceedings of the International Conference on Learning Representations (ICLR). Carlos Florensa, Yan Duan, and Pieter Abbeel. 2017. Stochastic Neural Networks for Hierarchical Reinforcement Learning. In Proceedings of the International Conference on Learning Representations (ICLR)."
+    },
+    {
+      "key": "e_1_2_2_15_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2508363.2508399"
+    },
+    {
+      "key": "e_1_2_2_16_1",
+      "volume-title": "Advances in Neural Information Processing Systems 27",
+      "author": "Goodfellow Ian",
+      "unstructured": "Ian Goodfellow , Jean Pouget-Abadie , Mehdi Mirza , Bing Xu , David Warde-Farley , Sherjil Ozair , Aaron Courville , and Yoshua Bengio . 2014. Generative Adversarial Nets . In Advances in Neural Information Processing Systems 27 , Z. Ghahramani, M. Welling, C. Cortes, N. D. Lawrence, and K. Q. Weinberger (Eds.). Curran Associates, Inc. , 2672--2680. http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. 2014. Generative Adversarial Nets. In Advances in Neural Information Processing Systems 27, Z. Ghahramani, M. Welling, C. Cortes, N. D. Lawrence, and K. Q. Weinberger (Eds.). Curran Associates, Inc., 2672--2680. http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf"
+    },
+    {
+      "key": "e_1_2_2_17_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/10867651.1998.10487493"
+    },
+    {
+      "key": "e_1_2_2_18_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1015706.1015755"
+    },
+    {
+      "key": "e_1_2_2_19_1",
+      "first-page": "I",
+      "article-title": "Improved Training of Wasserstein GANs",
+      "volume": "30",
+      "author": "Gulrajani Ishaan",
+      "year": "2017",
+      "unstructured": "Ishaan Gulrajani , Faruk Ahmed , Martin Arjovsky , Vincent Dumoulin , and Aaron C Courville . 2017 . Improved Training of Wasserstein GANs . In Advances in Neural Information Processing Systems 30 , I . Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett (Eds.). Curran Associates, Inc., 5767--5777. http://papers.nips.cc/paper/7159-improved-training-of-wasserstein-gans.pdf Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron C Courville. 2017. Improved Training of Wasserstein GANs. In Advances in Neural Information Processing Systems 30, I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett (Eds.). Curran Associates, Inc., 5767--5777. http://papers.nips.cc/paper/7159-improved-training-of-wasserstein-gans.pdf",
+      "journal-title": "Advances in Neural Information Processing Systems"
+    },
+    {
+      "key": "e_1_2_2_20_1",
+      "volume-title": "Stock-holmsmässan, Stockholm Sweden",
+      "author": "Haarnoja Tuomas",
+      "year": "2018",
+      "unstructured": "Tuomas Haarnoja , Kristian Hartikainen , Pieter Abbeel , and Sergey Levine . 2018 . Latent Space Policies for Hierarchical Reinforcement Learning (Proceedings of Machine Learning Research, Vol. 80), Jennifer Dy and Andreas Krause (Eds.). PMLR , Stock-holmsmässan, Stockholm Sweden , 1851--1860. http://proceedings.mlr.press/v80/haarnoja18a.html Tuomas Haarnoja, Kristian Hartikainen, Pieter Abbeel, and Sergey Levine. 2018. Latent Space Policies for Hierarchical Reinforcement Learning (Proceedings of Machine Learning Research, Vol. 80), Jennifer Dy and Andreas Krause (Eds.). PMLR, Stock-holmsmässan, Stockholm Sweden, 1851--1860. http://proceedings.mlr.press/v80/haarnoja18a.html"
+    },
+    {
+      "key": "e_1_2_2_21_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICHR.2004.1442140"
+    },
+    {
+      "key": "e_1_2_2_22_1",
+      "volume-title": "International Conference on Learning Representations. https://openreview.net/forum?id=rk07ZXZRb",
+      "author": "Hausman Karol",
+      "year": "2018",
+      "unstructured": "Karol Hausman , Jost Tobias Springenberg , Ziyu Wang , Nicolas Heess , and Martin Riedmiller . 2018 . Learning an Embedding Space for Transferable Robot Skills . In International Conference on Learning Representations. https://openreview.net/forum?id=rk07ZXZRb Karol Hausman, Jost Tobias Springenberg, Ziyu Wang, Nicolas Heess, and Martin Riedmiller. 2018. Learning an Embedding Space for Transferable Robot Skills. In International Conference on Learning Representations. https://openreview.net/forum?id=rk07ZXZRb"
+    },
+    {
+      "key": "e_1_2_2_23_1",
+      "volume-title": "Learning and Transfer of Modulated Locomotor Controllers. CoRR abs/1610.05182",
+      "author": "Heess Nicolas",
+      "year": "2016",
+      "unstructured": "Nicolas Heess , Gregory Wayne , Yuval Tassa , Timothy P. Lillicrap , Martin A. Riedmiller , and David Silver . 2016. Learning and Transfer of Modulated Locomotor Controllers. CoRR abs/1610.05182 ( 2016 ). arXiv:1610.05182 http://arxiv.org/abs/1610.05182 Nicolas Heess, Gregory Wayne, Yuval Tassa, Timothy P. Lillicrap, Martin A. Riedmiller, and David Silver. 2016. Learning and Transfer of Modulated Locomotor Controllers. CoRR abs/1610.05182 (2016). arXiv:1610.05182 http://arxiv.org/abs/1610.05182"
+    },
+    {
+      "key": "e_1_2_2_24_1",
+      "volume-title": "Advances in Neural Information Processing Systems 29",
+      "author": "Ho Jonathan",
+      "unstructured": "Jonathan Ho and Stefano Ermon . 2016. Generative Adversarial Imitation Learning . In Advances in Neural Information Processing Systems 29 , D. D. Lee, M. Sugiyama, U. V. Luxburg, I. Guyon, and R. Garnett (Eds.). Curran Associates, Inc. , 4565--4573. http://papers.nips.cc/paper/6391-generative-adversarial-imitation-learning.pdf Jonathan Ho and Stefano Ermon. 2016. Generative Adversarial Imitation Learning. In Advances in Neural Information Processing Systems 29, D. D. Lee, M. Sugiyama, U. V. Luxburg, I. Guyon, and R. Garnett (Eds.). Curran Associates, Inc., 4565--4573. http://papers.nips.cc/paper/6391-generative-adversarial-imitation-learning.pdf"
+    },
+    {
+      "key": "e_1_2_2_25_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3072959.3073663"
+    },
+    {
+      "key": "e_1_2_2_26_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3306346.3322966"
+    },
+    {
+      "key": "e_1_2_2_27_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Angjoo Kanazawa Michael J. Black David W. Jacobs and Jitendra Malik. 2018. End-to-end Recovery of Human Shape and Pose. In Computer Vision and Pattern Regognition (CVPR).  Angjoo Kanazawa Michael J. Black David W. Jacobs and Jitendra Malik. 2018. End-to-end Recovery of Human Shape and Pose. In Computer Vision and Pattern Regognition (CVPR).",
+      "DOI": "10.1109/CVPR.2018.00744"
+    },
+    {
+      "key": "e_1_2_2_28_1",
+      "volume-title": "Progressive Growing of GANs for Improved Quality, Stability, and Variation. CoRR abs/1710.10196",
+      "author": "Karras Tero",
+      "year": "2017",
+      "unstructured": "Tero Karras , Timo Aila , Samuli Laine , and Jaakko Lehtinen . 2017. Progressive Growing of GANs for Improved Quality, Stability, and Variation. CoRR abs/1710.10196 ( 2017 ). arXiv:1710.10196 http://arxiv.org/abs/1710.10196 Tero Karras, Timo Aila, Samuli Laine, and Jaakko Lehtinen. 2017. Progressive Growing of GANs for Improved Quality, Stability, and Variation. CoRR abs/1710.10196 (2017). arXiv:1710.10196 http://arxiv.org/abs/1710.10196"
+    },
+    {
+      "key": "e_1_2_2_29_1",
+      "volume-title": "Srinivasa",
+      "author": "Ke Liyiming",
+      "year": "2019",
+      "unstructured": "Liyiming Ke , Matt Barnes , Wen Sun , Gilwoo Lee , Sanjiban Choudhury , and Siddhartha S . Srinivasa . 2019 . Imitation Learning as f-Divergence Minimization. CoRR abs/1905.12888 (2019). arXiv:1905.12888 http://arxiv.org/abs/1905.12888 Liyiming Ke, Matt Barnes, Wen Sun, Gilwoo Lee, Sanjiban Choudhury, and Siddhartha S. Srinivasa. 2019. Imitation Learning as f-Divergence Minimization. CoRR abs/1905.12888 (2019). arXiv:1905.12888 http://arxiv.org/abs/1905.12888"
+    },
+    {
+      "key": "e_1_2_2_30_1",
+      "volume-title": "Kingma and Max Welling",
+      "author": "Diederik",
+      "year": "2014",
+      "unstructured": "Diederik P. Kingma and Max Welling . 2014 . Auto-Encoding Variational Bayes. In 2nd International Conference on Learning Representations, ICLR 2014, Banff, AB, Canada, April 14-16, 2014, Conference Track Proceedings . arXiv:http://arxiv.org/abs/1312.6114v10 [stat.ML] Diederik P. Kingma and Max Welling. 2014. Auto-Encoding Variational Bayes. In 2nd International Conference on Learning Representations, ICLR 2014, Banff, AB, Canada, April 14-16, 2014, Conference Track Proceedings. arXiv:http://arxiv.org/abs/1312.6114v10 [stat.ML]"
+    },
+    {
+      "key": "e_1_2_2_31_1",
+      "volume-title": "How to Train Your DRAGAN. CoRR abs/1705.07215",
+      "author": "Kodali Naveen",
+      "year": "2017",
+      "unstructured": "Naveen Kodali , Jacob D. Abernethy , James Hays , and Zsolt Kira . 2017. How to Train Your DRAGAN. CoRR abs/1705.07215 ( 2017 ). arXiv:1705.07215 http://arxiv.org/abs/1705.07215 Naveen Kodali, Jacob D. Abernethy, James Hays, and Zsolt Kira. 2017. How to Train Your DRAGAN. CoRR abs/1705.07215 (2017). arXiv:1705.07215 http://arxiv.org/abs/1705.07215"
+    },
+    {
+      "key": "e_1_2_2_32_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3072959.2983616"
+    },
+    {
+      "key": "e_1_2_2_33_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/566654.566607"
+    },
+    {
+      "key": "e_1_2_2_34_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3272127.3275071"
+    },
+    {
+      "key": "e_1_2_2_35_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3306346.3322972"
+    },
+    {
+      "key": "e_1_2_2_36_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1778765.1781155"
+    },
+    {
+      "key": "e_1_2_2_37_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1882261.1866160"
+    },
+    {
+      "key": "e_1_2_2_38_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1966394.1966402"
+    },
+    {
+      "key": "e_1_2_2_39_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2185520.2185524"
+    },
+    {
+      "key": "e_1_2_2_40_1",
+      "volume-title": "Character Controllers Using Motion VAEs. 39, 4",
+      "author": "Ling Hung Yu",
+      "year": "2020",
+      "unstructured": "Hung Yu Ling , Fabio Zinno , George Cheng , and Michiel van de Panne . 2020. Character Controllers Using Motion VAEs. 39, 4 ( 2020 ). Hung Yu Ling, Fabio Zinno, George Cheng, and Michiel van de Panne. 2020. Character Controllers Using Motion VAEs. 39, 4 (2020)."
+    },
+    {
+      "key": "e_1_2_2_41_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2893476"
+    },
+    {
+      "key": "e_1_2_2_42_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2366145.2366173"
+    },
+    {
+      "key": "e_1_2_2_43_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1778765.1778865"
+    },
+    {
+      "key": "e_1_2_2_44_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3386569.3392433"
+    },
+    {
+      "key": "e_1_2_2_45_1",
+      "volume-title": "Proceedings of the Conference on Robot Learning (Proceedings of Machine Learning Research",
+      "volume": "1132",
+      "author": "Lynch Corey",
+      "year": "2020",
+      "unstructured": "Corey Lynch , Mohi Khansari , Ted Xiao , Vikash Kumar , Jonathan Tompson , Sergey Levine , and Pierre Sermanet . 2020 . Learning Latent Plans from Play . In Proceedings of the Conference on Robot Learning (Proceedings of Machine Learning Research , Vol. 100), Leslie Pack Kaelbling, Danica Kragic, and Komei Sugiura (Eds.). PMLR, 1113-- 1132 . http://proceedings.mlr.press/v100/lynch20a.html Corey Lynch, Mohi Khansari, Ted Xiao, Vikash Kumar, Jonathan Tompson, Sergey Levine, and Pierre Sermanet. 2020. Learning Latent Plans from Play. In Proceedings of the Conference on Robot Learning (Proceedings of Machine Learning Research, Vol. 100), Leslie Pack Kaelbling, Danica Kragic, and Komei Sugiura (Eds.). PMLR, 1113--1132. http://proceedings.mlr.press/v100/lynch20a.html"
+    },
+    {
+      "key": "e_1_2_2_46_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICCV.2017.304"
+    },
+    {
+      "key": "e_1_2_2_47_1",
+      "volume-title": "Neural Probabilistic Motor Primitives for Humanoid Control. In International Conference on Learning Representations. https://openreview.net/forum?id=BJl6TjRcY7",
+      "author": "Merel Josh",
+      "year": "2019",
+      "unstructured": "Josh Merel , Leonard Hasenclever , Alexandre Galashov , Arun Ahuja , Vu Pham , Greg Wayne , Yee Whye Teh , and Nicolas Heess . 2019 . Neural Probabilistic Motor Primitives for Humanoid Control. In International Conference on Learning Representations. https://openreview.net/forum?id=BJl6TjRcY7 Josh Merel, Leonard Hasenclever, Alexandre Galashov, Arun Ahuja, Vu Pham, Greg Wayne, Yee Whye Teh, and Nicolas Heess. 2019. Neural Probabilistic Motor Primitives for Humanoid Control. In International Conference on Learning Representations. https://openreview.net/forum?id=BJl6TjRcY7"
+    },
+    {
+      "key": "e_1_2_2_48_1",
+      "volume-title": "Learning human behaviors from motion capture by adversarial imitation. CoRR abs/1707.02201",
+      "author": "Merel Josh",
+      "year": "2017",
+      "unstructured": "Josh Merel , Yuval Tassa , Dhruva TB , Sriram Sr inivasan, Jay Lemmon , Ziyu Wang , Greg Wayne , and Nicolas Heess . 2017. Learning human behaviors from motion capture by adversarial imitation. CoRR abs/1707.02201 ( 2017 ). arXiv:1707.02201 http://arxiv.org/abs/1707.02201 Josh Merel, Yuval Tassa, Dhruva TB, Sriram Srinivasan, Jay Lemmon, Ziyu Wang, Greg Wayne, and Nicolas Heess. 2017. Learning human behaviors from motion capture by adversarial imitation. CoRR abs/1707.02201 (2017). arXiv:1707.02201 http://arxiv.org/abs/1707.02201"
+    },
+    {
+      "key": "e_1_2_2_49_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3386569.3392474"
+    },
+    {
+      "key": "e_1_2_2_50_1",
+      "volume-title": "Proceedings of the 35th International Conference on Machine Learning (Proceedings of Machine Learning Research",
+      "volume": "3490",
+      "author": "Mescheder Lars",
+      "year": "2018",
+      "unstructured": "Lars Mescheder , Andreas Geiger , and Sebastian Nowozin . 2018 . Which Training Methods for GANs do actually Converge? . In Proceedings of the 35th International Conference on Machine Learning (Proceedings of Machine Learning Research , Vol. 80), Jennifer Dy and Andreas Krause (Eds.). PMLR, Stockholmsmässan, Stockholm Sweden, 3481-- 3490 . http://proceedings.mlr.press/v80/mescheder18a.html Lars Mescheder, Andreas Geiger, and Sebastian Nowozin. 2018. Which Training Methods for GANs do actually Converge?. In Proceedings of the 35th International Conference on Machine Learning (Proceedings of Machine Learning Research, Vol. 80), Jennifer Dy and Andreas Krause (Eds.). PMLR, Stockholmsmässan, Stockholm Sweden, 3481--3490. http://proceedings.mlr.press/v80/mescheder18a.html"
+    },
+    {
+      "key": "e_1_2_2_51_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2185520.2185539"
+    },
+    {
+      "key": "e_1_2_2_52_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2508363.2508365"
+    },
+    {
+      "key": "e_1_2_2_53_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1576246.1531387"
+    },
+    {
+      "key": "e_1_2_2_54_1",
+      "volume-title": "Proceedings of the 27th International Conference on International Conference on Machine Learning",
+      "author": "Nair Vinod",
+      "unstructured": "Vinod Nair and Geoffrey E. Hinton . 2010. Rectified Linear Units Improve Restricted Boltzmann Machines . In Proceedings of the 27th International Conference on International Conference on Machine Learning ( Haifa, Israel) (ICML'10). Omnipress, Madison, WI, USA, 807--814. Vinod Nair and Geoffrey E. Hinton. 2010. Rectified Linear Units Improve Restricted Boltzmann Machines. In Proceedings of the 27th International Conference on International Conference on Machine Learning (Haifa, Israel) (ICML'10). Omnipress, Madison, WI, USA, 807--814."
+    },
+    {
+      "key": "e_1_2_2_55_1",
+      "volume-title": "Garnett (Eds.)",
+      "volume": "29",
+      "author": "Nowozin Sebastian",
+      "year": "2016",
+      "unstructured": "Sebastian Nowozin , Botond Cseke , and Ryota Tomioka . 2016 . f-GAN: Training Generative Neural Samplers using Variational Divergence Minimization. In Advances in Neural Information Processing Systems, D. Lee, M. Sugiyama, U. Luxburg, I. Guyon, and R . Garnett (Eds.) , Vol. 29 . Curran Associates, Inc., 271--279. https://proceedings.neurips.cc/paper/ 2016/file/cedebb6e872f539bef8c3f919874e9d7-Paper.pdf Sebastian Nowozin, Botond Cseke, and Ryota Tomioka. 2016. f-GAN: Training Generative Neural Samplers using Variational Divergence Minimization. In Advances in Neural Information Processing Systems, D. Lee, M. Sugiyama, U. Luxburg, I. Guyon, and R. Garnett (Eds.), Vol. 29. Curran Associates, Inc., 271--279. https://proceedings.neurips.cc/paper/2016/file/cedebb6e872f539bef8c3f919874e9d7-Paper.pdf"
+    },
+    {
+      "key": "e_1_2_2_56_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3355089.3356501"
+    },
+    {
+      "key": "e_1_2_2_57_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3197517.3201311"
+    },
+    {
+      "key": "e_1_2_2_58_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2897824.2925881"
+    },
+    {
+      "key": "e_1_2_2_59_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3072959.3073602"
+    },
+    {
+      "key": "e_1_2_2_60_1",
+      "unstructured": "Xue Bin Peng Michael Chang Grace Zhang Pieter Abbeel and Sergey Levine. 2019a. MCP: Learning Composable Hierarchical Control with Multiplicative Compositional Policies. In Advances in Neural Information Processing Systems 32 H. Wallach H. Larochelle A. Beygelzimer F. d'Alché-Buc E. Fox and R. Garnett (Eds.). Cur-ran Associates Inc. 3681--3692. http://papers.nips.cc/paper/8626-mcp-learning-composable-hierarchical-control-with-multiplicative-compositional-policies.pdf  Xue Bin Peng Michael Chang Grace Zhang Pieter Abbeel and Sergey Levine. 2019a. MCP: Learning Composable Hierarchical Control with Multiplicative Compositional Policies. In Advances in Neural Information Processing Systems 32 H. Wallach H. Larochelle A. Beygelzimer F. d'Alché-Buc E. Fox and R. Garnett (Eds.). Cur-ran Associates Inc. 3681--3692. http://papers.nips.cc/paper/8626-mcp-learning-composable-hierarchical-control-with-multiplicative-compositional-policies.pdf"
+    },
+    {
+      "key": "e_1_2_2_61_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3272127.3275014"
+    },
+    {
+      "key": "e_1_2_2_62_1",
+      "volume-title": "International Conference on Learning Representations. https://openreview.net/forum?id=HyxPx3R9tm",
+      "author": "Peng Xue Bin",
+      "year": "2019",
+      "unstructured": "Xue Bin Peng , Angjoo Kanazawa , Sam Toyer , Pieter Abbeel , and Sergey Levine . 2019 b. Variational Discriminator Bottleneck: Improving Imitation Learning, Inverse RL, and GANs by Constraining Information Flow . In International Conference on Learning Representations. https://openreview.net/forum?id=HyxPx3R9tm Xue Bin Peng, Angjoo Kanazawa, Sam Toyer, Pieter Abbeel, and Sergey Levine. 2019b. Variational Discriminator Bottleneck: Improving Imitation Learning, Inverse RL, and GANs by Constraining Information Flow. In International Conference on Learning Representations. https://openreview.net/forum?id=HyxPx3R9tm"
+    },
+    {
+      "key": "e_1_2_2_63_1",
+      "volume-title": "Proceedings of the 1st International Conference on Neural Information Processing Systems (NIPS'88)",
+      "author": "Pomerleau Dean A.",
+      "year": "1988",
+      "unstructured": "Dean A. Pomerleau . 1988 . ALVINN: An Autonomous Land Vehicle in a Neural Network . In Proceedings of the 1st International Conference on Neural Information Processing Systems (NIPS'88) . MIT Press, Cambridge, MA, USA, 305--313. Dean A. Pomerleau. 1988. ALVINN: An Autonomous Land Vehicle in a Neural Network. In Proceedings of the 1st International Conference on Neural Information Processing Systems (NIPS'88). MIT Press, Cambridge, MA, USA, 305--313."
+    },
+    {
+      "key": "e_1_2_2_64_1",
+      "volume-title": "Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks. CoRR abs/1511.06434",
+      "author": "Radford Alec",
+      "year": "2015",
+      "unstructured": "Alec Radford , Luke Metz , and Soumith Chintala . 2015. Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks. CoRR abs/1511.06434 ( 2015 ). arXiv:1511.06434 http://arxiv.org/abs/1511.06434 Alec Radford, Luke Metz, and Soumith Chintala. 2015. Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks. CoRR abs/1511.06434 (2015). arXiv:1511.06434 http://arxiv.org/abs/1511.06434"
+    },
+    {
+      "key": "e_1_2_2_65_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/122718.122755"
+    },
+    {
+      "key": "e_1_2_2_66_1",
+      "volume-title": "JMLR Workshop and Conference Proceedings",
+      "author": "Ross Stephane",
+      "year": "2011",
+      "unstructured": "Stephane Ross , Geoffrey Gordon , and Drew Bagnell . 2011 . A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning (Proceedings of Machine Learning Research, Vol. 15), Geoffrey Gordon, David Dunson, and Miroslav Dudík (Eds.) . JMLR Workshop and Conference Proceedings , Fort Lauderdale, FL, USA, 627--635. http://proceedings.mlr.press/v15/ross11a.html Stephane Ross, Geoffrey Gordon, and Drew Bagnell. 2011. A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning (Proceedings of Machine Learning Research, Vol. 15), Geoffrey Gordon, David Dunson, and Miroslav Dudík (Eds.). JMLR Workshop and Conference Proceedings, Fort Lauderdale, FL, USA, 627--635. http://proceedings.mlr.press/v15/ross11a.html"
+    },
+    {
+      "key": "e_1_2_2_67_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1276377.1276510"
+    },
+    {
+      "key": "e_1_2_2_68_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TASSP.1978.1163055"
+    },
+    {
+      "key": "e_1_2_2_69_1",
+      "volume-title": "Improved Techniques for Training GANs. CoRR abs/1606.03498",
+      "author": "Salimans Tim",
+      "year": "2016",
+      "unstructured": "Tim Salimans , Ian J. Goodfellow , Wojciech Zaremba , Vicki Cheung , Alec Radford , and Xi Chen . 2016. Improved Techniques for Training GANs. CoRR abs/1606.03498 ( 2016 ). arXiv:1606.03498 http://arxiv.org/abs/1606.03498 Tim Salimans, Ian J. Goodfellow, Wojciech Zaremba, Vicki Cheung, Alec Radford, and Xi Chen. 2016. Improved Techniques for Training GANs. CoRR abs/1606.03498 (2016). arXiv:1606.03498 http://arxiv.org/abs/1606.03498"
+    },
+    {
+      "key": "e_1_2_2_70_1",
+      "volume-title": "High-Dimensional Continuous Control Using Generalized Advantage Estimation. CoRR abs/1506.02438",
+      "author": "Schulman John",
+      "year": "2015",
+      "unstructured": "John Schulman , Philipp Moritz , Sergey Levine , Michael I. Jordan , and Pieter Abbeel . 2015. High-Dimensional Continuous Control Using Generalized Advantage Estimation. CoRR abs/1506.02438 ( 2015 ). arXiv:1506.02438 John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan, and Pieter Abbeel. 2015. High-Dimensional Continuous Control Using Generalized Advantage Estimation. CoRR abs/1506.02438 (2015). arXiv:1506.02438"
+    },
+    {
+      "key": "e_1_2_2_71_1",
+      "volume-title": "Proximal Policy Optimization Algorithms. CoRR abs/1707.06347",
+      "author": "Schulman John",
+      "year": "2017",
+      "unstructured": "John Schulman , Filip Wolski , Prafulla Dhariwal , Alec Radford , and Oleg Klimov . 2017. Proximal Policy Optimization Algorithms. CoRR abs/1707.06347 ( 2017 ). arXiv:1707.06347 http://arxiv.org/abs/1707.06347 John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. 2017. Proximal Policy Optimization Algorithms. CoRR abs/1707.06347 (2017). arXiv:1707.06347 http://arxiv.org/abs/1707.06347"
+    },
+    {
+      "key": "e_1_2_2_72_1",
+      "unstructured": "SFU. [n.d.]. SFU Motion Capture Database. http://mocap.cs.sfu.ca/.  SFU. [n.d.]. SFU Motion Capture Database. http://mocap.cs.sfu.ca/."
+    },
+    {
+      "key": "e_1_2_2_73_1",
+      "volume-title": "Proc. of IEEE International Conference on Robotics and Animation.",
+      "author": "Sharon Dana",
+      "unstructured": "Dana Sharon and Michiel van de Panne. 2005. Synthesis of Controllers for Stylized Planar Bipedal Walking . In Proc. of IEEE International Conference on Robotics and Animation. Dana Sharon and Michiel van de Panne. 2005. Synthesis of Controllers for Stylized Planar Bipedal Walking. In Proc. of IEEE International Conference on Robotics and Animation."
+    },
+    {
+      "key": "e_1_2_2_74_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1276377.1276511"
+    },
+    {
+      "key": "e_1_2_2_75_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3355089.3356505"
+    },
+    {
+      "key": "e_1_2_2_76_1",
+      "volume-title": "Barto",
+      "author": "Sutton Richard S.",
+      "year": "1998",
+      "unstructured": "Richard S. Sutton and Andrew G . Barto . 1998 . Introduction to Reinforcement Learning (1st ed.). MIT Press , Cambridge, MA, USA. Richard S. Sutton and Andrew G. Barto. 1998. Introduction to Reinforcement Learning (1st ed.). MIT Press, Cambridge, MA, USA."
+    },
+    {
+      "key": "e_1_2_2_77_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2601097.2601121"
+    },
+    {
+      "key": "e_1_2_2_78_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/cav.260"
+    },
+    {
+      "key": "e_1_2_2_79_1",
+      "volume-title": "David Budden, Abbas Abdolmaleki, Josh Merel, Andrew Lefrancq, Timothy P. Lillicrap, and Martin A. Riedmiller.",
+      "author": "Tassa Yuval",
+      "year": "2018",
+      "unstructured": "Yuval Tassa , Yotam Doron , Alistair Muldal , Tom Erez , Yazhe Li , Diego de Las Casas , David Budden, Abbas Abdolmaleki, Josh Merel, Andrew Lefrancq, Timothy P. Lillicrap, and Martin A. Riedmiller. 2018 . DeepMind Control Suite. CoRR abs/1801.00690 (2018). arXiv:1801.00690 http://arxiv.org/abs/1801.00690 Yuval Tassa, Yotam Doron, Alistair Muldal, Tom Erez, Yazhe Li, Diego de Las Casas, David Budden, Abbas Abdolmaleki, Josh Merel, Andrew Lefrancq, Timothy P. Lillicrap, and Martin A. Riedmiller. 2018. DeepMind Control Suite. CoRR abs/1801.00690 (2018). arXiv:1801.00690 http://arxiv.org/abs/1801.00690"
+    },
+    {
+      "key": "e_1_2_2_80_1",
+      "volume-title": "Generative Adversarial Imitation from Observation. CoRR abs/1807.06158",
+      "author": "Torabi Faraz",
+      "year": "2018",
+      "unstructured": "Faraz Torabi , Garrett Warnell , and Peter Stone . 2018. Generative Adversarial Imitation from Observation. CoRR abs/1807.06158 ( 2018 ). arXiv:1807.06158 http://arxiv.org/abs/1807.06158 Faraz Torabi, Garrett Warnell, and Peter Stone. 2018. Generative Adversarial Imitation from Observation. CoRR abs/1807.06158 (2018). arXiv:1807.06158 http://arxiv.org/abs/1807.06158"
+    },
+    {
+      "key": "e_1_2_2_81_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1275808.1276386"
+    },
+    {
+      "key": "e_1_2_2_82_1",
+      "volume-title": "Proceedings of Graphics Interface '94",
+      "author": "van de Panne Michiel",
+      "year": "1994",
+      "unstructured": "Michiel van de Panne , Ryan Kim , and Eugene Flume . 1994 . Virtual Wind-up Toys for Animation . In Proceedings of Graphics Interface '94 . 208--215. Michiel van de Panne, Ryan Kim, and Eugene Flume. 1994. Virtual Wind-up Toys for Animation. In Proceedings of Graphics Interface '94. 208--215."
+    },
+    {
+      "key": "e_1_2_2_83_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2601097.2601192"
+    },
+    {
+      "key": "e_1_2_2_84_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1661412.1618514"
+    },
+    {
+      "key": "e_1_2_2_85_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2185520.2185521"
+    },
+    {
+      "key": "e_1_2_2_86_1",
+      "volume-title": "Garnett (Eds.)",
+      "volume": "30",
+      "author": "Wang Ziyu",
+      "year": "2017",
+      "unstructured": "Ziyu Wang , Josh S Merel , Scott E Reed , Nando de Freitas , Gregory Wayne , and Nicolas Heess . 2017 . Robust Imitation of Diverse Behaviors. In Advances in Neural Information Processing Systems, I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R . Garnett (Eds.) , Vol. 30 . Cur-ran Associates, Inc., 5320--5329. https://proceedings.neurips.cc/paper/ 2017/file/044a23cadb567653eb51d4eb40acaa88-Paper.pdf Ziyu Wang, Josh S Merel, Scott E Reed, Nando de Freitas, Gregory Wayne, and Nicolas Heess. 2017. Robust Imitation of Diverse Behaviors. In Advances in Neural Information Processing Systems, I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett (Eds.), Vol. 30. Cur-ran Associates, Inc., 5320--5329. https://proceedings.neurips.cc/paper/2017/file/044a23cadb567653eb51d4eb40acaa88-Paper.pdf"
+    },
+    {
+      "key": "e_1_2_2_87_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3386569.3392381"
+    },
+    {
+      "key": "e_1_2_2_88_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1467-8659.2009.01625.x"
+    },
+    {
+      "key": "e_1_2_2_89_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3197517.3201397"
+    },
+    {
+      "key": "e_1_2_2_90_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3197517.3201366"
+    },
+    {
+      "key": "e_1_2_2_91_1",
+      "volume-title": "Proceedings of the 23rd National Conference on Artificial Intelligence -",
+      "volume": "3",
+      "author": "Ziebart Brian D.",
+      "unstructured": "Brian D. Ziebart , Andrew Maas , J. Andrew Bagnell , and Anind K. Dey . 2008. Maximum Entropy Inverse Reinforcement Learning . In Proceedings of the 23rd National Conference on Artificial Intelligence - Volume 3 (Chicago, Illinois) (AAAI'08). AAAI Press, 1433--1438. Brian D. Ziebart, Andrew Maas, J. Andrew Bagnell, and Anind K. Dey. 2008. Maximum Entropy Inverse Reinforcement Learning. In Proceedings of the 23rd National Conference on Artificial Intelligence - Volume 3 (Chicago, Illinois) (AAAI'08). AAAI Press, 1433--1438."
+    },
+    {
+      "key": "e_1_2_2_92_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/545261.545276"
+    }
+  ],
+  "container-title": [
+    "ACM Transactions on Graphics"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://dl.acm.org/doi/10.1145/3450626.3459670",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://dl.acm.org/doi/pdf/10.1145/3450626.3459670",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        6,
+        17
+      ]
+    ],
+    "date-time": "2025-06-17T16:17:16Z",
+    "timestamp": 1750177036000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://dl.acm.org/doi/10.1145/3450626.3459670"
+    }
+  },
+  "subtitle": [
+    "adversarial motion priors for stylized physics-based character control"
+  ],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2021,
+        7,
+        19
+      ]
+    ]
+  },
+  "references-count": 92,
+  "aliases": [
+    "10.1145/3476576.3476723"
+  ],
+  "journal-issue": {
+    "issue": "4",
+    "published-print": {
+      "date-parts": [
+        [
+          2021,
+          8,
+          31
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "10.1145/3450626.3459670"
+  ],
+  "URL": "https://doi.org/10.1145/3450626.3459670",
+  "relation": {},
+  "ISSN": [
+    "0730-0301",
+    "1557-7368"
+  ],
+  "issn-type": [
+    {
+      "value": "0730-0301",
+      "type": "print"
+    },
+    {
+      "value": "1557-7368",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2021,
+        7,
+        19
+      ]
+    ]
+  },
+  "assertion": [
+    {
+      "value": "2021-07-19",
+      "order": 2,
+      "name": "published",
+      "label": "Published",
+      "group": {
+        "name": "publication_history",
+        "label": "Publication History"
+      }
+    }
+  ]
+}

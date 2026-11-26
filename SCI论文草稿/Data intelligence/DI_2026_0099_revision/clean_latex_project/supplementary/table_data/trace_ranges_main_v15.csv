@@ -1,0 +1,3 @@
+method,peak_current_A,pitch_RMS_deg,pitch_peak_deg,joint_position_RMSE_rad
+DR-only,>15,3.5-4.0,6.0-6.2,0.08-0.12
+Hybrid-RTI,10-12,0.8-1.2,0.8-1.2,0.015-0.025

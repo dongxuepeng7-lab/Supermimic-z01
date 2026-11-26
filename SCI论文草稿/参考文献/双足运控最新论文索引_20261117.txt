@@ -1,0 +1,190 @@
+双足机器人运控参考文献索引 2026年11月17日
+
+为当前论文的引言、相关工作和基线设计选取。范围以 2026 年可核实的正式期刊、论文集、主会录用或会议稿为主。arXiv 托管的作者全文和正式出版记录分别注明；未核实卷页或 DOI 的不补造。此为定向检索，并非各会刊全量系统综述。
+
+先读顺序：视觉基线 CReF → 显式地形重建 DPL → 复杂地形训练 Hiking in the Wild / Now You See That → 想象轨迹策略优化 SuperMimic → 最新近邻 WM-LOCO / STEP。当前执行器余量稿优先读 AMPCO、Contact-UAN、Yan 的力矩控制、Schuller 的接触稳定与推扰恢复。不要把 WM-LOCO/STEP 计为已发表，也不要将 SuperMimic 的平地全身追踪结果视作视觉地形通行实验。
+
+本次另存 19 份公开全文，原有 5 份 PDF 保留。SuperMimic 已有本地旧版；Yan 的力矩控制、Schuller 的推扰恢复及 AMPCO 三篇保留正式来源链接，本次未取得公开全文。RSS 三份为官方论文集 PDF；文件名含 arXiv 的为公开作者稿，正式引用仍以期刊或会议元数据为准。
+
+一  正式期刊论文（含已在线发表）（10 篇）
+
+参考文献条目 cref2026 〔感知与地形通行〕
+Yuan Hao, Ruiqi Yu, Shixin Luo, Guoteng Zhang, Jun Wu, Qiuguo Zhu. CReF: Cross-Modal and Recurrent Fusion for Depth-Conditioned Humanoid Locomotion.
+IEEE Robotics and Automation Letters 2026，11(10)：11174–11181。DOI 10.1109/LRA.2026.3723339。
+深度与本体跨模态注意力加 GRU；适合作为深度时序融合对照。
+来源 https://ieeexplore.ieee.org/abstract/document/11652883
+DOI https://doi.org/10.1109/LRA.2026.3723339
+公开全文 https://arxiv.org/pdf/2603.29452v3
+
+参考文献条目 dpl2026 〔感知与地形通行〕
+Jingkai Sun, Gang Han, Pihai Sun, Wen Zhao, Jiahang Cao, Jiaxu Wang, Qiang Zhang, Yijie Guo. DPL: Depth-Only Perceptive Humanoid Locomotion via Realistic Depth Synthesis and Cross-Attention Terrain Reconstruction.
+IEEE Robotics and Automation Letters 2026，11(8)：9407–9414。DOI 10.1109/LRA.2026.3703584。
+自遮挡感知的深度合成，加交叉注意力重建地形；适合和预测式表征比较。
+来源 https://arxiv.org/abs/2510.07152v3
+DOI https://doi.org/10.1109/LRA.2026.3703584
+公开全文 https://arxiv.org/pdf/2510.07152v3
+
+参考文献条目 glad2026 〔感知与地形通行〕
+Shengcheng Fu, Yang Zhang, Zhanxiang Cao, Liyun Yan, Yizhi Chen, Yunpeng Yin, Yue Gao. Global-Local Attention Decomposition for Terrain Encoding in Humanoid Perceptive Locomotion.
+IEEE Robotics and Automation Letters 2026，11(12)：13685–13692。DOI 10.1109/LRA.2026.3743710。Published online 14 October 2026; December issue。
+高程图全局与局部注意力分工，处理稀疏落脚；真机用 LiDAR，不能当作纯深度基线。
+来源 https://ieeexplore.ieee.org/abstract/document/11737513
+DOI https://doi.org/10.1109/LRA.2026.3743710
+公开全文 https://arxiv.org/pdf/2606.00637v3
+
+参考文献条目 gaitdepth2026 〔感知与地形通行〕
+Haolin Song, Hongbo Zhu, Tao Yu, Yan Liu, Mingqi Yuan, Wengang Zhou, Hua Chen, Houqiang Li. Gait-Adaptive Perceptive Humanoid Locomotion With Real-Time Under-Base Terrain Reconstruction.
+IEEE Robotics and Automation Letters 2026，11(4)：4969–4976。DOI 10.1109/LRA.2026.3664167。
+下视深度重建与全身控制结合，联合学习关节指令和步态相位。
+来源 https://researchportal.hkust.edu.hk/en/publications/gait-adaptive-perceptive-humanoid-locomotion-with-real-time-under/
+DOI https://doi.org/10.1109/LRA.2026.3664167
+公开全文 https://arxiv.org/pdf/2512.07464
+
+参考文献条目 yanTorque2026 〔执行器与扰动〕
+Yashuai Yan, Tobias Egle, Christian Ott, Dongheui Lee. Efficiently Learning Robust Torque-Based Locomotion Through Reinforcement With Model-Based Supervision.
+IEEE Robotics and Automation Letters 2026，11(4)：4155–4162。DOI 10.1109/LRA.2026.3664534。
+以基于模型的控制监督学习力矩级残差策略；适合对照执行器鲁棒性。
+来源 https://elib.dlr.de/224123/
+DOI https://doi.org/10.1109/LRA.2026.3664534
+
+参考文献条目 ame22026 〔感知与地形通行〕
+Chong Zhang, Victor Klemm, Fan Yang, Marco Hutter. Agile and Generalized Legged Locomotion via Attention-Based Neural Map Encoding.
+IEEE Transactions on Robotics 2026。DOI 10.1109/TRO.2026.3742243。Early Access, 9 October 2026。
+注意力地形编码与神经地形地图；包含双足与四足验证，应按跨形态工作引用。
+来源 https://sites.google.com/leggedrobotics.com/ame-2
+DOI https://doi.org/10.1109/TRO.2026.3742243
+公开全文 https://arxiv.org/pdf/2601.08485v3
+
+参考文献条目 mgmt2026 〔动作跟踪与先验〕
+Zewei Zhang, Kehan Wen, Michael Xu, Junzhe He, Chenhao Li, Takahiro Miki, Clemens Schwarke, Chong Zhang, Xue Bin Peng, Marco Hutter. Learning Whole-Body Humanoid Locomotion Via Motion Generation and Motion Tracking.
+IEEE Robotics and Automation Letters 2026，11(9)：10194–10201。DOI 10.1109/LRA.2026.3710365。
+以地形条件扩散生成参考动作，再闭环跟踪；G1 真机跨障。
+来源 https://www.research-collection.ethz.ch/entities/publication/2740bc55-1558-4423-833d-e217107236f6
+DOI https://doi.org/10.1109/LRA.2026.3710365
+公开全文 https://arxiv.org/pdf/2604.17335v2
+
+参考文献条目 schullerDcm2026 〔接触与扰动〕
+Robert Schuller, George Mesesan, Johannes Englsberger, Christian Ott, Jinoh Lee, Alin Albu-Schäffer. Grounding the Three-Dimensional Divergent Component of Motion: Geometric Analysis of Contact and Dynamic Stability and Its Application to Humanoid Push Recovery.
+The International Journal of Robotics Research 2026。DOI 10.1177/02783649261445462。OnlineFirst, 30 July 2026。
+分析 3D DCM 与接触可行性，用 TORO 真机验证推扰恢复；适合联系接触余量，但方法不同。
+来源 https://journals.sagepub.com/doi/abs/10.1177/02783649261445462
+DOI https://doi.org/10.1177/02783649261445462
+
+参考文献条目 beyondMimic2026 〔动作跟踪与先验〕
+Qiayuan Liao, Takara E. Truong, Xiaoyu Huang, Yuman Gao, Guy Tevet, Koushil Sreenath, C. Karen Liu. BeyondMimic: From Motion Tracking to Versatile Humanoid Control via Guided Diffusion.
+Science Robotics 2026，11(117)：eadx8924。DOI 10.1126/scirobotics.adx8924。
+全身运动跟踪和引导扩散相结合，用于丰富的真机运动技能。
+来源 https://www.science.org/doi/10.1126/scirobotics.adx8924
+DOI https://doi.org/10.1126/scirobotics.adx8924
+公开全文 https://arxiv.org/pdf/2508.08241
+
+参考文献条目 sonic2026 〔动作跟踪与先验〕
+Zhengyi Luo, Ye Yuan, Tingwu Wang, Chenran Li, Fernando Castañeda, Sirui Chen, Zi-Ang Cao, Jiefeng Li, David Minor, Qingwei Ben, Jinhyung Park, David Sami, Zi Wang, Xingye Da, Runyu Ding, Cyrus Hogg, Lina Song, Edy Lim, Eugene Jeong, Tairan He, Haoru Xue, Wenli Xiao, Simon Yuen, Jan Kautz, Yan Chang, Umar Iqbal, Linxi Jim Fan, Yuke Zhu. SONIC: Supersizing Motion Tracking for Natural Humanoid Whole-Body Control.
+Science Robotics 2026，11(117)：eaed4592。DOI 10.1126/scirobotics.aed4592。
+大规模动作跟踪与通用全身控制；是背景与 SuperMimic 的比较对象，不是直接的地形感知基线。
+来源 https://nvlabs.github.io/GEAR-SONIC/
+DOI https://doi.org/10.1126/scirobotics.aed4592
+公开全文 https://arxiv.org/pdf/2511.07820v4
+
+二  已在正式会议论文集中发表（6 篇）
+
+参考文献条目 php2026 〔感知与地形通行〕
+Zhen Wu, Xiaoyu Huang, Lujie Yang, Yuanhang Zhang, Xi Chen, Pieter Abbeel, Rocky Duan, Angjoo Kanazawa, Carmelo Sferrazza, Guanya Shi, Karen Liu. Perceptive Humanoid Parkour: Chaining Dynamic Human Skills via Motion Matching.
+Robotics: Science and Systems 2026。DOI 10.15607/RSS.2026.XXII.020。
+动作匹配串接人类技能，再将教师蒸馏到深度策略，G1 真机验证。
+来源 https://roboticsproceedings.org/rss22/p020.html
+DOI https://doi.org/10.15607/RSS.2026.XXII.020
+公开全文 https://roboticsproceedings.org/rss22/p020.pdf
+
+参考文献条目 rawpixels2026 〔感知与地形通行〕
+Wandong Sun, Yongbo Su, Guo Huang, Zilong Zhang, Wei Yingdong, Sen Xu, Sheng Cao, Xingwu Tian, Baoshi Cao, Yang Liu, Bin Yan, Yan Xie, Xie Zongwu. Now You See That: Learning End-to-End Humanoid Locomotion from Raw Pixels.
+Robotics: Science and Systems 2026。DOI 10.15607/RSS.2026.XXII.027。
+用仿真双目深度噪声与视觉蒸馏处理视觉迁移，覆盖两种人形平台。
+来源 https://roboticsproceedings.org/rss22/p027.html
+DOI https://doi.org/10.15607/RSS.2026.XXII.027
+公开全文 https://roboticsproceedings.org/rss22/p027.pdf
+
+参考文献条目 mindsteps2026 〔落脚规划与跟踪〕
+Alessandro Montenegro, Shihao Li, Puze Liu, Alberto Maria Metelli, Jan Peters. Mind Your Steps: A General Learning Framework for Accurate Humanoid Foothold Tracking.
+Robotics: Science and Systems 2026。DOI 10.15607/RSS.2026.XXII.028。
+以三维落脚目标训练通用低层跟踪器，支持不同上层规划器；实机验证。
+来源 https://roboticsproceedings.org/rss22/p028.html
+DOI https://doi.org/10.15607/RSS.2026.XXII.028
+公开全文 https://roboticsproceedings.org/rss22/p028.pdf
+
+参考文献条目 polygmap2026 〔落脚规划与跟踪〕
+Bingquan Li, Ning Wang, Zhicheng He, Yucong Wu, Tianwei Zhang. PolygMap: A Perceptive Locomotion Framework for Humanoid Robot Stair Climbing.
+IEEE International Conference on Robotics and Automation 2026，9066–9073。DOI 10.1109/ICRA57385.2026.11696224。
+多传感融合重建多边形楼梯地图，并在线规划落脚。
+来源 https://ieeexplore.ieee.org/abstract/document/11696224/authors
+DOI https://doi.org/10.1109/ICRA57385.2026.11696224
+公开全文 https://arxiv.org/pdf/2510.12346（作者稿，作者排序以 IEEE 记录为准）
+
+参考文献条目 ampco2026 〔动作跟踪与先验〕
+Tuchapong Sangthaworn, Bawornsak Sakulkueakulsuk. Adaptive Motion Priors with Constrained Optimization.
+IEEE International Conference on Robotics and Automation 2026。DOI 10.1109/ICRA57385.2026.11696607。
+学习中调节模仿和任务目标，说明动态调模仿权重有先例；与按关节余量门控不同。
+来源 https://ieeexplore.ieee.org/abstract/document/11696607
+DOI https://doi.org/10.1109/ICRA57385.2026.11696607
+
+参考文献条目 adaptiveMpc2026 〔落脚规划与跟踪〕
+Junnosuke Kamohara, Feiyang Wu, Chinmayee Wamorkar, Seth Hutchinson, Ye Zhao. RL-Augmented Adaptive Model Predictive Control for Bipedal Locomotion over Challenging Terrain.
+IEEE International Conference on Robotics and Automation 2026，18015–18022。DOI 10.1109/ICRA57385.2026.11697426。
+强化学习调节 MPC 参数与步态，适合和感知端到端方法区分。
+来源 https://doi.org/10.1109/ICRA57385.2026.11697426
+DOI https://doi.org/10.1109/ICRA57385.2026.11697426
+公开全文 https://arxiv.org/pdf/2509.18466
+
+三  主会录用或会议稿已确认，正式卷页没有核实（5 篇）
+
+参考文献条目 supermimic2026 〔可微世界模型〕
+Qiayuan Liao, Yiyang Shao, Junfeng Long, Kevin Zakka, Roberto Horowitz, Pieter Abbeel, Koushil Sreenath. SuperMimic: Scaling Humanoid Whole-Body Control with One Differentiable World Model.
+Conference on Robot Learning 2026。arXiv:2610.28480。Main-conference oral; no archival proceedings pagination verified。
+通过可微模型上的想象轨迹更新策略；原任务是全身跟踪，未证明深度复杂地形控制。
+来源 https://bair.berkeley.edu/blog/2026/11/09/bair-at-corl-2026/
+公开全文 https://arxiv.org/pdf/2610.28480v2
+Superminic.pdf（本地旧版，链接为 v2）
+
+参考文献条目 cap2026 〔视觉退化与预测〕
+Hongjin Chen, Zijun Xu, Shihao Ma, Yi Zhao, Xilai Liu, Ke Ma, Wei Zhang, Chunyang Xie, Pengfei Li, Jieru Zhao, Wenchao Ding. CAP: Continuously Adaptive Perception-Blind Humanoid Locomotion via Learned Denoising.
+Conference on Robot Learning 2026。arXiv:2609.11553。Accepted at CoRL 2026; no archival proceedings pagination verified。
+受损深度重建、噪声课程与感知特征丢弃；可区分去噪表征和未来动力学预测。
+来源 https://arxiv.org/abs/2609.11553
+公开全文 https://arxiv.org/pdf/2609.11553v1
+
+参考文献条目 contactuan 〔执行器与扰动〕
+Nolan Fey, Khai Nguyen, Yash Prabhu, Gabriel B. Margolis, Pulkit Agrawal. Contact-UAN: Unsupervised Actuator Networks as a Residual World Model for Humanoid Control.
+Conference on Robot Learning 2026。arXiv:2610.18991。Accepted at CoRL 2026; no archival proceedings pagination verified。
+接触一致回放后拟合执行器残差世界模型。CoRL 主会录用；RSS 记录是 workshop。
+来源 https://contact-uan.csail.mit.edu/
+公开全文 https://arxiv.org/pdf/2610.18991v1
+
+参考文献条目 hiking2026 〔感知与地形通行〕
+Shaoting Zhu, Ziwen Zhuang, Mengjie Zhao, Kun-Ying Lee, Hang Zhao. Hiking in the Wild: A Scalable Perceptive Parkour Framework for Humanoids.
+Conference on Robot Learning 2026。arXiv:2601.07718。CoRL 2026 main conference; no archival proceedings pagination verified。
+原始深度加本体输入，结合地形边缘和足部几何约束；与本地 Project Instinct 路线相关。
+来源 https://project-instinct.github.io/hiking-in-the-wild/
+公开全文 https://arxiv.org/pdf/2601.07718
+
+参考文献条目 damp 〔动作跟踪与先验〕
+Puying Shen, Wenhao Cui, Huaxing Huang, Bangyu Qin, Shengtao Li, Ziyang Dong, Guoteng Zhang. DAMP: Humanoid Locomotion via Denoised Belief Learning and Adversarial Motion Priors.
+IEEE/RSJ International Conference on Intelligent Robots and Systems 2026。arXiv:2610.11505。IROS 2026 conference paper; IEEE Xplore DOI not verified。
+本体时序推断加 AMP；适合与深度策略区分，已核实会议稿。
+来源 https://rasevents.org/uploads/documents/pdfviewer/76/7e/234590-1175.pdf
+公开全文 https://arxiv.org/pdf/2610.11505v2
+
+四  高度相关的预印本，不计入顶会顶刊成果（2 篇）
+
+参考文献条目 wmloco2026 〔视觉世界模型〕
+Yuxi Liu, Lijun Han, Ziming Wang, Ao Zhang, Cong Yang, Wei Sui. World-Model-Augmented Visual Locomotion for Humanoids on Foothold-Constrained Terrain.
+arXiv 2026。arXiv:2609.02542。arXiv v2, 3 November 2026; formal publication not verified。
+深度、本体及动作条件 RSSM 的循环特征供 PPO；视觉世界模型最近邻。
+来源 https://arxiv.org/abs/2609.02542v2
+公开全文 https://arxiv.org/pdf/2609.02542v2
+
+参考文献条目 step2026 〔视觉世界模型〕
+Youhao Lyu, Chenghao Sun, Zhenxuan Ding, Shuting Zhang, Ziyang Dong, Wenhao Cui. STEP: Spatiotemporal Training with Explicit Prediction for Perceptive Humanoid Locomotion.
+arXiv 2026。arXiv:2611.08097。arXiv v1, 5 November 2026; formal publication not verified。
+融合深度与本体，显式动作条件预测下一融合状态；与短期预测辅助最接近。
+来源 https://arxiv.org/abs/2611.08097v1
+公开全文 https://arxiv.org/pdf/2611.08097v1

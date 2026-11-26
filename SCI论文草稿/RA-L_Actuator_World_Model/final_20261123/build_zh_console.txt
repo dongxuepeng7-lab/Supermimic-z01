@@ -1,0 +1,19 @@
+note: Running TeX ...
+warning: accessing absolute path `/usr/share/fonts/truetype/liberation2/LiberationSerif-Regular.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/usr/share/fonts/truetype/liberation/LiberationSerif-BoldItalic.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/usr/share/fonts/truetype/liberation2/LiberationSerif-Italic.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/usr/share/fonts/truetype/liberation2/LiberationSerif-Bold.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc`; build may not be reproducible in other environments
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+note: Running BibTeX on manuscript_zh.aux ...
+note: Rerunning TeX because bibtex was run ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+note: Running xdvipdfmx ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+note: Writing `manuscript_zh.bbl` (7 KiB)
+note: Writing `manuscript_zh.pdf` (649.0087890625 KiB)
+note: Writing `manuscript_zh.log` (22.4130859375 KiB)
+note: Writing `manuscript_zh.blg` (388 B)
+note: Writing `manuscript_zh.out` (2.3193359375 KiB)
+note: Writing `manuscript_zh.aux` (11.208984375 KiB)

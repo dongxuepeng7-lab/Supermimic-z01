@@ -1,0 +1,34 @@
+{
+  "stage": "cd_native_9h_v1",
+  "checked_unix": 1795622127.6358912,
+  "checks": [
+    "Python AST syntax",
+    "shell syntax",
+    "actual trainer argparse for five candidate command shapes",
+    "predecessor success/stopped/missing gates",
+    "unchanged 8/32 calibration rule and degenerate gate",
+    "deadline arithmetic and per-job remaining-budget cap",
+    "active cd01 source and explicit file contract unchanged",
+    "local 3090 launcher waiting without importing torch/CUDA"
+  ],
+  "gpu_training_validation_run": false,
+  "research_diagnostic_sweeps_run": false,
+  "old_training_interrupted": false,
+  "local_launcher_pid": 1370290,
+  "local_launcher_status": "waiting_predecessor",
+  "files": {
+    "tools/ral_cd_nine_hour.py": "4ad2009d5dadc47378da7eb0627fb1a493ac43dc1f7d4c1b2f1b3b01b2c6beac",
+    "configs/ral/cd_nine_hour_v1.json": "e1712701fe3fce79cb54e8dc849e3625c7201d0cd222dce0bc03c622505e84f9",
+    "scripts/ral_3090_cd9.sh": "21c997c5533c03dd58019de4a083995661bc63787be032d1976448df8936cd9e",
+    "scripts/ral_5080_cd9.sh": "ae6f45de88a7ea23ddb23c5700270c0283210c71a8a2a51b7c8508efd01fc758",
+    "configs/ral/tasks.json": "c38b6155e536f7ca1e1827f9276801a1dd057d20c4204e1b8478aaaef796bdac",
+    "docs/ral_cd_native_20261125.md": "f2c93024b186690ac823bd03538976267ac6d5bd8ab9c7e9e2a9afb3aa852d43",
+    "release/ral/cd9_design_20261125.json": "f788e9178d3b67d9fae0b8c7f802ab24fad945d8bf4c9785eda8dafab98fcead",
+    "release/ral/cd01_5080_review_20261125.json": "cf78f9b2d31dfdd0c7a8e455a63413cf629c6da0a1948885c78a2a70d55d49de"
+  },
+  "limitations": [
+    "Nine hours is an active wall budget, not a guarantee of completing all candidates/seeds/evaluations.",
+    "No adaptive-window model is fabricated if calibration fails.",
+    "New 6000-iteration candidates and their effectiveness are not yet measured."
+  ]
+}

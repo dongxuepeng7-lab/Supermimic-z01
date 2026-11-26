@@ -1,0 +1,11 @@
+{"kind":"deck","id":"pr/8y6g8i","name":"Deck"}
+{"kind":"layout","id":"ly/ytcnetsj","editable":false,"name":"Master","type":"master"}
+{"kind":"layout","id":"ly/8jud0nyx","editable":false,"name":"Title Slide","type":"title","placeholders":[{"name":"title","type":"title"},{"name":"subtitle","type":"subtitle"}]}
+{"kind":"layout","id":"ly/u5cv6lob","editable":false,"name":"Section Header","type":"sectionHeader","placeholders":[{"name":"title","type":"title"}]}
+{"kind":"layout","id":"ly/vy5ob6dk","editable":false,"name":"Title and Body","type":"tx","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"}]}
+{"kind":"layout","id":"ly/d0butob6","editable":false,"name":"Title and Two Column","type":"twoColTx","placeholders":[{"name":"title","type":"title"},{"name":"Left column","type":"body"},{"name":"Right column","type":"body"}]}
+{"kind":"layout","id":"ly/pcjqpk32","editable":false,"name":"Title and One Column","type":"tx","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"}]}
+{"kind":"layout","id":"ly/94vu9gze","editable":false,"name":"Blank","type":"blank"}
+{"kind":"slide","id":"sl/65p11y","slideIndex":0,"layout":{"id":"ly/94vu9gze","name":"Blank"},"title":"r_(t) = r_(t)^(task) + λ_(t)g(m_(t))r_(t)^(amp)","textShapes":1,"backgroundColor":"rgba(255,255,255,1)"}
+{"kind":"textbox","id":"sh/qhcji9c3","slideIndex":0,"position":{"left":50,"top":100,"width":1180,"height":180},"text":"r_(t) = r_(t)^(task) + λ_(t)g(m_(t))r_(t)^(amp)","geometry":"rect","style":{"fontSize":48,"typeface":"Cambria Math","color":"#10283F","alignment":"left"}}
+{"kind":"notes","id":"nt/65p11y","slideIndex":0,"text":""}

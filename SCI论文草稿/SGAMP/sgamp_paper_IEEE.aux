@@ -1,0 +1,136 @@
+\relax 
+\citation{hwangbo2019anymal}
+\citation{lee2020challenging}
+\citation{kumar2021rma}
+\citation{singh2022footsteps}
+\citation{vanmarum2023perceptive}
+\citation{song2025gaitadaptive}
+\citation{radosavovic2024challenging}
+\citation{huang2026coremoe}
+\citation{radosavovic2024real}
+\citation{cheng2024exbody}
+\citation{he2024hover}
+\citation{fu2024humanplus}
+\citation{he2024omnih2o}
+\citation{zhang2025gmp}
+\citation{peng2021amp}
+\citation{peng2021amp}
+\citation{zhang2025gmp}
+\citation{guo2026tgmp}
+\citation{peng2022ase}
+\citation{tessler2023calm}
+\citation{luo2024pulse}
+\citation{zhang2025gmp}
+\citation{guo2026tgmp}
+\citation{hwang2026footposition}
+\citation{guo2026tgmp}
+\citation{ho2016gail}
+\citation{peng2018deepmimic}
+\citation{peng2021amp}
+\citation{zhang2025gmp}
+\citation{guo2026tgmp}
+\citation{zhang2025gmp}
+\citation{guo2026tgmp}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{}\protected@file@percent }
+\newlabel{sec:introduction}{{I}{1}{}{section.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{1}{}\protected@file@percent }
+\newlabel{sec:related_work}{{II}{1}{}{section.2}{}}
+\citation{ma2026cmoe}
+\citation{huang2026coremoe}
+\citation{crismariu2026march}
+\citation{lau2026switch}
+\citation{vukobratovic2004zmp}
+\citation{kajita2003zmp}
+\citation{hwang2026footposition}
+\citation{siekmann2021periodic}
+\citation{schulman2017ppo}
+\citation{schulman2015trpo}
+\citation{todorov2012mujoco}
+\citation{mittal2023isaaclab}
+\citation{makoviychuk2021isaacgym}
+\citation{todorov2012mujoco}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Method}{2}{}\protected@file@percent }
+\newlabel{sec:method}{{III}{2}{}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Problem Formulation and AMP Background}{2}{}\protected@file@percent }
+\newlabel{subsec:method_prelim}{{\mbox  {III-A}}{2}{}{subsection.3.1}{}}
+\newlabel{eq:amp_disc}{{1}{2}{}{equation.1}{}}
+\newlabel{eq:amp_style}{{2}{2}{}{equation.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}CoP-Gated Style Reward}{2}{}\protected@file@percent }
+\newlabel{subsec:method_cop}{{\mbox  {III-B}}{2}{}{subsection.3.2}{}}
+\newlabel{eq:cop}{{3}{2}{}{equation.3}{}}
+\newlabel{eq:margin}{{4}{2}{}{equation.4}{}}
+\newlabel{eq:gate}{{5}{2}{}{equation.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Phase-Conditioned Discriminator}{2}{}\protected@file@percent }
+\newlabel{subsec:method_phase}{{\mbox  {III-C}}{2}{}{subsection.3.3}{}}
+\newlabel{eq:phase_disc}{{6}{2}{}{equation.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-D}}Stability-Driven Adaptive Style-Weight Curriculum}{2}{}\protected@file@percent }
+\newlabel{subsec:method_curriculum}{{\mbox  {III-D}}{2}{}{subsection.3.4}{}}
+\newlabel{eq:ema}{{7}{2}{}{equation.7}{}}
+\newlabel{eq:total}{{8}{2}{}{equation.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-E}}Training Procedure}{2}{}\protected@file@percent }
+\newlabel{subsec:method_training}{{\mbox  {III-E}}{2}{}{subsection.3.5}{}}
+\citation{guo2026tgmp}
+\citation{peng2021amp}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Overview of SG-AMP. Three lightweight modifications are made on top of vanilla AMP: (1) the style reward is gated by the CoP-based stability margin $g(m_t)$; (2) the discriminator is conditioned on the gait phase $(\cos \phi _t,\sin \phi _t)$; and (3) the style weight $\lambda _t=\lambda _{\max }\cdot \bar  g_t$ follows an EMA of the gate. All signals are available from the physics backend (Isaac Sim PhysX for training, MuJoCo for sim2sim).}}{3}{}\protected@file@percent }
+\newlabel{fig:overview}{{1}{3}{}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces CoP-gated style reward (contribution 1). The CoP is computed from contact forces, and the minimum signed distance $m_t$ to the support-polygon edges defines a dynamic stability margin. The smooth gate $g(m_t)=\sigma ((m_t-m_0)/\kappa )$ scales the AMP style reward so style supervision is active only when the robot is dynamically stable.}}{3}{}\protected@file@percent }
+\newlabel{fig:cop}{{2}{3}{}{figure.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Experiments}{3}{}\protected@file@percent }
+\newlabel{sec:experiments}{{IV}{3}{}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Experimental Setup}{3}{}\protected@file@percent }
+\newlabel{subsec:setup}{{\mbox  {IV-A}}{3}{}{subsection.4.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Phase-conditioned discriminator (contribution 2). A gait phase $\phi _t$ driven by foot-contact events is encoded as $(\cos \phi _t,\sin \phi _t)$ and concatenated to the discriminator input, so the discriminator learns phase-consistent style and suppresses within-cycle fluctuation.}}{3}{}\protected@file@percent }
+\newlabel{fig:phase}{{3}{3}{}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Baselines, Metrics, and Ablations}{3}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Benchmarking and ablation across simulated protocols (5 random seeds; mean $\pm $ std.\ in MuJoCo). All methods achieve 100\% survival under nominal flat walking. Planar touchdown is the stance percentage free of ankle inversion/eversion tilting.}}{4}{}\protected@file@percent }
+\newlabel{tab:comparison}{{I}{4}{}{table.1}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces SG-AMP training (PPO, simulation only).}}{4}{}\protected@file@percent }
+\newlabel{alg:sgamp}{{1}{4}{}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Results}{4}{}\protected@file@percent }
+\newlabel{subsec:results}{{\mbox  {IV-C}}{4}{}{subsection.4.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-C}0a}Gait kinematics and contact stability}{4}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Consecutive walking snapshots of the SG-AMP policy in simulation, showing a stable, upright bipedal gait.}}{4}{}\protected@file@percent }
+\newlabel{fig:snapshots}{{4}{4}{}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Foot-ground interaction and ground-reaction-force (GRF) analysis in MuJoCo. (a) Each foot is modeled with multiple contact points to evaluate support geometry. (b) Standard AMP and (c) vanilla PPO exhibit severe foot tilt at touchdown (edge contact); (d) SG-AMP enforces planar alignment and a more uniform GRF distribution.}}{4}{}\protected@file@percent }
+\newlabel{fig:grf}{{5}{4}{}{figure.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-C}0b}Ablation study}{4}{}\protected@file@percent }
+\bibstyle{unsrt}
+\bibdata{refs}
+\bibcite{hwangbo2019anymal}{1}
+\bibcite{lee2020challenging}{2}
+\bibcite{kumar2021rma}{3}
+\bibcite{singh2022footsteps}{4}
+\bibcite{vanmarum2023perceptive}{5}
+\bibcite{song2025gaitadaptive}{6}
+\bibcite{radosavovic2024challenging}{7}
+\bibcite{huang2026coremoe}{8}
+\bibcite{radosavovic2024real}{9}
+\bibcite{cheng2024exbody}{10}
+\bibcite{he2024hover}{11}
+\bibcite{fu2024humanplus}{12}
+\bibcite{he2024omnih2o}{13}
+\bibcite{zhang2025gmp}{14}
+\bibcite{peng2021amp}{15}
+\bibcite{guo2026tgmp}{16}
+\bibcite{peng2022ase}{17}
+\bibcite{tessler2023calm}{18}
+\bibcite{luo2024pulse}{19}
+\bibcite{hwang2026footposition}{20}
+\bibcite{ho2016gail}{21}
+\bibcite{peng2018deepmimic}{22}
+\bibcite{ma2026cmoe}{23}
+\bibcite{crismariu2026march}{24}
+\bibcite{lau2026switch}{25}
+\bibcite{vukobratovic2004zmp}{26}
+\bibcite{kajita2003zmp}{27}
+\bibcite{siekmann2021periodic}{28}
+\bibcite{schulman2017ppo}{29}
+\bibcite{schulman2015trpo}{30}
+\bibcite{todorov2012mujoco}{31}
+\bibcite{mittal2023isaaclab}{32}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-C}0c}Gate behavior under stress}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion}{5}{}\protected@file@percent }
+\newlabel{sec:conclusion}{{V}{5}{}{section.5}{}}
+\@writefile{toc}{\contentsline {section}{References}{5}{}\protected@file@percent }
+\bibcite{makoviychuk2021isaacgym}{33}
+\gdef \@abspage@last{6}

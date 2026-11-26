@@ -1,0 +1,375 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-21",
+  "formal_results": false,
+  "test_outcomes_inspected": false,
+  "purpose": "Conservative pilot02 setting selected from matched WM-only diagnostics; full-policy validation pending",
+  "selection_rule": "Candidate must keep cal forward MSE and q RMSE32 within 1.10x the same-seed weight-zero control on both seeds. Prefer lower cal raw response RMSE8; report RMSE32 too. No passing candidate means no accepted response setting.",
+  "selected": {
+    "name": "C_w1e4_h8",
+    "response_weight": 0.0001,
+    "response_horizon": 8,
+    "response_loss": "mse",
+    "response_huber_delta": 1.0,
+    "wm_amp": "none"
+  },
+  "candidate_comparisons": [
+    {
+      "name": "C_w1e4_h32",
+      "forward_guard_passed": true,
+      "mean_response_rmse8": 73.8473778334434
+    },
+    {
+      "name": "C_w1e3_h32",
+      "forward_guard_passed": true,
+      "mean_response_rmse8": 73.88752219841254
+    },
+    {
+      "name": "C_w1e2_h32",
+      "forward_guard_passed": false,
+      "mean_response_rmse8": 73.92278905844715
+    },
+    {
+      "name": "C_w1_h32",
+      "forward_guard_passed": false,
+      "mean_response_rmse8": 73.87249800676263
+    },
+    {
+      "name": "C_w1e4_h8",
+      "forward_guard_passed": true,
+      "mean_response_rmse8": 73.84204343459697
+    },
+    {
+      "name": "C_w1e3_h8",
+      "forward_guard_passed": true,
+      "mean_response_rmse8": 73.85165305077099
+    },
+    {
+      "name": "C_w1e2_h8",
+      "forward_guard_passed": false,
+      "mean_response_rmse8": 73.87871586753496
+    }
+  ],
+  "diagnostic_updates_per_run": 120,
+  "diagnostic_batch_size": 128,
+  "diagnostic_runs": 16,
+  "matched_initialization_and_sampling": true,
+  "results": [
+    {
+      "name": "B_control",
+      "seed": 1,
+      "response_weight": 0.0,
+      "response_horizon": 32,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.50553560256958,
+        "response_rmse8": 73.818648532019,
+        "response_rmse32": 113.82751050795014,
+        "q_rmse32_rad": 0.05782285852036473
+      },
+      "fit": {
+        "forward_mse": 1.782305374145508,
+        "response_rmse8": 71.12954759805454,
+        "response_rmse32": 151.91480034051983,
+        "q_rmse32_rad": 0.03883169005278334
+      }
+    },
+    {
+      "name": "C_w1e4_h32",
+      "seed": 1,
+      "response_weight": 0.0001,
+      "response_horizon": 32,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.521574974060059,
+        "response_rmse8": 73.82910217607282,
+        "response_rmse32": 113.92114957422305,
+        "q_rmse32_rad": 0.05767472675365825
+      },
+      "fit": {
+        "forward_mse": 1.802604308128357,
+        "response_rmse8": 71.10725757240095,
+        "response_rmse32": 151.58835836113866,
+        "q_rmse32_rad": 0.039265236935365794
+      }
+    },
+    {
+      "name": "C_w1e3_h32",
+      "seed": 1,
+      "response_weight": 0.001,
+      "response_horizon": 32,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.865836143493652,
+        "response_rmse8": 73.89301546408159,
+        "response_rmse32": 113.22259688468773,
+        "q_rmse32_rad": 0.059616299763822246
+      },
+      "fit": {
+        "forward_mse": 2.0315105724334717,
+        "response_rmse8": 71.00496890881095,
+        "response_rmse32": 150.93356451908733,
+        "q_rmse32_rad": 0.0445303262229939
+      }
+    },
+    {
+      "name": "C_w1e2_h32",
+      "seed": 1,
+      "response_weight": 0.01,
+      "response_horizon": 32,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 8.620355606079102,
+        "response_rmse8": 73.89822234414709,
+        "response_rmse32": 113.0190240830609,
+        "q_rmse32_rad": 0.0724290726304045
+      },
+      "fit": {
+        "forward_mse": 3.6221705341339114,
+        "response_rmse8": 70.85485191772828,
+        "response_rmse32": 150.21943376690646,
+        "q_rmse32_rad": 0.06373704240397719
+      }
+    },
+    {
+      "name": "C_w1_h32",
+      "seed": 1,
+      "response_weight": 1.0,
+      "response_horizon": 32,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 54.31188201904297,
+        "response_rmse8": 73.86663843331101,
+        "response_rmse32": 112.86626142807248,
+        "q_rmse32_rad": 0.3592872927242905
+      },
+      "fit": {
+        "forward_mse": 63.32218185424805,
+        "response_rmse8": 70.94762684977725,
+        "response_rmse32": 150.64629750885018,
+        "q_rmse32_rad": 0.3964125078584712
+      }
+    },
+    {
+      "name": "C_w1e4_h8",
+      "seed": 1,
+      "response_weight": 0.0001,
+      "response_horizon": 8,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.480860710144043,
+        "response_rmse8": 73.81815574225287,
+        "response_rmse32": 113.92955865769646,
+        "q_rmse32_rad": 0.05769473450073522
+      },
+      "fit": {
+        "forward_mse": 1.7476043987274168,
+        "response_rmse8": 71.03933664579237,
+        "response_rmse32": 151.61542271896352,
+        "q_rmse32_rad": 0.03901567298808296
+      }
+    },
+    {
+      "name": "C_w1e3_h8",
+      "seed": 1,
+      "response_weight": 0.001,
+      "response_horizon": 8,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.500613212585449,
+        "response_rmse8": 73.82053036334133,
+        "response_rmse32": 113.17470420493707,
+        "q_rmse32_rad": 0.05757859117275224
+      },
+      "fit": {
+        "forward_mse": 1.7661582279205321,
+        "response_rmse8": 70.60295960704082,
+        "response_rmse32": 151.71676813844604,
+        "q_rmse32_rad": 0.03936793452924521
+      }
+    },
+    {
+      "name": "C_w1e2_h8",
+      "seed": 1,
+      "response_weight": 0.01,
+      "response_horizon": 8,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 8.145796775817871,
+        "response_rmse8": 73.88496323994991,
+        "response_rmse32": 113.37965553423815,
+        "q_rmse32_rad": 0.06361751312759038
+      },
+      "fit": {
+        "forward_mse": 2.329858622550964,
+        "response_rmse8": 69.31689853040888,
+        "response_rmse32": 151.57832095261017,
+        "q_rmse32_rad": 0.0495426805830415
+      }
+    },
+    {
+      "name": "B_control",
+      "seed": 2,
+      "response_weight": 0.0,
+      "response_horizon": 32,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.2852373123168945,
+        "response_rmse8": 73.8757105242904,
+        "response_rmse32": 113.4986792668201,
+        "q_rmse32_rad": 0.05766392888969878
+      },
+      "fit": {
+        "forward_mse": 1.7113305282592775,
+        "response_rmse8": 71.1049452852511,
+        "response_rmse32": 151.57932496819117,
+        "q_rmse32_rad": 0.039090369058149735
+      }
+    },
+    {
+      "name": "C_w1e4_h32",
+      "seed": 2,
+      "response_weight": 0.0001,
+      "response_horizon": 32,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.354092121124268,
+        "response_rmse8": 73.86565349081398,
+        "response_rmse32": 113.38099918664723,
+        "q_rmse32_rad": 0.05797149937656938
+      },
+      "fit": {
+        "forward_mse": 1.727834038734436,
+        "response_rmse8": 71.0646855897067,
+        "response_rmse32": 150.95281055887963,
+        "q_rmse32_rad": 0.03938017961516753
+      }
+    },
+    {
+      "name": "C_w1e3_h32",
+      "seed": 2,
+      "response_weight": 0.001,
+      "response_horizon": 32,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.452131748199463,
+        "response_rmse8": 73.88202893274351,
+        "response_rmse32": 112.95308069061242,
+        "q_rmse32_rad": 0.06056009232936113
+      },
+      "fit": {
+        "forward_mse": 2.149271469116211,
+        "response_rmse8": 70.9699946956087,
+        "response_rmse32": 150.09422444230657,
+        "q_rmse32_rad": 0.04552107288290655
+      }
+    },
+    {
+      "name": "C_w1e2_h32",
+      "seed": 2,
+      "response_weight": 0.01,
+      "response_horizon": 32,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 8.913681030273438,
+        "response_rmse8": 73.94735577274722,
+        "response_rmse32": 112.98777502317452,
+        "q_rmse32_rad": 0.0724286065116108
+      },
+      "fit": {
+        "forward_mse": 4.349062108993531,
+        "response_rmse8": 70.51482521825835,
+        "response_rmse32": 150.81829868669783,
+        "q_rmse32_rad": 0.07223502007218476
+      }
+    },
+    {
+      "name": "C_w1_h32",
+      "seed": 2,
+      "response_weight": 1.0,
+      "response_horizon": 32,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 48.497314453125,
+        "response_rmse8": 73.87835758021424,
+        "response_rmse32": 112.87727537850566,
+        "q_rmse32_rad": 0.3403807157834387
+      },
+      "fit": {
+        "forward_mse": 61.64993362426758,
+        "response_rmse8": 70.89567931962713,
+        "response_rmse32": 150.60106902737277,
+        "q_rmse32_rad": 0.4040057703481873
+      }
+    },
+    {
+      "name": "C_w1e4_h8",
+      "seed": 2,
+      "response_weight": 0.0001,
+      "response_horizon": 8,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.292361259460449,
+        "response_rmse8": 73.86593112694106,
+        "response_rmse32": 113.11531812850326,
+        "q_rmse32_rad": 0.05763635882165381
+      },
+      "fit": {
+        "forward_mse": 1.7071954441070556,
+        "response_rmse8": 70.86594077905126,
+        "response_rmse32": 151.5531610524835,
+        "q_rmse32_rad": 0.03909366395700334
+      }
+    },
+    {
+      "name": "C_w1e3_h8",
+      "seed": 2,
+      "response_weight": 0.001,
+      "response_horizon": 8,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.312055587768555,
+        "response_rmse8": 73.88277573820065,
+        "response_rmse32": 113.51076748898097,
+        "q_rmse32_rad": 0.057814631551676834
+      },
+      "fit": {
+        "forward_mse": 1.7509936332702636,
+        "response_rmse8": 69.34224161481924,
+        "response_rmse32": 151.60132724311816,
+        "q_rmse32_rad": 0.03981646709293405
+      }
+    },
+    {
+      "name": "C_w1e2_h8",
+      "seed": 2,
+      "response_weight": 0.01,
+      "response_horizon": 8,
+      "wm_amp": "none",
+      "cal": {
+        "forward_mse": 7.6299238204956055,
+        "response_rmse8": 73.87246849512002,
+        "response_rmse32": 113.1387034172546,
+        "q_rmse32_rad": 0.060036085144308984
+      },
+      "fit": {
+        "forward_mse": 2.364743432998657,
+        "response_rmse8": 69.78063353837224,
+        "response_rmse32": 151.6675754322591,
+        "q_rmse32_rad": 0.04761830014876131
+      }
+    }
+  ],
+  "response_gain_established": false,
+  "interpretation": "Selected candidate restores forward fitting near the zero-response-weight control on both seeds. Cal response RMSE8 improvement is only about 0.007 percent on average; this does not establish useful response learning or a paper contribution.",
+  "limitations": [
+    "120 WM updates, no policy training in this sweep",
+    "No heldout test outcomes inspected",
+    "No validated window tolerance chosen",
+    "Full pilot02 repeats and independent evaluation required"
+  ],
+  "sweep_results": "logs/ral_response_sweep_v2/results.json",
+  "sweep_results_sha256": "1c157e9740794ef12a60aeb5ab95debb5c63b13fe39a3a1bf28f9fc80907759d",
+  "config_sha256": "2535a717bae22459c4f3cdd1b26cacb9db09a25e310e7b8dab44d60139331399",
+  "validation_record": "logs/ral_verification/response_v2_validation.json"
+}

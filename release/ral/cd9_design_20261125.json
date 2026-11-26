@@ -1,0 +1,25 @@
+{
+  "as_of_unix": 1795621709.3762386,
+  "stage": "cd9_design",
+  "evidence_scope": "cd01_5080 complete and cd01_3090 seed501 partial; other 3090 seeds not yet reviewed",
+  "B_cal_means": {
+    "q_rmse32_rad": 0.013352082468493304,
+    "qd_rmse32_rad_s": 0.36691884251716606,
+    "zero_response_rmse4": 7.7375416074480325,
+    "response_rmse4": 4.95583674037321,
+    "response_rmse8": 9.392554674108888,
+    "response_rmse32": 32.08549577055813
+  },
+  "C_cal_means": {
+    "q_rmse32_rad": 0.013337908694486575,
+    "qd_rmse32_rad_s": 0.3644112987684195,
+    "zero_response_rmse4": 7.7375416074480325,
+    "response_rmse4": 4.964021825263059,
+    "response_rmse8": 9.396794904966827,
+    "response_rmse32": 32.07233150043077
+  },
+  "s501_short_validated_bins": 0,
+  "s501_long_validated_bins": 0,
+  "calibration_threshold_unchanged": true,
+  "new_model_training_or_gpu_tests_run_during_implementation": false
+}

@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-26",
+  "stage": "cd_full_night_v1",
+  "config": "configs/ral/cd_full_night_v1.json",
+  "seeds": [
+    501,
+    505,
+    509,
+    513,
+    517
+  ],
+  "rationale": [
+    "Cap10-to30 changed actual gradients but did not rescue32-step response/policy.",
+    "Prior frozen actor window update reduced completion; reduce learning rate/updates and add an unchanged live-parent control.",
+    "Refresh labels from current B checkpoint and supervise4-step response; compare both weights on5080, replicate .05 vsB on3090."
+  ],
+  "machines": {
+    "3090": {
+      "legacy_evaluations": 26,
+      "new_evaluations": 60,
+      "new_joint_models": 10,
+      "expected_hours_range": [
+        8,
+        9
+      ],
+      "basis": "26+60 cells at observed261.7sec, ten2000-iteration continuations, shorter-response cost no greater than observed H32 estimate; no guarantee."
+    },
+    "5080": {
+      "new_evaluations": 240,
+      "new_joint_models": 15,
+      "new_window_models": 20,
+      "live_parent_exports": 5,
+      "expected_hours_range": [
+        8,
+        9
+      ],
+      "basis": "240 cells at observed96.1sec plus15 short2000-iteration continuations and20 conservative100-update windows."
+    }
+  },
+  "original_D": "Strict8/32 gate0.5 retained in separate calibration artifact; prior failures not changed.",
+  "empirical_D": {
+    "short": 16,
+    "long": 32,
+    "risk": "maximum relative prefix RMSE over first 32 steps",
+    "long_fraction_of_reliable_bins": 0.5,
+    "selection": "lower half of sample-sufficient, finite-risk bins (floor), ties broken by bin id; all others short",
+    "unreliable_sentinel": 1e+20,
+    "interpretation": "Empirical cal-risk ranking, NOT validated/certified horizons or original paper D. Original validation booleans remain truthful.",
+    "degenerate": "Run named empirical branches using the actual constant horizon; mark nonidentifiable, no D mechanism claim."
+  },
+  "decision_rules": {
+    "primary_C": "C_h4_w05 minus B_refresh within each GPU, five nonreference scenarios averaged per seed, all five paired seeds. Also report C_h4_w01 on 5080.",
+    "primary_D_emp": "D_emp minus C_perm_emp and fixed16/fixed32 on 5080, and change from identical parent live actor. All seeds/conditions; degenerate mapping is not evidence for state selection.",
+    "calibration": "Preserve strict 8/32 relative0.5 results. Empirical16/32 ranking is a distinct exploratory protocol, never overwrite or claim strict D success.",
+    "stop": "Nine active hours with two-minute reserve, low disk, nonfinite/integrity error, interrupted process. No selecting favorable seeds, early success pruning or fabricated complete matrices.",
+    "cross_device": "Separate replications; never pool raw response magnitudes or treat hardware differences as intervention effects.",
+    "completion": "Complete means every declared cell and response/calibration/paired-run check exists; otherwise enumerate missing cells."
+  },
+  "source_sessions": {
+    "3090": "cd02_3090",
+    "5080": "cd02_5080"
+  },
+  "scope_limit": "C/D development campaign; not a complete rerun of original seven paper groups, hardware or unseen-motion tests.",
+  "launch_3090": {
+    "status": "running",
+    "started_beijing": "2026-11-26T23:35:18.523092+08:00",
+    "nine_hour_ceiling_beijing": "2026-11-27T08:35:18.523092+08:00"
+  },
+  "launch_5080": "Package prepared; user must launch on remote5080, no remote access exercised."
+}

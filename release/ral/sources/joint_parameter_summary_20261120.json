@@ -1,0 +1,320 @@
+{
+  "as_of": "2026-11-20",
+  "scope": "Current runtime parameters; validation evidence distinguished from deployment. No robot config edits.",
+  "rows": [
+    {
+      "joint": "left_hip_pitch",
+      "title": "左髋俯仰",
+      "runtime": {
+        "armature": 0.0,
+        "damping": 4.840868,
+        "frictionloss": 1.388,
+        "load_offset": 1.9585,
+        "command_delay_sec": 0.00927,
+        "external_torque": -1.9585
+      },
+      "status": "跨幅值验证通过",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/hip_pitch_scale03_T2_validation_20261120/summary.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        250.0,
+        16.0
+      ]
+    },
+    {
+      "joint": "right_hip_pitch",
+      "title": "右髋俯仰",
+      "runtime": {
+        "armature": 0.0,
+        "damping": 4.293868,
+        "frictionloss": 1.330309,
+        "load_offset": -2.1996,
+        "command_delay_sec": 0.006289,
+        "external_torque": 2.1996
+      },
+      "status": "跨幅值验证通过",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/hip_pitch_scale03_T2_validation_20261120/summary.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        250.0,
+        16.0
+      ]
+    },
+    {
+      "joint": "left_hip_roll",
+      "title": "左髋侧摆",
+      "runtime": {
+        "armature": 0.0,
+        "damping": 13.4927,
+        "frictionloss": 1.4773,
+        "load_offset": 2.9197,
+        "command_delay_sec": 0.00629,
+        "external_torque": -2.9197
+      },
+      "status": "新幅值/周期验证通过",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_hip_roll_scale03_T3_validation_20261120/summary.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        200.0,
+        10.0
+      ]
+    },
+    {
+      "joint": "right_hip_roll",
+      "title": "右髋侧摆",
+      "runtime": {
+        "armature": 0.0826,
+        "damping": 3.619524,
+        "frictionloss": 1.8915,
+        "load_offset": -2.656,
+        "command_delay_sec": 0.012854,
+        "external_torque": 2.656
+      },
+      "status": "T2留出未改善；仍在使用候选",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/right_hip_roll_identification_20261117/candidate_parameters.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        200.0,
+        10.0
+      ]
+    },
+    {
+      "joint": "left_hip_yaw",
+      "title": "左髋偏航",
+      "runtime": {
+        "armature": 0.027778,
+        "damping": 0.587946,
+        "frictionloss": 0.283957,
+        "load_offset": 0.1642,
+        "command_delay_sec": 0.006758,
+        "external_torque": -0.1642
+      },
+      "status": "候选两条T2留出通过；运行值有微小差异",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_hip_yaw_identification_20261117/candidate_parameters.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        190.0,
+        5.0
+      ]
+    },
+    {
+      "joint": "right_hip_yaw",
+      "title": "右髋偏航",
+      "runtime": {
+        "armature": 0.0101,
+        "damping": 0.6341,
+        "frictionloss": 0.248,
+        "load_offset": -0.075,
+        "command_delay_sec": 0.00382,
+        "external_torque": 0.075
+      },
+      "status": "新小幅值验证通过；大幅值位置优势有限",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/right_hip_yaw_scale01_T2_validation_20261120/validation_summary.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        190.0,
+        5.0
+      ]
+    },
+    {
+      "joint": "left_knee_pitch",
+      "title": "左膝",
+      "runtime": {
+        "armature": 0.292,
+        "damping": 0.416,
+        "frictionloss": 2.505,
+        "load_offset": -0.4642184498225008,
+        "command_delay_sec": 0.012332878105799397,
+        "external_torque": 0.4642184498225008
+      },
+      "status": "跨幅值验证通过",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/knees_scale03_T2_validation_20261120/summary.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        230.0,
+        9.0
+      ]
+    },
+    {
+      "joint": "right_knee_pitch",
+      "title": "右膝",
+      "runtime": {
+        "armature": 0.2057,
+        "damping": 0.00079,
+        "frictionloss": 3.7068,
+        "load_offset": 0.40090889141074193,
+        "command_delay_sec": 0.016316821537860893,
+        "external_torque": -0.40090889141074193
+      },
+      "status": "跨幅值验证通过",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/knees_scale03_T2_validation_20261120/summary.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        230.0,
+        9.0
+      ]
+    },
+    {
+      "joint": "left_ankle_pitch",
+      "title": "左踝俯仰",
+      "runtime": {
+        "armature": 0.1047,
+        "damping": 0.0,
+        "frictionloss": 0.6382,
+        "load_offset": 0.1503,
+        "command_delay_sec": 0.001344,
+        "external_torque": -0.1503
+      },
+      "status": "两幅值T2留出通过；力矩收益较小",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_ankle_pitch_T2_validation_20261117/validation_summary.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        50.0,
+        2.0
+      ]
+    },
+    {
+      "joint": "right_ankle_pitch",
+      "title": "右踝俯仰",
+      "runtime": {
+        "armature": 0.1047,
+        "damping": 0.0,
+        "frictionloss": 0.6382,
+        "load_offset": 0.1503,
+        "command_delay_sec": 0.001344,
+        "external_torque": -0.1503
+      },
+      "status": "复用左侧；尚无完成的右侧独立验证",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_ankle_pitch_T2_validation_20261117/validation_summary.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        50.0,
+        2.0
+      ]
+    },
+    {
+      "joint": "left_ankle_roll",
+      "title": "左踝侧摆",
+      "runtime": {
+        "armature": 0.029,
+        "damping": 0.0,
+        "frictionloss": 0.2986,
+        "load_offset": 0.0453,
+        "command_delay_sec": 5.7e-05,
+        "external_torque": -0.0453
+      },
+      "status": "原T2及新增大幅值未通过；按用户要求暂停",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_ankle_roll_scale03_T2_validation_20261120/summary.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        70.0,
+        1.0
+      ]
+    },
+    {
+      "joint": "right_ankle_roll",
+      "title": "右踝侧摆",
+      "runtime": {
+        "armature": 0.029,
+        "damping": 0.0,
+        "frictionloss": 0.2986,
+        "load_offset": 0.0453,
+        "command_delay_sec": 5.7e-05,
+        "external_torque": -0.0453
+      },
+      "status": "复用左侧未通过候选；右侧尚未完成独立辨识",
+      "evidence": "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_ankle_roll_identification_20261118/candidate_parameters.json",
+      "training_matches_runtime": {
+        "armature": true,
+        "damping": true,
+        "frictionloss": true,
+        "load_offset": true,
+        "command_delay_sec": true
+      },
+      "PD": [
+        70.0,
+        1.0
+      ]
+    }
+  ],
+  "hashes": {
+    "/home/coder/zoyi/ros2/robot_calibration_ros/src/robots/robot_assets/Z01_angle/mjcf/Z01.xml": "932fc587eea8e751881cf5f337fe0d0d24722052414565d64c1986b4bec8be0f",
+    "/home/coder/zoyi/ros2/robot_calibration_ros/src/zoyi_sim_real_alignment/config/z01_sim_dynamics.yaml": "d20e90250f78d15bc72b8d1eab62af629bd19e230208b3aaaf730785058d767f",
+    "/home/coder/zoyi/locomotion/zoyi_rl_amp/legged_lab/assets/Z01_angle/identified_dynamics.json": "993b5a9a3960c04241b9132f5b8373ea006ca78a0369c47f1963210fe21cde86",
+    "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/hip_pitch_scale03_T2_validation_20261120/summary.json": "8166bbd77cea89e7f27d2130f3d95be9183188f0547f03b1fdad92e8068b0958",
+    "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_hip_roll_scale03_T3_validation_20261120/summary.json": "78492dd183bd97132a634c7026cd5b5c5db7b316f368fa476e75352b89543e87",
+    "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/right_hip_roll_identification_20261117/candidate_parameters.json": "30f7af8fd9c89412ca506521f26f144de5f192f4ac00c5ba0d081cda40d5a1e7",
+    "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_hip_yaw_identification_20261117/candidate_parameters.json": "342047529e2e52970613bf71eeb4ea0389aec2425a8e21624625bd52b5a5ad63",
+    "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/right_hip_yaw_scale01_T2_validation_20261120/validation_summary.json": "e2fafaf43c86d0219e19463f6edb384b2a32474e0d82e500eca4ba02d6575d07",
+    "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/knees_scale03_T2_validation_20261120/summary.json": "f7c1ff28cf998a98f74d851c5ac953f2a4f4b9017b863a382ee3e53e04804717",
+    "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_ankle_pitch_T2_validation_20261117/validation_summary.json": "0ee9638cc331ff34726f445c3e385caf70434494d77c53653973ccb78ea9a1e3",
+    "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_ankle_roll_scale03_T2_validation_20261120/summary.json": "4e2397456d08303260783d64d49da4a323ce481aba6f6e6d1cc98b11a8fc4302",
+    "/home/coder/zoyi/ros2/robot_calibration_ros/analysis/left_ankle_roll_identification_20261118/candidate_parameters.json": "6c573cbfab5dc165f596ece41465538c919c9d781bc5df5435bf5b7e4d5e73fb"
+  }
+}

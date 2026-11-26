@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-23",
+  "status": "implementation_verified_nine_hour_queues_not_launched",
+  "formal_results": false,
+  "response_test_arrays_accessed": false,
+  "unit_tests": {
+    "new_queue": 6,
+    "reused_online_helpers": 9,
+    "deadline_disk_process_helpers": 19,
+    "total_passed": 34
+  },
+  "gpu_smoke": {
+    "smoke_only": true,
+    "formal_results": false,
+    "training": [
+      {
+        "condition": "baseline",
+        "group": "A+",
+        "verified": true,
+        "updates": 6,
+        "env_steps": 632
+      },
+      {
+        "condition": "baseline",
+        "group": "B",
+        "verified": true,
+        "updates": 6,
+        "env_steps": 632
+      },
+      {
+        "condition": "short_actor",
+        "group": "A+",
+        "verified": true,
+        "updates": 6,
+        "env_steps": 632
+      },
+      {
+        "condition": "short_actor",
+        "group": "B",
+        "verified": true,
+        "updates": 6,
+        "env_steps": 632
+      },
+      {
+        "condition": "long_world",
+        "group": "A+",
+        "verified": true,
+        "updates": 6,
+        "env_steps": 632
+      },
+      {
+        "condition": "long_world",
+        "group": "B",
+        "verified": true,
+        "updates": 6,
+        "env_steps": 632
+      }
+    ],
+    "backend": [
+      {
+        "profile": "graph_batch",
+        "blocks": 2,
+        "status": "completed",
+        "screen_passed": false
+      },
+      {
+        "profile": "eager_batch",
+        "blocks": 2,
+        "status": "completed",
+        "screen_passed": false
+      },
+      {
+        "profile": "eager_single",
+        "blocks": 2,
+        "status": "completed",
+        "screen_passed": false
+      }
+    ],
+    "gradient": [
+      {
+        "group": "A+",
+        "blocks": 2,
+        "all_finite": true
+      },
+      {
+        "group": "B",
+        "blocks": 2,
+        "all_finite": true
+      }
+    ],
+    "status": "completed",
+    "initial_actor_critic_matched": true
+  },
+  "full_shape_smoke": {
+    "status": "completed",
+    "smoke_only": true,
+    "formal_results": false,
+    "gpu": "RTX3090",
+    "iterations": 2,
+    "full_training_shapes": true,
+    "horizon": 32,
+    "wm_window": 32,
+    "env_steps": 70656
+  },
+  "full_shape_model_archive_sha256": "dee391d6e768c00d1f4c82453b401056ef36cb49e5415f750a1aa293ad867611",
+  "profiles_identical_inputs_checked_blocks": 2,
+  "full_protocol_freeze_reproduced": true,
+  "historical_source_assets_data_hashes_unchanged": true,
+  "all_three_machine_dry_runs_passed": true,
+  "wrong_gpu_rejected_with_status_and_review": true,
+  "shell_syntax_passed": true,
+  "git_diff_check_passed": true,
+  "files": {
+    "tools/ral_nine_hour.py": "79af5e06ff95f50a605784c711b3e19df7827a7e3ac5b11bd6ac88e799832fc9",
+    "tools/ral_prior_diagnose.py": "6d935a4ae15ccccaa34bab0d5d2561909fd0129bbfa3d8adb27dde1ab42c779f",
+    "tools/ral_gradient_diagnose.py": "968a931c937a75603eeff92b041b2fee7fd16f1a1731551853f5ad726bcee11f",
+    "tools/ral_backend_diagnose.py": "042acdcded48cd5f5345a6b9123622f5d7d4adfa5f871490f0ebfb7c24daaa82",
+    "configs/ral/diagnose_nine_hour_v1.json": "7ed2d4d99cc81c4d6c1d272edbd777f13fa580fbee410a061c3c3b6166a4b42e",
+    "release/ral/diagnose_nine_hour_protocol_v1.json": "04c5cbeddbe1ca48425e1d7c54d13d24fc475915f5e1e5305a385962f53ad943"
+  },
+  "limitations": [
+    "GPU integration was run on the local RTX3090; the 4090/5080 nine-hour experiments remain to be launched on their own machines.",
+    "Six small networks used six updates each; one full-shape B/WM32 model used two updates. These validate execution, not scientific performance.",
+    "All three small backend samples still failed the original physics screen. No claim that the backend problem is repaired.",
+    "Historical 5000-update weights remain absent locally; the optional original-machine prelude will verify them if present."
+  ]
+}

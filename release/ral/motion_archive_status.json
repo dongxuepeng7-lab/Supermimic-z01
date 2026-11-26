@@ -1,0 +1,1150 @@
+{
+  "archive_sha256": "e558084fc0a7db195cc0fd7285b0ea530792611fd74f3c1a6a9ce6f948446bf2",
+  "files": 163,
+  "actual_npz": 0,
+  "missing_link_targets": [
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject2__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject1__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject1__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject2__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject2__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject2__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject4__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject5__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject5__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp1_subject4__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp1_subject5__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject2__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg006.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg007.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject3__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject3__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject3__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject3__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject3__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject1__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject1__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject1__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject1__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject1__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject4__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject1__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg006.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg007.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg006.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg007.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject2__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject2__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject2__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject2__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject5__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject5__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject5__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject1__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject1__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject1__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject1__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject1__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg006.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg007.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg008.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg009.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg010.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg006.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg007.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg008.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg009.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg010.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject1__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject1__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject1__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg006.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject1__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject1__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject1__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject1__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject1__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject3__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject3__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject3__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject3__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject4__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject4__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject4__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject4__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg005.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg006.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg007.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject2__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject2__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject2__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject2__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject2__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject3__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject3__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject4__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject4__seg001.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject4__seg002.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject4__seg003.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject4__seg004.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject5__seg000.npz",
+    "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk4_subject1__seg000.npz"
+  ],
+  "records": [
+    {
+      "name": "z01_lafan_v2_clean/dance1_subject2__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject2__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance1_subject3__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance1_subject3__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg001.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance1_subject3__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg002.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance1_subject3__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg003.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance1_subject3__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg004.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance1_subject3__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance1_subject3__seg005.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject1__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject1__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject1__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject1__seg001.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject2__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject2__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject2__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject2__seg001.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject2__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject2__seg002.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject3__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject3__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg001.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject3__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg002.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject3__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg003.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject3__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg004.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject3__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject3__seg005.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject4__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject4__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject5__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject5__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/dance2_subject5__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/dance2_subject5__seg001.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fallAndGetUp1_subject4__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp1_subject4__seg000.npz",
+      "bytes": 99
+    },
+    {
+      "name": "z01_lafan_v2_clean/fallAndGetUp1_subject5__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp1_subject5__seg000.npz",
+      "bytes": 99
+    },
+    {
+      "name": "z01_lafan_v2_clean/fallAndGetUp2_subject2__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject2__seg000.npz",
+      "bytes": 99
+    },
+    {
+      "name": "z01_lafan_v2_clean/fallAndGetUp2_subject3__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg000.npz",
+      "bytes": 99
+    },
+    {
+      "name": "z01_lafan_v2_clean/fallAndGetUp2_subject3__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg001.npz",
+      "bytes": 99
+    },
+    {
+      "name": "z01_lafan_v2_clean/fallAndGetUp2_subject3__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg002.npz",
+      "bytes": 99
+    },
+    {
+      "name": "z01_lafan_v2_clean/fallAndGetUp2_subject3__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg003.npz",
+      "bytes": 99
+    },
+    {
+      "name": "z01_lafan_v2_clean/fallAndGetUp2_subject3__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg004.npz",
+      "bytes": 99
+    },
+    {
+      "name": "z01_lafan_v2_clean/fallAndGetUp2_subject3__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fallAndGetUp2_subject3__seg005.npz",
+      "bytes": 99
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject2__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject2__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg001.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject2__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg002.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject2__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg003.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject2__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg004.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject2__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg005.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject2__seg006.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg006.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject2__seg007.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject2__seg007.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject3__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject3__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject3__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject3__seg001.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject3__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject3__seg002.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject3__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject3__seg003.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject3__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject3__seg004.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject5__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject5__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg001.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject5__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg002.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject5__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg003.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject5__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg004.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fight1_subject5__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fight1_subject5__seg005.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/fightAndSports1_subject1__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject1__seg000.npz",
+      "bytes": 101
+    },
+    {
+      "name": "z01_lafan_v2_clean/fightAndSports1_subject1__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject1__seg001.npz",
+      "bytes": 101
+    },
+    {
+      "name": "z01_lafan_v2_clean/fightAndSports1_subject1__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject1__seg002.npz",
+      "bytes": 101
+    },
+    {
+      "name": "z01_lafan_v2_clean/fightAndSports1_subject1__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject1__seg003.npz",
+      "bytes": 101
+    },
+    {
+      "name": "z01_lafan_v2_clean/fightAndSports1_subject1__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject1__seg004.npz",
+      "bytes": 101
+    },
+    {
+      "name": "z01_lafan_v2_clean/fightAndSports1_subject4__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/fightAndSports1_subject4__seg000.npz",
+      "bytes": 101
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject1__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject1__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject2__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject2__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg001.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject2__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg002.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject2__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg003.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject2__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg004.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject2__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg005.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject2__seg006.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg006.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject2__seg007.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject2__seg007.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject5__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg000.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject5__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg001.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject5__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg002.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject5__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg003.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject5__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg004.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject5__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg005.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject5__seg006.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg006.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/jumps1_subject5__seg007.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/jumps1_subject5__seg007.npz",
+      "bytes": 92
+    },
+    {
+      "name": "z01_lafan_v2_clean/run1_subject2__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject2__seg000.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run1_subject2__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject2__seg001.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run1_subject2__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject2__seg002.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run1_subject2__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject2__seg003.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run1_subject5__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject5__seg000.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run1_subject5__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject5__seg001.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run1_subject5__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run1_subject5__seg002.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject1__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject1__seg000.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject1__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject1__seg001.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject1__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject1__seg002.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject1__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject1__seg003.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject1__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject1__seg004.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject4__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg000.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject4__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg001.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject4__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg002.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject4__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg003.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject4__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg004.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/run2_subject4__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/run2_subject4__seg005.npz",
+      "bytes": 90
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg000.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg001.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg002.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg003.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg004.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg005.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg006.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg006.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg007.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg007.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg008.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg008.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg009.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg009.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject2__seg010.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject2__seg010.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg000.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg001.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg002.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg003.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg004.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg005.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg006.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg006.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg007.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg007.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg008.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg008.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg009.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg009.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/sprint1_subject4__seg010.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/sprint1_subject4__seg010.npz",
+      "bytes": 93
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject1__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject1__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject1__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject1__seg001.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject1__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject1__seg002.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject2__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject2__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg001.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject2__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg002.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject2__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg003.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject2__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg004.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject2__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject2__seg005.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject5__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject5__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg001.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject5__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg002.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject5__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg003.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject5__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg004.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject5__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg005.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk1_subject5__seg006.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk1_subject5__seg006.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject1__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject1__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject1__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject1__seg001.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject1__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject1__seg002.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject1__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject1__seg003.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject1__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject1__seg004.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject3__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject3__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject3__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject3__seg001.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject3__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject3__seg002.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject3__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject3__seg003.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject4__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject4__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject4__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject4__seg001.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject4__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject4__seg002.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk2_subject4__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk2_subject4__seg003.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject1__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject1__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg001.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject1__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg002.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject1__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg003.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject1__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg004.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject1__seg005.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg005.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject1__seg006.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg006.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject1__seg007.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject1__seg007.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject2__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject2__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject2__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject2__seg001.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject2__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject2__seg002.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject2__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject2__seg003.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject2__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject2__seg004.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject3__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject3__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject3__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject3__seg001.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject4__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject4__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject4__seg001.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject4__seg001.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject4__seg002.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject4__seg002.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject4__seg003.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject4__seg003.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject4__seg004.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject4__seg004.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk3_subject5__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk3_subject5__seg000.npz",
+      "bytes": 91
+    },
+    {
+      "name": "z01_lafan_v2_clean/walk4_subject1__seg000.npz",
+      "is_symlink": true,
+      "target": "/home/zoyi/project/PartyMimic/data/motions/z01_lafan_v2/segments/walk4_subject1__seg000.npz",
+      "bytes": 91
+    }
+  ]
+}

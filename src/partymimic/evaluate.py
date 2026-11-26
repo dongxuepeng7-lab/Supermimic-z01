@@ -33,6 +33,8 @@ parser.add_argument("--dr_parts", type=str, default="all", choices=["all", "dyna
                     help="with --dr_from: take only its simulator randomization or only its sensing")
 parser.add_argument("--repeats", type=int, default=1, help="rollouts per clip")
 parser.add_argument("--seed", type=int, default=0)
+parser.add_argument("--parameter_manifest", default=None, help="shared RA-L evaluation plant, independent of training group")
+parser.add_argument("--plant", choices=("nominal", "identified"), default="nominal")
 parser.add_argument("--out", type=str, default=None, help="with --ckpt: write the full result (per-clip values too) here")
 args = parser.parse_args()
 
@@ -79,6 +81,11 @@ torch.backends.cuda.matmul.allow_tf32 = True
 torch.manual_seed(args.seed)
 dev = "cuda:0"
 robot = get_robot(args.robot)
+if args.parameter_manifest:
+    from partymimic.experiments.parameters import parameterized_robot
+    robot = parameterized_robot(robot, args.parameter_manifest, args.plant)
+elif args.plant != "nominal":
+    raise ValueError("Identified evaluation requires --parameter_manifest")
 if args.dr_from:
     robot = transfer_dr(robot, robot if args.dr_from == "self" else get_robot(args.dr_from), args.dr_parts)
     print("pd_gain_scale on this robot:", robot.dr.pd_gain_scale)
@@ -111,6 +118,9 @@ def evaluate(env: TrackingSim, ck: dict, record: str | None = None) -> dict:
     clip_end = motion.clip_end[clip_of]
     ret = torch.zeros(N, device=dev)
     steps = torch.zeros(N, device=dev)
+    q_sse, v_sse = torch.zeros(N, device=dev), torch.zeros(N, device=dev)
+    q_count, v_count = torch.zeros(N, device=dev), torch.zeros(N, device=dev)
+    invalid_steps = torch.zeros(N, device=dev)
     hist = None
     traj = {"root_p": [], "root_quat": [], "q": [], "f": [], "alive": []}
     while not bool(env.done_eval.all()):
@@ -125,6 +135,18 @@ def evaluate(env: TrackingSim, ck: dict, record: str | None = None) -> dict:
             traj["root_p"].append(S[0].cpu()), traj["root_quat"].append(mat_to_quat(S[1]).cpu())
             traj["q"].append(S[4].cpu()), traj["f"].append(env.f.cpu()), traj["alive"].append(alive.cpu())
         out = env.step(a)
+        observed = env.state()
+        reference = motion.ref_state(env.f.clamp(max=motion.num_frames-1))
+        eq, ev = observed[4]-reference[4], observed[2]-reference[2]
+        finite = torch.isfinite(eq).all(-1) & torch.isfinite(ev).all(-1)
+        valid = alive & finite
+        q_sse += torch.where(valid, eq.square().sum(-1), 0.)
+        v_sse += torch.where(valid, ev.square().sum(-1), 0.)
+        q_count += valid.float()*robot.num_joints
+        v_count += valid.float()*3
+        invalid_steps += (alive & ~finite).float()
+        env.failed_eval |= alive & ~finite
+        env.done_eval |= alive & ~finite
         ret += torch.where(alive, out["r"], 0.0)
         steps += alive.float()
         env.f = torch.minimum(env.f, clip_end - 1)  # finished clips keep stepping; keep f+1 in range
@@ -133,6 +155,8 @@ def evaluate(env: TrackingSim, ck: dict, record: str | None = None) -> dict:
     norm_c = norm.view(args.repeats, C).mean(0)
     fail_c = env.failed_eval.view(args.repeats, C).float().mean(0)
     res = {
+        "plant": args.plant,
+        "parameter_manifest": args.parameter_manifest,
         "norm_return": norm.mean().item(),
         "norm_return_framew": (ret.sum() / ((clip_len - 1).sum() * MAX_STEP_REWARD)).item(),
         "n_failed": int(env.failed_eval.sum().item()),
@@ -144,6 +168,16 @@ def evaluate(env: TrackingSim, ck: dict, record: str | None = None) -> dict:
         "per_clip_progress": dict(zip(motion.names, (steps / (clip_len - 1).float()).clamp(max=1).view(args.repeats, C)
                                       .mean(0).round(decimals=3).tolist())),
     }
+    res["episodes"] = [dict(motion_id=motion.names[i%C], repeat=i//C, eval_seed=args.seed,
+        complete=int(not env.failed_eval[i]), termination_reason="nonfinite" if invalid_steps[i]>0 else
+            ("tracking_termination" if env.failed_eval[i] else "reference_complete"),
+        planned_s=float((clip_len[i]-1)*.02), valid_s=float(steps[i]*.02),
+        q_sqerr_sum_rad2=float(q_sse[i]),q_valid_count=int(q_count[i]),
+        q_rmse_rad=float((q_sse[i]/q_count[i]).sqrt()) if q_count[i]>0 else None,
+        v_sqerr_sum=float(v_sse[i]),v_valid_count=int(v_count[i]),
+        v_rmse_m_s=float((v_sse[i]/v_count[i]).sqrt()) if v_count[i]>0 else None,
+        velocity_definition="root origin linear velocity; world XYZ; per-component RMSE",
+        nonfinite_steps=int(invalid_steps[i])) for i in range(N)]
     if record:
         np.savez_compressed(record, names=np.array(motion.names), **{k: torch.stack(v).numpy() for k, v in traj.items()},
                             ref_root_p=motion.root_p.cpu().numpy(), ref_root_R=motion.root_R.cpu().numpy(), ref_q=motion.q.cpu().numpy(),

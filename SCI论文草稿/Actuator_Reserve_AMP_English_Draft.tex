@@ -1,0 +1,299 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,booktabs,longtable,array,graphicx,xcolor}
+\usepackage[colorlinks=true,urlcolor=blue,citecolor=black,linkcolor=black]{hyperref}
+\usepackage{microtype}
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+\newcommand{\pending}[1]{\textbf{[PENDING #1]}}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\sigmoid}{\operatorname{sigmoid}}
+\newcommand{\TBC}{\textit{To measure}}
+\title{Actuator Reserve Gating of Adversarial Motion Priors for Humanoid Locomotion with Calibrated Actuation}
+\author{\pending{M1: author list, affiliations and corresponding author}}
+\date{Research manuscript draft \quad 4 November 2026}
+\begin{document}
+\maketitle
+\textbf{Evidence status.} The method below is a proposed extension of two accepted studies. Joint-method experiments have not been supplied or performed for this draft. All new empirical outcomes remain explicitly pending; reported outcomes from the accepted studies are not reused as results of the proposed method.
+
+\begin{abstract}
+Motion priors can improve the coordination of humanoid locomotion, but their style rewards need not reflect the torque reserve available under actuator uncertainty. A gait that appears acceptable in contact geometry may still approach actuator saturation, especially when transmission losses and tracking transients differ between simulation and hardware. We propose actuator reserve gating of adversarial motion priors within a calibrated sim-to-real training pipeline. Current-consistent actuator identification establishes a nominal loss model, while bounded residual torque injection exposes the policy to unmodeled actuation effects. During training, a phase-conditioned discriminator provides the motion-style reward. Its contribution is modulated by both a contact reserve proxy and a normalized actuator reserve computed before saturation after subtracting a held-out residual budget. The deployed policy uses proprioceptive history and the same joint-target interface; contact quantities, discriminator outputs, and the residual generator are confined to training. The central hypothesis is that coupling style supervision to uncertainty-adjusted actuation reserve improves the robustness--naturalness tradeoff relative to calibrated residual training, contact-only gating, and their direct combination. A matched-platform evaluation is specified to test this hypothesis through component ablations, actuator and latency shifts, independent motion-quality measures, and repeated hardware trials. \pending{R1: insert the primary measured effect, confidence interval and limitations after the joint-method evaluation.} No empirical superiority of the proposed coupling is claimed at this stage.
+\end{abstract}
+\textbf{Keywords:} humanoid locomotion; adversarial motion prior; actuator reserve; sim-to-real transfer; system identification; residual torque injection.
+
+\section{Introduction}
+Humanoid locomotion places simultaneous demands on balance, command tracking, and coordinated motion. Reinforcement learning can produce deployable feedback policies from simulated experience, as demonstrated by real-world humanoid locomotion research \cite{realworld}. Motion priors address a complementary issue: task rewards alone do not specify the coordination that makes a gait resemble a reference distribution. Adversarial Motion Priors (AMP) learn a style signal from reference transitions without prescribing a single trajectory to track \cite{amp}. Generative Motion Prior and terrain-conditioned extensions provide alternative ways to structure motion supervision \cite{gmp,tgmp}.
+
+These objectives interact through the actuators. A motion transition can receive a favorable style score while requiring a joint torque close to its available limit. Contact geometry may remain acceptable during that transition, yet insufficient actuation reserve can prevent recovery from a subsequent disturbance. Transmission losses, current saturation, bandwidth, and latency further change the torque that is available on hardware. Thus, a contact-based style gate and an actuator-robust training distribution address different parts of the same problem.
+
+Two accepted studies motivate the present extension. The first introduces stability-gated AMP with phase conditioning and an adaptive style weight, evaluated on a simulated biped \cite{priorSG}. The second combines actuator identification, identification-centered domain randomization (DR), and training-time Residual Torque Injection (RTI) for a full-size humanoid \cite{priorRTI}. Their results establish separate methodological starting points. They do not establish that combining the modules improves performance, because they concern different robot configurations, training interfaces, and evaluation conditions.
+
+We therefore formulate a narrower question: does making style supervision explicitly depend on uncertainty-adjusted actuator reserve improve locomotion beyond simply combining contact gating and calibrated residual training? Our proposed gate uses the nominal torque request before saturation and a held-out residual budget in the same torque channel. It reduces the style contribution when little torque headroom remains. This is a training objective design, not a projection of the action into a certified safe set.
+
+The intended contributions are as follows. First, we formulate a normalized reserve gate that connects a physically calibrated actuator uncertainty budget to phase-conditioned style supervision. Second, we specify an interface that confines contact-based reward signals and residual perturbations to training while preserving a proprioceptive deployment policy. Third, we define matched comparisons that separate the proposed coupling from contact-only gating, ordinary torque penalties, and a generally smaller style weight. The first two are methodological proposals; the third requires new empirical evidence. We make no priority claim that torque margins, stability-aware imitation, or actuator modeling are new in themselves.
+
+\section{Related Work}
+\subsection{Motion priors and structured supervision}
+AMP learns a discriminator-based style reward from reference transitions \cite{amp}. Periodic reward composition demonstrates that gait structure can also be encoded through phase-dependent objectives \cite{periodic}. GMP instead uses a generative model to provide trajectory-level supervision \cite{gmp}. T-GMP conditions a motion manifold on terrain and introduces terrain-sensitive supervision \cite{tgmp}. These approaches motivate comparison against motion-quality measures that are independent of the discriminator used for training. A higher discriminator score alone cannot establish that one gait is more natural.
+
+The accepted SG-AMP study conditions its discriminator on gait phase and scales the style reward using a contact-related margin \cite{priorSG}. We retain those ideas as inherited components. We revise the interpretation of the contact quantity: a force-weighted point within the convex hull of the same contacts is a contact reserve proxy, not a general dynamic stability certificate. In particular, a nonnegative weighted average cannot leave that convex hull under consistent geometry.
+
+\subsection{Actuator modeling and transfer robustness}
+Parallel simulation and domain randomization can make policy learning practical \cite{rudin,isaacgym}. Their effectiveness nevertheless depends on whether the simulated actuation and contact distributions represent relevant hardware conditions. The accepted calibration study separates identifiable friction and damping from residual actuation uncertainty \cite{priorRTI}. Its RTI mechanism samples bounded state-dependent disturbances; it does not train a deployment-time compensation network.
+
+Robust Adversarial Reinforcement Learning uses a learned destabilizing adversary \cite{rarl}. Our episode-randomized RTI generator is different: it is a fixed random field within each episode, rather than an optimized opponent. The distinction matters because a bounded random field does not establish worst-case robustness. Simulator disagreement is also retained as an evaluation question rather than assumed away by a shared robot description \cite{mujoco}.
+
+\subsection{Recent control and actuator learning}
+Recent work expands both whole-body tracking and actuator-aware transfer. Contact-UAN studies contact-consistent residual actuator world models from proprioceptive signals \cite{contactuan}. This is a close modeling comparison: the proposed gate does not identify a richer residual world model, but changes when motion-style supervision is applied. State-dependent joint-torque perturbation injection is also an existing sim-to-real approach \cite{torqueperturb}; it must be distinguished from a newly proposed mechanism. Delay-randomization research explicitly studies latency tolerance in simulation \cite{delay}. Its relevance here is that delay must be measured in physical time and evaluated separately from friction or torque uncertainty.
+
+CompliantBot downweights task rewards under external loading and restores them after release \cite{compliantbot}. Our proposal instead schedules the motion-style term using a calibrated residual budget and nominal torque headroom. This is a difference in conditioning signal and objective, not evidence of superiority. DAMP combines temporal latent-state inference and AMP \cite{damp}, so proprioceptive history with AMP is not a new contribution. Stability-aware retargeting already connects stability margins with joint torque margins \cite{retarget}. These studies rule out broad claims of being the first to combine physical constraints, reward adaptation, or motion priors. \pending{L1: complete implementation-level comparisons with the closest available code before making any novelty or performance claim.}
+
+The proposed contribution should therefore be assessed at the interface between actuator uncertainty and the imitation objective. A broader prior or a more accurate actuator model may improve performance without the reserve gate. Conversely, a successful reserve gate must outperform simple torque-aware reward shaping and contact-only gating on a matched setup.
+
+\subsection{Recent locomotion control and terrain perception}
+Recent torque-level and contact-aware methods provide complementary baselines for actuator reserve. Model-based supervision can guide a residual torque policy around a whole-body controller \cite{yanTorque2026}, while contact-stability analysis with a three-dimensional divergent component of motion addresses push recovery \cite{schullerDcm2026}. An alternative line uses reinforcement learning to adapt model predictive control on challenging terrain \cite{adaptiveMpc2026}. Adaptive Motion Priors with Constrained Optimization also changes the role of imitation during optimization \cite{ampco2026}; the reserve gate here is distinguished by conditioning the style term on current pre-saturation actuation demand and a calibrated uncertainty budget.
+
+Perceptive locomotion spans direct fusion of depth and proprioception, explicit geometry reconstruction, and terrain-conditioned gait regulation \cite{cref2026,dpl2026,gaitdepth2026}. Elevation-map encoders such as GLAD and AME-2 provide alternatives to direct depth fusion, with the latter covering both bipedal and quadrupedal systems \cite{glad2026,ame22026}. Visual traversal ranges from depth-policy distillation and terrain-aware parkour to explicit stair planning and separate low-level foothold tracking \cite{rawpixels2026,php2026,hiking2026,polygmap2026,mindsteps2026}. These works contextualize terrain and foothold experiments; their reported results cannot substitute for matched evaluation of the proposed actuator gate.
+
+Whole-body motion generation and tracking also offer routes to coordinated locomotion \cite{mgmt2026,beyondMimic2026,sonic2026}. Within predictive control, SuperMimic uses a differentiable learned model to update the policy on imagined trajectories \cite{supermimic2026}, whereas CAP uses a learned depth denoising objective to handle visual degradation \cite{cap2026}. The recent WM-LOCO and STEP preprints are closer comparators for a visual extension: WM-LOCO contributes action-conditioned predictive features to PPO, while STEP explicitly supervises action-dependent evolution of the fused policy representation \cite{wmloco2026,step2026}. These methods operate on different information and training objectives from the present reserve-gating study; the present draft does not evaluate a visual policy or an imagination-based optimizer.
+
+\section{Problem Formulation}
+\subsection{Policy interface and information separation}
+The robot has a floating base and $n$ actuated joints. Its generalized configuration is denoted by $q$, with actuated coordinates $q_a$. The dynamics are
+\begin{equation}
+ M(q)\ddot q+C(q,\dot q)\dot q+G(q)=S^\top\tau_{\mathrm{joint}}+J_c(q)^\top\lambda_c .
+\end{equation}
+The deployed actor receives a history $h_t=(o_{t-H+1},\ldots,o_t)$ of joint positions and velocities, base orientation and angular velocity, command velocity, and previous actions. It predicts joint-target offsets, $a_t\sim\pi_\theta(\cdot\mid h_t)$ and $q_t^{\mathrm{des}}=q^{\mathrm{nom}}+s_a a_t$. The action scale $s_a$, observation normalization, history length, and policy rate are frozen across comparisons. \pending{P1: confirm the target robot, exact actuator list, sensors, and controller interface.}
+
+Contact patch quantities, reference phase labels, calibrated uncertainty budgets, and RTI samples are available to the reward computation during training. They are not actor inputs. A privileged critic may be used if its input list is identical across all baselines and its role is documented. The phase-conditioned discriminator is also removed at deployment. No hardware contact sensor is required by this proposed actor interface.
+
+\subsection{Torque conventions and nominal calibration}
+For each joint $j$, driver current $i_j$ is mapped to a joint-output-equivalent electromagnetic torque by
+\begin{equation}
+ \tau_{\mathrm{eq},j}=K_{\tau,j}(i_j-i_{0,j}),\qquad K_{\tau,j}=\eta_j N_j k_{t,j}.
+\end{equation}
+Here $N_j$, $k_{t,j}$, and $\eta_j$ denote gear ratio, motor torque constant, and effective conversion efficiency. Their provenance and uncertainty must be recorded. Current conventions such as phase current, RMS current, or quadrature current must be established before this conversion is used. Efficiency is operating-regime dependent; treating it as constant is a local approximation.
+
+The nominal loss model is
+\begin{equation}
+ \ell_j(\dot q_j;\vartheta_j)=\tau_{c,j}\tanh(\dot q_j/v_{\epsilon,j})+B_j\dot q_j+\tau_{b,j}.
+\end{equation}
+The smoothing speed $v_{\epsilon,j}>0$ is a declared modeling setting, not an independently identified physical constant. Friction, damping, and bias are fitted using low-risk joint excitation and command replay. Gravity and inertial effort are accounted for by the replay model; simply subtracting friction from measured current would not isolate an actuator residual. Calibration, residual-budget selection, and final evaluation use disjoint trial sets, rather than random time samples from the same trajectory.
+
+The unsaturated PD request is $u^{\mathrm{raw}}_{j,t}=K_{p,j}(q^{\mathrm{des}}_{j,t}-q_{j,t})+K_{d,j}(\dot q^{\mathrm{des}}_{j,t}-\dot q_{j,t})$. Let $\tilde u_{j,t}=\mathcal H_j(u^{\mathrm{raw}}_{j,0:t})$ be the nominal request after the declared actuator bandwidth and delay model, before torque saturation. Simulation applies
+\begin{equation}
+ \tau_{\mathrm{joint},j,t}=\sat_{L_{j,t}}(\tilde u_{j,t}+\Delta\tau_{j,t})-\ell_j(\dot q_{j,t};\vartheta_j).
+ \label{eq:channel}
+\end{equation}
+The current-equivalent limit $L_{j,t}>0$ and $\Delta\tau$ use the same units and channel as $\tilde u$. A calibrated loss already implemented inside the simulator must not be subtracted a second time. The filter--delay--saturation order must reproduce the selected driver interface. \pending{P2: verify this ordering with driver documentation and hardware replay.}
+
+\section{Actuator Reserve Gating}
+\subsection{Residual budget and training perturbations}
+After calibration, the replay residual is $r_{j,t}=\tau^{\mathrm{hw}}_{\mathrm{eq},j,t}-\widehat\tau^{\mathrm{replay}}_{\mathrm{eq},j,t}$. Replay aligns the same signals, sign conventions, and timestamps. It includes the nominal controller, modeled mechanical effort, and identified losses. Identification quality is evaluated on withheld trials using torque and position errors, not inferred from one illustrative trace.
+
+A positive uncertainty budget is selected using the calibration-validation set:
+\begin{equation}
+ b_j=\min\{Q_{0.95}(|r_j|),\,b_j^{\mathrm{engineering}}\}.
+ \label{eq:budget}
+\end{equation}
+The engineering cap is platform specific and must be stated in N\,m. It is not copied unchanged from another robot. Because a minimum can shrink the 95th-percentile envelope, Eq.~\eqref{eq:budget} does not imply 95\% residual coverage. We report the actual exceedance fraction, amplitude quantiles, and residual spectra on separate test logs. Nor does a pointwise quantile imply a trajectory-wise maximum bound.
+
+RTI applies the bounded perturbation
+\begin{equation}
+ \Delta\tau_{j,t}=b_j\tanh f_{W,j}(z_t),\quad W\sim P_W\text{ once per episode},
+\end{equation}
+where $z_t$ contains normalized tracking errors, velocities, and previous actions. The generator architecture, weight distribution, input scaling, random seed, and any filtering are part of the released configuration. DR samples actuator and environmental parameters around the calibrated nominal center. These inherited robustness modules are held fixed when testing the new reward coupling.
+
+\subsection{Contact reserve as a training proxy}
+For a verified planar support condition, contact patch forces $f_{z,k}\geq0$ and planar coordinates $p_k$ define
+\begin{equation}
+ p_c=\frac{\sum_k f_{z,k}p_k}{\sum_k f_{z,k}},\qquad
+ m_c=\min_e d_{\mathrm{in}}(p_c,e),\quad \mathcal P=\operatorname{conv}\{p_k\}.
+\end{equation}
+The inward distance is taken to supporting lines of the convex polygon with consistent edge orientation. Only contacts above a declared noise threshold are included. Under this definition $p_c\in\mathcal P$ and $m_c\geq0$. The margin indicates concentration near a contact boundary; it does not prove resistance to falling, slipping, or momentum-driven instability.
+
+The contact gate is $g_{c,t}=\sigmoid((m_{c,t}-m_0)/\kappa_m)$, with $\kappa_m>0$. It is set to zero when the support set has no valid area or total normal force is too small. A valid contact wrench can alternatively locate CoP through its moment balance, after coordinate transformation. A per-foot net force and a foot rectangle alone cannot determine the foot's internal CoP; such a reconstruction must be named a proxy and evaluated as a separate variant. Nonplanar terrain requires an explicit projection convention and is outside the main planar-margin claim. \pending{P3: verify patch/wrench access in the selected training backend before enabling this gate.}
+
+\subsection{Uncertainty adjusted actuator reserve}
+Define normalized reserve for joint $j$ and its limiting value across actuators:
+\begin{equation}
+ h_{j,t}=\frac{L_{j,t}-|\tilde u_{j,t}|-b_j}{L_{j,t}},\qquad
+ h_t=\min_{j\in\mathcal J}h_{j,t}.
+ \label{eq:reserve}
+\end{equation}
+The set $\mathcal J$ is fixed before evaluation and includes all actively controlled locomotion joints. Computing the reserve from a saturated command would conceal the severity of requests beyond the limit, so Eq.~\eqref{eq:reserve} uses the pre-saturation value. Where a validated torque--speed or thermal envelope is unavailable, $L_j$ is a conservative declared operating limit; it is not presented as an exact online estimate of available torque.
+
+The actuator gate and combined gate are
+\begin{equation}
+ g_{a,t}=\sigmoid((h_t-h_0)/\kappa_h),\qquad g_t=g_{c,t}g_{a,t},
+ \label{eq:gate}
+\end{equation}
+where $h_0$ and $\kappa_h>0$ are dimensionless. A near-limit joint can reduce the style contribution even if the contact proxy remains favorable. The minimum is conservative and can be dominated by one noisy joint; soft-min pooling and removal of the residual budget are explicit ablations.
+
+For a single channel, if $|\Delta\tau_{j,t}|\leq b_j$ and $|\tilde u_{j,t}|+b_j\leq L_{j,t}$, then
+\begin{equation}
+ |\tilde u_{j,t}+\Delta\tau_{j,t}|\leq |\tilde u_{j,t}|+b_j\leq L_{j,t}.
+\end{equation}
+This elementary inequality explains the reserve interpretation. It is conditional on the chosen channel, actuator envelope, and perturbation budget. The reward gate does not enforce the premise, account for every hardware residual, or certify closed-loop stability.
+
+\subsection{Phase conditioned motion supervision}
+The discriminator receives transition features $x_t,x_{t+1}$ and phase $c_t=(\cos\phi_t,\sin\phi_t)$. These features are distinct from the actor history. A commanded-frequency clock advances phase and is aligned using debounced simulated stance-onset events. Reference transitions use the same phase convention, left/right assignments, and contact-labeling rule. Phase is reset to declared left/right targets with a refractory interval; its frequency is not inferred from an unavailable hardware sensor.
+
+We use a least-squares discriminator objective and bounded style reward:
+\begin{align}
+ \mathcal L_D={}&\tfrac12\mathbb E_{\mathcal M}(D_\psi(x_t,x_{t+1},c_t)-1)^2
+ +\tfrac12\mathbb E_{\pi}(D_\psi(x_t,x_{t+1},c_t)+1)^2+\lambda_{gp}\mathcal L_{gp},\\
+ r^{\mathrm{AMP}}_t={}&\max\{0,1-\tfrac14(D_\psi(x_t,x_{t+1},c_t)-1)^2\}.
+\end{align}
+The gradient penalty $\mathcal L_{gp}$, feature normalization, and reference sampling distribution must be specified identically across AMP comparisons. A phase-only discriminator is a shortcut: phase histograms are therefore balanced, and held-out phase-stratified diagnostics are reported.
+
+The slow gate state and total reward are
+\begin{align}
+ \bar g_t&=(1-\alpha)\bar g_{t-1}+\alpha g_t,\qquad \alpha=1-\exp(-\Delta t_{\pi}/T_g),\\
+ r_t&=r^{\mathrm{task}}_t+\lambda_{\max}\bar g_t g_t r^{\mathrm{AMP}}_t.
+ \label{eq:reward}
+\end{align}
+Using a time constant $T_g$ avoids silently changing the curriculum when the policy frequency changes. The gate state is reset per environment and episode. Task terms include command tracking, non-fall continuation, and declared joint/action regularizers. Their coefficients remain fixed across comparisons. Gating can encourage an overly conservative gait or avoidance of imitation; command adherence and an independent motion metric are therefore co-primary checks of usefulness.
+
+\subsection{Training and deployment procedure}
+\begin{enumerate}
+\item Collect low-risk identification trials. Partition trials into fitting, budget-selection, and final replay-test sets. Estimate nominal actuation and record a versioned parameter manifest.
+\item Export matching joint order, loss parameters, torque limits, gains, action scaling, delay model, and control periods to training and replay simulators. Verify command replay without assuming identical numerical dynamics.
+\item Retarget and split reference motions by source clip. Check joint limits, collision, contact labels, and phase consistency. Reserve held-out clips for independent motion evaluation.
+\item At each training episode sample DR parameters and RTI weights. At each policy step compute the actor action, pre-saturation torque request, contact reserve, actuator reserve, and reward in Eq.~\eqref{eq:reward}.
+\item Update the discriminator and the policy using the same PPO implementation, interaction budget, and checkpoint-selection rule across configurations \cite{ppo}. Select checkpoints on validation scenarios only.
+\item Remove RTI, reward gates, discriminator, and any privileged critic. Deploy the frozen actor through the verified joint-target/PD interface after staged checks. Log command timing, current, IMU, interventions, and all failed trials.
+\end{enumerate}
+
+\section{Experimental Design}
+\subsection{Platform and reproducibility settings}
+The intended primary platform is the ZOYI Z01 configuration used for actuator calibration in the accepted study \cite{priorRTI}. Its exact hardware revision and controlled joint list remain to be confirmed. The 12-DoF simulated biped from SG-AMP is not treated as an equivalent robot. If included, it forms a separately labeled transfer study with its own retargeting and limits. \pending{P4: hardware revision, lower-body joint count, mass, sole dimensions, URDF hash and calibration log identifiers.}
+
+All main comparisons use one robot model, one reference dataset, one training backend and an unchanged actor interface. The previous projects use different Isaac software stacks; this draft does not mix their results. \pending{P5: simulator versions, solver settings, physics step, policy decimation, driver loop rate, network widths, PPO settings, reward coefficients and computing hardware.} A 5\,ms interval is 200\,Hz; 50\,Hz would require a 20\,ms policy interval or explicit four-step decimation. Delay is reported in milliseconds alongside steps. Candidate values are validation settings, not measured hardware facts.
+
+\subsection{Matched comparisons}
+\begin{table}[ht]
+\centering\small
+\caption{Required comparisons on the same platform. Calibrated DR is used in every row; inherited modules must be reimplemented and reevaluated.}
+\begin{tabular}{p{9mm}p{88mm}p{37mm}}
+\toprule ID & Configuration & Purpose\\\midrule
+C0 & Task-only PPO without RTI & Calibrated task baseline\\
+C1 & Task-only PPO with RTI & Accepted actuation pipeline\\
+C2 & Phase AMP with contact gate, without RTI & Motion-prior baseline\\
+C3 & C2 with RTI & Direct combination of accepted components\\
+C4 & C3 with ordinary normalized torque-limit penalty & Reward-shaping control\\
+C5 & C3 with torque-reserve gate using $b_j=0$ in the gate only & Value of residual budget\\
+C6 & C3 with smaller constant style coefficient & Effect of less imitation\\
+C7 & Full proposed uncertainty-adjusted reserve gate & Proposed coupling\\\bottomrule
+\end{tabular}
+\end{table}
+C7 versus C3 is the primary comparison. C4's penalty coefficient and C6's style coefficient receive the same validation budget as C7's gate settings. C5 retains the same RTI amplitude as C7; only the budget subtraction inside the gate is removed. Additional ablations remove phase conditioning or the slow gate state, replace RTI with amplitude-matched random noise, and compare minimum pooling with soft-min pooling. A no-calibration variant is confined to simulation if it fails screening.
+
+\subsection{Simulation and hardware protocols}
+The minimum proposed simulation study uses five independently trained seeds per main configuration. Evaluation scenarios are shared across policies, with disjoint validation and test seeds. Five seeds are an initial resource plan, not a power guarantee. \pending{E1: set training interactions and episode count before comparing test results; expand seed count if precision is insufficient.}
+
+Nominal tests cover forward command tracking and start/stop transitions. Disturbance tests apply phase-randomized torso impulses with specified force, duration, direction, and point of application. Actuator-shift tests vary calibrated losses and bandwidth within declared envelopes. Latency tests use measured nominal delays plus specified additional delays in milliseconds. Rough-surface testing is a secondary scope check; its contact-margin projection must be stated. No undefined ``push strength times three'' is used. \pending{E2: freeze numerical ranges, trial duration, termination rules and scene files.}
+
+Hardware validation proceeds from replay and supported checks to untethered tests within the platform's operating limits. At minimum, C1, C3, and C7 must be compared if the central claim concerns real transfer. Plan an initial ten independent trials per eligible configuration, with randomized or blocked method order, battery and temperature logging, and a fixed command profile. The count is revisited using pilot precision, without changing the primary contrast after seeing results. Unsafe methods are marked as not deployed, not silently excluded from the record. \pending{E3: define operating limits and execute the new repeated hardware trials.}
+
+\subsection{Metrics and statistical analysis}
+The primary outcome is completion without falling or human intervention over the full prescribed trial. Report exact counts and Wilson intervals; zero observed falls is not proof of zero fall probability. Failed trials contribute to success and time-to-failure analysis. Tracking metrics restricted to completed windows are explicitly conditional on completion, with complete and attempted sample counts both reported. This prevents a weak policy from looking accurate merely because its difficult trials were discarded.
+
+For $N$ samples, joint RMSE is $\sqrt{\sum_{j,t}(q^{\mathrm{des}}_{j,t}-q_{j,t})^2/(nN)}$; command tracking is reported separately using estimated base velocity. Pitch RMS is $\sqrt{\sum_t\theta_t^2/N}$, pitch peak is $\max_t|\theta_t|$, and pitch variance removes the sample mean. Peak current is computed per trial before cross-trial aggregation. If voltage and power are not measured, reduced current is not called improved energy efficiency.
+
+Actuator metrics include the pre-saturation exceedance fraction, actual saturation fraction after RTI, the distribution of $h_t$, and the fraction of residual-test samples exceeding $b_j$. Use the nominal pre-saturation request to expose excessive demands. Current derivative metrics require an explicit filter and sampling rate. Motion smoothness is measured with a fixed, detrended Welch spectrum over a declared frequency band below the common Nyquist limit, normalized by trial duration. \pending{E4: record the frequency band, detrending, window and overlap.}
+
+Naturalness is assessed on held-out motions using phase-aligned lower-body keypoint trajectories normalized by leg length, with phase alignment fixed independently of the training discriminator. Report knee flexion, foot clearance, command error, and the trajectory-distance distribution rather than treating less spectral energy as sufficient evidence of naturalness. \pending{E5: dataset identity, usage license, retargeting procedure, held-out split and independent metric implementation.}
+
+Metrics are aggregated at the independent seed or hardware-trial level. Shared scenarios support within-scenario comparisons. Seed-level paired analyses are used only when training runs are prospectively matched in declared blocks; otherwise, independent-seed contrasts or hierarchical bootstrap analyses are used. Hardware trials are not called paired unless matched by design. Report effect sizes and confidence intervals, with bootstrap resampling at the highest independent level. Any secondary significance tests use an announced multiple-comparison procedure. No $p$ value or interval is inferred by treating control samples as independent trials.
+
+\section{Results to Be Completed}
+\subsection{Identification and residual support}
+\pending{R2: report fit and held-out replay errors for each joint, residual quantiles, budget caps and actual exceedance fractions.} This result tests whether the nominal model and residual budget are meaningful on the new dataset. A narrow amplitude distribution without spectral agreement does not establish that random RTI reproduces the actuator. The conclusion is limited to the tested uncertainty exposure.
+
+\subsection{Primary matched comparison}
+\pending{R3: populate Table 2 from new joint-method trials and state the C7--C3 effect with its confidence interval.} The result must show whether improvements persist under matched command tracking and independent motion-quality evaluation. If C7 only walks more slowly or reduces style exposure, the proposed interpretation is not supported.
+\begin{table}[ht]
+\centering\small
+\caption{New-study outcomes. Every entry is pending. No result from an accepted paper is inserted here. Completion must be reported as successes/attempts.}
+\begin{tabular}{lcccc}
+\toprule & Completion & Command RMSE & Saturation & Motion distance\\
+Method & count & m/s & fraction & leg-length units\\\midrule
+C1 & \TBC & \TBC & \TBC & \TBC\\
+C3 & \TBC & \TBC & \TBC & \TBC\\
+C4 & \TBC & \TBC & \TBC & \TBC\\
+C5 & \TBC & \TBC & \TBC & \TBC\\
+C6 & \TBC & \TBC & \TBC & \TBC\\
+C7 & \TBC & \TBC & \TBC & \TBC\\\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Mechanism and sensitivity}
+\pending{R4: show time-aligned gate, requested torque, reserve, contact proxy and disturbance events, using the same trial windows.} The actuator gate should add information in transitions where contact reserve remains high but torque reserve is low. Correlation alone does not prove causality; C3--C5--C7 and the torque-penalty comparison test the proposed mechanism. Sensitivity to $b_j$, $h_0$, $T_g$, and style weight must be reported. Gate duty cycle is a diagnostic, not a performance objective.
+
+\subsection{Hardware transfer and failure cases}
+\pending{R5: report all new hardware attempts, current and attitude summaries, completion intervals and deployment exclusions.} Distinguish supported checks from untethered trials. Include representative failures and conditions outside the calibration envelope. The main claim must be reduced to simulation if the proposed coupling has not been tested on hardware; results of the accepted RTI controller cannot fill this gap.
+
+\section{Discussion}
+The proposed mechanism makes an explicit connection between two otherwise separate design choices: the uncertainty distribution used to train a controller and the intensity of motion imitation. Calibration improves the nominal actuation center, RTI exposes the controller to a bounded disturbance family, and reserve gating makes the style objective depend on remaining nominal torque headroom. Each component can also be useful independently. The matched experiments are needed to determine whether coupling them contributes more than a direct combination.
+
+Several failure modes are plausible. An overly large residual budget can suppress style throughout training, while a small budget can miss important hardware deviations. A minimum over joints can respond excessively to one limiting channel. A contact margin can remain large while the robot has unfavorable momentum, and a torque margin cannot detect slipping or unmodeled delay. A policy can also exploit gated imitation by pursuing states with weak style supervision. Evaluation must therefore retain task completion, command adherence, and independent motion measures together.
+
+The method does not provide a safety filter, a theorem of stability, or an identified nonlinear harmonic-drive emulator. The contact calculation is restricted by the available simulator signals and support geometry. The actuator envelope and current conversion introduce their own uncertainty, especially with speed and temperature changes. Recent contact-aware residual models and explicit latency studies may offer stronger modeling tools \cite{contactuan,delay}; comparison with them is necessary before claiming a general advantage over actuator learning.
+
+Both precursor studies are accepted publications according to the authors. Their inherited modules are cited, and no accepted numerical result is presented as a new experiment. The extension should be described to the target editor with the two accepted manuscripts, a clear overlap statement, and the genuinely new results. Reusing reference motions or a robot is compatible with a new research question, but copying experimental claims into a new method would not answer that question.
+
+\section{Conclusion}
+We formulate actuator reserve gating of phase-conditioned motion priors within a calibrated residual-training pipeline. The proposed coupling scales style supervision using a contact reserve proxy and a pre-saturation torque margin reduced by a held-out residual budget. Its deployment interface remains a proprioceptive history policy with joint-target control. The mathematical reserve interpretation is conditional and local to the modeled torque channel. Empirical validation of the robustness--naturalness tradeoff remains pending and requires the matched ablations and new hardware evaluation specified above. \pending{R6: replace this final sentence with a measured conclusion after the study is completed.}
+
+\section*{Declarations}
+\textbf{Data and code.} \pending{M2: supply actual repository/archive or controlled-access terms, model hashes, calibration and trial-level logs, reference-motion license, and analysis scripts. Do not claim release until accessible.}
+
+\textbf{Authorship and funding.} \pending{M3: agree the new manuscript's author order, contributions, funding acknowledgments and competing-interest statement with all authors. Existing accepted author lists and grant statements are not automatically transferred.}
+
+\textbf{Relationship to accepted work.} This manuscript extends the two accepted studies in Refs.~\cite{priorSG,priorRTI}. \pending{M4: add the exact venues, acceptance/publication dates and DOI or accepted-manuscript identifiers; verify the target journal's extension and reuse requirements.}
+
+\begin{thebibliography}{99}
+\bibitem{priorSG} J. Li, X. Dong, S. Xu and B. Jiang. Stability-Gated Adversarial Motion Priors with Phase-Conditioned Discriminator for Natural and Robust Bipedal Locomotion. Accepted manuscript supplied by the authors. \pending{M4: venue, year and DOI.}
+\bibitem{priorRTI} J. Li, X. Dong, S. Xu, Y. Zheng and F. Deng. Real-to-Sim Calibrated Domain Randomization for Full-Size Humanoid Locomotion under Harmonic-Drive Nonlinearities. Accepted manuscript supplied by the authors. \pending{M4: confirm final bibliographic record; local files identify Data Intelligence.}
+\bibitem{amp} X. B. Peng, Z. Ma, P. Abbeel, S. Levine and A. Kanazawa. AMP: Adversarial Motion Priors for Stylized Physics-Based Character Control. ACM Transactions on Graphics, 40(4), 2021. \url{https://arxiv.org/abs/2104.02180}.
+\bibitem{realworld} I. Radosavovic, T. Xiao, B. Zhang, T. Darrell, J. Malik and K. Sreenath. Real-world humanoid locomotion with reinforcement learning. Science Robotics, 9(89), eadi9579, 2024. doi:10.1126/scirobotics.adi9579.
+\bibitem{gmp} H. Zhang, L. Zhang, Z. Chen, L. Chen, Y. Wang and R. Xiong. Natural Humanoid Robot Locomotion with Generative Motion Prior. arXiv:2503.09015, 2025. \url{https://arxiv.org/abs/2503.09015}.
+\bibitem{tgmp} J. Guo et al. T-GMP: Terrain-conditioned Generative Motion Priors for Versatile and Natural Humanoid Locomotion. arXiv:2606.06944, 2026. \url{https://arxiv.org/abs/2606.06944}.
+\bibitem{periodic} J. Siekmann, Y. Godse, A. Fern and J. Hurst. Sim-to-Real Learning of All Common Bipedal Gaits via Periodic Reward Composition. ICRA, pp. 7309--7315, 2021. \url{https://arxiv.org/abs/2011.01387}.
+\bibitem{rudin} N. Rudin, D. Hoeller, P. Reist and M. Hutter. Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement Learning. PMLR 164, pp. 91--100, 2022. \url{https://proceedings.mlr.press/v164/rudin22a.html}.
+\bibitem{isaacgym} V. Makoviychuk et al. Isaac Gym: High Performance GPU-Based Physics Simulation For Robot Learning. arXiv:2108.10470, 2021. \url{https://arxiv.org/abs/2108.10470}.
+\bibitem{rarl} L. Pinto, J. Davidson, R. Sukthankar and A. Gupta. Robust Adversarial Reinforcement Learning. PMLR 70, pp. 2817--2826, 2017. \url{https://proceedings.mlr.press/v70/pinto17a.html}.
+\bibitem{mujoco} E. Todorov, T. Erez and Y. Tassa. MuJoCo: A physics engine for model-based control. IROS, pp. 5026--5033, 2012. doi:10.1109/IROS.2012.6386109.
+\bibitem{ppo} J. Schulman, F. Wolski, P. Dhariwal, A. Radford and O. Klimov. Proximal Policy Optimization Algorithms. arXiv:1707.06347, 2017. \url{https://arxiv.org/abs/1707.06347}.
+\bibitem{contactuan} N. Fey et al. Contact-UAN: Unsupervised Actuator Networks as a Residual World Model for Humanoid Control. Conference on Robot Learning (CoRL), 2026 (accepted); author manuscript arXiv:2610.18991. \url{https://contact-uan.csail.mit.edu/}.
+\bibitem{delay} S. Li and Y. Sun. Delay Randomization Widens the Delay Margin of Learned Humanoid Motion Trackers. arXiv:2610.32277v1, 23 October 2026. \url{https://arxiv.org/abs/2610.32277}.
+\bibitem{compliantbot} H. Li, K. Zhu, Z. Cao, Y. Zhang, Y. Chen, X. Yang and Y. Gao. CompliantBot: Learning Whole-Body Compliance across Task Interfaces for Humanoid Control. arXiv:2611.01748v1, 1 November 2026. \url{https://arxiv.org/abs/2611.01748}.
+\bibitem{damp} P. Shen et al. DAMP: Humanoid Locomotion via Denoised Belief Learning and Adversarial Motion Priors. IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (conference paper). \url{https://rasevents.org/uploads/documents/pdfviewer/76/7e/234590-1175.pdf}.
+\bibitem{torqueperturb} J. R. Cha, W. Cha, J. Shin, D. Kim and J. Park. Sim-to-Real of Humanoid Locomotion Policies via Joint Torque Space Perturbation Injection. arXiv:2504.06585v2, 25 March 2026. \url{https://arxiv.org/abs/2504.06585}.
+\bibitem{retarget} S. McCrory, R. Orsolino, D. Thanki, L. Penco and R. Griffin. Stability-Aware Retargeting for Humanoid Multi-Contact Teleoperation. arXiv:2510.04353v1, 5 October 2025. \url{https://arxiv.org/abs/2510.04353}.
+\bibitem{cref2026} Y. Hao et al. CReF: Cross-Modal and Recurrent Fusion for Depth-Conditioned Humanoid Locomotion. IEEE Robotics and Automation Letters, 11(10), 11174--11181, 2026. \url{https://doi.org/10.1109/LRA.2026.3723339}.
+\bibitem{dpl2026} J. Sun et al. DPL: Depth-Only Perceptive Humanoid Locomotion via Realistic Depth Synthesis and Cross-Attention Terrain Reconstruction. IEEE Robotics and Automation Letters, 11(8), 9407--9414, 2026. \url{https://doi.org/10.1109/LRA.2026.3703584}.
+\bibitem{glad2026} S. Fu et al. Global-Local Attention Decomposition for Terrain Encoding in Humanoid Perceptive Locomotion. IEEE Robotics and Automation Letters, 11(12), 13685--13692, 2026 (Published online 14 October 2026; December issue). \url{https://doi.org/10.1109/LRA.2026.3743710}.
+\bibitem{gaitdepth2026} H. Song et al. Gait-Adaptive Perceptive Humanoid Locomotion With Real-Time Under-Base Terrain Reconstruction. IEEE Robotics and Automation Letters, 11(4), 4969--4976, 2026. \url{https://doi.org/10.1109/LRA.2026.3664167}.
+\bibitem{yanTorque2026} Y. Yan et al. Efficiently Learning Robust Torque-Based Locomotion Through Reinforcement With Model-Based Supervision. IEEE Robotics and Automation Letters, 11(4), 4155--4162, 2026. \url{https://doi.org/10.1109/LRA.2026.3664534}.
+\bibitem{ame22026} C. Zhang et al. Agile and Generalized Legged Locomotion via Attention-Based Neural Map Encoding. IEEE Transactions on Robotics, 2026 (Early Access, 9 October 2026). \url{https://doi.org/10.1109/TRO.2026.3742243}.
+\bibitem{mgmt2026} Z. Zhang et al. Learning Whole-Body Humanoid Locomotion Via Motion Generation and Motion Tracking. IEEE Robotics and Automation Letters, 11(9), 10194--10201, 2026. \url{https://doi.org/10.1109/LRA.2026.3710365}.
+\bibitem{schullerDcm2026} R. Schuller et al. Grounding the Three-Dimensional Divergent Component of Motion: Geometric Analysis of Contact and Dynamic Stability and Its Application to Humanoid Push Recovery. The International Journal of Robotics Research, 2026 (OnlineFirst, 30 July 2026). \url{https://doi.org/10.1177/02783649261445462}.
+\bibitem{beyondMimic2026} Q. Liao et al. BeyondMimic: From Motion Tracking to Versatile Humanoid Control via Guided Diffusion. Science Robotics, 11(117), eadx8924, 2026. \url{https://doi.org/10.1126/scirobotics.adx8924}.
+\bibitem{sonic2026} Z. Luo et al. SONIC: Supersizing Motion Tracking for Natural Humanoid Whole-Body Control. Science Robotics, 11(117), eaed4592, 2026. \url{https://doi.org/10.1126/scirobotics.aed4592}.
+\bibitem{php2026} Z. Wu et al. Perceptive Humanoid Parkour: Chaining Dynamic Human Skills via Motion Matching. Robotics: Science and Systems (RSS), 2026. \url{https://doi.org/10.15607/RSS.2026.XXII.020}.
+\bibitem{rawpixels2026} W. Sun et al. Now You See That: Learning End-to-End Humanoid Locomotion from Raw Pixels. Robotics: Science and Systems (RSS), 2026. \url{https://doi.org/10.15607/RSS.2026.XXII.027}.
+\bibitem{mindsteps2026} A. Montenegro et al. Mind Your Steps: A General Learning Framework for Accurate Humanoid Foothold Tracking. Robotics: Science and Systems (RSS), 2026. \url{https://doi.org/10.15607/RSS.2026.XXII.028}.
+\bibitem{supermimic2026} Q. Liao et al. SuperMimic: Scaling Humanoid Whole-Body Control with One Differentiable World Model. Conference on Robot Learning (CoRL), 2026 (main-conference oral); author manuscript arXiv:2610.28480. \url{https://bair.berkeley.edu/blog/2026/11/09/bair-at-corl-2026/}.
+\bibitem{cap2026} H. Chen et al. CAP: Continuously Adaptive Perception-Blind Humanoid Locomotion via Learned Denoising. Conference on Robot Learning (CoRL), 2026 (accepted); author manuscript arXiv:2609.11553. \url{https://arxiv.org/abs/2609.11553}.
+\bibitem{hiking2026} S. Zhu et al. Hiking in the Wild: A Scalable Perceptive Parkour Framework for Humanoids. Conference on Robot Learning (CoRL), 2026 (accepted); author manuscript arXiv:2601.07718. \url{https://project-instinct.github.io/hiking-in-the-wild/}.
+\bibitem{polygmap2026} B. Li et al. PolygMap: A Perceptive Locomotion Framework for Humanoid Robot Stair Climbing. IEEE International Conference on Robotics and Automation (ICRA), pp.~9066--9073, 2026. \url{https://doi.org/10.1109/ICRA57385.2026.11696224}.
+\bibitem{ampco2026} T. Sangthaworn and B. Sakulkueakulsuk Adaptive Motion Priors with Constrained Optimization. IEEE International Conference on Robotics and Automation (ICRA), 2026. \url{https://doi.org/10.1109/ICRA57385.2026.11696607}.
+\bibitem{adaptiveMpc2026} J. Kamohara et al. RL-Augmented Adaptive Model Predictive Control for Bipedal Locomotion over Challenging Terrain. IEEE International Conference on Robotics and Automation (ICRA), pp.~18015--18022, 2026. \url{https://doi.org/10.1109/ICRA57385.2026.11697426}.
+\bibitem{wmloco2026} Y. Liu et al. World-Model-Augmented Visual Locomotion for Humanoids on Foothold-Constrained Terrain. arXiv:2609.02542, 2026 (preprint). \url{https://arxiv.org/abs/2609.02542v2}.
+\bibitem{step2026} Y. Lyu et al. STEP: Spatiotemporal Training with Explicit Prediction for Perceptive Humanoid Locomotion. arXiv:2611.08097, 2026 (preprint). \url{https://arxiv.org/abs/2611.08097v1}.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,284 @@
+{
+  "revision": "2026-11-22 parameter and completion zero clarification",
+  "base_pdf": "output/pdf/Z01_RAL_Comments_20261122.pdf",
+  "backup_directory": "logs/ral_verification/manuscript_before_zero_clarification_20261122",
+  "input_hashes": {
+    "release/ral/params.csv": "c9c808a17b24fe5f47a2fa6ed4b4f22a71a9ce1808885c71e817c1ce60998c43",
+    "release/ral/sources/joint_parameter_summary_20261120.json": "8f1026f156a79d8c51be9426b0fa5e763fc5b1c1779fcf239ca5649055d65b7d",
+    "release/ral/closed_loop_5080_review_20261122.json": "2ace1b10a6401648e49b37099ebb647af8bdd1e09280a4bcc0570f54dcb9aead",
+    "release/ral/policy_diagnostic_review_20261122.json": "369ab1f459f6957a133752fcdf9cf2de1ffadede34eaf1030e156d82cff53cd7",
+    "output/pdf/Z01_RAL_Comments_20261122.pdf": "21148be9a7e6a5bb594534e95bf290b228603766b6103aae007a1f6dfb79963e"
+  },
+  "joint_armature_inventory": [
+    {
+      "joint_id": "left_hip_pitch",
+      "identified_value": "0.0",
+      "effective_A": "0.0",
+      "enabled": "1",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "left_hip_roll",
+      "identified_value": "0.0",
+      "effective_A": "0.0",
+      "enabled": "1",
+      "validation_status": "新幅值/周期验证通过"
+    },
+    {
+      "joint_id": "left_hip_yaw",
+      "identified_value": "0.027778",
+      "effective_A": "0.01",
+      "enabled": "0",
+      "validation_status": "候选两条T2留出通过；运行值有微小差异"
+    },
+    {
+      "joint_id": "left_knee_pitch",
+      "identified_value": "0.292",
+      "effective_A": "0.292",
+      "enabled": "1",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "left_ankle_pitch",
+      "identified_value": "0.1047",
+      "effective_A": "0.1047",
+      "enabled": "1",
+      "validation_status": "两幅值T2留出通过；力矩收益较小"
+    },
+    {
+      "joint_id": "left_ankle_roll",
+      "identified_value": "0.029",
+      "effective_A": "0.01",
+      "enabled": "0",
+      "validation_status": "原T2及新增大幅值未通过；按用户要求暂停"
+    },
+    {
+      "joint_id": "right_hip_pitch",
+      "identified_value": "0.0",
+      "effective_A": "0.0",
+      "enabled": "1",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "right_hip_roll",
+      "identified_value": "0.0826",
+      "effective_A": "0.02",
+      "enabled": "0",
+      "validation_status": "T2留出未改善；仍在使用候选"
+    },
+    {
+      "joint_id": "right_hip_yaw",
+      "identified_value": "0.0101",
+      "effective_A": "0.0101",
+      "enabled": "1",
+      "validation_status": "新小幅值验证通过；大幅值位置优势有限"
+    },
+    {
+      "joint_id": "right_knee_pitch",
+      "identified_value": "0.2057",
+      "effective_A": "0.2057",
+      "enabled": "1",
+      "validation_status": "跨幅值验证通过"
+    },
+    {
+      "joint_id": "right_ankle_pitch",
+      "identified_value": "0.1047",
+      "effective_A": "0.01",
+      "enabled": "0",
+      "validation_status": "复用左侧；尚无完成的右侧独立验证"
+    },
+    {
+      "joint_id": "right_ankle_roll",
+      "identified_value": "0.029",
+      "effective_A": "0.01",
+      "enabled": "0",
+      "validation_status": "复用左侧未通过候选；右侧尚未完成独立辨识"
+    },
+    {
+      "joint_id": "waist_yaw",
+      "identified_value": "",
+      "effective_A": "0.01",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "waist_pitch",
+      "identified_value": "",
+      "effective_A": "0.01",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "left_shoulder_pitch",
+      "identified_value": "",
+      "effective_A": "0.005",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "left_shoulder_roll",
+      "identified_value": "",
+      "effective_A": "0.005",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "left_elbow_yaw",
+      "identified_value": "",
+      "effective_A": "0.003",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "left_elbow_pitch",
+      "identified_value": "",
+      "effective_A": "0.003",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "left_wrist_yaw",
+      "identified_value": "",
+      "effective_A": "0.001",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "right_shoulder_pitch",
+      "identified_value": "",
+      "effective_A": "0.005",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "right_shoulder_roll",
+      "identified_value": "",
+      "effective_A": "0.005",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "right_elbow_yaw",
+      "identified_value": "",
+      "effective_A": "0.003",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "right_elbow_pitch",
+      "identified_value": "",
+      "effective_A": "0.003",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "right_wrist_yaw",
+      "identified_value": "",
+      "effective_A": "0.001",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "head_yaw",
+      "identified_value": "",
+      "effective_A": "0.001",
+      "enabled": "0",
+      "validation_status": "missing"
+    },
+    {
+      "joint_id": "head_pitch",
+      "identified_value": "",
+      "effective_A": "0.001",
+      "enabled": "0",
+      "validation_status": "missing"
+    }
+  ],
+  "raw_evaluation_checks": {
+    "all_84_source_hashes_match_prior_audit": true,
+    "all_episode_counts_and_nonfinite_values_checked": true,
+    "verified_common_runs": 60,
+    "zero_completion_runs": 40,
+    "zero_completion_episodes": 6520,
+    "termination_reasons": {
+      "tracking_termination": 6520
+    },
+    "zero_runs": [
+      "s10_Aplus_identified",
+      "s10_Aplus_nominal",
+      "s10_B_identified",
+      "s10_B_nominal",
+      "s10_C_huber_1e2_identified",
+      "s10_C_huber_1e2_nominal",
+      "s10_C_reference_identified",
+      "s10_C_reference_nominal",
+      "s2_Aplus_identified",
+      "s2_Aplus_nominal",
+      "s2_B_identified",
+      "s2_B_nominal",
+      "s2_C_huber_1e2_identified",
+      "s2_C_huber_1e2_nominal",
+      "s2_C_reference_identified",
+      "s2_C_reference_nominal",
+      "s4_Aplus_identified",
+      "s4_Aplus_nominal",
+      "s4_B_identified",
+      "s4_B_nominal",
+      "s4_C_huber_1e2_identified",
+      "s4_C_huber_1e2_nominal",
+      "s4_C_reference_identified",
+      "s4_C_reference_nominal",
+      "s6_Aplus_identified",
+      "s6_Aplus_nominal",
+      "s6_B_identified",
+      "s6_B_nominal",
+      "s6_C_huber_1e2_identified",
+      "s6_C_huber_1e2_nominal",
+      "s6_C_reference_identified",
+      "s6_C_reference_nominal",
+      "s8_Aplus_identified",
+      "s8_Aplus_nominal",
+      "s8_B_identified",
+      "s8_B_nominal",
+      "s8_C_huber_1e2_identified",
+      "s8_C_huber_1e2_nominal",
+      "s8_C_reference_identified",
+      "s8_C_reference_nominal"
+    ]
+  },
+  "changes": [
+    "Reorder all seven enabled joints: four nonzero armatures first, then three zero armatures; no substitution of disabled candidates.",
+    "Explain added inertia and archived zero values.",
+    "Explain observed zero clip completion versus unexecuted Pending and zero sample SD versus uncertainty.",
+    "Compact repeated evaluation/failure-analysis prose to preserve eight pages."
+  ],
+  "armature_definition_source": "https://mujoco.readthedocs.io/en/3.2.6/XMLreference.html#body-joint-armature",
+  "validation": {
+    "pages": 8,
+    "six_table_numeric_contents_unchanged": true,
+    "abstract_equations_bibliography_unchanged": true,
+    "all_eight_final_page_renders_visually_inspected": true,
+    "no_overfull_boxes": true,
+    "no_unresolved_references": true,
+    "caption_fonts": {
+      "Allsevenenabledidentifiedjoints": {
+        "page": 5,
+        "font": "IHAIZV+NimbusRomNo9L-Regu",
+        "size": 7.970111999999972
+      },
+      "Closed-loopdevelopmentresults:": {
+        "page": 6,
+        "font": "IHAIZV+NimbusRomNo9L-Regu",
+        "size": 7.970112000000029
+      }
+    },
+    "nonfatal_warnings": "Existing class TU/ptm fallback notices and underfull spacing notices; rendered captions are Nimbus Roman."
+  },
+  "training_code_or_parameter_values_modified": false,
+  "new_experiments_run": false,
+  "outputs": {
+    "output/pdf/Z01_RAL_Clarified_20261122.pdf": "92eff49d6024b70d5766861bd4ddedb3c2b6d4acd2e7c12402a6ddf3940031ef",
+    "SCI论文草稿/RA-L_Actuator_World_Model/RA-L_English_Draft.pdf": "92eff49d6024b70d5766861bd4ddedb3c2b6d4acd2e7c12402a6ddf3940031ef",
+    "SCI论文草稿/RA-L_Actuator_World_Model/manuscript.tex": "d1864a4946597e5e75cdf87e467d3a678c5a0ae907a49e82cbdc7bb6c341e292",
+    "SCI论文草稿/RA-L_Actuator_World_Model/中文修改说明.txt": "35cc9a1de9294278a4fcb0ec9a72abf2c3162af4f1978d9bc528e276b1cc3153"
+  }
+}

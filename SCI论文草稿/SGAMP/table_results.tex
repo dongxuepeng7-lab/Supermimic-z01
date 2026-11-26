@@ -1,0 +1,17 @@
+\begin{table*}[t]
+  \centering
+  \caption{Zero-shot robustness and naturalness (simulation). Survival rate is higher-better; spectral energy and tracking RMSE are lower-better; CoP margin is higher-better.}
+  \label{tab:results}
+  \begin{tabular}{lcccccc}
+    \toprule
+    Method & Flat surv. & Push surv. & Rough surv. & Spectral energy $\downarrow$ & CoP margin (m) & Track RMSE (m/s) \\
+    \midrule
+    Pure RL & 1.000 & 0.401 & 0.215 & 0.0045 & 0.0000 & 0.144 \\
+    AMP & 1.000 & 0.428 & 0.187 & 0.0022 & 0.0000 & 0.147 \\
+    \textbf{SG-AMP (ours)} & 1.000 & 0.424 & 0.210 & 0.0027 & 0.0512 & 0.150 \\
+    SG-AMP $-$ G1 & 1.000 & 0.450 & 0.184 & 0.0028 & 0.0514 & 0.147 \\
+    SG-AMP $-$ G2 & 1.000 & 0.417 & 0.160 & 0.0016 & 0.0512 & 0.152 \\
+    SG-AMP $-$ G3 & 1.000 & 0.421 & 0.194 & 0.0027 & 0.0513 & 0.153 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}

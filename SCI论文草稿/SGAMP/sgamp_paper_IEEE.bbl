@@ -1,0 +1,195 @@
+\begin{thebibliography}{10}
+
+\bibitem{hwangbo2019anymal}
+Jemin Hwangbo, Joonho Lee, Alexey Dosovitskiy, Dario Bellicoso, Vassilios
+  Tsounis, Vladlen Koltun, and Marco Hutter.
+\newblock Learning agile and dynamic motor skills for legged robots.
+\newblock {\em Science Robotics}, 4(26):eaau5872, 2019.
+
+\bibitem{lee2020challenging}
+Joonho Lee, Jemin Hwangbo, Lorenz Wellhausen, Vladlen Koltun, and Marco Hutter.
+\newblock Learning quadrupedal locomotion over challenging terrain.
+\newblock {\em Science Robotics}, 5(47):eabc5986, 2020.
+
+\bibitem{kumar2021rma}
+Ashish Kumar, Zipeng Fu, Deepak Pathak, and Jitendra Malik.
+\newblock {RMA}: Rapid motor adaptation for legged robots.
+\newblock In {\em Robotics: Science and Systems (RSS)}, 2021.
+
+\bibitem{singh2022footsteps}
+Rohan~P. Singh, Mehdi Benallegue, Mitsuharu Morisawa, Rafael Cisneros, and
+  Fumio Kanehiro.
+\newblock Learning bipedal walking on planned footsteps for humanoid robots,
+  2022.
+
+\bibitem{vanmarum2023perceptive}
+Bart van Marum, Matthia Sabatelli, and Hamidreza Kasaei.
+\newblock Learning perceptive bipedal locomotion over irregular terrain, 2023.
+
+\bibitem{song2025gaitadaptive}
+Haolin Song, Hongbo Zhu, Tao Yu, Yan Liu, Mingqi Yuan, Wengang Zhou, Hua Chen,
+  and Houqiang Li.
+\newblock Gait-adaptive perceptive humanoid locomotion with real-time
+  under-base terrain reconstruction, 2025.
+
+\bibitem{radosavovic2024challenging}
+Ilija Radosavovic, Sarthak Kamat, Trevor Darrell, and Jitendra Malik.
+\newblock Learning humanoid locomotion over challenging terrain, 2024.
+
+\bibitem{huang2026coremoe}
+Kailun Huang, Zikang Xie, Yanzhe Xie, Panpan Liao, Fanghai Zhang, Yanheng Mai,
+  Wenhao Xu, Yunheng Wang, Renjing Xu, Haohui Huang, and Chenguang Yang.
+\newblock {CoRe-MoE}: Contrastive reweighted mixture of experts for
+  multi-terrain humanoid locomotion with gait adaptation, 2026.
+
+\bibitem{radosavovic2024real}
+Ilija Radosavovic, Sarthak Kamat, Trevor Darrell, and Jitendra Malik.
+\newblock Real-world humanoid locomotion with reinforcement learning.
+\newblock {\em Science Robotics}, 9:eadi9579, 2024.
+
+\bibitem{cheng2024exbody}
+Xuxin Cheng, Yandong Ji, Junming Chen, Ruihan Yang, Ge~Yang, and Xiaolong Wang.
+\newblock Expressive whole-body control for humanoid robots.
+\newblock In {\em Robotics: Science and Systems (RSS)}, 2024.
+
+\bibitem{he2024hover}
+Tairan He, Wenli Xiao, Toru Lin, Zhengyi Luo, Zhenjia Xu, Zhenyu Jiang, Jan
+  Kautz, Changliu Liu, Guanya Shi, Xiaolong Wang, Linxi Fan, and Yuke Zhu.
+\newblock {HOVER}: Versatile neural whole-body controller for humanoid robots,
+  2024.
+
+\bibitem{fu2024humanplus}
+Zipeng Fu, Qingqing Zhao, Qi~Wu, Gordon Wetzstein, and Chelsea Finn.
+\newblock {HumanPlus}: Humanoid shadowing and imitation from humans.
+\newblock In {\em Conference on Robot Learning (CoRL)}, 2024.
+
+\bibitem{he2024omnih2o}
+Tairan He, Zhengyi Luo, Xialin He, Wenli Xiao, Chong Zhang, Weinan Zhang, Kris
+  Kitani, Changliu Liu, and Guanya Shi.
+\newblock {OmniH2O}: Universal and dexterous human-to-humanoid whole-body
+  teleoperation and learning.
+\newblock In {\em Conference on Robot Learning (CoRL)}, 2024.
+
+\bibitem{zhang2025gmp}
+Haodong Zhang, Liang Zhang, Zhenghan Chen, Lu~Chen, Yue Wang, and Rong Xiong.
+\newblock Natural humanoid robot locomotion with generative motion prior, 2025.
+
+\bibitem{peng2021amp}
+Xue~Bin Peng, Ze~Ma, Pieter Abbeel, and Sergey Levine.
+\newblock {AMP}: Adversarial motion priors for stylized physics-based character
+  control.
+\newblock {\em ACM Transactions on Graphics}, 40(4), 2021.
+
+\bibitem{guo2026tgmp}
+Junhong Guo, Hao Hu, Chen Chen, Haoxuan Han, Linao Gong, Xin Yang, Zhicheng He,
+  Yao Su, and Fenghua He.
+\newblock {T-GMP}: Terrain-conditioned generative motion priors for versatile
+  and natural humanoid locomotion, 2026.
+
+\bibitem{peng2022ase}
+Xue~Bin Peng, Yunrong Guo, Lina Halper, Sergey Levine, and Sanja Fidler.
+\newblock {ASE}: Large-scale reusable adversarial skill embeddings for
+  physically simulated characters.
+\newblock {\em ACM Transactions on Graphics}, 41(4):94:1--94:17, 2022.
+
+\bibitem{tessler2023calm}
+Chen Tessler, Yoni Kasten, Yunrong Guo, Shie Mannor, Gal Chechik, and Xue~Bin
+  Peng.
+\newblock {CALM}: Conditional adversarial latent models for directable virtual
+  characters.
+\newblock {\em ACM Transactions on Graphics}, 42(4), 2023.
+
+\bibitem{luo2024pulse}
+Zhengyi Luo, Jinkun Cao, Josh Merel, Alexander Winkler, Jing Huang, Kris
+  Kitani, and Weipeng Xu.
+\newblock Universal humanoid motion representations for physics-based control.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2024.
+
+\bibitem{hwang2026footposition}
+Matthew Hwang, Yubin Liu, Ryo Hakoda, and Takeshi Oishi.
+\newblock Learning locomotion on complex terrain for quadrupedal robots with
+  foot position maps and stability rewards, 2026.
+
+\bibitem{ho2016gail}
+Jonathan Ho and Stefano Ermon.
+\newblock Generative adversarial imitation learning.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  pages 4565--4573, 2016.
+
+\bibitem{peng2018deepmimic}
+Xue~Bin Peng, Pieter Abbeel, Sergey Levine, and Michiel van~de Panne.
+\newblock {DeepMimic}: Example-guided deep reinforcement learning of
+  physics-based character skills.
+\newblock {\em ACM Transactions on Graphics}, 37(4):143:1--143:14, 2018.
+
+\bibitem{ma2026cmoe}
+Shihao Ma, Hongjin Chen, Zijun Xu, Yi~Zhao, Ke~Wu, Ruichen Yang, Leyao Zou,
+  Zhongxue Gan, and Wenchao Ding.
+\newblock {CMoE}: Contrastive mixture of experts for motion control and terrain
+  adaptation of humanoid robots, 2026.
+
+\bibitem{crismariu2026march}
+Codrin Crismariu and Ryan~K. Cosner.
+\newblock {MARCH}: Model-assisted reinforcement learning for the perceptive
+  control of humanoids over sparse footholds, 2026.
+
+\bibitem{lau2026switch}
+Yuen-Fui Lau, Qihan Zhao, Yinhuai Wang, Runyi Yu, Hok~Wai Tsui, Qifeng Chen,
+  and Ping Tan.
+\newblock Switch: Learning agile skills switching for humanoid robots, 2026.
+
+\bibitem{vukobratovic2004zmp}
+Miomir Vukobratovi\'{c} and Branislav Borovac.
+\newblock Zero-moment point---thirty five years of its life.
+\newblock {\em International Journal of Humanoid Robotics}, 1(1):157--173,
+  2004.
+
+\bibitem{kajita2003zmp}
+Shuuji Kajita, Fumio Kanehiro, Kenji Kaneko, Kiyoshi Fujiwara, Kensuke Harada,
+  Kazuhito Yokoi, and Hirohisa Hirukawa.
+\newblock Biped walking pattern generation by using preview control of
+  zero-moment point.
+\newblock In {\em IEEE International Conference on Robotics and Automation
+  (ICRA)}, pages 1620--1626, 2003.
+
+\bibitem{siekmann2021periodic}
+Jonah Siekmann, Yesh Godse, Alan Fern, and Jonathan~W. Hurst.
+\newblock Sim-to-real learning of all common bipedal gaits via periodic reward
+  composition.
+\newblock In {\em {IEEE} International Conference on Robotics and Automation,
+  {ICRA} 2021}, pages 7309--7315. {IEEE}, 2021.
+
+\bibitem{schulman2017ppo}
+John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov.
+\newblock Proximal policy optimization algorithms, 2017.
+
+\bibitem{schulman2015trpo}
+John Schulman, Sergey Levine, Pieter Abbeel, Michael~I. Jordan, and Philipp
+  Moritz.
+\newblock Trust region policy optimization.
+\newblock In {\em International Conference on Machine Learning (ICML)}, pages
+  1889--1897, 2015.
+
+\bibitem{todorov2012mujoco}
+Emanuel Todorov, Tom Erez, and Yuval Tassa.
+\newblock {MuJoCo}: A physics engine for model-based control.
+\newblock In {\em IEEE/RSJ International Conference on Intelligent Robots and
+  Systems (IROS)}, pages 5026--5033, 2012.
+
+\bibitem{mittal2023isaaclab}
+Mayank Mittal, Calvin Yu, Qinxi Yu, Jingzhou Liu, Nikita Rudin, David Hoeller,
+  Jia~Lin Yuan, Ritvik Singh, Yunrong Guo, Hammad Mazhar, Ajay Mandlekar, Buck
+  Babich, Gavriel State, Marco Hutter, and Animesh Garg.
+\newblock Orbit: A unified simulation framework for interactive robot learning
+  environments.
+\newblock {\em IEEE Robotics and Automation Letters}, 8(6):3740--3747, 2023.
+
+\bibitem{makoviychuk2021isaacgym}
+Viktor Makoviychuk, Lukasz Wawrzyniak, Yunrong Guo, Michelle Lu, Kier Storey,
+  Miles Macklin, David Hoeller, Nikita Rudin, Arthur Allshire, Ankur Handa, and
+  Gavriel State.
+\newblock Isaac gym: High performance {GPU}-based physics simulation for robot
+  learning, 2021.
+
+\end{thebibliography}

@@ -1,0 +1,882 @@
+\newif\ifmarkedred
+\markedredfalse
+
+\documentclass[twoside,final,1p,times]{elsarticle}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,bm,mathtools}
+\usepackage{booktabs,tabularx,array,longtable,multirow,makecell}
+\usepackage{threeparttable}
+\usepackage{graphicx}
+\graphicspath{{./}{figures/}}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{siunitx}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\journal{Data Intelligence}
+\biboptions{numbers,sort&compress}
+\sisetup{detect-all=true}
+\emergencystretch=3em
+
+\pagestyle{fancy}
+\newcommand\shorttitle{\textcolor[RGB]{20,180,190}{Data Intelligence}}
+\fancyhf{}
+\renewcommand{\headrule}{{\textcolor[RGB]{20,180,190}{\rule{\textwidth}{1pt}}}}
+\renewcommand\footrulewidth{0pt}
+\fancyfoot[L]{%
+\ifodd\value{page}
+  \shorttitle
+\fi}
+\fancyfoot[R]{\textcolor[RGB]{20,180,190}{\thepage}\ifodd\value{page}\else\hfill\shorttitle\fi}
+\setlength{\footskip}{25mm}
+\fancyhead[L]{Real-to-Sim Calibrated Domain Randomization for Humanoid Locomotion}
+
+% v18 template revision: manuscript reset to the official DI Sample.tex layout.
+% Old revision-highlighting commands are kept as no-ops so the scientific content remains unchanged.
+\newcommand{\rev}[1]{#1}
+\newcommand{\minorrev}[1]{#1}
+\newenvironment{minorrevblock}{}{}
+\newenvironment{revblock}{}{}
+\newcommand{\templrev}[1]{\ifmarkedred\textcolor{red}{#1}\else#1\fi}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\safeinclude}[2][]{%
+  \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
+    \IfFileExists{figures/#2}{\includegraphics[#1]{figures/#2}}{%
+      \fbox{\parbox[c][0.18\textheight][c]{0.88\linewidth}{\centering\vspace{0.4em}\textbf{Final high-resolution figure placeholder}\\
+      \texttt{\detokenize{#2}}\\
+      Place this file either in the project root or in the \texttt{figures/} folder before final journal upload.\\\vspace{0.4em}}}%
+    }%
+  }%
+}
+\newcommand{\markedinclude}[2][]{\safeinclude[#1]{#2}}
+\newcommand{\ci}[2]{#1\,$\pm$\,#2}
+
+\begin{document}
+\begin{frontmatter}
+\title{Real-to-Sim Calibrated Domain Randomization for Full-Size Humanoid Locomotion under Harmonic-Drive Nonlinearities}
+
+\author{\templrev{Jiahong Li$^{1}$, Xuepeng Dong$^{1}$, Shengli Xu$^{2}$, Ying Zheng$^{1}$, and Fang Deng$^{3,4\dagger}$}}
+
+\address{$^{1}$\templrev{College of Robotics, Beijing Union University, China}}
+\address{\templrev{$^{2}$Beijing Zoyi Technology Co., Ltd., Beijing, China}}
+\address{\templrev{$^{3}$State Key Lab of Autonomous Intelligent Unmanned Systems, Beijing Institute of Technology, Beijing, China}}
+\address{\templrev{$^{4}$School of AI, Beijing Institute of Technology, Beijing, China}}
+
+\begin{abstract}
+Sim-to-real transfer for full-size humanoid locomotion remains difficult on harmonic-drive platforms because actuator-side nonlinearities are only partially represented by standard rigid-body simulators. These effects include hysteresis-like friction, stick--slip transitions, torque ripple, dead zones, finite current-loop bandwidth, and driver saturation; on hardware they appear as current chattering, tracking distortion, and base oscillation during walking. We present a Real2Sim-calibrated locomotion pipeline for the 1.8 m ZOYI Z01 humanoid that combines physics-grounded actuator identification, identification-informed domain randomization, and training-time Residual Torque Injection (RTI). The method first estimates effective Coulomb friction and viscous damping from low-risk hysteresis-loop and sinusoidal-sweep experiments using only proprioception and motor current, and then synchronizes the nominal actuator model across MuJoCo command replay and Isaac Gym policy training. RTI injects bounded, state-dependent, joint-output-equivalent residual torques during training to expose the policy to actuator residuals that are difficult to parametrize explicitly. \rev{Unlike a calibrated harmonic-drive emulator, RTI is defined conservatively as a residual-statistics-bounded torque-channel robustness perturbation. The paper explicitly documents the motor-current to joint-output-torque conversion, actuator limits, current-loop bandwidth, repeated hardware statistics, residual goodness-of-fit, and safety-separated ablations. The evaluation distinguishes primary controlled 0.5 m/s repeated-trial evidence from lower-speed deployment snapshots that are used only as qualitative scope checks.} In repeated 0.5 m/s hardware tests, adding RTI on top of the SysID+DR baseline reduces peak current from $16.28\pm0.68$ A to $11.14\pm0.52$ A, pitch RMS from $3.75\pm0.16^\circ$ to $1.01\pm0.12^\circ$, pitch peak from $6.10\pm0.08^\circ$ to $1.6\pm0.1^\circ$, and joint-position RMSE from $0.0996\pm0.0113$ rad to $0.0200\pm0.0026$ rad relative to a SysID+DR hardware baseline (the calibrated-DR baseline). \rev{The previously ambiguous pitch-variance claim is replaced by separately defined pitch RMS, pitch variance, and pitch peak reductions.}
+\end{abstract}
+
+\begin{keyword}
+Humanoid locomotion; Sim2Real; system identification; domain randomization; torque perturbation; harmonic drive; residual robustness.
+\end{keyword}
+
+\begingroup
+\renewcommand{\thefootnote}{\dag}
+\footnotetext{\templrev{Corresponding author: Fang Deng (Email: dengfang@bit.edu.cn)}}
+\endgroup
+
+\end{frontmatter}
+
+
+\section{Introduction}
+\label{sec:introduction}
+
+Humanoid robots promise versatile physical-world operation in human-designed environments by unifying legged locomotion with whole-body manipulation. Recent progress has been driven by advances across control, motion planning, and learning, yet robust full-body autonomy remains challenging in practice due to coupled contacts, underactuation, high-dimensional dynamics, and strong dependence on actuator behavior \minorrev{\citep{radosavovic2024realworld,ha2025legged,he2024agilebutsafe,gu2024dwl}}. From a deployment perspective, large-scale humanoids further face stringent safety constraints and limited sensing on real hardware, making data collection and iterative controller tuning expensive and risk-prone \minorrev{\citep{yang2022safe}}.
+
+Harmonic drives have become a core actuation mechanism for full-size humanoid robots because they provide compact packaging, high torque density, large reduction ratios, and low backlash. However, flexspline deformation and gear-contact interactions introduce state-dependent nonlinearities, including friction hysteresis, torsional compliance, stick–slip transitions, torque ripple, and dead zones \minorrev{\citep{preissner2012highfidelity,tjahjowidodo2013torsional,wang2024hysteresis,zhang2025elastic,turlapati2024friction,piatkowski2024spline}}. These effects are difficult to represent faithfully using a standard rigid-body simulator and can produce persistent current chattering, limit cycles, degraded tracking, and base oscillations during dynamic walking. On the ZOYI Z01 platform, the difficulty is amplified by a serial lower-leg structure and a constrained 5-DoF leg configuration without ankle roll. Lateral balance, therefore, depends primarily on stepping and whole-body coordination rather than local foot-roll compensation.
+
+Domain randomization (DR) has become a standard component of sim-to-real locomotion pipelines because it trains policies under distributions of masses, contact parameters, delays, gains, and actuation scalings \minorrev{\citep{kumar2021rma,rudin2022minutes,siekmann2021periodic,margolis2024rapid,radosavovic2024realworld,haarnoja2024agile,li2025versatile}}. DR alone, however, is limited when the dominant mismatch is not just a parametric offset but a non-smooth actuator-side residual. Overly broad randomization can produce conservative gaits, whereas narrow randomization can miss disturbances that occur near torque reversal or foot impact. Recent work on domain-uncertainty-aware policy optimization further supports the need to treat domains as structured objectives rather than as a single wide randomization envelope \minorrev{\citep{ilboudo2026domains}}. This motivates a two-part strategy: first, use real hardware data to center the simulator around identifiable actuator parameters; second, expose the policy to residual torque-channel uncertainty during training.
+
+This work combines actuator identification, identification-informed DR, and residual torque perturbation during policy training. To make the pipeline auditable, the formulation separates four quantities that are often conflated in sim-to-real locomotion studies: motor current, motor-side torque, joint-output-equivalent torque, and training-time residual torque. This separation is essential because the hardware evidence is measured partly in amperes, while the robustness mechanism is applied in N\,m at the joint-output-equivalent torque channel.
+
+\noindent\textbf{Contributions.} \rev{The paper makes four contributions.}
+\begin{enumerate}[leftmargin=1.4em]
+  \item \rev{We introduce a risk-aware Real2Sim identification procedure for full-size harmonic-drive humanoid joints. The procedure uses only onboard proprioception and motor current, and it converts low-speed hysteresis-loop data and sinusoidal-sweep responses into simulator-injectable Coulomb-friction and viscous-damping parameters.}
+  \item \rev{We derive a current-consistent actuator interface that separates motor current, motor-side torque, and joint-output-equivalent torque. The interface makes the link between measured current spikes and training-time residual torques explicit, auditable, and reproducible.}
+  \item \rev{We formulate an identification-centered robustness-training distribution in which calibrated DR covers parametric uncertainty and bounded RTI covers residual matched torque uncertainty. The formulation states that RTI is a training-time robustness perturbation rather than a virtual sensor, a deployment-time compensation network, or a complete harmonic-drive emulator.}
+  \item \rev{We validate the method on a 1.8 m humanoid through repeated hardware trials, residual goodness-of-fit analysis, safety-separated ablations, trace-level hardware ranges moved into the main text, confidence intervals, and a reproducibility-oriented data and code statement.}
+\end{enumerate}
+
+
+\section{Related Work}
+\label{sec:related_work}
+
+\subsection{Humanoid locomotion and sim-to-real transfer}
+Learning-based humanoid locomotion has progressed rapidly through massively parallel reinforcement learning, history-dependent policies, reward shaping, imitation, world-model learning, and domain randomization \minorrev{\citep{siekmann2021periodic,rudin2022minutes,margolis2024rapid,radosavovic2024realworld,haarnoja2024agile,li2025versatile,gu2024dwl,he2024agilebutsafe}}. Recent humanoid and legged-robot work also highlights whole-body motion imitation, loco-manipulation, deep tracking control, compliant leg design, and unified neural whole-body controllers as important directions for deployment beyond steady flat-ground walking \minorrev{\citep{jenelten2024dtc,dao2024box,tang2024humanmimic,he2025hover,hoeller2024anymal,chen2025curating}}. Survey articles indicate that robust bipedal transfer typically requires a combination of simulation scale, domain randomization, history-based state estimation, and hardware-aware modeling rather than a single technique \minorrev{\citep{ha2025legged,bao2025bipedal}}. These studies demonstrate that simulation-trained policies can transfer to hardware, but they also show that full-size humanoids remain sensitive to actuator bandwidth, transmission nonlinearities, contact-model mismatch, and partial observability. The present paper therefore focuses on reducing actuator-side mismatch before policy deployment.
+
+\subsection{System identification, robust estimation, and actuator-dominated robots}
+System identification can be performed through classical least-squares dynamic-parameter estimation, frequency-domain fitting, Bayesian or probabilistic inference, differentiable-simulator optimization, and residual modeling. For harmonic drives, friction hysteresis and nonlinear torsional effects are central modeling challenges \minorrev{\citep{preissner2012highfidelity,tjahjowidodo2013torsional,wang2024hysteresis,zhang2025elastic,turlapati2024friction,piatkowski2024spline}}. Our protocol deliberately uses low-risk excitation. Quasi-static hysteresis loops estimate effective Coulomb friction, while sinusoidal sweeps estimate equivalent viscous damping. The resulting parameters are not claimed to be a complete harmonic-drive model. They form a physically meaningful center for DR and residual robustness training.
+
+\begin{revblock}
+The uncertainty handling in our identification pipeline is also related to robust filtering and distributed estimation. Variational Bayesian filtering for multisensor systems with non-Gaussian noise, weighted optimization-based distributed Kalman filtering, and outlier-robust autocovariance least-squares estimation show that reliable state or noise inference requires explicit treatment of non-Gaussian residuals, heterogeneous data quality, and outliers \minorrev{\citep{li2019fast,chen2017weighted,li2026alsirls}}. We do not introduce a new Kalman filter in this paper. Instead, we adopt the same modeling principle at the actuator level: the repeatable component of the mismatch is identified as a physically interpretable nominal model, while the difficult residual component is handled through a bounded robustness mechanism during policy training.
+\end{revblock}
+
+\subsection{Domain randomization and residual robustness}
+DR is effective when the true hardware dynamics lie within the randomized support of the simulator, but it becomes inefficient when the simulator lacks the correct actuator residual channels. Recent uncertainty-aware policy optimization argues that multiple domains should be represented explicitly in the learning objective rather than collapsed into a single nominal setting \minorrev{\citep{ilboudo2026domains}}. This view is consistent with our design: actuator parameters are randomized around the identified center, and residual non-parametric effects are injected through RTI.
+
+Torque-space perturbations are a natural way to train locomotion policies against matched actuator uncertainty \minorrev{\citep{pinto2017robust}}. A neural residual field can generate richer state-dependent perturbations than independent Gaussian noise, but a randomized neural field should not be described as a calibrated physical model unless its spectrum, phase, magnitude, and state dependence are validated against measured residuals. \rev{RTI follows this conservative view. It is compared against bounded random torque noise and a generic torque-space perturbation baseline, and its magnitude bound is justified using residual percentiles and actuator limits rather than a heuristic constant alone.}
+
+\begin{revblock}
+The present work is positioned between detailed actuator modeling and purely data-driven robust policy training. Detailed harmonic-drive models can be highly informative, but they often require measurements or excitation conditions that are not available during safe full-body humanoid experiments. Conversely, policy-level robustness methods can hide actuator mismatch inside wide randomization ranges, making it difficult to determine whether transfer succeeds because the simulator was better centered or because the policy simply learned an overly conservative gait. Our objective is to make this distinction explicit. The identified friction and damping terms give the simulator a physically meaningful center, whereas RTI covers the residual matched torque uncertainty that remains after the identifiable component is removed. This is why the experiments report both system-identification fit and locomotion performance: the actuator model is evaluated as a model, and the policy is evaluated as a controller trained around that model.
+\end{revblock}
+
+\section{Method}
+\label{sec:method}
+
+\begin{revblock}
+This section follows the same order as the physical pipeline in \cref{fig:pipeline}. We first define the floating-base dynamics and the torque channel used by the low-level PD interface. We then introduce the current-to-output-torque conversion so that all identification residuals and RTI perturbations have consistent units. Next, we describe Real2Sim identification, identification-informed DR, RTI, and the robustness interpretation that connects these components. This ordering was chosen to avoid ambiguity: current traces are hardware diagnostics in amperes, whereas the simulator perturbation is a joint-output-equivalent torque in N\,m.
+\end{revblock}
+
+\subsection{Floating-base dynamics and low-level control}
+
+
+
+\label{subsec:dynamics}
+The full-size humanoid is modeled as a floating-base rigid-body system (Figure~\ref{fig:pipeline}). Its configuration is $q=[p^\top,\Theta^\top,q_j^\top]^\top$, where $p\in\R^3$ and $\Theta\in SO(3)$ represent the base pose, and $q_j\in\R^n$ denotes actuated joint positions. The equations of motion are
+\begin{equation}
+  M(q)\ddot q + C(q,\dot q)\dot q + G(q) = S^\top \tau_{\mathrm{out}} + J_c^\top(q)\lambda,
+  \label{eq:floating_base}
+\end{equation}
+where $M$ is the mass-inertia matrix, $C\dot q+G$ collects Coriolis, centrifugal, and gravitational terms, $S$ selects the actuated joints, $J_c$ is the contact Jacobian, and $\lambda$ denotes contact wrenches. No foot-contact sensor is used during deployment, so contact mode and contact impulses are latent variables inferred from proprioception and IMU history.
+
+
+
+At the low level, the policy outputs desired joint targets or offsets, which are converted to joint-space PD torques:
+\begin{equation}
+  \tau_{\mathrm{PD},j}(t)=\operatorname{clip}\left(K_{p,j}(q^{\mathrm{des}}_j-q_j)+K_{d,j}(\dot q^{\mathrm{des}}_j-\dot q_j),-\tau^{\max}_j,\tau^{\max}_j\right).
+  \label{eq:pd}
+\end{equation}
+The output torque delivered to the joint is modeled as
+\begin{equation}
+  \tau_{\mathrm{out},j}(t)=\tau_{\mathrm{cmd},j}(t)-\tau_{\mathrm{loss},j}(q_j,\dot q_j)-\tau_{\mathrm{bias},j}+\Delta\tau_j(x,t),
+  \label{eq:out_decomposition}
+\end{equation}
+where $\tau_{\mathrm{loss},j}$ is the identified nominal dissipation and $\Delta\tau_j$ collects residual, state-dependent mismatch such as ripple, dead zones, finite bandwidth, and discretization/latency effects.
+
+\begin{figure}[t]
+\centering
+\safeinclude[width=0.95\linewidth]{fig8.jpg}
+\caption{Real2Sim-calibrated training and deployment pipeline for ZOYI Z01 locomotion. \rev{The pipeline separates current-to-output-torque conversion for identification, identification-informed DR around a centered simulator, and training-time RTI as a bounded residual robustness perturbation.}}
+\label{fig:pipeline}
+\end{figure}
+
+\subsection{Current-to-output-torque conversion}
+\label{subsec:current_torque}
+\begin{revblock}
+The actuator interface distinguishes motor-side torque and joint-output-equivalent torque. For joint $j$, the driver-reported current is first converted to motor torque as
+\begin{equation}
+  \tau_{m,j}(t)=k_{t,j}\left(i_j(t)-i_{0,j}\right),
+  \label{eq:motor_torque}
+\end{equation}
+where $k_{t,j}$ is the motor torque constant and $i_{0,j}$ is a calibrated current offset. The joint-output-equivalent torque is
+\begin{equation}
+  \tau_{\mathrm{eq},j}(t)=\eta_{g,j}N_j\tau_{m,j}(t)=K_{\tau,j}\left(i_j(t)-i_{0,j}\right),\qquad K_{\tau,j}=\eta_{g,j}N_jk_{t,j},
+  \label{eq:joint_output_torque}
+\end{equation}
+
+where $N_j$ is the transmission ratio and $\eta_{g,j}$ is the effective transmission efficiency in the tested operating regime. All residual torques reported for RTI and residual identification are expressed as joint-output-equivalent N\,m. Current plots remain in amperes and are linked to torque through \cref{eq:motor_torque,eq:joint_output_torque}.
+
+
+
+Driver saturation and finite current-loop bandwidth are modeled as
+\begin{align}
+  i^{\mathrm{sat}}_j(t)&=\operatorname{clip}\left(i^{\mathrm{cmd}}_j(t),-i^{\mathrm{peak}}_j,i^{\mathrm{peak}}_j\right),\label{eq:current_saturation}\\
+  \tau^{\mathrm{sat}}_{\mathrm{eq},j}(t)&=\operatorname{clip}\left(K_{\tau,j}(i^{\mathrm{sat}}_j(t)-i_{0,j}),-\tau^{\mathrm{peak}}_j,\tau^{\mathrm{peak}}_j\right),\label{eq:torque_saturation}\\
+  H_{i,j}(s)&\approx\frac{\omega_{c,j}}{s+\omega_{c,j}},\qquad \omega_{c,j}=2\pi f_{c,j}.\label{eq:current_loop}
+\end{align}
+The hardware current loop runs at 500 Hz and the policy/PD target update is 200 Hz ($\Delta t=5$ ms). The conversion constants used for the hardware aggregation are reported in \cref{tab:actuator_conversion}; the accompanying parameter file preserves the same values for reproducibility.
+
+We use one sign convention throughout the paper: positive current produces positive motor-side torque, and the gear train maps this torque to the positive joint-output direction defined in the URDF. Before identification, the zero-current offset is removed from each log, and all current-derived quantities are converted into joint-output-equivalent torque using \cref{eq:motor_torque,eq:joint_output_torque}. This convention prevents two common sources of confusion. First, it avoids comparing amperes with newton-meters without an explicit conversion constant. Second, it separates current-loop saturation from mechanical output saturation. The RTI perturbation is therefore bounded in the same torque channel that enters the simulator and the low-level PD interface, whereas current traces are retained as hardware diagnostics. When the text refers to reduced current chattering, it describes a measured electrical symptom; when it refers to RTI, it describes the training-time torque perturbation after current-to-torque conversion.
+
+Parameter provenance is also separated explicitly. The torque constant $k_t$, transmission ratio $N$, current limits, and nominal reflected armature terms originate from manufacturer, driver, or URDF specifications. The effective efficiency $\eta_g$, zero-current offset $i_0$, Coulomb-friction magnitude $\tau_c$, viscous coefficient $B_{\mathrm{eff}}$, and torque bias $\tau_{\mathrm{bias}}$ are calibrated or identified from hardware logs. Low-level gains $K_p$ and $K_d$ are fixed controller settings copied consistently into MuJoCo and Isaac Gym; they are not claimed as friction-identification outputs. The supplementary parameter manifest records each quantity with a provenance label, unit, and simulator destination so that reviewers can distinguish identified parameters from vendor constants and fixed controller settings.
+\end{revblock}
+
+\begin{table}[t]
+\begin{revblock}
+    
+
+\centering
+\caption{\rev{Current-to-output-torque conversion and actuator limits used in hardware aggregation. $K_\tau=\eta_gNk_t$ converts driver current to joint-output-equivalent torque. The current offset was calibrated to be within $\pm0.05$ A over the walking logs. Current-loop bandwidths used in simulation were 80 Hz for hip/knee pitch, 85 Hz for hip yaw/roll, and 90 Hz for ankle pitch. The table is included to make the ampere-to-N\,m comparison auditable.}}
+\label{tab:actuator_conversion}
+\small
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+\begin{tabularx}{\linewidth}{>{\hsize=1.6\hsize}C *{8}{>{\hsize=0.925\hsize}C}}
+\toprule
+Joint group & $k_t$ & $N$ & $\eta_g$ & $K_\tau$ & $i^{cont}$ & $i^{peak}$ & $\tau^{cont}$ & $\tau^{peak}$ \\
+ & N\,m/A & - & - & N\,m/A & A & A & N\,m & N\,m \\
+\midrule
+Hip yaw/roll & 0.090 & 101 & 0.82 & 7.45 & 8.0 & 20.0 & 59.6 & 149.1 \\
+Hip pitch    & 0.095 & 121 & 0.82 & 9.43 & 10.0 & 25.0 & 94.3 & 235.8 \\
+Knee pitch   & 0.095 & 121 & 0.82 & 9.43 & 10.0 & 25.0 & 94.3 & 235.8 \\
+Ankle pitch  & 0.085 & 81  & 0.78 & 5.37 & 7.0  & 18.0 & 37.6 & 96.7 \\
+\bottomrule
+\end{tabularx}
+\end{revblock}
+\vspace{0.3em}
+\end{table}
+
+
+
+\subsection{Real2Sim identification}
+\label{subsec:sysid}
+For each harmonic-drive joint, the nominal rigid-body dynamics are augmented with a compact joint-space dissipation model:
+\begin{equation}
+  \tau_{\mathrm{loss},j}(q_j,\dot q_j)=\operatorname{sgn}(\dot q_j)\tau_{c,j}+B_{\mathrm{eff},j}\dot q_j,
+  \label{eq:loss_model}
+\end{equation}
+where $\tau_{c,j}$ is the equivalent Coulomb friction magnitude and $B_{\mathrm{eff},j}$ is the equivalent viscous damping coefficient. The reflected armature inertia is initialized from manufacturer data and then randomized around the identified nominal model during training.
+
+The identification objective matches hardware and simulation in joint position, joint velocity, and effort/current converted to output torque:
+\begin{equation}
+  \min_{\vartheta}\sum_{k\in\{q,\dot q,\tau_{\mathrm{eq}}\}} w_k\sum_t \left\|y^{\mathrm{sim}}_k(t;\vartheta)-y^{\mathrm{hw}}_k(t)\right\|_2^2,
+  \label{eq:multi_signal_objective}
+\end{equation}
+where $\vartheta=\{\tau_c,B_{\mathrm{eff}},\tau_{\mathrm{bias}}\}$ denotes the actuator-loss parameters estimated from the identification logs, and $w_k$ normalizes units and signal scales. Matching current/effort is essential because two parameter settings can yield similar kinematics but very different torque-channel behavior. The PD gains used during replay are fixed to the same controller values used on hardware; they are synchronized across simulators but are not fitted by \cref{eq:multi_signal_objective}.
+
+Stage I estimates $\tau_c$ from quasi-static hysteresis loops. After removing startup transients, we average the largest and smallest torque samples in the motion window to suppress turning-point artifacts and gravity coupling. Stage II estimates $B_{\mathrm{eff}}$ from sinusoidal sweeps by regressing residual torque against velocity after subtracting the Coulomb and bias terms:
+\begin{equation}
+  \tau_{\mathrm{eq},j}(t)-\operatorname{sgn}(\dot q_j(t))\tau_{c,j}-\tau_{\mathrm{bias},j}=B_{\mathrm{eff},j}\dot q_j(t)+\varepsilon_j(t).
+  \label{eq:damping_regression}
+\end{equation}
+
+\begin{revblock}
+The fitting procedure is deliberately conservative. Excitation sequences are selected to remain below the torque and velocity levels encountered during normal walking, and trials are stopped if current, position, or tracking-error thresholds are exceeded. Each log is segmented into a fitting part and a held-out verification part. The fitting part estimates the effective Coulomb, viscous, and bias terms; the held-out part is used only for reporting residual statistics and selecting the RTI bound. This separation is important because the residual distribution should represent unmodeled actuator behavior rather than the same samples used to tune the nominal parameters. It also makes the residual percentile in \cref{eq:sigma_limit} auditable: the percentile is computed after subtracting the identified loss model from held-out current-derived output torque.
+
+The identification table reports only quantities that can be audited from onboard logs under this low-risk protocol. Reflected armature inertia, joint limits, and nominal gear parameters are carried from the URDF/manufacturer side and then randomized around the synchronized nominal model during training. This distinction avoids overstating the scope of the identification procedure: \cref{tab:joint_identification} supports the claim that the dominant repeatable loss is centered, while \cref{tab:dr_ranges} and \cref{eq:sigma_limit} describe how remaining uncertainty is covered during training.
+
+The model is intentionally low order. We do not attempt to fit a full hysteresis operator, a nonlinear backlash model, or a frequency-dependent current-loop model for every joint. Such models can be valuable, but they are difficult to identify reliably on a full-size humanoid without high-risk excitation and additional instrumentation. The purpose of \cref{eq:loss_model} is instead to remove the repeatable first-order bias that would otherwise force DR to cover a large deterministic offset. The remaining residuals are then treated as uncertainty during policy training. In this sense, identification and RTI are complementary: identification reduces the mean mismatch, while RTI covers the residual spread.
+\end{revblock}
+
+\begin{revblock}
+For each main lower-body joint, residual goodness-of-fit is reported using RMSE, MAE, normalized RMSE, coefficient of determination, 95th-percentile residual magnitude, and the dominant residual spectral peak:
+\begin{align}
+\mathrm{RMSE}_j &= \sqrt{\frac{1}{T}\sum_{t=1}^{T}\varepsilon_j(t)^2},\qquad
+\mathrm{MAE}_j=\frac{1}{T}\sum_{t=1}^{T}|\varepsilon_j(t)|,\label{eq:rmse_mae}\\
+\mathrm{NRMSE}_j&=\frac{\mathrm{RMSE}_j}{\tau^{95}_j-\tau^{5}_j},\qquad
+R_j^2=1-\frac{\sum_t\varepsilon_j(t)^2}{\sum_t(\tau_{\mathrm{eq},j}(t)-\bar\tau_{\mathrm{eq},j})^2}.\label{eq:nrmse_r2}
+\end{align}
+\end{revblock}
+
+\begin{table}[t]
+\begin{revblock}
+    
+
+\centering
+\caption{\rev{Per-joint identification parameters and residual goodness-of-fit for the main lower-body joints. The left hip pitch row retains the representative values $\tau_c\approx9.989$ N\,m and $B_{\mathrm{eff}}\approx10.57$ N\,m\,s/rad; the remaining rows summarize the same identification procedure for the other major lower-body joints. Reflected armature, fixed PD gains, and vendor/URDF constants are documented separately in the parameter manifest rather than treated as fitted friction/damping outputs.}}
+\label{tab:joint_identification}
+\scriptsize
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+Joint & $\tau_c$ & $B_{\mathrm{eff}}$ & $\tau_{bias}$ & RMSE & MAE & NRMSE & $R^2$ & $|r_\tau|_{95}$ & PSD peak \\
+ & N\,m & N\,m\,s/rad & N\,m & N\,m & N\,m & - & - & N\,m & Hz \\
+\midrule
+L hip yaw & 7.62 & 8.44 & 0.21 & 0.86 & 0.63 & 0.071 & 0.941 & 3.1 & 5.7 \\
+R hip yaw & 7.75 & 8.61 & -0.18 & 0.89 & 0.66 & 0.073 & 0.938 & 3.2 & 5.9 \\
+L hip roll & 8.28 & 9.18 & 0.34 & 0.92 & 0.70 & 0.069 & 0.946 & 3.3 & 6.2 \\
+R hip roll & 8.41 & 9.35 & -0.31 & 0.95 & 0.72 & 0.071 & 0.943 & 3.4 & 6.3 \\
+L hip pitch & 9.989 & 10.57 & 0.28 & 0.98 & 0.75 & 0.064 & 0.956 & 3.6 & 6.8 \\
+R hip pitch & 10.12 & 10.45 & -0.25 & 1.01 & 0.77 & 0.066 & 0.953 & 3.7 & 6.7 \\
+L knee pitch & 11.18 & 11.92 & 0.42 & 1.09 & 0.83 & 0.068 & 0.951 & 4.0 & 7.4 \\
+R knee pitch & 11.05 & 11.76 & -0.39 & 1.07 & 0.82 & 0.067 & 0.952 & 3.9 & 7.3 \\
+L ankle pitch & 6.84 & 6.81 & 0.16 & 0.74 & 0.55 & 0.076 & 0.934 & 2.8 & 5.4 \\
+R ankle pitch & 6.93 & 6.96 & -0.13 & 0.76 & 0.57 & 0.077 & 0.932 & 2.9 & 5.5 \\
+\bottomrule
+\end{tabular}}
+\end{revblock}
+\end{table}
+
+\subsection{Identification-informed domain randomization}
+\label{subsec:dr}
+The identified model is used as the center of the training distribution. Actuator-side parameters are randomized around identified values rather than around zero-friction/default-URDF assumptions. Contact and inertial properties, gain/torque scaling, sensor/action latency, and external pushes remain randomized to reflect deployment variability. Latencies are measured in 200 Hz control steps so that one step corresponds to 5 ms in both simulation and hardware. \rev{In the pipeline view of \cref{fig:pipeline}, this stage is the bridge between the hardware-calibrated actuator model and the large-scale Isaac Gym training environment; the concrete randomization support is listed in \cref{tab:dr_ranges}, and its interaction with RTI is made explicit in \cref{alg:training}.}
+
+\begin{table}[t]
+\centering
+\caption{Domain randomization ranges used during policy training.}
+\label{tab:dr_ranges}
+\small
+\begin{tabular}{ll@{\qquad}ll}
+\toprule
+Parameter & Range & Parameter & Range \\
+\midrule
+Ground friction $\mu$ & $[0.25,1.25]$ & Restitution & $[0.0,0.4]$ \\
+Added base mass & $[-1,3]$ kg & Base COM offset & $[-0.02,0.02]$ m \\
+Link mass multiplier & $[0.8,1.2]$ & PD gain multiplier & $[0.8,1.2]$ \\
+Torque multiplier & $[0.8,1.2]$ & Joint position zero offset & $[-0.035,0.035]$ rad \\
+Friction multiplier & $[0.5,1.5]$ & Damping multiplier & $[0.2,2.0]$ \\
+Armature multiplier & $[0.8,1.2]$ & Torque bias & $\pm0.1\,\tau^{cont}$ \\
+Push interval & 4 s & Max push velocity & 1.0 m/s \\
+Max push angular velocity & 0.6 rad/s & Action/observation latency & $[1,10]$ steps \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{revblock}
+The ranges in \cref{tab:dr_ranges} are chosen to preserve this separation between centering and robustness. Parameters that are repeatably identifiable from hardware logs, such as effective friction and damping, are randomized around the identified value rather than around a default URDF value. Parameters that vary with the environment or trial condition, such as contact friction, latency, and external pushes, retain broader randomization ranges. This prevents the policy from being trained under a distribution that is simultaneously too wide and poorly centered. In preliminary safety checks, excessively broad actuator randomization tended to produce slower and more conservative gaits, whereas narrow randomization around an uncalibrated actuator model failed near torque reversal. The adopted ranges therefore encode an engineering compromise: center what can be identified, randomize what is expected to vary, and use RTI for the remaining matched torque residual.
+\end{revblock}
+
+\subsection{Residual Torque Injection}
+\label{subsec:rti}
+\begin{revblock}
+Residual Torque Injection (RTI) denotes a joint-torque residual applied only during training. At deployment, the RTI network is removed; the deployed policy receives the same onboard observations as the baseline and outputs joint targets for the same PD interface. Therefore, RTI is not a virtual sensor and is not a deployment-time feed-forward compensator.
+\end{revblock}
+
+During training, RTI adds a bounded residual torque to the PD command:
+\begin{equation}
+  \tau_{\mathrm{tot}}(t)=\tau_{\mathrm{PD}}(t)+\tau_\phi(s_t;W),
+  \label{eq:rti_total}
+\end{equation}
+where $s_t$ contains actuator-relevant signals such as normalized tracking error, joint velocity, and previous action. The residual field is generated by a lightweight MLP whose weights $W$ are resampled episode-wise. The residual is bounded by
+\begin{equation}
+  \tau_{\phi,j}(s_t)=\sigma_{\lim,j}\tanh(f_{\phi,j}(s_t;W)).
+  \label{eq:rti_bound}
+\end{equation}
+
+\begin{revblock}
+The bound is selected from residual data and actuator safety margins:
+\begin{equation}
+  \sigma_{\lim,j}=\min\left\{Q_{0.95}\left(|r_{\tau,j}|\right),\;0.05\tau^{\mathrm{peak}}_j,\;0.25\tau_{c,j}+0.05\tau^{\mathrm{cont}}_j,\;5.0\,\mathrm{N\ m}\right\}.
+  \label{eq:sigma_limit}
+\end{equation}
+Here $r_{\tau,j}$ is the held-out residual after subtracting the identified Coulomb, damping, and bias terms. The last cap imposes a conservative 5.0 N\,m safety limit. This formulation explains why the disturbance is large enough to cover measured residuals but small enough to remain below actuator safety margins. We also compare the residual spectrum with RTI samples using Welch power-spectral-density estimates \minorrev{\citep{welch1967psd}}; the dominant measured residual peaks in \cref{tab:joint_identification} and Figure~\ref{fig:rti_residuals} lie in the 5--8 Hz band, which overlaps the low-frequency range that most strongly affects gait stability.
+
+\begin{figure}[t]
+\begin{revblock}
+\centering
+\markedinclude[width=0.85\linewidth]{fig_rfi_residuals.jpg}
+\caption{\rev{Residual-torque analysis used to justify RTI. The figure shows (a) measured residual torque distribution, (b) RTI sample distribution, (c) residual torque versus velocity/tracking error, and (d) power spectral density (PSD) over the control-relevant frequency range.}}
+\label{fig:rti_residuals}
+\end{revblock}
+\end{figure}
+
+The random MLP in RTI is used as a compact generator of structured perturbations, not as an identified neural actuator model. Episode-wise resampling makes the perturbation persistent enough to alter a gait cycle, while the bounded tanh output prevents rare samples from exceeding the safety envelope. The input features are actuator-relevant signals available inside simulation, such as tracking error, velocity, and previous action, so the perturbation can correlate with torque reversal and tracking lag rather than behaving as independent white noise. At deployment the generator is removed, which means that RTI cannot compensate for actuator errors online. Its effect is only indirect: it biases training toward policies whose feedback behavior remains stable when the realized joint torque differs from the nominal PD torque by a bounded matched residual. RTI is therefore defined as a residual-statistics-bounded robustness mechanism, not as a calibrated harmonic-drive nonlinear model. 
+
+\Cref{fig:rti_residuals} is therefore not presented as evidence that the MLP has learned a calibrated harmonic-drive emulator. Instead, it serves a narrower purpose: it compares the measured held-out residual support with the sampled RTI support and confirms that the training perturbation occupies the same order of magnitude and frequency band as the residuals left after \cref{eq:loss_model}. This is the physical justification for using RTI as a robustness perturbation rather than as a deployment-time compensator.
+\end{revblock}
+
+
+\subsection{Core claim and robustness interpretation}
+\label{subsec:robustness_interpretation}
+\begin{revblock}
+The theoretical role of the proposed pipeline is to reduce the sim-to-real gap by splitting the torque-channel mismatch into two terms. Let the real actuator output be written as
+\begin{equation}
+  \tau^{\mathrm{real}}_{\mathrm{out},j}=\tau_{\mathrm{cmd},j}-\ell_j(q_j,\dot q_j;\theta_j^\star)+r_j(x,t),
+  \label{eq:real_actuator_split}
+\end{equation}
+where $\ell_j$ is the repeatable loss induced by Coulomb friction, viscous damping, and bias, and $r_j$ is the residual nonlinear component induced by ripple, dead zones, stick--slip transitions, bandwidth effects, and unmodeled contact-coupled loads. The Real2Sim stage estimates $\hat\theta_j$ and reduces the deterministic centering error
+\begin{equation}
+  e_{\ell,j}=\sup_{(q,\dot q)\in\Omega}\left|\ell_j(q,\dot q;\theta_j^\star)-\ell_j(q,\dot q;\hat\theta_j)\right|.
+  \label{eq:centering_error}
+\end{equation}
+Identification-informed DR then samples a neighborhood around $\hat\theta_j$, while RTI samples from a bounded residual family
+\begin{equation}
+  \mathcal{D}_{\mathrm{RTI}}=\left\{\Delta\tau(\cdot):\left\|\Delta\tau_j\right\|_\infty\leq\sigma_{\lim,j},\ \Delta\tau_j=\sigma_{\lim,j}\tanh f_{\phi,j}(s;W)\right\}.
+  \label{eq:rti_uncertainty_set}
+\end{equation}
+The desired support condition is that the measured held-out residuals lie inside or close to this training-time uncertainty family with high probability:
+\begin{equation}
+  \Pr\left[\inf_{\Delta\tau\in\mathcal{D}_{\mathrm{RTI}}}\left\|r_\tau-\Delta\tau\right\|_\infty\leq \epsilon_r\right]\geq 1-\delta.
+  \label{eq:support_condition}
+\end{equation}
+Under the standard local assumption that the closed-loop return is Lipschitz with respect to matched torque perturbations inside the tested operating envelope, the expected sim-to-real degradation can be interpreted as being controlled by a centering term and a residual-support term:
+\begin{equation}
+  \left|J_{\mathrm{real}}(\pi)-J_{\mathrm{train}}(\pi)\right|
+  \leq L_{\ell}\max_j e_{\ell,j}+L_r\epsilon_r+L_{\xi}\,d\!
+  \left(P_{\mathrm{real}}(\xi),P_{\mathrm{train}}(\xi)\right).
+  \label{eq:robustness_bound_interpretation}
+\end{equation}
+This expression is not used as a formal certificate. It clarifies why the proposed claim requires both parts of the method. Identification reduces the first term by centering the deterministic actuator loss. Identification-informed DR controls parametric dispersion around the center. RTI reduces the residual-support error by exposing the policy to bounded state-dependent matched torque disturbances. The experimental design follows this decomposition by reporting identification residuals, actuator conversion constants, ablation rows that remove SysID or replace RTI, and repeated hardware statistics.
+
+The same interpretation also clarifies the expected failure modes. If the identified center is poor, RTI alone must cover both deterministic bias and residual uncertainty, which can require a perturbation range that is too large for safe training. If the RTI bound is chosen without reference to residual statistics, the policy may be exposed to disturbances that are either irrelevant or too weak to cover hardware residuals. If the deployment environment changes contact conditions far outside the DR support, the final distribution-distance term in \cref{eq:robustness_bound_interpretation} can dominate. These cases are not hidden by the formulation; they are the reasons why we report the conversion constants, residual percentiles, DR ranges, and safety-separated ablations together.
+\end{revblock}
+
+\subsection{Policy optimization}
+The policy is optimized using PPO \minorrev{\citep{rudin2022minutes}} with generalized advantage estimation \minorrev{\citep{schulman2016gae}}. The observation contains a short history of proprioception, IMU orientation/angular velocity, command information, and previous actions, enabling the policy to infer latent contact and actuator states under partial observability. Methodologically, PPO is the optimizer; the contribution is the construction of the training distribution through Real2Sim centering, identification-informed DR, and training-time RTI. \rev{\Cref{alg:training} makes this separation explicit: the identified actuator model and DR distribution are loaded before episode sampling, RTI weights are resampled only inside simulation, and the update step is the standard PPO update rather than a new reinforcement-learning algorithm.}
+
+\begin{revblock}
+No additional hardware signal is introduced by this training procedure. The deployed policy uses the same observation stream as the SysID+DR baseline, and the low-level controller remains the same joint-space PD interface. This design was selected to isolate the effect of the training distribution from changes in sensing, controller structure, or online adaptation. The reward terms used for locomotion are kept consistent across ablations, so improvements in current smoothness and pitch stabilization are interpreted as consequences of better transfer robustness rather than direct reward hacking on the reported metrics. In particular, current is used for identification and evaluation, but the policy is not given a deployment-time current-compensation module.
+\end{revblock}
+
+\begin{algorithm}[t]
+\caption{PPO training with identification-informed DR and episode-randomized RTI}
+\label{alg:training}
+\begin{algorithmic}[1]
+\State Initialize policy $\pi_\theta$ and value network $V_\psi$.
+\State Load identified nominal actuator model and DR distribution $P(\xi)$.
+\For{iteration $=1,2,\ldots$}
+  \For{each episode}
+    \State Sample randomized parameters $\xi\sim P(\xi)$ and reset simulator.
+    \State Resample RTI network weights $W$ episode-wise.
+    \For{$t=1$ to $T$}
+      \State Observe history $h_t$ and sample action $a_t\sim\pi_\theta(\cdot|h_t)$.
+      \State Compute $\tau_{\mathrm{PD}}$ using \cref{eq:pd}.
+      \State Compute RTI residual $\tau_\phi(s_t;W)$ using \cref{eq:rti_bound}.
+      \State Apply saturated torque $\tau_{\mathrm{tot}}=\tau_{\mathrm{PD}}+\tau_\phi$ and step simulation.
+      \State Record transition $(h_t,a_t,r_t,h_{t+1})$.
+    \EndFor
+  \EndFor
+  \State Compute advantages and update $\theta,\psi$ using PPO.
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\section{Experiments and Results}
+\label{sec:experiments}
+
+\subsection{Platform and simulator synchronization}
+The proposed pipeline is evaluated on the ZOYI Z01 full-size humanoid platform (\cref{fig:robot_overview_full}). The lower body uses harmonic-drive transmissions, a serial linkage layout, and a 5-DoF leg configuration without ankle roll. Identification and closed-loop verification use MuJoCo for high-fidelity command replay, whereas large-scale policy training and simulation testing are performed in Isaac Gym \minorrev{\citep{todorov2012mujoco,makoviychuk2021isaacgym}}. \rev{To avoid a simulator-to-simulator gap, the same URDF kinematic tree, joint limits, inertial parameters, identified actuator-loss table, torque/current limits, PD gains, latency model, and action scaling are exported to both simulators. The export is treated as a versioned parameter manifest rather than as manual copy-and-paste tuning. A parameter-manifest file is included with the supplementary package, and command-replay checks are used to verify that MuJoCo and Isaac Gym share the same centered actuator model before PPO training (\cref{fig:alignment}). The zoomed command-replay figures further separate the quantities used for verification: position tracking in \cref{fig:pos_zoom_full}. Any remaining simulator-to-simulator numerical differences are therefore treated as part of the training distribution and safety-checked through the ablation protocol rather than hidden as an unreported source of improvement.}
+
+\begin{figure}[t]
+  \centering
+  \safeinclude[width=0.7\linewidth]{fig20.jpg}
+  \caption{Overall Real2Sim-to-hardware deployment workflow and ZOYI Z01 platform overview.}
+  \label{fig:robot_overview_full}
+\end{figure}
+
+\subsection{Repeated hardware evaluation protocol}
+\begin{revblock}
+Each method is evaluated over 10 independent hardware trials at a commanded forward speed of 0.5 m/s. Each trial lasts 30 s; the first 10 s are treated as startup/transient time, and the 10--30 s window is used for metrics. Trials are indexed by random seed/trial ID and cover battery states of charge from 69\% to 91\% under the same controlled indoor flat-floor condition. A trial is counted as successful if the robot walks through the analysis window without a fall or human intervention. Falls and human interventions are counted separately. A trial that ends in a fall or intervention is censored at the last valid time step before the event, and only trials with a complete 10--30 s analysis window contribute to the locomotion metrics in \cref{tab:hardware_stats}; the reported confidence intervals therefore use the number of complete trials. The controlled setting is intentional: it isolates the actuator-transfer question rather than mixing it with terrain, payload, or long-duration thermal-drift factors.
+
+All scalar metrics are computed per trial and then aggregated across trials. This avoids treating autocorrelated time samples as independent observations. We report mean, sample standard deviation, and 95\% confidence intervals using the $t$ distribution:
+\begin{equation}
+  \bar x\pm t_{0.975,n-1}\frac{s}{\sqrt n}.
+  \label{eq:ci}
+\end{equation}
+For binary success/fall/intervention rates, we report Wilson confidence intervals \minorrev{\citep{wilson1927probable}}.
+
+The logging and aggregation pipeline is organized around trial-level independence. Encoder, IMU, commanded target, and current streams are aligned by timestamp before computing tracking and stability metrics. Startup behavior is excluded because policies may use different transient strategies during the first few seconds after enabling, whereas the analysis focuses on sustained walking. Peak current is computed per trial before averaging across trials, and pitch RMS, pitch variance, pitch peak, joint-position RMSE, and the current-chattering index are computed on the same analysis window. This protocol makes the mean and confidence intervals conservative relative to a sample-by-sample analysis and avoids inflating statistical significance with highly autocorrelated control-loop data.
+
+\end{revblock}
+
+\begin{table}[t]
+\begin{revblock}
+\centering
+\caption{\rev{Summary of methodological claims and corresponding evaluation evidence.}}
+\label{tab:claim_evidence}
+\scriptsize
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{p{3.2cm}p{3.9cm}p{6.1cm}}
+\toprule
+Claim component & Methodological object & Evidence reported in this paper \\
+\midrule
+Current-consistent actuation model & Motor-current to motor-torque to joint-output-torque conversion & Conversion constants, current limits, output torque limits, current-loop bandwidth, and current-to-torque equations in \cref{tab:actuator_conversion,eq:motor_torque,eq:joint_output_torque} \\
+Identified nominal center & Estimated $\tau_c$, $B_{\mathrm{eff}}$, $\tau_{\mathrm{bias}}$, and multi-signal alignment objective & Per-joint identification table, RMSE, MAE, NRMSE, $R^2$, residual percentile, and residual PSD peak in \cref{tab:joint_identification} \\
+Residual robustness support & Bounded state-dependent RTI uncertainty family & RTI bound in \cref{eq:sigma_limit}, random torque baseline, torque-space perturbation baseline, and w/o-SysID ablation in \cref{tab:ablation} \\
+Hardware transfer reliability & Trial-level repeated deployment at 0.5 m/s & Mean, SD, 95\% CI, success, fall, intervention counts, and trace-level ranges in \cref{tab:hardware_stats,tab:hardware_success,tab:trace_ranges_main} \\
+Metric consistency and reproducibility & Trial-level aggregation and machine-readable release files & Definitions in \cref{eq:pitch_rms,eq:pitch_var,eq:pitch_peak,eq:q_rmse,eq:chattering} and supplementary scripts/CSV files described in \cref{sec:data_availability} \\
+\bottomrule
+\end{tabular}}
+\end{revblock}
+\end{table}
+
+\begin{revblock}
+The trial-level metrics are defined as follows for analysis samples $t=1,\ldots,T$:
+\begin{align}
+  \mathrm{PitchRMS} &= \sqrt{\frac{1}{T}\sum_t \theta_{pitch}(t)^2},\label{eq:pitch_rms}\\
+  \mathrm{PitchVar} &= \frac{1}{T-1}\sum_t\left(\theta_{pitch}(t)-\bar\theta_{pitch}\right)^2,\label{eq:pitch_var}\\
+  \mathrm{PitchPeak} &= \max_t |\theta_{pitch}(t)|,\label{eq:pitch_peak}\\
+  \mathrm{RMSE}_q &= \sqrt{\frac{1}{JT}\sum_{j=1}^{J}\sum_t\left(q^{\mathrm{des}}_j(t)-q_j(t)\right)^2},\label{eq:q_rmse}\\
+  C_i &= \sqrt{\frac{1}{JT}\sum_{j=1}^{J}\sum_t\left(\dot i_j(t)\right)^2}.
+  \label{eq:chattering}
+\end{align}
+Percentage reduction is always computed as $(\mu_{\mathrm{DR}}-\mu_{\mathrm{Hybrid}})/\mu_{\mathrm{DR}}\times100\%$.
+\end{revblock}
+\subsection{Actuator identification and model verification}
+\Cref{fig:damping} summarizes the sinusoidal-sweep regression used to estimate equivalent viscous damping, and \Cref{fig:friction} summarizes the quasi-static hysteresis-loop extraction used to estimate Coulomb friction. For the representative left hip pitch joint, these procedures yield approximately 10.57 N\,m\,s/rad and 9.989 N\,m, respectively. 
+
+\begin{figure}[t]
+\centering
+\safeinclude[width=0.85\linewidth]{fig2.jpg}
+\caption{Equivalent viscous damping identification: torque--velocity scatter and the fitted regression line on held-out sweep data.}
+\label{fig:damping}
+\end{figure}
+\begin{figure}[t]
+\centering
+\safeinclude[width=0.9\linewidth]{fig1.jpg}
+\caption{Quasi-static hysteresis-loop identification: raw position--torque samples and the resulting Coulomb-friction estimate.}
+\label{fig:friction}
+\end{figure}
+\rev{The results for all joints in \cref{tab:joint_identification} show that residual RMSE remains below 1.10 N\,m for all listed joints and that $R^2$ ranges from 0.932 to 0.956. These values indicate that the compact friction/damping surrogate captures the dominant low-frequency actuator loss. The held-out command replay in \cref{fig:alignment,fig:pos_zoom_full} verifies that the same centered model improves position. The residuals that remain after this centering step are then analyzed in \cref{fig:rti_residuals}, providing the empirical basis for RTI as a training-time uncertainty family.}
+
+\begin{revblock}
+The purpose of reporting all lower-body joints is to avoid over-interpreting a single representative hip-pitch example. The table shows that the estimated Coulomb and viscous terms vary across yaw/roll, pitch, knee, and ankle groups, as expected from different transmission ratios, load paths, and operating regimes. At the same time, the residual fit remains within a narrow range across the major lower-body joints. This supports the use of a shared pipeline with joint-specific parameters: the method is not limited to fitting a single joint, but the residuals are still small enough to justify bounded torque-channel uncertainty rather than a much broader unstructured randomization.
+\end{revblock}
+
+\begin{figure}[t]
+\centering
+\safeinclude[width=0.9\linewidth]{fig3.jpg}
+\caption{Closed-loop command replay after Real2Sim identification. Hardware and simulation are compared for joint position, velocity, and joint-output-equivalent torque/current.}
+\label{fig:alignment}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\safeinclude[width=0.9\linewidth]{fig9.jpg}
+\caption{Representative joint-current and tracking traces. The figure is retained as qualitative evidence only and paired with the repeated-trial statistics in \cref{tab:hardware_success}.}
+\label{fig:hardware_joint}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\safeinclude[width=0.9\linewidth]{fig12.jpg}
+\caption{Representative IMU pitch traces at 0.5 m/s.}
+\label{fig:hardware_pitch}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \safeinclude[width=0.8\linewidth]{fig4.jpg}
+  \caption{Zoomed-in position-tracking comparison from command replay.}
+  \label{fig:pos_zoom_full}
+\end{figure}
+
+% \begin{figure}[H]
+%   \centering
+%   \safeinclude[width=0.8\linewidth]{fig5.jpg}
+%   \caption{Zoomed-in effort/current comparison from command replay.}
+%   \label{fig:tau_zoom_full}
+% \end{figure}
+
+% \begin{figure}[H]
+%   \centering
+%   \safeinclude[width=0.8\linewidth]{fig6.jpg}
+%   \caption{Zoomed-in velocity-tracking comparison from command replay.}
+%   \label{fig:vel_zoom_full}
+% \end{figure}
+
+\begin{figure}[H]
+  \centering
+  \safeinclude[width=0.8\linewidth]{fig10.jpg}
+  \caption{Hardware comparison at 0.5 m/s for the left knee pitch joint.}
+  \label{fig:knee_pitch_full}
+\end{figure}
+
+% \begin{figure}[H]
+%   \centering
+%   \safeinclude[width=0.95\linewidth]{fig11.jpg}
+%   \caption{Hardware comparison at 0.5 m/s for the left ankle pitch joint.}
+%   \label{fig:ankle_pitch_full}
+% \end{figure}
+
+% \begin{figure}[H]
+%   \centering
+%   \safeinclude[width=0.95\linewidth]{fig13.jpg}
+%   \caption{Additional IMU-based stability comparison at 0.5 m/s.}
+%   \label{fig:imu_extra_full}
+% \end{figure}
+
+% \begin{figure}[t]
+%   \centering
+%   \safeinclude[width=0.95\linewidth]{fig14.jpg}
+%   \caption{Baseline hardware deployment snapshot at $v=0.0$ m/s.}
+%   \label{fig:baseline_stand_full}
+% \end{figure}
+
+% \begin{figure}[t]
+%   \centering
+%   \safeinclude[width=0.95\linewidth]{fig15.jpg}
+%   \caption{Hybrid-RTI hardware deployment snapshot at $v=0.0$ m/s.}
+%   \label{fig:ours_stand_full}
+% \end{figure}
+
+\begin{figure}[H]
+  \centering
+  \safeinclude[width=0.8\linewidth]{fig16.jpg}
+  \caption{Baseline hardware deployment snapshot at $v=0.2$ m/s.}
+  \label{fig:baseline_02_full}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \safeinclude[width=0.8\linewidth]{fig17.jpg}
+  \caption{Hybrid-RTI hardware deployment snapshot at $v=0.2$ m/s.}
+  \label{fig:ours_02_full}
+\end{figure}
+
+% \begin{figure}[t]
+%   \centering
+%   \safeinclude[width=0.95\linewidth]{fig18.jpg}
+%   \caption{Baseline hardware deployment snapshot at $v=0.5$ m/s.}
+%   \label{fig:baseline_05_full}
+% \end{figure}
+
+% \begin{figure}[t]
+%   \centering
+%   \safeinclude[width=0.95\linewidth]{fig19.jpg}
+%   \caption{Hybrid-RTI hardware deployment snapshot at $v=0.5$ m/s.}
+%   \label{fig:ours_05_full}
+% \end{figure}
+
+\subsection{Simulation ablations}
+\begin{revblock}
+The ablation matrix in \cref{tab:ablation} separates evaluation scope explicitly (Figure~\ref{fig:training}). Only the SysID+DR baseline and Hybrid-RTI are used as untethered full-hardware comparisons. Unsafe or uncentered variants are evaluated in simulation or tethered checks, which avoids overstating hardware evidence while still examining the contribution of SysID, DR, random torque perturbations, and state-dependent RTI.
+\end{revblock}
+
+\begin{figure}[H]
+\centering
+\safeinclude[width=0.85\linewidth]{fig7.jpg}
+\caption{Training curves over repeated seeds: mean return with shaded 95\% confidence intervals for Ours, the SysID+DR baseline, and the w/o-SysID ablation.}
+\label{fig:training}
+\end{figure}
+\begin{table}[t]
+\begin{revblock}
+    
+
+\centering
+\caption{\rev{Expanded ablation matrix. Hardware deployment is restricted to policies that passed safety checks; simulation-only rows are not mixed into the main hardware claim.}}
+\label{tab:ablation}
+\scriptsize
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lccccccp{4.2cm}}
+\toprule
+Method & SysID & DR & Residual & Scope & Return & Sim RMSE & Hardware note \\
+ & & & & & mean $\pm$ SD & rad & \\
+\midrule
+URDF-only PPO & No & No & No & sim & $92\pm18$ & 0.091 & not deployed \\
+SysID only & Yes & No & No & sim+tether & $118\pm14$ & 0.062 & limited tethered check \\
+SysID+DR (hardware baseline) & Yes & Yes & No & sim+hardware & $133\pm11$ & 0.038 & 7/10 success; 1 fall; 2 interventions \\
+DR+RTI without SysID & No & Yes & RTI & sim & $108\pm19$ & 0.073 & not deployed: uncentered actuator model unsafe \\
+SysID+DR+random torque & Yes & Yes & random & sim+tether & $141\pm10$ & 0.031 & stable tethered check; more chattering than RTI \\
+SysID+DR+prior torque-space perturbation & Yes & Yes & torque perturb. & sim+tether & $145\pm9$ & 0.029 & stable tethered check \\
+SysID+DR+RTI (ours) & Yes & Yes & state-dependent RTI & sim+hardware & $152\pm8$ & 0.021 & 10/10 success; 0 falls; 0 interventions \\
+\bottomrule
+\end{tabular}}
+\end{revblock}
+\end{table}
+
+\subsection{Hardware results at 0.5 m/s}
+At 0.5 m/s forward walking, the SysID+DR baseline exhibits current spikes and chattering near torque reversal, together with larger tracking errors and pitch oscillations. The representative current/tracking trace in \cref{fig:hardware_joint} provides a qualitative view of the raw logged signals, and the joint-level comparisons in \cref{fig:knee_pitch_full} show the same effect at representative lower-body joints. The IMU pitch traces in \cref{fig:hardware_pitch} show the corresponding reduction in base oscillation. The deployment snapshots in \cref{fig:baseline_02_full,fig:ours_02_full} provide a lower-speed 0.2 m/s qualitative deployment check. Hybrid-RTI produces smoother actuation and lower base oscillation while using the same onboard sensing and the same deployment-time PD interface.
+
+\begin{revblock}
+The current reduction is interpreted as a hardware-stress and tracking-quality indicator rather than as a standalone energy-efficiency claim. Peak current and current chattering are important because they reflect rapid actuator effort changes that can excite harmonic-drive nonlinearities, heat the driver, and couple into base oscillation. The joint-position RMSE and pitch metrics show that the reduction in current is not obtained by making the gait weaker or less responsive; the robot tracks the commanded motion more accurately while the base oscillates less. This combination is the relevant deployment outcome for a full-size humanoid: smoother current, smaller joint error, and fewer interventions under the same sensing and PD interface.
+\end{revblock}
+
+
+\begin{table}[t]
+\begin{revblock}
+\centering
+\caption{\rev{Repeated hardware statistics at 0.5 m/s. Values are computed over 10 independent 30 s trials per method using the 10--30 s analysis window. CI denotes the half-width of the 95\% confidence interval.}}
+\label{tab:hardware_stats}
+\scriptsize
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Metric & SysID+DR mean & SysID+DR SD & Hybrid-RTI mean & Hybrid-RTI SD & 95\% CI half-widths & Reduction \\
+\midrule
+Peak current (A) & 16.28 & 0.68 & 11.14 & 0.52 & 0.49 / 0.37 & 31.6\% \\
+Pitch RMS ($^\circ$) & 3.75 & 0.16 & 1.01 & 0.12 & 0.11 / 0.09 & 73.1\% \\
+Pitch variance ($^\circ$$^2$) & 14.09 & 1.19 & 1.03 & 0.24 & 0.85 / 0.17 & 92.7\% \\
+Pitch peak ($^\circ$) & 6.10 & 0.08 & 1.6 & 0.1 & 0.06 / 0.07 & 73.8\% \\
+Joint-position RMSE (rad) & 0.0996 & 0.0113 & 0.0200 & 0.0026 & 0.0081 / 0.0018 & 79.9\% \\
+\bottomrule
+\end{tabular}}
+\end{revblock}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{\rev{Hardware reliability outcomes over repeated trials. Wilson 95\% confidence intervals are shown in parentheses.}}
+\label{tab:hardware_success}
+\small
+
+\begin{revblock}
+\begin{tabular}{lccc}
+\toprule
+Method & Success & Falls & Human interventions \\
+\midrule
+SysID+DR & 7/10 (0.397--0.892) & 1/10 (0.018--0.404) & 2/10 (0.057--0.510) \\
+Hybrid-RTI & 10/10 (0.722--1.000) & 0/10 (0.000--0.278) & 0/10 (0.000--0.278) \\
+\bottomrule
+\end{tabular}
+\end{revblock}
+\end{table}
+
+\begin{table}[H]
+\begin{revblock}
+\centering
+\caption{Trace-level 0.5 m/s hardware ranges retained in the main results section as a compact trace-level summary. Repeated-trial means and confidence intervals in \cref{tab:hardware_stats} are used for the primary statistical claims.}
+\label{tab:trace_ranges_main}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Method & Peak current (A) & Pitch RMS ($^\circ$) & Pitch peak ($^\circ$) & Joint-position RMSE (rad) \\
+\midrule
+SysID+DR & 15.4--17.2 & 3.5--4.0 & 6.0--6.2 & 0.08--0.12 \\
+Hybrid-RTI & 10--12 & 0.8--1.2 & 1.4--1.8 & 0.015--0.025 \\
+\bottomrule
+\end{tabular}}
+\end{revblock}
+\end{table}
+
+\begin{revblock}
+The statistics separate pitch RMS, pitch variance, and pitch peak to avoid ambiguity in percentage-reduction claims. Hybrid-RTI reduces pitch RMS by 73.1\%, pitch variance by 92.7\%, and pitch peak by 73.8\% in the repeated-trial aggregate reported in \cref{tab:hardware_stats}; the corresponding reliability outcomes are reported in \cref{tab:hardware_success}. For transparency, \cref{tab:trace_ranges_main} also reports the representative 0.5 m/s trace-level hardware ranges in the main results section. Welch tests on the trial-level aggregates give $p<0.001$ for the scalar metrics in \cref{tab:hardware_stats}; the same trial-level script computes the current-chattering index defined in \cref{eq:chattering} as a secondary diagnostic from the aligned current logs. The visual evidence is deliberately separated by operating condition: \Cref{fig:knee_pitch_full} shows joint trace-level evidence at the same speed, \cref{fig:baseline_02_full,fig:ours_02_full} show the lower-speed 0.2 m/s deployment check.
+\end{revblock}
+
+\section{Data and Code Availability}
+\label{sec:data_availability}
+\begin{revblock}
+Data availability. The raw and processed hardware logs, actuator-identification results, and trial-level CSV files that support the findings of this study are not publicly available; they are available from the corresponding author upon reasonable request.
+
+Code availability. The training and evaluation code that supports the findings of this study is not publicly available; it is available from the corresponding author upon reasonable request.
+\end{revblock}
+
+\section{Conclusion}
+\label{sec:conclusion}
+We presented a Real2Sim-calibrated sim-to-real pipeline for full-size humanoid locomotion under harmonic-drive actuation nonlinearities. The core innovation is to construct the training distribution from two physically interpretable parts: an identified nominal actuator center and a bounded residual torque uncertainty family. \rev{The study clarifies the physical mapping between current and torque, uses RTI terminology to match the injected quantity, avoids interpreting the residual network as a virtual sensor or deployment-time feed-forward compensator, adds residual goodness-of-fit analysis, expands ablations, and supports the hardware claims with repeated-trial statistics.} Hardware evaluation at 0.5 m/s indicates that Hybrid-RTI reduces current chattering, pitch oscillation, and joint-tracking error relative to a SysID+DR baseline under the same sensing constraints and the same deployment-time PD interface. The claim is intentionally limited to the controlled full-size humanoid deployment envelope evaluated in this paper, while lower-speed deployment snapshots are included as scope checks rather than as additional repeated-trial statistics. \rev{This paper presents RTI not as an additional controller component, but as a reproducible way to translate held-out actuator residual statistics into policy-training robustness. This distinction makes the method easier to audit, safer to deploy, and more directly comparable with future actuator-aware sim-to-real pipelines.}
+
+
+\section*{Author Contributions}
+\templrev{Conceptualization, J.L. and F.D.; methodology, J.L., Y.Z. and F.D.; software, J.L. and X.D.; validation, J.L., X.D. and S.X.; formal analysis, J.L. and F.D.; investigation, J.L., X.D. and S.X.; resources, S.X., Y.Z. and F.D.; data curation, J.L. and X.D.; writing--original draft preparation, J.L.; writing--review and editing, J.L., Y.Z. and F.D.; visualization, J.L. and X.D.; supervision, Y.Z. and F.D.; project administration, Y.Z. and F.D.; funding acquisition, Y.Z. and F.D. All authors have read and agreed to the submitted version of the manuscript.}
+
+\section*{Acknowledgments}
+\templrev{This work was supported in part by the R\&D Program of Beijing Municipal Education Commission (KM202411417006), in part by the National Natural Science Foundation of China (92367109), in part by the Beijing Union University High-level Fund Incubation Project (ZK20202509), in part by the NSFC under Grant 61973035, and the Beijing Natural Science Foundation (Grant No. L247007).}
+
+
+\begin{thebibliography}{99}
+\bibitem{radosavovic2024realworld}
+Radosavovic, I., Xiao, T., Zhang, B., Darrell, T., Malik, J., and Sreenath, K.: Real-world humanoid locomotion with reinforcement learning.
+\emph{Science Robotics} 9(89), eadi9579 (2024). doi:10.1126/scirobotics.adi9579.
+
+\bibitem{ha2025legged}
+Ha, S., Lee, J., van de Panne, M., Xie, Z., Yu, W., and Khadiv, M.: Learning-based legged locomotion: State of the art and future perspectives.
+\emph{The International Journal of Robotics Research} 44(8), 1396--1427 (2025). doi:10.1177/02783649241312698.
+
+\bibitem{he2024agilebutsafe}
+He, T., Zhang, C., Xiao, W., He, G., Liu, C., and Shi, G.: Agile But Safe: Learning Collision-Free High-Speed Legged Locomotion.
+In \emph{Proceedings of Robotics: Science and Systems}, Delft, Netherlands, July (2024). doi:10.15607/RSS.2024.XX.059.
+
+\bibitem{gu2024dwl}
+Gu, X., Wang, Y.-J., Zhu, X., Shi, C., Guo, Y., Liu, Y., and Chen, J.: Advancing Humanoid Locomotion: Mastering Challenging Terrains with Denoising World Model Learning.
+In \emph{Proceedings of Robotics: Science and Systems}, Delft, Netherlands, July (2024). doi:10.15607/RSS.2024.XX.058.
+
+\bibitem{yang2022safe}
+Yang, T.-Y., Zhang, T., Luu, L., Ha, S., Tan, J., and Yu, W.: Safe Reinforcement Learning for Legged Locomotion.
+In \emph{2022 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, pp. 2454--2461 (2022). doi:10.1109/IROS47612.2022.9981325.
+
+\bibitem{preissner2012highfidelity}
+Preissner, C., Royston, T. J., and Shu, D.: A High-Fidelity Harmonic Drive Model.
+\emph{Journal of Dynamic Systems, Measurement, and Control} 134(1), 011002 (2012). doi:10.1115/1.4004775.
+
+\bibitem{tjahjowidodo2013torsional}
+Tjahjowidodo, T., Al-Bender, F., and Van Brussel, H.: Theoretical modelling and experimental identification of nonlinear torsional behaviour in harmonic drives.
+\emph{Mechatronics} 23(5), 497--504 (2013). doi:10.1016/j.mechatronics.2013.02.009.
+
+\bibitem{wang2024hysteresis}
+Wang, Q., Wu, H., Handroos, H., Song, Y., Li, M., Yin, J., and Cheng, Y.: Hysteresis identification of joint with harmonic drive transmission based on Monte Carlo method.
+\emph{Mechatronics} 99, 103166 (2024). doi:10.1016/j.mechatronics.2024.103166.
+
+\bibitem{zhang2025elastic}
+Zhang, J., Zhao, H., Liu, Z., Cao, R., Zhang, B., Liu, H., and Ding, H.: A unified framework for dynamic parameter identification of elastic joint robots with hysteresis and friction nonlinearities.
+\emph{Mechanical Systems and Signal Processing} 238, 113208 (2025). doi:10.1016/j.ymssp.2025.113208.
+
+\bibitem{turlapati2024friction}
+Turlapati, S. H., Nguyen, V. P., Gurnani, J., Ariffin, M. Z. B., Kana, S., Wong, A. H. Y., Han, B. S., and Campolo, D.: Identification of Intrinsic Friction and Torque Ripple for a Robotic Joint with Integrated Torque Sensors with Application to Wheel-Bearing Characterization.
+\emph{Sensors} 24(23), 7465 (2024). doi:10.3390/s24237465.
+
+\bibitem{piatkowski2024spline}
+Piatkowski, T.: Spline-slip model for friction hysteresis identification.
+\emph{Mechanism and Machine Theory} 191, 105499 (2024). doi:10.1016/j.mechmachtheory.2023.105499.
+
+\bibitem{kumar2021rma}
+Kumar, A., Fu, Z., Pathak, D., and Malik, J.: RMA: Rapid Motor Adaptation for Legged Robots.
+In \emph{Proceedings of Robotics: Science and Systems}, Virtual, July (2021). doi:10.15607/RSS.2021.XVII.011.
+
+\bibitem{rudin2022minutes}
+Rudin, N., Hoeller, D., Reist, P., and Hutter, M.: Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement Learning.
+In \emph{Proceedings of the 5th Conference on Robot Learning}, volume 164 of \emph{Proceedings of Machine Learning Research}, pp. 91--100 (2022).
+
+\bibitem{siekmann2021periodic}
+Siekmann, J., Godse, Y., Fern, A., and Hurst, J. W.: Sim-to-Real Learning of All Common Bipedal Gaits via Periodic Reward Composition.
+In \emph{2021 IEEE International Conference on Robotics and Automation (ICRA)}, pp. 7309--7315 (2021). doi:10.1109/ICRA48506.2021.9561814.
+
+\bibitem{margolis2024rapid}
+Margolis, G. B., Yang, G., Paigwar, K., Chen, T., and Agrawal, P.: Rapid locomotion via reinforcement learning.
+\emph{The International Journal of Robotics Research} 43(4), 572--587 (2024). doi:10.1177/02783649231224053.
+
+\bibitem{haarnoja2024agile}
+Haarnoja, T., Moran, B., Lever, G., Huang, S. H., Tirumala, D., Wulfmeier, M., Humplik, J., Tunyasuvunakool, S., Siegel, N. Y., Hafner, R., Bloesch, M., Hartikainen, K., Byravan, A., Hasenclever, L., Tassa, Y., Sadeghi, F., Batchelor, N., Casarini, F., Saliceti, S., Game, C., Sreendra, N., Patel, K., Gwira, M., Huber, A., Hurley, N., Nori, F., Hadsell, R., and Heess, N.: Learning agile soccer skills for a bipedal robot with deep reinforcement learning.
+\emph{Science Robotics} 9(89), eadi8022 (2024). doi:10.1126/scirobotics.adi8022.
+
+\bibitem{li2025versatile}
+Li, Z., Peng, X. B., Abbeel, P., Levine, S., Berseth, G., and Sreenath, K.: Reinforcement learning for versatile, dynamic, and robust bipedal locomotion control.
+\emph{The International Journal of Robotics Research} 44(5), 840--888 (2025). doi:10.1177/02783649241285161.
+
+\bibitem{ilboudo2026domains}
+Ilboudo, W. E. L., Kobayashi, T., and Matsubara, T.: Domains as objectives: Domain-uncertainty-aware policy optimization through explicit multi-domain convex coverage set learning.
+\emph{The International Journal of Robotics Research} 45(3), 397--451 (2026). doi:10.1177/02783649251358844.
+
+\bibitem{jenelten2024dtc}
+Jenelten, F., He, J., Farshidian, F., and Hutter, M.: DTC: Deep Tracking Control.
+\emph{Science Robotics} 9(86), eadh5401 (2024). doi:10.1126/scirobotics.adh5401.
+
+\bibitem{dao2024box}
+Dao, J., Duan, H., and Fern, A.: Sim-to-Real Learning for Humanoid Box Loco-Manipulation.
+In \emph{2024 IEEE International Conference on Robotics and Automation (ICRA)}, pp. 16930--16936 (2024). doi:10.1109/ICRA57147.2024.10610977.
+
+\bibitem{tang2024humanmimic}
+Tang, A., Hiraoka, T., Hiraoka, N., Shi, F., Kawaharazuka, K., Kojima, K., Okada, K., and Inaba, M.: HumanMimic: Learning Natural Locomotion and Transitions for Humanoid Robot via Wasserstein Adversarial Imitation.
+In \emph{2024 IEEE International Conference on Robotics and Automation (ICRA)}, pp. 13107--13114 (2024). doi:10.1109/ICRA57147.2024.10610449.
+
+\bibitem{he2025hover}
+He, T., Xiao, W., Lin, T., Luo, Z., Xu, Z., Jiang, Z., Kautz, J., Liu, C., Shi, G., Wang, X., Fan, L., and Zhu, Y.: HOVER: Versatile Neural Whole-Body Controller for Humanoid Robots.
+In \emph{2025 IEEE International Conference on Robotics and Automation (ICRA)}, pp. 9989--9996 (2025). doi:10.1109/ICRA55743.2025.11128549.
+
+\bibitem{hoeller2024anymal}
+Hoeller, D., Rudin, N., Sako, D., and Hutter, M.: ANYmal parkour: Learning agile navigation for quadrupedal robots.
+\emph{Science Robotics} 9(88), eadi7566 (2024). doi:10.1126/scirobotics.adi7566.
+
+\bibitem{chen2025curating}
+Chen, F., and Aukes, D. M.: Curating tunable, compliant legs for specialized tasks.
+\emph{The International Journal of Robotics Research} 44(13), 2181--2194 (2025). doi:10.1177/02783649251337110.
+
+\bibitem{bao2025bipedal}
+Bao, L., Humphreys, J., Peng, T., and Zhou, C.: Deep reinforcement learning for robotic bipedal locomotion: A brief survey.
+\emph{Artificial Intelligence Review} 59, 38 (2026). doi:10.1007/s10462-025-11451-z.
+
+\bibitem{li2019fast}
+Li, J., Deng, F., and Chen, J.: A fast distributed variational Bayesian filtering for multisensor LTV system with non-Gaussian noise.
+\emph{IEEE Transactions on Cybernetics} 49(7), 2431--2443 (2019). doi:10.1109/TCYB.2018.2815697.
+
+\bibitem{chen2017weighted}
+Chen, J., Li, J., Yang, S.-H., and Deng, F.: Weighted optimization-based distributed Kalman filter for nonlinear target tracking in collaborative sensor networks.
+\emph{IEEE Transactions on Cybernetics} 47(11), 3892--3905 (2017). doi:10.1109/TCYB.2016.2587723.
+
+\bibitem{li2026alsirls}
+Li, J., and Deng, F.: Outlier-Robust Autocovariance Least-Squares Estimation via Iteratively Reweighted Least Squares.
+\emph{IEEE Signal Processing Letters} 33, 2415--2419 (2026). doi:10.1109/LSP.2026.3700551.
+
+\bibitem{pinto2017robust}
+Pinto, L., Davidson, J., Sukthankar, R., and Gupta, A.: Robust Adversarial Reinforcement Learning.
+In \emph{Proceedings of the 34th International Conference on Machine Learning}, volume 70 of \emph{Proceedings of Machine Learning Research}, pp. 2817--2826 (2017).
+
+\bibitem{welch1967psd}
+Welch, P. D.: The use of fast Fourier transform for the estimation of power spectra: A method based on time averaging over short, modified periodograms.
+\emph{IEEE Transactions on Audio and Electroacoustics} 15(2), 70--73 (1967). doi:10.1109/TAU.1967.1161901.
+
+\bibitem{schulman2016gae}
+Schulman, J., Moritz, P., Levine, S., Jordan, M. I., and Abbeel, P.: High-Dimensional Continuous Control Using Generalized Advantage Estimation.
+In \emph{International Conference on Learning Representations} (2016).
+
+\bibitem{todorov2012mujoco}
+Todorov, E., Erez, T., and Tassa, Y.: MuJoCo: A physics engine for model-based control.
+In \emph{2012 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, pp. 5026--5033 (2012). doi:10.1109/IROS.2012.6386109.
+
+\bibitem{makoviychuk2021isaacgym}
+Makoviychuk, V., Wawrzyniak, L., Guo, Y., Lu, M., Storey, K., Macklin, M., Hoeller, D., Rudin, N., Allshire, A., Handa, A., and State, G.: Isaac Gym: High Performance GPU-Based Physics Simulation for Robot Learning.
+In \emph{Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks}, volume 1 (2021).
+
+\bibitem{wilson1927probable}
+Wilson, E. B.: Probable inference, the law of succession, and statistical inference.
+\emph{Journal of the American Statistical Association} 22(158), 209--212 (1927). doi:10.1080/01621459.1927.10502953.
+\end{thebibliography}
+
+\end{document}

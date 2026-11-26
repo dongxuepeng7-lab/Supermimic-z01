@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-11-26",
+  "checks": [
+    "Source/dependency hashes match frozen cd02",
+    "Five source handoff archive hashes verified by input check",
+    "Actual generated trainer commands differ only in gradient cap between C candidates",
+    "Incomplete outcome cells excluded; empty means remain null",
+    "All primary B/C evaluations scheduled before D",
+    "Running 3090 frozen files unchanged",
+    "CLI and shell syntax checked"
+  ],
+  "gpu_training_or_simulation_executed": false,
+  "limitation": "No local 5080 is attached; actual GPU throughput, stability at cap30 and scientific benefit are not validated.",
+  "new_file_sha256": {
+    "tools/ral_cd_strength.py": "82e173debc71011c99e02ff98283b9fb208c47f00a83fdbf254269e02114c2db",
+    "configs/ral/cd_strength_v1.json": "5900da7a361ac4dad2f37f6392032e1df798583942279decb5f71435baf1732b",
+    "scripts/ral_5080_cd_strength.sh": "fe640426f92a604469e5e39693a421094eca45fa5f3765ea1db59915897afbaf"
+  }
+}

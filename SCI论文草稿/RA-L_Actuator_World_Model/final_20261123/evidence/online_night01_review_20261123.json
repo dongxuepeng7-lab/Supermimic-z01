@@ -1,0 +1,3476 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-11-23",
+  "scope": "Offline development-result audit",
+  "formal_results": false,
+  "C_authorized": false,
+  "response_test_arrays_accessed": false,
+  "new_5000_update_model_weights_present": false,
+  "new_policy_evaluations_executed": false,
+  "frozen_protocol_sha256": "91ac2df09b77ca4c2c3b9288d162d5dcf1030c7081ea176264b510519d486b60",
+  "limitations": [
+    "Remote packages contain metadata only: actual 5000-update weights and model archive bytes have not been independently verified here.",
+    "Use all complete pairs, including both failed gates. Keep GPU strata and 1000/5000-update budgets separate.",
+    "Queues stopped after observed control-screen failures. Means/SD are descriptive, not confirmatory fixed-sample inference.",
+    "Repeat 0 is primary. Repeat 1 is repeatability, not another training seed.",
+    "Reference motions and randomized conditions are from training distributions; no heldout/hardware claim.",
+    "CPU fit/cal prediction scores do not establish consistent response supervision on the training GPU backend."
+  ],
+  "machines": {
+    "4090": {
+      "machine": "4090",
+      "source_folder": "logs/ral_online_8h/import/online_night01_4090",
+      "status": "control_screen_failed",
+      "complete_pairs": 20,
+      "complete_models": 40,
+      "seeds": [
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        84
+      ],
+      "approximate_queue_hours_from_archive_timestamp": 5.96816020541721,
+      "training_seconds_per_model": {
+        "n": 40,
+        "mean": 339.73094311356544,
+        "sample_sd": 0.4538821753270015,
+        "minimum": 339.18857431411743,
+        "maximum": 341.3045346736908
+      },
+      "policy_updates_per_model": 5000,
+      "wm_updates_per_model": 25000,
+      "environment_transitions_per_model": 12865536,
+      "checked_training_iteration_rows": 200040,
+      "checked_retained_metadata_hashes": 320,
+      "checked_evaluations": 80,
+      "checked_episodes": 13040,
+      "recorded_initial_modules_matched": true,
+      "independently_verified_model_archives": 0,
+      "primary_completion_percent": {
+        "A+": {
+          "n": 20,
+          "mean": 89.11042944785277,
+          "sample_sd": 2.5558066583899626,
+          "minimum": 85.88957055214725,
+          "maximum": 94.47852760736197
+        },
+        "B": {
+          "n": 20,
+          "mean": 89.84662576687117,
+          "sample_sd": 2.4898493640556945,
+          "minimum": 85.88957055214725,
+          "maximum": 93.25153374233128
+        }
+      },
+      "primary_B_minus_Aplus_completion_pp": {
+        "n": 20,
+        "mean": 0.7361963190184051,
+        "sample_sd": 3.552822239248605,
+        "minimum": -6.134969325153373,
+        "maximum": 7.36196319018404
+      },
+      "B_win_tie_loss": {
+        "win": 12,
+        "tie": 1,
+        "loss": 7
+      },
+      "passing_pairs": 19,
+      "prediction_diagnostics": {
+        "fit": {
+          "q32_B_reduction_percent": {
+            "n": 20,
+            "mean": 3.902637053081076,
+            "sample_sd": 3.0402292202049512,
+            "minimum": -1.5126884435614192,
+            "maximum": 9.071762333617396
+          },
+          "response8_B_reduction_percent": {
+            "n": 20,
+            "mean": -0.05848900729997624,
+            "sample_sd": 0.021301267645321417,
+            "minimum": -0.09086033154333269,
+            "maximum": -0.01299138959137801
+          },
+          "response8_B_reduction_vs_zero_percent": {
+            "n": 20,
+            "mean": 0.12757430545038312,
+            "sample_sd": 0.02047731802475194,
+            "minimum": 0.0995405052177369,
+            "maximum": 0.17150279333509424
+          },
+          "q32_B_better_seeds": 18
+        },
+        "cal": {
+          "q32_B_reduction_percent": {
+            "n": 20,
+            "mean": 3.0892625483442213,
+            "sample_sd": 6.82743711995642,
+            "minimum": -10.033598693026073,
+            "maximum": 13.222663842086261
+          },
+          "response8_B_reduction_percent": {
+            "n": 20,
+            "mean": -0.026966458017877813,
+            "sample_sd": 0.03870268778830891,
+            "minimum": -0.12320488032671563,
+            "maximum": 0.032337378034521386
+          },
+          "response8_B_reduction_vs_zero_percent": {
+            "n": 20,
+            "mean": 0.19974855700172758,
+            "sample_sd": 0.03392432659928932,
+            "minimum": 0.1384859310941343,
+            "maximum": 0.25779836502812004
+          },
+          "q32_B_better_seeds": 14
+        }
+      },
+      "pairs": [
+        {
+          "seed": 8,
+          "primary": {
+            "A+": {
+              "completed": 145,
+              "clips": 163,
+              "completion": 0.8895705521472392,
+              "median_valid_s": 15.619999885559082
+            },
+            "B": {
+              "completed": 140,
+              "clips": 163,
+              "completion": 0.8588957055214724,
+              "median_valid_s": 15.4399995803833
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8834355828220859,
+              0.8895705521472392
+            ],
+            "B": [
+              0.8588957055214724,
+              0.8588957055214724
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 0.47239756954293466,
+              "response8_B_reduction_percent": -0.09086033154333269,
+              "response8_B_reduction_vs_zero_percent": 0.12316273949389747,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": -10.033598693026073,
+              "response8_B_reduction_percent": -0.04693240647649285,
+              "response8_B_reduction_vs_zero_percent": 0.18232455938759318,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -3.0674846625766805,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 8,
+                "worst_completion_drop_pp": 3.0674846625766805,
+                "worst_duration_ratio": 0.9884762927980433
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              145,
+              144
+            ],
+            "B": [
+              140,
+              140
+            ]
+          },
+          "model_archive": "models/s8_models.tar.gz",
+          "model_archive_sha256": "ef340c09c6bae1c613e1a74ed64c9282390dcfe14e9026edc51cd7bfdfe8e628",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject2__seg000",
+              "jumps1_subject5__seg003",
+              "sprint1_subject4__seg002",
+              "walk3_subject1__seg005",
+              "walk3_subject1__seg007"
+            ],
+            "B_only": [
+              "jumps1_subject5__seg001"
+            ],
+            "both_complete": 139,
+            "both_fail": 17
+          }
+        },
+        {
+          "seed": 12,
+          "primary": {
+            "A+": {
+              "completed": 149,
+              "clips": 163,
+              "completion": 0.9141104294478528,
+              "median_valid_s": 16.399999618530273
+            },
+            "B": {
+              "completed": 150,
+              "clips": 163,
+              "completion": 0.9202453987730062,
+              "median_valid_s": 16.059999465942383
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.9079754601226994,
+              0.9141104294478528
+            ],
+            "B": [
+              0.9202453987730062,
+              0.9202453987730062
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": -1.5126884435614192,
+              "response8_B_reduction_percent": -0.06681964029576354,
+              "response8_B_reduction_vs_zero_percent": 0.11748621384870625,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": -5.671571437743639,
+              "response8_B_reduction_percent": -0.061723919375397965,
+              "response8_B_reduction_vs_zero_percent": 0.16101757792032254,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 0.6134969325153339,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 12,
+                "worst_completion_drop_pp": -0.6134969325153339,
+                "worst_duration_ratio": 0.9792682828965602
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              149,
+              148
+            ],
+            "B": [
+              150,
+              150
+            ]
+          },
+          "model_archive": "models/s12_models.tar.gz",
+          "model_archive_sha256": "9659ece591414a6d135268968023aa6956850c7ad796f932d8d27bf4aef2947b",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject3__seg004",
+              "fallAndGetUp2_subject3__seg005",
+              "jumps1_subject2__seg000",
+              "run1_subject2__seg001"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg003",
+              "fight1_subject2__seg006",
+              "run2_subject4__seg001",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg001",
+              "sprint1_subject4__seg007"
+            ],
+            "both_complete": 144,
+            "both_fail": 8
+          }
+        },
+        {
+          "seed": 16,
+          "primary": {
+            "A+": {
+              "completed": 145,
+              "clips": 163,
+              "completion": 0.8895705521472392,
+              "median_valid_s": 15.619999885559082
+            },
+            "B": {
+              "completed": 150,
+              "clips": 163,
+              "completion": 0.9202453987730062,
+              "median_valid_s": 15.679999351501465
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8895705521472392,
+              0.8957055214723927
+            ],
+            "B": [
+              0.9202453987730062,
+              0.9202453987730062
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 2.0905132395469574,
+              "response8_B_reduction_percent": -0.0365760657880296,
+              "response8_B_reduction_vs_zero_percent": 0.13434533411722255,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": -6.302102503657227,
+              "response8_B_reduction_percent": 0.01702959467258521,
+              "response8_B_reduction_vs_zero_percent": 0.2504189333253097,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 3.0674846625766916,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 16,
+                "worst_completion_drop_pp": -2.4539877300613466,
+                "worst_duration_ratio": 1.0
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              145,
+              146
+            ],
+            "B": [
+              150,
+              150
+            ]
+          },
+          "model_archive": "models/s16_models.tar.gz",
+          "model_archive_sha256": "96113848db1c8e0ec7cd5118fa42a270f0c86e0344322a16544d2e784c6b72ff",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "sprint1_subject2__seg003"
+            ],
+            "B_only": [
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject2__seg000",
+              "fallAndGetUp2_subject3__seg003",
+              "fallAndGetUp2_subject3__seg004",
+              "run2_subject4__seg001",
+              "sprint1_subject4__seg007",
+              "walk3_subject3__seg001"
+            ],
+            "both_complete": 143,
+            "both_fail": 11
+          }
+        },
+        {
+          "seed": 20,
+          "primary": {
+            "A+": {
+              "completed": 144,
+              "clips": 163,
+              "completion": 0.8834355828220859,
+              "median_valid_s": 15.619999885559082
+            },
+            "B": {
+              "completed": 146,
+              "clips": 163,
+              "completion": 0.8957055214723927,
+              "median_valid_s": 16.059999465942383
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8773006134969326,
+              0.8834355828220859
+            ],
+            "B": [
+              0.8957055214723927,
+              0.8957055214723927
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 2.7332196150977026,
+              "response8_B_reduction_percent": -0.06057987090125259,
+              "response8_B_reduction_vs_zero_percent": 0.11374654005084278,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 1.6752151906074269,
+              "response8_B_reduction_percent": -0.12320488032671563,
+              "response8_B_reduction_vs_zero_percent": 0.1384859310941343,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 1.2269938650306789,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 20,
+                "worst_completion_drop_pp": -1.2269938650306789,
+                "worst_duration_ratio": 1.0217669753571654
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              144,
+              143
+            ],
+            "B": [
+              146,
+              146
+            ]
+          },
+          "model_archive": "models/s20_models.tar.gz",
+          "model_archive_sha256": "da72a1ee7bd774fec052022fdd121cb900f247bd7916a5dad19f0fd3f223d323",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp2_subject3__seg003",
+              "fight1_subject2__seg001",
+              "run1_subject2__seg001"
+            ],
+            "B_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "sprint1_subject4__seg001",
+              "walk2_subject3__seg003",
+              "walk3_subject1__seg007",
+              "walk3_subject4__seg004"
+            ],
+            "both_complete": 141,
+            "both_fail": 14
+          }
+        },
+        {
+          "seed": 24,
+          "primary": {
+            "A+": {
+              "completed": 141,
+              "clips": 163,
+              "completion": 0.8650306748466258,
+              "median_valid_s": 15.4399995803833
+            },
+            "B": {
+              "completed": 147,
+              "clips": 163,
+              "completion": 0.901840490797546,
+              "median_valid_s": 15.679999351501465
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8650306748466258,
+              0.8711656441717791
+            ],
+            "B": [
+              0.8895705521472392,
+              0.901840490797546
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 3.417984869970678,
+              "response8_B_reduction_percent": -0.024828193415358076,
+              "response8_B_reduction_vs_zero_percent": 0.15812495781397068,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.624532501491729,
+              "response8_B_reduction_percent": -0.02368134940621281,
+              "response8_B_reduction_vs_zero_percent": 0.21474116111038763,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 3.6809815950920255,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 24,
+                "worst_completion_drop_pp": -1.8404907975460127,
+                "worst_duration_ratio": 1.015544027049268
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              141,
+              142
+            ],
+            "B": [
+              147,
+              145
+            ]
+          },
+          "model_archive": "models/s24_models.tar.gz",
+          "model_archive_sha256": "5198433a916899cbabd65ee308e8cb55953ceac23dc0b1f714ca0758a1eba3ef",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "jumps1_subject5__seg002",
+              "run2_subject4__seg001",
+              "sprint1_subject4__seg007"
+            ],
+            "B_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject2__seg000",
+              "fallAndGetUp2_subject3__seg004",
+              "fallAndGetUp2_subject3__seg005",
+              "fightAndSports1_subject1__seg001",
+              "jumps1_subject5__seg001",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg002"
+            ],
+            "both_complete": 138,
+            "both_fail": 13
+          }
+        },
+        {
+          "seed": 28,
+          "primary": {
+            "A+": {
+              "completed": 141,
+              "clips": 163,
+              "completion": 0.8650306748466258,
+              "median_valid_s": 15.4399995803833
+            },
+            "B": {
+              "completed": 152,
+              "clips": 163,
+              "completion": 0.9325153374233128,
+              "median_valid_s": 16.719999313354492
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8650306748466258,
+              0.8711656441717791
+            ],
+            "B": [
+              0.9263803680981595,
+              0.9325153374233128
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 1.4981904059469306,
+              "response8_B_reduction_percent": -0.048297299344929774,
+              "response8_B_reduction_vs_zero_percent": 0.12073510876890899,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 1.745547168353416,
+              "response8_B_reduction_percent": -0.025659751614280798,
+              "response8_B_reduction_vs_zero_percent": 0.18113947348020262,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 6.7484662576687064,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 28,
+                "worst_completion_drop_pp": -5.521472392638039,
+                "worst_duration_ratio": 1.0773195778098414
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              141,
+              142
+            ],
+            "B": [
+              152,
+              151
+            ]
+          },
+          "model_archive": "models/s28_models.tar.gz",
+          "model_archive_sha256": "65c1a3731cd5f6d67bf5aa37b02f3813b0f089833766a5ceb948d29acb1f299a",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp2_subject2__seg000",
+              "sprint1_subject4__seg002"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg004",
+              "fight1_subject3__seg004",
+              "jumps1_subject2__seg007",
+              "run2_subject4__seg001",
+              "run2_subject4__seg002",
+              "sprint1_subject2__seg004",
+              "sprint1_subject4__seg007",
+              "walk2_subject3__seg003",
+              "walk3_subject1__seg005",
+              "walk3_subject1__seg007",
+              "walk3_subject3__seg001",
+              "walk3_subject4__seg004"
+            ],
+            "both_complete": 139,
+            "both_fail": 9
+          }
+        },
+        {
+          "seed": 32,
+          "primary": {
+            "A+": {
+              "completed": 145,
+              "clips": 163,
+              "completion": 0.8895705521472392,
+              "median_valid_s": 15.519999504089355
+            },
+            "B": {
+              "completed": 142,
+              "clips": 163,
+              "completion": 0.8711656441717791,
+              "median_valid_s": 15.579999923706055
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8895705521472392,
+              0.8895705521472392
+            ],
+            "B": [
+              0.8711656441717791,
+              0.8773006134969326
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": -0.44241309167500936,
+              "response8_B_reduction_percent": -0.07586353025366331,
+              "response8_B_reduction_vs_zero_percent": 0.11347490402720972,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": -8.334342703177345,
+              "response8_B_reduction_percent": -0.06274804795670842,
+              "response8_B_reduction_vs_zero_percent": 0.20639027857315453,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -1.8404907975460127,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 32,
+                "worst_completion_drop_pp": 1.8404907975460127,
+                "worst_duration_ratio": 1.0
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              145,
+              145
+            ],
+            "B": [
+              142,
+              143
+            ]
+          },
+          "model_archive": "models/s32_models.tar.gz",
+          "model_archive_sha256": "2f8fe99f0fc0d501a24fb4fa7f8086ecd8aa23feaf9cca465437f43a8687bb53",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fallAndGetUp2_subject2__seg000",
+              "fight1_subject2__seg006",
+              "jumps1_subject5__seg001",
+              "jumps1_subject5__seg006",
+              "run1_subject2__seg001",
+              "sprint1_subject2__seg004",
+              "sprint1_subject4__seg001",
+              "sprint1_subject4__seg002",
+              "walk2_subject3__seg003"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "jumps1_subject2__seg007",
+              "jumps1_subject5__seg003",
+              "run2_subject4__seg001",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg007"
+            ],
+            "both_complete": 135,
+            "both_fail": 11
+          }
+        },
+        {
+          "seed": 36,
+          "primary": {
+            "A+": {
+              "completed": 154,
+              "clips": 163,
+              "completion": 0.9447852760736196,
+              "median_valid_s": 16.719999313354492
+            },
+            "B": {
+              "completed": 147,
+              "clips": 163,
+              "completion": 0.901840490797546,
+              "median_valid_s": 15.679999351501465
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.9447852760736196,
+              0.9447852760736196
+            ],
+            "B": [
+              0.901840490797546,
+              0.9079754601226994
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.748480873419848,
+              "response8_B_reduction_percent": -0.04054971867767234,
+              "response8_B_reduction_vs_zero_percent": 0.15216318869546447,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 11.84169498088491,
+              "response8_B_reduction_percent": 0.022276759956815006,
+              "response8_B_reduction_vs_zero_percent": 0.19266376690312556,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -4.294478527607359,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 36,
+                "worst_completion_drop_pp": 4.294478527607359,
+                "worst_duration_ratio": 0.9377990427892922
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              154,
+              154
+            ],
+            "B": [
+              147,
+              148
+            ]
+          },
+          "model_archive": "models/s36_models.tar.gz",
+          "model_archive_sha256": "088358414ea977c532b9ba62524c3d04078f563febbd53962e41ed3f93bbcb8b",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "run1_subject2__seg001",
+              "sprint1_subject2__seg004",
+              "sprint1_subject2__seg005",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg002",
+              "walk3_subject3__seg001"
+            ],
+            "B_only": [
+              "sprint1_subject4__seg001"
+            ],
+            "both_complete": 146,
+            "both_fail": 8
+          }
+        },
+        {
+          "seed": 40,
+          "primary": {
+            "A+": {
+              "completed": 145,
+              "clips": 163,
+              "completion": 0.8895705521472392,
+              "median_valid_s": 15.679999351501465
+            },
+            "B": {
+              "completed": 141,
+              "clips": 163,
+              "completion": 0.8650306748466258,
+              "median_valid_s": 15.4399995803833
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8895705521472392,
+              0.8895705521472392
+            ],
+            "B": [
+              0.8650306748466258,
+              0.8711656441717791
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.6876803962038895,
+              "response8_B_reduction_percent": -0.05579273667521105,
+              "response8_B_reduction_vs_zero_percent": 0.12371255826692798,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 8.8651539868938,
+              "response8_B_reduction_percent": 0.01307050521899959,
+              "response8_B_reduction_vs_zero_percent": 0.25779836502812004,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -2.4539877300613466,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 40,
+                "worst_completion_drop_pp": 2.4539877300613466,
+                "worst_duration_ratio": 0.9846938915150413
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              145,
+              145
+            ],
+            "B": [
+              141,
+              142
+            ]
+          },
+          "model_archive": "models/s40_models.tar.gz",
+          "model_archive_sha256": "b8e81863c46d37ae9bf09f6d4c20e5bb61165bd3461eb56f31f132246f2e4cd9",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fallAndGetUp1_subject5__seg000",
+              "jumps1_subject2__seg000",
+              "run1_subject2__seg001",
+              "sprint1_subject2__seg003",
+              "sprint1_subject4__seg001",
+              "sprint1_subject4__seg007",
+              "walk2_subject3__seg003",
+              "walk3_subject1__seg007"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg001",
+              "jumps1_subject5__seg001",
+              "sprint1_subject2__seg005",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg002"
+            ],
+            "both_complete": 136,
+            "both_fail": 13
+          }
+        },
+        {
+          "seed": 44,
+          "primary": {
+            "A+": {
+              "completed": 141,
+              "clips": 163,
+              "completion": 0.8650306748466258,
+              "median_valid_s": 15.4399995803833
+            },
+            "B": {
+              "completed": 141,
+              "clips": 163,
+              "completion": 0.8650306748466258,
+              "median_valid_s": 15.4399995803833
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8650306748466258,
+              0.8711656441717791
+            ],
+            "B": [
+              0.8588957055214724,
+              0.8650306748466258
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 8.996741581761313,
+              "response8_B_reduction_percent": -0.01299138959137801,
+              "response8_B_reduction_vs_zero_percent": 0.17150279333509424,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 9.025109172993515,
+              "response8_B_reduction_percent": -0.010753728827978069,
+              "response8_B_reduction_vs_zero_percent": 0.2333844258038224,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 0.0,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 44,
+                "worst_completion_drop_pp": 1.2269938650306678,
+                "worst_duration_ratio": 1.0
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              141,
+              142
+            ],
+            "B": [
+              141,
+              140
+            ]
+          },
+          "model_archive": "models/s44_models.tar.gz",
+          "model_archive_sha256": "04c1f8e8f159ed6dddbe1ce596da7643eff5dd39a816829f0f6c7f82279f0689",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "run2_subject4__seg001",
+              "sprint1_subject2__seg005",
+              "sprint1_subject4__seg001",
+              "sprint1_subject4__seg002",
+              "walk2_subject3__seg003"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "jumps1_subject2__seg007",
+              "sprint1_subject2__seg004",
+              "walk3_subject1__seg005"
+            ],
+            "both_complete": 136,
+            "both_fail": 17
+          }
+        },
+        {
+          "seed": 48,
+          "primary": {
+            "A+": {
+              "completed": 154,
+              "clips": 163,
+              "completion": 0.9447852760736196,
+              "median_valid_s": 17.239999771118164
+            },
+            "B": {
+              "completed": 151,
+              "clips": 163,
+              "completion": 0.9263803680981595,
+              "median_valid_s": 16.059999465942383
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.9263803680981595,
+              0.9447852760736196
+            ],
+            "B": [
+              0.9263803680981595,
+              0.9325153374233128
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 9.071762333617396,
+              "response8_B_reduction_percent": -0.055902566672884485,
+              "response8_B_reduction_vs_zero_percent": 0.14048662871465312,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.452981628128381,
+              "response8_B_reduction_percent": -0.07753364994930481,
+              "response8_B_reduction_vs_zero_percent": 0.17398759469188066,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -1.8404907975460127,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 48,
+                "worst_completion_drop_pp": 1.8404907975460127,
+                "worst_duration_ratio": 0.9315545057516409
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              154,
+              151
+            ],
+            "B": [
+              151,
+              152
+            ]
+          },
+          "model_archive": "models/s48_models.tar.gz",
+          "model_archive_sha256": "e6420cee2e0c23ea180dbc6d0990043dbfe609271cd4a13c14f261bccc7211da",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp2_subject3__seg005",
+              "run2_subject4__seg001",
+              "sprint1_subject2__seg005",
+              "sprint1_subject2__seg007"
+            ],
+            "B_only": [
+              "sprint1_subject4__seg007"
+            ],
+            "both_complete": 150,
+            "both_fail": 8
+          }
+        },
+        {
+          "seed": 52,
+          "primary": {
+            "A+": {
+              "completed": 146,
+              "clips": 163,
+              "completion": 0.8957055214723927,
+              "median_valid_s": 15.679999351501465
+            },
+            "B": {
+              "completed": 149,
+              "clips": 163,
+              "completion": 0.9141104294478528,
+              "median_valid_s": 16.079999923706055
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8957055214723927,
+              0.8957055214723927
+            ],
+            "B": [
+              0.9141104294478528,
+              0.9141104294478528
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.475600606738055,
+              "response8_B_reduction_percent": -0.06297276851449564,
+              "response8_B_reduction_vs_zero_percent": 0.14823468473739232,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 13.222663842086261,
+              "response8_B_reduction_percent": -0.04029115825981288,
+              "response8_B_reduction_vs_zero_percent": 0.20579874691780572,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 1.8404907975460127,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 52,
+                "worst_completion_drop_pp": -1.8404907975460127,
+                "worst_duration_ratio": 1.0255102416293331
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              146,
+              146
+            ],
+            "B": [
+              149,
+              149
+            ]
+          },
+          "model_archive": "models/s52_models.tar.gz",
+          "model_archive_sha256": "649e41b2e6c00541f7e71c23d7aa0c6fc86d7e7de52567ea681846f32b41eeef",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "sprint1_subject2__seg005"
+            ],
+            "B_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fallAndGetUp2_subject3__seg003",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg001"
+            ],
+            "both_complete": 145,
+            "both_fail": 13
+          }
+        },
+        {
+          "seed": 56,
+          "primary": {
+            "A+": {
+              "completed": 144,
+              "clips": 163,
+              "completion": 0.8834355828220859,
+              "median_valid_s": 15.579999923706055
+            },
+            "B": {
+              "completed": 150,
+              "clips": 163,
+              "completion": 0.9202453987730062,
+              "median_valid_s": 16.059999465942383
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8834355828220859,
+              0.8834355828220859
+            ],
+            "B": [
+              0.9079754601226994,
+              0.9202453987730062
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 2.044181759876457,
+              "response8_B_reduction_percent": -0.0763368534981536,
+              "response8_B_reduction_vs_zero_percent": 0.0995405052177369,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 8.474500597378132,
+              "response8_B_reduction_percent": -0.04163320597176737,
+              "response8_B_reduction_vs_zero_percent": 0.16539870223030392,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 3.6809815950920255,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 56,
+                "worst_completion_drop_pp": -2.4539877300613466,
+                "worst_duration_ratio": 1.0243902513672494
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              144,
+              144
+            ],
+            "B": [
+              150,
+              148
+            ]
+          },
+          "model_archive": "models/s56_models.tar.gz",
+          "model_archive_sha256": "addfba6de1faac1dbbbd0cb8e2c51b0079ad5f91afa9c82619263dad34285cab",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject3__seg004",
+              "run2_subject4__seg001",
+              "walk2_subject3__seg003"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "fallAndGetUp2_subject3__seg005",
+              "run1_subject2__seg001",
+              "sprint1_subject2__seg004",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg002",
+              "sprint1_subject4__seg007",
+              "walk3_subject1__seg007",
+              "walk3_subject4__seg004"
+            ],
+            "both_complete": 140,
+            "both_fail": 9
+          }
+        },
+        {
+          "seed": 60,
+          "primary": {
+            "A+": {
+              "completed": 146,
+              "clips": 163,
+              "completion": 0.8957055214723927,
+              "median_valid_s": 15.679999351501465
+            },
+            "B": {
+              "completed": 150,
+              "clips": 163,
+              "completion": 0.9202453987730062,
+              "median_valid_s": 16.399999618530273
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8895705521472392,
+              0.8957055214723927
+            ],
+            "B": [
+              0.9141104294478528,
+              0.9202453987730062
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.443960080881196,
+              "response8_B_reduction_percent": -0.08257578772664738,
+              "response8_B_reduction_vs_zero_percent": 0.11205081273188428,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": -0.8899477996150846,
+              "response8_B_reduction_percent": 0.032337378034521386,
+              "response8_B_reduction_vs_zero_percent": 0.21642389987315658,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 2.4539877300613466,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 60,
+                "worst_completion_drop_pp": -1.8404907975460127,
+                "worst_duration_ratio": 1.045918386275945
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              146,
+              145
+            ],
+            "B": [
+              150,
+              149
+            ]
+          },
+          "model_archive": "models/s60_models.tar.gz",
+          "model_archive_sha256": "dd1b50613119ab8d5f30b1d3cf4e72472e1a9de502b83ac2cd327a8ab475278f",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp2_subject3__seg005",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg007"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "jumps1_subject2__seg007",
+              "sprint1_subject4__seg001",
+              "walk3_subject1__seg005",
+              "walk3_subject1__seg007",
+              "walk3_subject4__seg004"
+            ],
+            "both_complete": 143,
+            "both_fail": 10
+          }
+        },
+        {
+          "seed": 64,
+          "primary": {
+            "A+": {
+              "completed": 142,
+              "clips": 163,
+              "completion": 0.8711656441717791,
+              "median_valid_s": 15.579999923706055
+            },
+            "B": {
+              "completed": 146,
+              "clips": 163,
+              "completion": 0.8957055214723927,
+              "median_valid_s": 15.679999351501465
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8711656441717791,
+              0.8895705521472392
+            ],
+            "B": [
+              0.8957055214723927,
+              0.901840490797546
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 4.562013652392028,
+              "response8_B_reduction_percent": -0.034655784082757,
+              "response8_B_reduction_vs_zero_percent": 0.15765552271884817,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": -3.1986248324064896,
+              "response8_B_reduction_percent": -0.008146351692702284,
+              "response8_B_reduction_vs_zero_percent": 0.22419350915310876,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 2.4539877300613577,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 64,
+                "worst_completion_drop_pp": -0.613496932515345,
+                "worst_duration_ratio": 1.0038411950308561
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              142,
+              145
+            ],
+            "B": [
+              146,
+              147
+            ]
+          },
+          "model_archive": "models/s64_models.tar.gz",
+          "model_archive_sha256": "2d06d0dbafaf874fbac3c04ab64b86f02659f01acdef61624ff79f2e5b24fa0f",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject5__seg000",
+              "run2_subject4__seg001",
+              "sprint1_subject2__seg004"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject2__seg000",
+              "jumps1_subject2__seg007",
+              "jumps1_subject5__seg001",
+              "jumps1_subject5__seg006",
+              "sprint1_subject2__seg005",
+              "walk2_subject1__seg003",
+              "walk3_subject4__seg004"
+            ],
+            "both_complete": 139,
+            "both_fail": 14
+          }
+        },
+        {
+          "seed": 68,
+          "primary": {
+            "A+": {
+              "completed": 140,
+              "clips": 163,
+              "completion": 0.8588957055214724,
+              "median_valid_s": 15.4399995803833
+            },
+            "B": {
+              "completed": 152,
+              "clips": 163,
+              "completion": 0.9325153374233128,
+              "median_valid_s": 16.69999885559082
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.852760736196319,
+              0.8588957055214724
+            ],
+            "B": [
+              0.9325153374233128,
+              0.9386503067484663
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.3091324933499475,
+              "response8_B_reduction_percent": -0.08352073946525562,
+              "response8_B_reduction_vs_zero_percent": 0.11455595049043754,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 6.432099826917978,
+              "response8_B_reduction_percent": -0.0128404792448413,
+              "response8_B_reduction_vs_zero_percent": 0.24761299126140793,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 7.36196319018404,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 68,
+                "worst_completion_drop_pp": -7.36196319018404,
+                "worst_duration_ratio": 1.0816061728918933
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              140,
+              139
+            ],
+            "B": [
+              152,
+              153
+            ]
+          },
+          "model_archive": "models/s68_models.tar.gz",
+          "model_archive_sha256": "86001ea05b3ee0c532b282bf4ece46c59edaa38ffa206406d672d26c0fd54426",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "jumps1_subject2__seg006"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject2__seg000",
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "fallAndGetUp2_subject3__seg004",
+              "jumps1_subject2__seg007",
+              "run2_subject4__seg001",
+              "sprint1_subject2__seg005",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg001",
+              "sprint1_subject4__seg002",
+              "walk3_subject1__seg005",
+              "walk3_subject1__seg007",
+              "walk3_subject4__seg004"
+            ],
+            "both_complete": 139,
+            "both_fail": 10
+          }
+        },
+        {
+          "seed": 72,
+          "primary": {
+            "A+": {
+              "completed": 146,
+              "clips": 163,
+              "completion": 0.8957055214723927,
+              "median_valid_s": 15.960000038146973
+            },
+            "B": {
+              "completed": 141,
+              "clips": 163,
+              "completion": 0.8650306748466258,
+              "median_valid_s": 15.4399995803833
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8895705521472392,
+              0.8957055214723927
+            ],
+            "B": [
+              0.8650306748466258,
+              0.8711656441717791
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 3.703912884590613,
+              "response8_B_reduction_percent": -0.08117783773300065,
+              "response8_B_reduction_vs_zero_percent": 0.10231789004329649,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 6.860227377470449,
+              "response8_B_reduction_percent": -0.05512309294318537,
+              "response8_B_reduction_vs_zero_percent": 0.18614963645967178,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -3.0674846625766916,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 72,
+                "worst_completion_drop_pp": 3.0674846625766916,
+                "worst_duration_ratio": 0.9674185177618555
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              146,
+              145
+            ],
+            "B": [
+              141,
+              142
+            ]
+          },
+          "model_archive": "models/s72_models.tar.gz",
+          "model_archive_sha256": "4bbbd47cedb8cc39fa0aafbabca579c72e507facb21cc5ff635ade1c8f814ddd",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "run1_subject2__seg001",
+              "run1_subject2__seg002",
+              "run2_subject4__seg002",
+              "sprint1_subject2__seg004",
+              "sprint1_subject4__seg001",
+              "walk2_subject3__seg003",
+              "walk3_subject1__seg007",
+              "walk3_subject3__seg001"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg003",
+              "jumps1_subject5__seg007",
+              "run2_subject4__seg001",
+              "sprint1_subject4__seg002"
+            ],
+            "both_complete": 137,
+            "both_fail": 13
+          }
+        },
+        {
+          "seed": 76,
+          "primary": {
+            "A+": {
+              "completed": 141,
+              "clips": 163,
+              "completion": 0.8650306748466258,
+              "median_valid_s": 15.579999923706055
+            },
+            "B": {
+              "completed": 145,
+              "clips": 163,
+              "completion": 0.8895705521472392,
+              "median_valid_s": 15.619999885559082
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8650306748466258,
+              0.8773006134969326
+            ],
+            "B": [
+              0.8895705521472392,
+              0.8895705521472392
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 0.4077809251719283,
+              "response8_B_reduction_percent": -0.06782806361710515,
+              "response8_B_reduction_vs_zero_percent": 0.10836412467471024,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 2.176237815424009,
+              "response8_B_reduction_percent": -0.02695790468847793,
+              "response8_B_reduction_vs_zero_percent": 0.14820337197620842,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 2.4539877300613466,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 76,
+                "worst_completion_drop_pp": -1.2269938650306678,
+                "worst_duration_ratio": 1.002567391659108
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              141,
+              143
+            ],
+            "B": [
+              145,
+              145
+            ]
+          },
+          "model_archive": "models/s76_models.tar.gz",
+          "model_archive_sha256": "10cb9d25609ce602ee42848180c57d32f10e2a96fa04c7398ee4b702686ea609",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "sprint1_subject4__seg001",
+              "sprint1_subject4__seg002",
+              "sprint1_subject4__seg006",
+              "walk2_subject3__seg003"
+            ],
+            "B_only": [
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject2__seg000",
+              "jumps1_subject2__seg006",
+              "jumps1_subject2__seg007",
+              "jumps1_subject5__seg001",
+              "sprint1_subject2__seg004",
+              "sprint1_subject4__seg007",
+              "walk3_subject1__seg005"
+            ],
+            "both_complete": 137,
+            "both_fail": 14
+          }
+        },
+        {
+          "seed": 80,
+          "primary": {
+            "A+": {
+              "completed": 144,
+              "clips": 163,
+              "completion": 0.8834355828220859,
+              "median_valid_s": 15.579999923706055
+            },
+            "B": {
+              "completed": 147,
+              "clips": 163,
+              "completion": 0.901840490797546,
+              "median_valid_s": 15.679999351501465
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8834355828220859,
+              0.8834355828220859
+            ],
+            "B": [
+              0.8895705521472392,
+              0.901840490797546
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 4.748130660887883,
+              "response8_B_reduction_percent": -0.042690483189611966,
+              "response8_B_reduction_vs_zero_percent": 0.1143660599142832,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.625624562390247,
+              "response8_B_reduction_percent": 0.020562254641395442,
+              "response8_B_reduction_vs_zero_percent": 0.22235353055121923,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 1.8404907975460127,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 80,
+                "worst_completion_drop_pp": -0.6134969325153339,
+                "worst_duration_ratio": 1.002567391659108
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              144,
+              144
+            ],
+            "B": [
+              147,
+              145
+            ]
+          },
+          "model_archive": "models/s80_models.tar.gz",
+          "model_archive_sha256": "8f2ff2049f1d4049cfcd9559bfc108f3af32360c84c82ebcbad33da91920d775",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fightAndSports1_subject1__seg002",
+              "sprint1_subject4__seg007",
+              "walk3_subject3__seg001",
+              "walk3_subject4__seg004"
+            ],
+            "B_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fallAndGetUp2_subject2__seg000",
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "fallAndGetUp2_subject3__seg005",
+              "jumps1_subject2__seg007",
+              "walk3_subject1__seg005"
+            ],
+            "both_complete": 140,
+            "both_fail": 12
+          }
+        },
+        {
+          "seed": 84,
+          "primary": {
+            "A+": {
+              "completed": 152,
+              "clips": 163,
+              "completion": 0.9325153374233128,
+              "median_valid_s": 16.399999618530273
+            },
+            "B": {
+              "completed": 142,
+              "clips": 163,
+              "completion": 0.8711656441717791,
+              "median_valid_s": 15.519999504089355
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.9325153374233128,
+              0.9325153374233128
+            ],
+            "B": [
+              0.8588957055214724,
+              0.8711656441717791
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 8.596158647862184,
+              "response8_B_reduction_percent": -0.06896048501302236,
+              "response8_B_reduction_vs_zero_percent": 0.12545959134617507,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 9.193850285490035,
+              "response8_B_reduction_percent": -0.02737572614799442,
+              "response8_B_reduction_vs_zero_percent": 0.18648468429361614,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -6.134969325153373,
+          "gate": {
+            "passed": false,
+            "reasons": [
+              "s84: candidate B completion remains below A"
+            ],
+            "pairs": [
+              {
+                "seed": 84,
+                "worst_completion_drop_pp": 7.36196319018404,
+                "worst_duration_ratio": 0.94146341094653
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Diagnose failed control/structure/repeatability checks; do not extend automatically",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              152,
+              152
+            ],
+            "B": [
+              142,
+              140
+            ]
+          },
+          "model_archive": "models/s84_models.tar.gz",
+          "model_archive_sha256": "c2ccf1b0307649d4250765937983ee7fabea2763b73c8130f553f5749d431152",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject2__seg000",
+              "fallAndGetUp2_subject3__seg003",
+              "fallAndGetUp2_subject3__seg004",
+              "fallAndGetUp2_subject3__seg005",
+              "sprint1_subject2__seg004",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg001",
+              "sprint1_subject4__seg002",
+              "walk2_subject1__seg003",
+              "walk2_subject3__seg003"
+            ],
+            "B_only": [
+              "run1_subject2__seg001",
+              "sprint1_subject4__seg007"
+            ],
+            "both_complete": 140,
+            "both_fail": 9
+          }
+        }
+      ]
+    },
+    "5080": {
+      "machine": "5080",
+      "source_folder": "logs/ral_online_8h/import/online_night01_5080",
+      "status": "control_screen_failed",
+      "complete_pairs": 11,
+      "complete_models": 22,
+      "seeds": [
+        6,
+        10,
+        14,
+        18,
+        22,
+        26,
+        30,
+        34,
+        38,
+        42,
+        46
+      ],
+      "approximate_queue_hours_from_archive_timestamp": 3.7805292165279387,
+      "training_seconds_per_model": {
+        "n": 22,
+        "mean": 414.84774966673416,
+        "sample_sd": 0.1829677152386383,
+        "minimum": 414.548796415329,
+        "maximum": 415.4527451992035
+      },
+      "policy_updates_per_model": 5000,
+      "wm_updates_per_model": 25000,
+      "environment_transitions_per_model": 12865536,
+      "checked_training_iteration_rows": 110022,
+      "checked_retained_metadata_hashes": 176,
+      "checked_evaluations": 44,
+      "checked_episodes": 7172,
+      "recorded_initial_modules_matched": true,
+      "independently_verified_model_archives": 0,
+      "primary_completion_percent": {
+        "A+": {
+          "n": 11,
+          "mean": 88.90128276631344,
+          "sample_sd": 2.7084975278574324,
+          "minimum": 84.66257668711657,
+          "maximum": 92.02453987730061
+        },
+        "B": {
+          "n": 11,
+          "mean": 87.78583379810374,
+          "sample_sd": 1.9488460914284584,
+          "minimum": 85.88957055214725,
+          "maximum": 92.02453987730061
+        }
+      },
+      "primary_B_minus_Aplus_completion_pp": {
+        "n": 11,
+        "mean": -1.115448968209704,
+        "sample_sd": 3.500893051765403,
+        "minimum": -6.134969325153373,
+        "maximum": 4.907975460122705
+      },
+      "B_win_tie_loss": {
+        "win": 4,
+        "tie": 0,
+        "loss": 7
+      },
+      "passing_pairs": 10,
+      "prediction_diagnostics": {
+        "fit": {
+          "q32_B_reduction_percent": {
+            "n": 11,
+            "mean": 4.593630355364977,
+            "sample_sd": 3.0373813242199628,
+            "minimum": -0.5033448926695638,
+            "maximum": 11.121859862599505
+          },
+          "response8_B_reduction_percent": {
+            "n": 11,
+            "mean": -0.047950673976467184,
+            "sample_sd": 0.022424159716561427,
+            "minimum": -0.07349204731966894,
+            "maximum": 0.006147619548793047
+          },
+          "response8_B_reduction_vs_zero_percent": {
+            "n": 11,
+            "mean": 0.1375054264080687,
+            "sample_sd": 0.021824227873334476,
+            "minimum": 0.10112811299493205,
+            "maximum": 0.1637945826168928
+          },
+          "q32_B_better_seeds": 10
+        },
+        "cal": {
+          "q32_B_reduction_percent": {
+            "n": 11,
+            "mean": 5.2961454774097545,
+            "sample_sd": 4.023379250323056,
+            "minimum": -2.5162149591066845,
+            "maximum": 11.395801273664665
+          },
+          "response8_B_reduction_percent": {
+            "n": 11,
+            "mean": -0.005743677048301901,
+            "sample_sd": 0.0553707307453384,
+            "minimum": -0.11033184325948729,
+            "maximum": 0.08471354643741481
+          },
+          "response8_B_reduction_vs_zero_percent": {
+            "n": 11,
+            "mean": 0.2073840693459692,
+            "sample_sd": 0.04252250566413018,
+            "minimum": 0.11807399834376348,
+            "maximum": 0.2719310694246796
+          },
+          "q32_B_better_seeds": 10
+        }
+      },
+      "pairs": [
+        {
+          "seed": 6,
+          "primary": {
+            "A+": {
+              "completed": 148,
+              "clips": 163,
+              "completion": 0.9079754601226994,
+              "median_valid_s": 15.960000038146973
+            },
+            "B": {
+              "completed": 142,
+              "clips": 163,
+              "completion": 0.8711656441717791,
+              "median_valid_s": 15.579999923706055
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.9079754601226994,
+              0.9079754601226994
+            ],
+            "B": [
+              0.8711656441717791,
+              0.8711656441717791
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": -0.5033448926695638,
+              "response8_B_reduction_percent": -0.03857145663175358,
+              "response8_B_reduction_vs_zero_percent": 0.14996343323879371,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": -2.5162149591066845,
+              "response8_B_reduction_percent": -0.005061064036951701,
+              "response8_B_reduction_vs_zero_percent": 0.20673542082229357,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -3.6809815950920255,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 6,
+                "worst_completion_drop_pp": 3.6809815950920255,
+                "worst_duration_ratio": 0.9761904690769012
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              148,
+              148
+            ],
+            "B": [
+              142,
+              142
+            ]
+          },
+          "model_archive": "models/s6_models.tar.gz",
+          "model_archive_sha256": "b55590a3e1b5b2fd93348cc04d860d0a057227341f1078eb860378f71892d842",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fallAndGetUp2_subject3__seg001",
+              "fight1_subject3__seg000",
+              "jumps1_subject2__seg007",
+              "run2_subject1__seg003",
+              "sprint1_subject4__seg001",
+              "walk3_subject1__seg005",
+              "walk3_subject1__seg007",
+              "walk3_subject3__seg001"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject2__seg000",
+              "fallAndGetUp2_subject3__seg005",
+              "run1_subject2__seg001"
+            ],
+            "both_complete": 139,
+            "both_fail": 12
+          }
+        },
+        {
+          "seed": 10,
+          "primary": {
+            "A+": {
+              "completed": 140,
+              "clips": 163,
+              "completion": 0.8588957055214724,
+              "median_valid_s": 15.4399995803833
+            },
+            "B": {
+              "completed": 146,
+              "clips": 163,
+              "completion": 0.8957055214723927,
+              "median_valid_s": 15.579999923706055
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8588957055214724,
+              0.8650306748466258
+            ],
+            "B": [
+              0.8957055214723927,
+              0.8957055214723927
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 3.7258376764648666,
+              "response8_B_reduction_percent": -0.06861079210992141,
+              "response8_B_reduction_vs_zero_percent": 0.10377853638586497,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 0.38287259870470974,
+              "response8_B_reduction_percent": 0.02691464167048704,
+              "response8_B_reduction_vs_zero_percent": 0.2156466216954549,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 3.6809815950920255,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 10,
+                "worst_completion_drop_pp": -3.0674846625766916,
+                "worst_duration_ratio": 1.0038660065421323
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              140,
+              141
+            ],
+            "B": [
+              146,
+              146
+            ]
+          },
+          "model_archive": "models/s10_models.tar.gz",
+          "model_archive_sha256": "7fc30ecabbd939ffb2e7b0fdecbc439b042ff6235fda34736bfa25c67f4e535f",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "sprint1_subject2__seg005",
+              "sprint1_subject4__seg002",
+              "sprint1_subject4__seg005",
+              "sprint1_subject4__seg007",
+              "walk3_subject1__seg007"
+            ],
+            "both_complete": 139,
+            "both_fail": 16
+          }
+        },
+        {
+          "seed": 14,
+          "primary": {
+            "A+": {
+              "completed": 149,
+              "clips": 163,
+              "completion": 0.9141104294478528,
+              "median_valid_s": 16.059999465942383
+            },
+            "B": {
+              "completed": 143,
+              "clips": 163,
+              "completion": 0.8773006134969326,
+              "median_valid_s": 15.579999923706055
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.901840490797546,
+              0.9141104294478528
+            ],
+            "B": [
+              0.8773006134969326,
+              0.8834355828220859
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 2.231698261351706,
+              "response8_B_reduction_percent": 0.006147619548793047,
+              "response8_B_reduction_vs_zero_percent": 0.1594718509120053,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.43222738251709,
+              "response8_B_reduction_percent": 0.03620534262641483,
+              "response8_B_reduction_vs_zero_percent": 0.20800309202459366,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -3.6809815950920255,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 14,
+                "worst_completion_drop_pp": 3.6809815950920255,
+                "worst_duration_ratio": 0.9701121072105738
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              149,
+              147
+            ],
+            "B": [
+              143,
+              144
+            ]
+          },
+          "model_archive": "models/s14_models.tar.gz",
+          "model_archive_sha256": "e773438a425f03ea09721b5327acaa91f4018704ab9aae683fe685deff1d6ce9",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject2__seg000",
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg004",
+              "fight1_subject5__seg002",
+              "run2_subject4__seg001",
+              "walk3_subject1__seg007",
+              "walk3_subject4__seg004"
+            ],
+            "B_only": [
+              "run1_subject2__seg001",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg005"
+            ],
+            "both_complete": 140,
+            "both_fail": 11
+          }
+        },
+        {
+          "seed": 18,
+          "primary": {
+            "A+": {
+              "completed": 138,
+              "clips": 163,
+              "completion": 0.8466257668711656,
+              "median_valid_s": 15.359999656677246
+            },
+            "B": {
+              "completed": 146,
+              "clips": 163,
+              "completion": 0.8957055214723927,
+              "median_valid_s": 16.079999923706055
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8466257668711656,
+              0.8466257668711656
+            ],
+            "B": [
+              0.8957055214723927,
+              0.8957055214723927
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 6.516564414781861,
+              "response8_B_reduction_percent": -0.04617412386303212,
+              "response8_B_reduction_vs_zero_percent": 0.14435643818054983,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 3.4174042665037216,
+              "response8_B_reduction_percent": -0.03740670318557872,
+              "response8_B_reduction_vs_zero_percent": 0.21459198985218889,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 4.907975460122705,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 18,
+                "worst_completion_drop_pp": -4.907975460122705,
+                "worst_duration_ratio": 1.0401554340938455
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              138,
+              138
+            ],
+            "B": [
+              146,
+              146
+            ]
+          },
+          "model_archive": "models/s18_models.tar.gz",
+          "model_archive_sha256": "ce666472a23eadc54dcade9600ff65526cb2eb2b6a67999f70397002430427c4",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "walk3_subject1__seg005"
+            ],
+            "B_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject3__seg004",
+              "fallAndGetUp2_subject3__seg005",
+              "run1_subject2__seg001",
+              "run2_subject4__seg001",
+              "sprint1_subject2__seg004",
+              "walk2_subject3__seg003",
+              "walk3_subject3__seg001"
+            ],
+            "both_complete": 137,
+            "both_fail": 16
+          }
+        },
+        {
+          "seed": 22,
+          "primary": {
+            "A+": {
+              "completed": 139,
+              "clips": 163,
+              "completion": 0.852760736196319,
+              "median_valid_s": 15.4399995803833
+            },
+            "B": {
+              "completed": 141,
+              "clips": 163,
+              "completion": 0.8650306748466258,
+              "median_valid_s": 15.4399995803833
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.852760736196319,
+              0.852760736196319
+            ],
+            "B": [
+              0.8650306748466258,
+              0.8773006134969326
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 3.747157712261093,
+              "response8_B_reduction_percent": -0.03949993150397368,
+              "response8_B_reduction_vs_zero_percent": 0.15555666414891015,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 4.306048140216737,
+              "response8_B_reduction_percent": -0.04630748412646275,
+              "response8_B_reduction_vs_zero_percent": 0.20735276236800862,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 1.2269938650306789,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 22,
+                "worst_completion_drop_pp": -1.2269938650306789,
+                "worst_duration_ratio": 1.0
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              139,
+              139
+            ],
+            "B": [
+              141,
+              143
+            ]
+          },
+          "model_archive": "models/s22_models.tar.gz",
+          "model_archive_sha256": "7e90cc3cfcdcb48d9049e5caca6cffe6f9df8a17c5a0f5164531da554195b835",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fight1_subject5__seg004",
+              "jumps1_subject5__seg003",
+              "jumps1_subject5__seg006",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg001",
+              "walk2_subject3__seg003"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "jumps1_subject2__seg007",
+              "sprint1_subject2__seg002",
+              "sprint1_subject2__seg004",
+              "sprint1_subject2__seg005",
+              "sprint1_subject4__seg002",
+              "sprint1_subject4__seg007",
+              "walk3_subject1__seg005"
+            ],
+            "both_complete": 132,
+            "both_fail": 15
+          }
+        },
+        {
+          "seed": 26,
+          "primary": {
+            "A+": {
+              "completed": 147,
+              "clips": 163,
+              "completion": 0.901840490797546,
+              "median_valid_s": 16.059999465942383
+            },
+            "B": {
+              "completed": 150,
+              "clips": 163,
+              "completion": 0.9202453987730062,
+              "median_valid_s": 16.059999465942383
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.901840490797546,
+              0.901840490797546
+            ],
+            "B": [
+              0.9202453987730062,
+              0.9263803680981595
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 3.8434891948140306,
+              "response8_B_reduction_percent": -0.06060987640909303,
+              "response8_B_reduction_vs_zero_percent": 0.11418457479666307,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 6.836099214985715,
+              "response8_B_reduction_percent": -0.0019514855798306232,
+              "response8_B_reduction_vs_zero_percent": 0.19956483915198645,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": 1.8404907975460127,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 26,
+                "worst_completion_drop_pp": -1.8404907975460127,
+                "worst_duration_ratio": 1.0
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              147,
+              147
+            ],
+            "B": [
+              150,
+              151
+            ]
+          },
+          "model_archive": "models/s26_models.tar.gz",
+          "model_archive_sha256": "f41f849d51adb7bd465355b4971fac6e842a33dbdb7868f9e88d5e0a2f2076ca",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "sprint1_subject2__seg004",
+              "sprint1_subject2__seg005",
+              "sprint1_subject4__seg001"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg004",
+              "jumps1_subject2__seg007",
+              "sprint1_subject4__seg005",
+              "sprint1_subject4__seg007",
+              "walk3_subject1__seg007",
+              "walk3_subject4__seg004"
+            ],
+            "both_complete": 144,
+            "both_fail": 10
+          }
+        },
+        {
+          "seed": 30,
+          "primary": {
+            "A+": {
+              "completed": 143,
+              "clips": 163,
+              "completion": 0.8773006134969326,
+              "median_valid_s": 15.619999885559082
+            },
+            "B": {
+              "completed": 140,
+              "clips": 163,
+              "completion": 0.8588957055214724,
+              "median_valid_s": 15.4399995803833
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8773006134969326,
+              0.8834355828220859
+            ],
+            "B": [
+              0.8588957055214724,
+              0.8588957055214724
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 7.083688409646167,
+              "response8_B_reduction_percent": -0.07349204731966894,
+              "response8_B_reduction_vs_zero_percent": 0.10112811299493205,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 10.696331586619866,
+              "response8_B_reduction_percent": 0.08471354643741481,
+              "response8_B_reduction_vs_zero_percent": 0.2719310694246796,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -1.8404907975460127,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 30,
+                "worst_completion_drop_pp": 2.4539877300613466,
+                "worst_duration_ratio": 0.9846938915150413
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              143,
+              144
+            ],
+            "B": [
+              140,
+              140
+            ]
+          },
+          "model_archive": "models/s30_models.tar.gz",
+          "model_archive_sha256": "0e6426f3bba64260e9ef6003b9dcfb81037612a0bb81c12596f734b8969ab5c9",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "jumps1_subject2__seg007",
+              "sprint1_subject4__seg005",
+              "walk3_subject1__seg007"
+            ],
+            "B_only": [
+              "jumps1_subject5__seg001",
+              "run2_subject4__seg001"
+            ],
+            "both_complete": 138,
+            "both_fail": 18
+          }
+        },
+        {
+          "seed": 34,
+          "primary": {
+            "A+": {
+              "completed": 150,
+              "clips": 163,
+              "completion": 0.9202453987730062,
+              "median_valid_s": 16.399999618530273
+            },
+            "B": {
+              "completed": 144,
+              "clips": 163,
+              "completion": 0.8834355828220859,
+              "median_valid_s": 15.579999923706055
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.901840490797546,
+              0.9202453987730062
+            ],
+            "B": [
+              0.8834355828220859,
+              0.8834355828220859
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 2.5954241145075696,
+              "response8_B_reduction_percent": -0.05724033241017733,
+              "response8_B_reduction_vs_zero_percent": 0.1396442120778452,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 6.159572343443841,
+              "response8_B_reduction_percent": 0.05941616113519327,
+              "response8_B_reduction_vs_zero_percent": 0.2706693466816366,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -3.6809815950920255,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 34,
+                "worst_completion_drop_pp": 3.6809815950920255,
+                "worst_duration_ratio": 0.9500000174452623
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              150,
+              147
+            ],
+            "B": [
+              144,
+              144
+            ]
+          },
+          "model_archive": "models/s34_models.tar.gz",
+          "model_archive_sha256": "85744791f4c24e9e3f3b90892058e2ab98c817d59bbc76c3c1d75b8516bae4ce",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject3__seg004",
+              "fallAndGetUp2_subject3__seg005",
+              "run2_subject4__seg001",
+              "sprint1_subject2__seg004",
+              "sprint1_subject2__seg007",
+              "sprint1_subject4__seg001"
+            ],
+            "B_only": [
+              "fallAndGetUp2_subject3__seg001"
+            ],
+            "both_complete": 143,
+            "both_fail": 12
+          }
+        },
+        {
+          "seed": 38,
+          "primary": {
+            "A+": {
+              "completed": 146,
+              "clips": 163,
+              "completion": 0.8957055214723927,
+              "median_valid_s": 15.679999351501465
+            },
+            "B": {
+              "completed": 142,
+              "clips": 163,
+              "completion": 0.8711656441717791,
+              "median_valid_s": 15.579999923706055
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8773006134969326,
+              0.8957055214723927
+            ],
+            "B": [
+              0.8588957055214724,
+              0.8711656441717791
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 4.167942351176893,
+              "response8_B_reduction_percent": -0.06924845226740865,
+              "response8_B_reduction_vs_zero_percent": 0.13609713367590312,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 6.933977183051498,
+              "response8_B_reduction_percent": -0.026692440228831486,
+              "response8_B_reduction_vs_zero_percent": 0.20288385213372095,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -2.4539877300613577,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 38,
+                "worst_completion_drop_pp": 3.6809815950920255,
+                "worst_duration_ratio": 0.9936224852084682
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              146,
+              143
+            ],
+            "B": [
+              142,
+              140
+            ]
+          },
+          "model_archive": "models/s38_models.tar.gz",
+          "model_archive_sha256": "b7b9b5c3a25fa26495bb5dab8daa3253f08ec1fa589fa951b0ffcdf5aae303ac",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject2__seg000",
+              "fallAndGetUp2_subject3__seg004",
+              "fallAndGetUp2_subject3__seg005",
+              "walk2_subject3__seg003"
+            ],
+            "B_only": [
+              "fallAndGetUp1_subject4__seg000"
+            ],
+            "both_complete": 141,
+            "both_fail": 16
+          }
+        },
+        {
+          "seed": 42,
+          "primary": {
+            "A+": {
+              "completed": 144,
+              "clips": 163,
+              "completion": 0.8834355828220859,
+              "median_valid_s": 15.579999923706055
+            },
+            "B": {
+              "completed": 140,
+              "clips": 163,
+              "completion": 0.8588957055214724,
+              "median_valid_s": 15.4399995803833
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.8773006134969326,
+              0.8834355828220859
+            ],
+            "B": [
+              0.8588957055214724,
+              0.8588957055214724
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 11.121859862599505,
+              "response8_B_reduction_percent": -0.03583718283824863,
+              "response8_B_reduction_vs_zero_percent": 0.1637945826168928,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 11.395801273664665,
+              "response8_B_reduction_percent": -0.042679118983688286,
+              "response8_B_reduction_vs_zero_percent": 0.16577177030733456,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -2.4539877300613466,
+          "gate": {
+            "passed": true,
+            "reasons": [],
+            "pairs": [
+              {
+                "seed": 42,
+                "worst_completion_drop_pp": 2.4539877300613466,
+                "worst_duration_ratio": 0.991014098587399
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Review predictions and response backend validity before designing C",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              144,
+              143
+            ],
+            "B": [
+              140,
+              140
+            ]
+          },
+          "model_archive": "models/s42_models.tar.gz",
+          "model_archive_sha256": "916f8636396d30cd798c5a6ad4d4ac1ac4fa1a77a8bee5f7bcefabdeac551aa4",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fight1_subject2__seg005",
+              "jumps1_subject2__seg007",
+              "walk2_subject3__seg003",
+              "walk3_subject1__seg005"
+            ],
+            "B_only": [
+              "sprint1_subject4__seg002"
+            ],
+            "both_complete": 139,
+            "both_fail": 18
+          }
+        },
+        {
+          "seed": 46,
+          "primary": {
+            "A+": {
+              "completed": 150,
+              "clips": 163,
+              "completion": 0.9202453987730062,
+              "median_valid_s": 16.399999618530273
+            },
+            "B": {
+              "completed": 140,
+              "clips": 163,
+              "completion": 0.8588957055214724,
+              "median_valid_s": 15.519999504089355
+            }
+          },
+          "repeat_ranges": {
+            "A+": [
+              0.9202453987730062,
+              0.9202453987730062
+            ],
+            "B": [
+              0.8588957055214724,
+              0.8588957055214724
+            ]
+          },
+          "prediction_diagnostics": {
+            "fit": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.9996168040806195,
+              "response8_B_reduction_percent": -0.04432083793665468,
+              "response8_B_reduction_vs_zero_percent": 0.1445841514603955,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            },
+            "cal": {
+              "valid": true,
+              "q32_B_reduction_percent": 5.213481220906142,
+              "response8_B_reduction_percent": -0.11033184325948729,
+              "response8_B_reduction_vs_zero_percent": 0.11807399834376348,
+              "interpretation": "CPU pair diagnostics; response backend validity is unresolved"
+            }
+          },
+          "primary_B_minus_Aplus_completion_pp": -6.134969325153373,
+          "gate": {
+            "passed": false,
+            "reasons": [
+              "s46: candidate B completion remains below A"
+            ],
+            "pairs": [
+              {
+                "seed": 46,
+                "worst_completion_drop_pp": 6.134969325153373,
+                "worst_duration_ratio": 0.946341455188413
+              }
+            ],
+            "formal_results": false,
+            "meaning": "Control-retention screen only; not superiority, equivalence or a paper conclusion.",
+            "next_action": "Diagnose failed control/structure/repeatability checks; do not extend automatically",
+            "automatic_training_authorized": false,
+            "C_authorized": false
+          },
+          "repeat_completed": {
+            "A+": [
+              150,
+              150
+            ],
+            "B": [
+              140,
+              140
+            ]
+          },
+          "model_archive": "models/s46_models.tar.gz",
+          "model_archive_sha256": "f25808b0fa5529d023a20fae2af1f01b1461ae5a602ae53628494a7c55ffa1ff",
+          "primary_clip_discordance": {
+            "Aplus_only": [
+              "fallAndGetUp1_subject4__seg000",
+              "fallAndGetUp1_subject5__seg000",
+              "fallAndGetUp2_subject2__seg000",
+              "fallAndGetUp2_subject3__seg001",
+              "fallAndGetUp2_subject3__seg003",
+              "fallAndGetUp2_subject3__seg004",
+              "fallAndGetUp2_subject3__seg005",
+              "jumps1_subject2__seg007",
+              "run1_subject2__seg001",
+              "walk2_subject3__seg003",
+              "walk3_subject1__seg005",
+              "walk3_subject1__seg007"
+            ],
+            "B_only": [
+              "sprint1_subject2__seg005",
+              "sprint1_subject2__seg007"
+            ],
+            "both_complete": 138,
+            "both_fail": 11
+          }
+        }
+      ]
+    }
+  },
+  "evidence": {
+    "/home/zoyi/Downloads/online_night01_4090_review.tar.gz": "dac1ec0e3a612fa8b268c6587606ca8d7bdf70deffcd6aaa7c0f18bd1e13ca13",
+    "/home/zoyi/Projects/Supermimic-z01/logs/ral_online_8h/import/online_night01_4090/status.json": "794d4d114ba3fe66cfa08546bc03db424df40bfa7e4d40dd6a1c99bf4662215c",
+    "/home/zoyi/Downloads/online_night01_5080_review.tar.gz": "a15ad5869f32adf0776dd706e9e78d77f27ea2b84757f786940f5194146da235",
+    "/home/zoyi/Projects/Supermimic-z01/logs/ral_online_8h/import/online_night01_5080/status.json": "9ba9591a48d6d4bd6bfce509b32c103557a23d0f0fcd95b0b048bcf6f05252dc",
+    "/home/zoyi/Projects/Supermimic-z01/logs/ral_online_8h/online_night01_3090/status.json": "c9cf0ba53be69bcb221586d5e91a7ec787aca886538965ccfb9791cd73f35f6c",
+    "/home/zoyi/Downloads/online_night01_4090_console.log": "1eaa671342052040ade2d69a1c9398a396b3a1ce4654f45ec60ab64cd2d413bb",
+    "/home/zoyi/Downloads/online_night01_5080_console.log": "a9e6fe5024726ec8c4d63df4e0271183971dad1d7c315a211e23f7d629178f28"
+  },
+  "local_3090": {
+    "source_folder": "logs/ral_online_8h/online_night01_3090",
+    "status": "timed_out",
+    "source_training_budget_policy_updates": 1000,
+    "training_seeds": [
+      2,
+      4
+    ],
+    "completed_evaluations": 115,
+    "complete_cells": 28,
+    "evaluations_in_complete_cells": 112,
+    "complete_evaluations_excluded_from_balanced_aggregation": 3,
+    "incomplete_job": {
+      "id": "identified_training_dr_e115_s4_B",
+      "cell": "identified_training_dr_e115",
+      "eval_seed": 115,
+      "condition": "identified_training_dr",
+      "plant": "identified",
+      "group": "B",
+      "seed": 4,
+      "run": "/home/zoyi/Projects/Supermimic-z01/logs/ral_structure/import/structure01_4090/jobs/s4_B/run"
+    },
+    "complete_evaluation_seeds": [
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114
+    ],
+    "scope": "Training dynamics randomization plus default training observation noise; not heldout robustness",
+    "contrasts": [
+      {
+        "condition": "identified_training_dr",
+        "training_seed": 2,
+        "evaluation_seeds": 14,
+        "Aplus_completion_percent": {
+          "n": 14,
+          "mean": 81.98948290972831,
+          "sample_sd": 1.2643474837022128,
+          "minimum": 79.75460122699386,
+          "maximum": 84.66257668711657
+        },
+        "B_completion_percent": {
+          "n": 14,
+          "mean": 80.93777388255916,
+          "sample_sd": 1.0885641126961267,
+          "minimum": 79.75460122699386,
+          "maximum": 82.82208588957054
+        },
+        "B_minus_Aplus_completion_pp": {
+          "n": 14,
+          "mean": -1.05170902716915,
+          "sample_sd": 1.7589054653575555,
+          "minimum": -3.6809815950920255,
+          "maximum": 1.8404907975460127
+        }
+      },
+      {
+        "condition": "identified_training_dr",
+        "training_seed": 4,
+        "evaluation_seeds": 14,
+        "Aplus_completion_percent": {
+          "n": 14,
+          "mean": 79.84224364592463,
+          "sample_sd": 1.0449455549112137,
+          "minimum": 77.30061349693251,
+          "maximum": 81.59509202453987
+        },
+        "B_completion_percent": {
+          "n": 14,
+          "mean": 79.4478527607362,
+          "sample_sd": 1.3343761694760405,
+          "minimum": 76.07361963190185,
+          "maximum": 80.98159509202453
+        },
+        "B_minus_Aplus_completion_pp": {
+          "n": 14,
+          "mean": -0.39439088518842974,
+          "sample_sd": 1.7944072194887648,
+          "minimum": -4.294478527607359,
+          "maximum": 3.0674846625766916
+        }
+      },
+      {
+        "condition": "nominal_training_dr",
+        "training_seed": 2,
+        "evaluation_seeds": 14,
+        "Aplus_completion_percent": {
+          "n": 14,
+          "mean": 80.67484662576686,
+          "sample_sd": 1.2445650773233188,
+          "minimum": 77.91411042944786,
+          "maximum": 82.20858895705521
+        },
+        "B_completion_percent": {
+          "n": 14,
+          "mean": 77.82646801051709,
+          "sample_sd": 1.4409322382100125,
+          "minimum": 75.4601226993865,
+          "maximum": 80.3680981595092
+        },
+        "B_minus_Aplus_completion_pp": {
+          "n": 14,
+          "mean": -2.8483786152497794,
+          "sample_sd": 2.092363476840767,
+          "minimum": -5.521472392638039,
+          "maximum": 2.4539877300613466
+        }
+      },
+      {
+        "condition": "nominal_training_dr",
+        "training_seed": 4,
+        "evaluation_seeds": 14,
+        "Aplus_completion_percent": {
+          "n": 14,
+          "mean": 79.4478527607362,
+          "sample_sd": 1.4979301791509063,
+          "minimum": 77.30061349693251,
+          "maximum": 82.20858895705521
+        },
+        "B_completion_percent": {
+          "n": 14,
+          "mean": 77.65118317265556,
+          "sample_sd": 1.609084554307115,
+          "minimum": 74.84662576687117,
+          "maximum": 79.75460122699386
+        },
+        "B_minus_Aplus_completion_pp": {
+          "n": 14,
+          "mean": -1.7966695880806294,
+          "sample_sd": 2.2887285994571576,
+          "minimum": -6.134969325153373,
+          "maximum": 1.8404907975460127
+        }
+      }
+    ],
+    "backend_passes": [
+      {
+        "repeat": 0,
+        "blocks": 516,
+        "failed": 65,
+        "passed_blocks": 451,
+        "failed_blocks": [
+          "dance1_subject3__seg002:2:490",
+          "dance1_subject3__seg005:2:639",
+          "dance2_subject4__seg000:3:274",
+          "fight1_subject5__seg001:2:269",
+          "fight1_subject5__seg004:2:227",
+          "fight1_subject5__seg005:0:255",
+          "jumps1_subject5__seg003:1:237",
+          "jumps1_subject5__seg007:1:111",
+          "jumps1_subject5__seg007:2:478",
+          "run1_subject2__seg000:0:1294",
+          "run1_subject2__seg002:3:265",
+          "run2_subject1__seg000:2:167",
+          "run2_subject1__seg001:0:69",
+          "run2_subject1__seg001:1:196",
+          "run2_subject1__seg001:3:252",
+          "run2_subject4__seg000:1:867",
+          "run2_subject4__seg001:1:974",
+          "run2_subject4__seg001:2:842",
+          "run2_subject4__seg002:1:679",
+          "run2_subject4__seg003:1:204",
+          "run2_subject4__seg003:2:221",
+          "run2_subject4__seg004:2:599",
+          "sprint1_subject2__seg001:2:41",
+          "sprint1_subject2__seg002:0:844",
+          "sprint1_subject2__seg002:2:1348",
+          "sprint1_subject2__seg004:0:209",
+          "sprint1_subject2__seg008:0:93",
+          "sprint1_subject2__seg008:2:96",
+          "walk1_subject1__seg001:0:985",
+          "walk1_subject5__seg002:0:1507",
+          "walk1_subject5__seg002:2:1026",
+          "walk1_subject5__seg004:1:13",
+          "walk1_subject5__seg006:3:3688",
+          "walk2_subject1__seg000:0:381",
+          "walk2_subject1__seg000:3:62",
+          "walk2_subject1__seg001:3:412",
+          "walk2_subject1__seg003:0:1156",
+          "walk2_subject1__seg004:0:185",
+          "walk2_subject1__seg004:1:51",
+          "walk3_subject1__seg001:0:328",
+          "walk3_subject1__seg001:2:240",
+          "walk3_subject1__seg002:0:166",
+          "walk3_subject1__seg005:1:2202",
+          "walk3_subject1__seg005:3:164",
+          "walk3_subject1__seg007:3:524",
+          "walk3_subject2__seg001:0:2842",
+          "walk3_subject2__seg002:0:297",
+          "walk3_subject2__seg002:3:170",
+          "walk3_subject2__seg003:3:1221",
+          "walk3_subject2__seg004:1:1020",
+          "fightAndSports1_subject4__seg000:2:523",
+          "jumps1_subject1__seg000:1:616",
+          "jumps1_subject1__seg000:2:368",
+          "jumps1_subject2__seg000:1:762",
+          "jumps1_subject2__seg006:2:1057",
+          "jumps1_subject2__seg007:1:126",
+          "sprint1_subject4__seg000:0:59",
+          "sprint1_subject4__seg001:3:252",
+          "sprint1_subject4__seg003:3:163",
+          "sprint1_subject4__seg004:1:523",
+          "sprint1_subject4__seg009:2:177",
+          "walk3_subject4__seg001:3:375",
+          "walk3_subject4__seg003:1:972",
+          "walk3_subject4__seg003:2:2134",
+          "walk3_subject4__seg004:1:513"
+        ],
+        "failure_categories_overlapping": {
+          "forward": 42,
+          "CPU_GPU_response": 47,
+          "same_batch_GPU_repeat": 24
+        },
+        "coverage": {
+          "fit": 400,
+          "cal": 116
+        },
+        "maximum_saved_replay_abs_error": 5.613287612504791e-13,
+        "maximum_CPU_scene_scaled_RMSE": 0.0
+      },
+      {
+        "repeat": 1,
+        "blocks": 516,
+        "failed": 67,
+        "passed_blocks": 449,
+        "failed_blocks": [
+          "dance1_subject3__seg002:2:490",
+          "dance1_subject3__seg005:2:639",
+          "dance2_subject4__seg000:3:274",
+          "fight1_subject5__seg001:2:269",
+          "fight1_subject5__seg004:2:227",
+          "fight1_subject5__seg005:0:255",
+          "jumps1_subject5__seg003:1:237",
+          "jumps1_subject5__seg007:1:111",
+          "jumps1_subject5__seg007:2:478",
+          "run1_subject2__seg000:0:1294",
+          "run1_subject2__seg002:3:265",
+          "run2_subject1__seg000:2:167",
+          "run2_subject1__seg001:0:69",
+          "run2_subject1__seg001:1:196",
+          "run2_subject1__seg001:3:252",
+          "run2_subject4__seg000:1:867",
+          "run2_subject4__seg001:1:974",
+          "run2_subject4__seg001:2:842",
+          "run2_subject4__seg002:1:679",
+          "run2_subject4__seg003:2:221",
+          "run2_subject4__seg004:2:599",
+          "sprint1_subject2__seg001:2:41",
+          "sprint1_subject2__seg002:0:844",
+          "sprint1_subject2__seg002:2:1348",
+          "sprint1_subject2__seg004:0:209",
+          "sprint1_subject2__seg008:0:93",
+          "sprint1_subject2__seg008:2:96",
+          "walk1_subject1__seg001:0:985",
+          "walk1_subject5__seg002:0:1507",
+          "walk1_subject5__seg002:2:1026",
+          "walk1_subject5__seg004:1:13",
+          "walk1_subject5__seg006:3:3688",
+          "walk2_subject1__seg000:0:381",
+          "walk2_subject1__seg000:3:62",
+          "walk2_subject1__seg001:3:412",
+          "walk2_subject1__seg003:0:1156",
+          "walk2_subject1__seg004:0:185",
+          "walk2_subject1__seg004:1:51",
+          "walk3_subject1__seg001:0:328",
+          "walk3_subject1__seg001:2:240",
+          "walk3_subject1__seg002:0:166",
+          "walk3_subject1__seg005:1:2202",
+          "walk3_subject1__seg005:3:164",
+          "walk3_subject1__seg007:3:524",
+          "walk3_subject2__seg001:0:2842",
+          "walk3_subject2__seg002:0:297",
+          "walk3_subject2__seg002:3:170",
+          "walk3_subject2__seg003:3:1221",
+          "walk3_subject2__seg004:1:1020",
+          "dance2_subject1__seg000:2:313",
+          "fightAndSports1_subject4__seg000:2:523",
+          "jumps1_subject1__seg000:1:616",
+          "jumps1_subject1__seg000:2:368",
+          "jumps1_subject1__seg000:3:794",
+          "jumps1_subject2__seg000:1:762",
+          "jumps1_subject2__seg006:2:1057",
+          "jumps1_subject2__seg007:1:126",
+          "sprint1_subject4__seg000:0:59",
+          "sprint1_subject4__seg001:3:252",
+          "sprint1_subject4__seg003:3:163",
+          "sprint1_subject4__seg004:1:523",
+          "sprint1_subject4__seg009:2:177",
+          "walk3_subject4__seg001:3:375",
+          "walk3_subject4__seg003:1:972",
+          "walk3_subject4__seg003:2:2134",
+          "walk3_subject4__seg004:1:513",
+          "walk3_subject4__seg004:3:404"
+        ],
+        "failure_categories_overlapping": {
+          "forward": 42,
+          "CPU_GPU_response": 46,
+          "same_batch_GPU_repeat": 26
+        },
+        "coverage": {
+          "fit": 400,
+          "cal": 116
+        },
+        "maximum_saved_replay_abs_error": 5.613287612504791e-13,
+        "maximum_CPU_scene_scaled_RMSE": 0.0
+      }
+    ],
+    "cross_process_repeatability": {
+      "blocks": 516,
+      "failed": 15,
+      "failed_blocks": [
+        "run1_subject2__seg000:0:1294",
+        "run2_subject4__seg001:1:974",
+        "run2_subject4__seg001:2:842",
+        "sprint1_subject2__seg001:2:41",
+        "sprint1_subject2__seg004:0:209",
+        "sprint1_subject2__seg008:2:96",
+        "walk2_subject1__seg001:3:412",
+        "walk2_subject1__seg004:1:51",
+        "walk3_subject1__seg002:0:166",
+        "walk3_subject2__seg001:0:2842",
+        "walk3_subject2__seg003:3:1221",
+        "dance2_subject1__seg000:2:313",
+        "jumps1_subject1__seg000:1:616",
+        "sprint1_subject4__seg001:3:252",
+        "walk3_subject4__seg004:1:513"
+      ]
+    },
+    "actual_source_checkpoint_and_scenario_array_hashes_verified": true,
+    "raw_backend_arrays_recomputed": true
+  },
+  "summary": {
+    "new_completed_paired_seeds": 31,
+    "new_completed_models": 62,
+    "remote_final_evaluations_checked": 124,
+    "remote_final_episodes_checked": 20212,
+    "new_model_weight_verification": "pending transfer",
+    "decision": "Pause more identical A+/B replication; diagnose paired failures and response backend. Do not enable C/D/C-perm."
+  },
+  "audit_script": {
+    "path": "logs/ral_online_8h/audit_online_night01.py",
+    "sha256": "04089f6636d516912a692503ef0d9eb15f4784f443eecceda92d53e7ea7f215f",
+    "log": "logs/ral_online_8h/audit_online_night01.log",
+    "status": "passed"
+  },
+  "diagnostic_model_request": {
+    "purpose": "First scheduled pair and screen-failing pair from each machine; purposive diagnosis only, not a performance estimate.",
+    "preserve_all_31_pairs": true,
+    "items": [
+      {
+        "machine": "4090",
+        "seed": 8,
+        "source": "logs/ral_online_8h/online_night01_4090/models/s8_models.tar.gz",
+        "sha256": "ef340c09c6bae1c613e1a74ed64c9282390dcfe14e9026edc51cd7bfdfe8e628",
+        "reason": "first_scheduled_pair"
+      },
+      {
+        "machine": "4090",
+        "seed": 84,
+        "source": "logs/ral_online_8h/online_night01_4090/models/s84_models.tar.gz",
+        "sha256": "c2ccf1b0307649d4250765937983ee7fabea2763b73c8130f553f5749d431152",
+        "reason": "control_screen_failure"
+      },
+      {
+        "machine": "5080",
+        "seed": 6,
+        "source": "logs/ral_online_8h/online_night01_5080/models/s6_models.tar.gz",
+        "sha256": "b55590a3e1b5b2fd93348cc04d860d0a057227341f1078eb860378f71892d842",
+        "reason": "first_scheduled_pair"
+      },
+      {
+        "machine": "5080",
+        "seed": 46,
+        "source": "logs/ral_online_8h/online_night01_5080/models/s46_models.tar.gz",
+        "sha256": "f25808b0fa5529d023a20fae2af1f01b1461ae5a602ae53628494a7c55ffa1ff",
+        "reason": "control_screen_failure"
+      }
+    ]
+  }
+}

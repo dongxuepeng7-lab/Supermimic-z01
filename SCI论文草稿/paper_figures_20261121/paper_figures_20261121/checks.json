@@ -1,0 +1,12 @@
+{
+  "rmse_recomputed_and_matched_existing_reports": true,
+  "comparisons": 8,
+  "metrics_per_parameter_set": 3,
+  "max_step_seconds": 0.0005,
+  "scoring_grid_seconds": 0.002,
+  "all_transients_retained_in_metrics": true,
+  "synthetic_or_refitted_results": false,
+  "trajectory_window_rule": "first three scored periods",
+  "failure_window_rule": "largest absolute roll deviation from full replay-span median",
+  "actual_execution_timestamps_available": false
+}

@@ -1,0 +1,13 @@
+{
+  "created_at": "2026-11-26T12:38:50.344278+08:00",
+  "purpose": "5080 cap10/cap30 matched native response training, additive-only files",
+  "requires": "Existing native cd02 implementation and five original cd01 handoffs, verified by input checks",
+  "files": {
+    "tools/ral_cd_strength.py": "82e173debc71011c99e02ff98283b9fb208c47f00a83fdbf254269e02114c2db",
+    "configs/ral/cd_strength_v1.json": "5900da7a361ac4dad2f37f6392032e1df798583942279decb5f71435baf1732b",
+    "scripts/ral_5080_cd_strength.sh": "fe640426f92a604469e5e39693a421094eca45fa5f3765ea1db59915897afbaf",
+    "docs/ral_cd_strength_20261126.txt": "d441995f691302b0f3933aade4d186fbae69379a7c428686d98c1d9a8b52d10a",
+    "release/ral/cd_strength_design_20261126.json": "716a7543856b3dc9b0e284d74177e2bd53ff2b407010d591b3ceedc73705b0c9",
+    "release/ral/cd_strength_implementation_20261126.json": "3de2884928935679f24df8f1a90a56bcf0acf0ad7dcbd058585bdac63a5058df"
+  }
+}

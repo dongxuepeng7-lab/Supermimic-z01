@@ -1,0 +1,49 @@
+note: Running TeX ...
+warning: body_en:11: Underfull \hbox (badness 2662) in paragraph at lines 10--11
+warning: body_en:29: Underfull \hbox (badness 1824) in paragraph at lines 28--29
+warning: body_en:35: Underfull \hbox (badness 3849) in paragraph at lines 34--35
+warning: body_en:153: Underfull \hbox (badness 5519) in paragraph at lines 152--153
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: body_en:199: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: body_en:201: Underfull \vbox (badness 10000) has occurred while \output is active
+note: Running BibTeX on manuscript_en.aux ...
+note: Rerunning TeX because bibtex was run ...
+warning: body_en:11: Underfull \hbox (badness 2662) in paragraph at lines 10--11
+warning: body_en:29: Underfull \hbox (badness 1824) in paragraph at lines 28--29
+warning: body_en:35: Underfull \hbox (badness 3849) in paragraph at lines 34--35
+warning: body_en:153: Underfull \hbox (badness 5519) in paragraph at lines 152--153
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: body_en:199: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: body_en:201: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
+note: Running xdvipdfmx ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+note: Writing `manuscript_en.out` (4.3603515625 KiB)
+note: Writing `manuscript_en.bbl` (7 KiB)
+note: Writing `manuscript_en.aux` (12.0341796875 KiB)
+note: Writing `manuscript_en.log` (16.6474609375 KiB)
+note: Writing `manuscript_en.pdf` (446.0947265625 KiB)
+note: Writing `manuscript_en.blg` (388 B)
+note: Running TeX ...
+warning: accessing absolute path `/usr/share/fonts/truetype/liberation2/LiberationSerif-Regular.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/usr/share/fonts/truetype/liberation/LiberationSerif-BoldItalic.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/usr/share/fonts/truetype/liberation2/LiberationSerif-Italic.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/usr/share/fonts/truetype/liberation2/LiberationSerif-Bold.ttf`; build may not be reproducible in other environments
+warning: accessing absolute path `/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc`; build may not be reproducible in other environments
+warning: accessing absolute path `/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc`; build may not be reproducible in other environments
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+note: Running BibTeX on manuscript_zh.aux ...
+note: Rerunning TeX because bibtex was run ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+note: Rerunning TeX because "manuscript_zh.aux" changed ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+note: Running xdvipdfmx ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+note: Writing `manuscript_zh.aux` (11.208984375 KiB)
+note: Writing `manuscript_zh.log` (22.4130859375 KiB)
+note: Writing `manuscript_zh.pdf` (649.0087890625 KiB)
+note: Writing `manuscript_zh.out` (2.3193359375 KiB)
+note: Writing `manuscript_zh.bbl` (7 KiB)
+note: Writing `manuscript_zh.blg` (388 B)
+/home/zoyi/Projects/Supermimic-z01/tmp/pdfs/ral_final_20261123/source_package_check/Z01_RAL_Final_20261123/manuscript_en.pdf
+/home/zoyi/Projects/Supermimic-z01/tmp/pdfs/ral_final_20261123/source_package_check/Z01_RAL_Final_20261123/manuscript_zh.pdf

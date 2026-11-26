@@ -1,0 +1,362 @@
+[
+  {
+    "slide": 1,
+    "hidden": false,
+    "texts": [
+      "01",
+      "SG-AMP",
+      "Stability-Gated Adversarial Motion Priors",
+      "with Phase-Conditioned Discriminator",
+      "for Natural and Robust Bipedal Locomotion",
+      "Jiahong Li, Xuepeng Dong, Shengli Xu, Beiyan Jiang*",
+      "Beijing Union University",
+      "Beijing Zoyi Technology Co., Ltd."
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 25 seconds\n\nSPEAKING SCRIPT\nGood morning. Today I will present SG-AMP, our method for natural and robust bipedal locomotion. The central idea is to regulate adversarial motion imitation using contact stability. I will explain the formulation, show how its three components interact, and then examine the quantitative evidence from simulation.\n\nSOURCE\nSGAMP.pdf, title and abstract. User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 2,
+    "hidden": false,
+    "texts": [
+      "Research problem: style and stability",
+      "02",
+      "Task rewards support locomotion.",
+      "Motion priors encourage natural gait.",
+      "Style score lacks",
+      "contact stability",
+      "Phase ambiguity",
+      "adds jitter",
+      "A fixed weight",
+      "limits adaptation"
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 40 seconds\n\nSPEAKING SCRIPT\nA task reward can make a biped walk, but it does not fully capture the coordination and appearance of human motion. AMP introduces reference-motion style through an adversarial discriminator. The difficulty is that a good imitation score does not directly establish stable foot contact. Phase ambiguity can also create inconsistent rewards within a gait cycle, and a fixed style weight cannot adapt to changing stability. Our question is therefore how to retain motion imitation while regulating when, and how strongly, it should influence locomotion. The sequence shown here is the SG-AMP policy in simulation.\n\nSOURCE\nSGAMP.pdf, Introduction and Fig. 4; original source image fig7.jpg. User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 3,
+    "hidden": false,
+    "texts": [
+      "AMP formulation and objective conflict",
+      "03",
+      "Discriminator: reference transitions versus policy transitions",
+      "A fixed style weight couples imitation and task performance."
+    ],
+    "math": [
+      "LD=12EM[(D-1)2]+12Eπ[(D+1)2]",
+      "rtamp=max(0,1-14(D(st,st+1)-1)2)",
+      "rt=rttask+wstylertamp"
+    ],
+    "notes": "SUGGESTED TIME: 50 seconds\n\nSPEAKING SCRIPT\nStandard AMP learns a discriminator that separates reference transitions from policy transitions. The least-squares objective assigns different targets to these two groups. Its score becomes a bounded style reward, shown in the second equation. PPO then optimizes the sum of task reward and weighted style reward. The key issue is the fixed coefficient in the last equation. A strong style signal may compete with recovery during a difficult contact. A weak coefficient reduces the benefit of imitation. SG-AMP retains this adversarial framework, but changes both the discriminator’s conditioning and how its style reward enters the policy objective.\n\nSOURCE\nSGAMP.pdf, Section III-A, Eqs. (1)–(2). User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 4,
+    "hidden": false,
+    "texts": [
+      "SG-AMP training architecture",
+      "04",
+      "Contact forces",
+      "and sole geometry",
+      "Reference / policy data",
+      "with contact-aligned phase",
+      "G1  CoP margin",
+      "and style gate",
+      "G3  EMA of gate",
+      "and style weight",
+      "G2  Discriminator",
+      "with gait phase",
+      "All three signals enter the reward used by PPO"
+    ],
+    "math": [
+      "rt=rttask+λt g(mt) rtamp"
+    ],
+    "notes": "SUGGESTED TIME: 50 seconds\n\nSPEAKING SCRIPT\nThis architecture shows where each modification enters training. Contact forces and sole geometry define the CoP margin and the instantaneous style gate, G1. An exponential moving average of that gate determines the adaptive style weight, G3. Separately, reference and policy transitions enter a discriminator conditioned on contact-aligned gait phase, G2. The three signals meet in the reward optimized by PPO. The important distinction is that the CoP signal directly scales the style contribution, rather than appearing only as another task-reward term. We do not replace the policy optimizer or the adversarial training loop. Each modification also has a corresponding ablation.\n\nSOURCE\nSGAMP.pdf, Section III-B–E, Eqs. (5)–(8) and Algorithm 1. User-supplied manuscript.\n\nThe architecture follows the manuscript equations. The original Fig. 1 image contains inconsistent adaptive-weight labels, so this diagram uses the mathematical definitions."
+  },
+  {
+    "slide": 5,
+    "hidden": false,
+    "texts": [
+      "G1: contact geometry controls style reward",
+      "05",
+      "m₀ = 0.025 m",
+      "κ = 0.006 m",
+      "Support polygon: active-foot convex hull"
+    ],
+    "math": [
+      "pCoP=i,kfz,i,k pi,ki,kfz,i,k",
+      "mt=mine∈∂Stdsigned(pCoP,e)",
+      "g(mt)=σmt-m0κ"
+    ],
+    "notes": "SUGGESTED TIME: 75 seconds\n\nSPEAKING SCRIPT\nThe CoP is the vertical-force-weighted average of the contact positions. We construct a support polygon from active-foot geometry, then compute the minimum signed distance from the CoP to its boundary. This margin controls a sigmoid gate. The curve is an analytical evaluation of the equation, not an experimental trajectory. At the threshold of 2.5 centimeters, the gate is one half. Larger margins preserve more of the style reward, while smaller margins attenuate it continuously. The smoothing scale is 6 millimeters. This multiplication regulates the imitation signal at each step without adding a new gradient path through the physics. We treat the contact margin as a training proxy for stability, rather than a formal guarantee. Accurate contact reconstruction is therefore an important implementation requirement.\n\nSOURCE\nSGAMP.pdf, Section III-B, Eqs. (3)–(5). User-supplied manuscript.\n\nAnalytic plot computed directly from Eq. (5) with m0=0.025 m and kappa=0.006 m. Active contact threshold in the paper: vertical force >1 N. The manuscript’s CoP reconstruction details need clarification before hardware implementation."
+  },
+  {
+    "slide": 6,
+    "hidden": false,
+    "texts": [
+      "G2: gait phase conditions the discriminator",
+      "06",
+      "Commanded frequency advances the clock.",
+      "Heel strikes align the phase with actual contact.",
+      "Reference and policy data use the same phase convention."
+    ],
+    "math": [
+      "φt+Δt=φt+2πfcmdΔt",
+      "Dψ(st,st+1,cosφt,sinφt)"
+    ],
+    "notes": "SUGGESTED TIME: 50 seconds\n\nSPEAKING SCRIPT\nGait phase gives the discriminator context for interpreting a transition. The phase clock advances at the commanded step frequency, and heel-strike events align it with actual contacts. Cosine and sine represent the cyclic variable continuously across the phase boundary. We concatenate this encoding with the state transition. The same convention labels the reference data offline, so the discriminator can compare motion at corresponding phases. This targets within-cycle inconsistency rather than changing the task reward. In the ablation, removing phase conditioning almost doubles spectral energy, which is the most direct quantitative evidence for its contribution.\n\nSOURCE\nSGAMP.pdf, Section III-C, Eq. (6), Table I. User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 7,
+    "hidden": false,
+    "texts": [
+      "G3: imitation adapts at two time scales",
+      "07",
+      "Fast gate: current contact",
+      "Slow weight: recent stability"
+    ],
+    "math": [
+      "gt=αg(mt)+(1-α)gt-1",
+      "λt=λmaxgt",
+      "rt=rttask+λmaxgt g(mt) rtamp",
+      "α=0.01",
+      "λmax=0.5"
+    ],
+    "notes": "SUGGESTED TIME: 50 seconds\n\nSPEAKING SCRIPT\nThe curriculum adds a slower adaptation to the instantaneous gate. We average the gate using an exponential moving average, then multiply it by the maximum style weight. The average starts at zero, with alpha equal to 0.01 and a maximum weight of 0.5. The full reward therefore contains two stability factors. The current gate responds immediately to contact conditions. Its average changes imitation intensity according to recent stability. This allows imitation to increase as the policy stabilizes, while retaining a fast response to difficult contacts. The ablation with a fixed style weight tests whether this slower adaptation contributes beyond the gate alone.\n\nSOURCE\nSGAMP.pdf, Section III-D, Eqs. (7)–(8) and Algorithm 1. User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 8,
+    "hidden": false,
+    "texts": [
+      "Experimental design and evaluation",
+      "08",
+      "Platform",
+      "1.75 m, 60.9 kg, 12 actuated joints",
+      "Proprioceptive policy, joint PD targets",
+      "Training",
+      "PPO in Isaac Sim / PhysX, ≈4,096 environments",
+      "Flat terrain with random velocity commands",
+      "Evaluation",
+      "Zero-shot MuJoCo transfer, 5 random seeds",
+      "Pushes ×3 and unseen rough terrain",
+      "All methods reach 100% survival in nominal flat walking."
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 40 seconds\n\nSPEAKING SCRIPT\nOur platform is a 1.75-meter, 60.9-kilogram biped with twelve actuated joints. The proprioceptive policy outputs joint-level PD targets. We train with PPO in approximately four thousand parallel Isaac Sim environments, using flat terrain and random velocity commands. Evaluation transfers the policy to MuJoCo without further training and uses five random seeds. The baselines are task-only reinforcement learning and standard AMP with a fixed style weight. All methods survive nominal flat walking. The stronger tests are external pushes and unseen rough terrain, together with motion and contact quality. These results establish simulation evidence on this platform.\n\nSOURCE\nSGAMP.pdf, Section III-A, implementation notes, Section IV-A–C. User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 9,
+    "hidden": false,
+    "texts": [
+      "SG-AMP improves survival under stress",
+      "09",
+      "Mean ± SD over 5 random seeds",
+      "vs. AMP: +27.4 pp on pushes, +16.8 pp on rough terrain"
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 60 seconds\n\nSPEAKING SCRIPT\nThe labels show the mean survival and its standard deviation over five seeds. Under external pushes, AMP reaches 46.2 percent survival and SG-AMP reaches 73.6 percent, an increase of 27.4 percentage points. On unseen rough terrain, the corresponding values are 21.8 and 38.6 percent, a gain of 16.8 points. In relative terms, these improvements are 59.3 and 77.1 percent. Pure RL also performs below SG-AMP in both tests. The variation across seeds is much smaller than the observed mean differences, but the paper does not report a significance test, so we do not claim one. Rough-terrain survival remains below forty percent, which also sets a clear limit on the result.\n\nSOURCE\nSGAMP.pdf, Table I baseline comparisons. User-supplied manuscript.\n\nLabels give mean ± standard deviation. Standard deviation is expressed in percentage points. Table I is used consistently: rough survival 0.386, not the abstract’s 0.486. Relative rough improvement recalculated as (0.386/0.218−1)×100=77.1%."
+  },
+  {
+    "slide": 10,
+    "hidden": false,
+    "texts": [
+      "Contact quality and motion smoothness",
+      "10",
+      "Planar stance ratio",
+      "AMP",
+      "SG-AMP",
+      "Spectral energy",
+      "2.48 to 1.65 ×10⁻³",
+      "33.5% lower than AMP",
+      "Planar stance excludes ankle inversion / eversion."
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 45 seconds\n\nSPEAKING SCRIPT\nThe contact metric measures the proportion of stance without ankle inversion or eversion. SG-AMP increases this ratio from 46.8 percent for AMP to 85.4 percent. The enlarged source panels compare AMP and SG-AMP at contact. They illustrate the difference qualitatively, while the ratio provides the measured evidence. Motion smoothness also improves: spectral energy falls from 2.48 to 1.65 times ten to the minus three, or 33.5 percent relative to AMP. These metrics support better contact behavior and lower jitter. They do not establish that every edge landing or oscillation has been eliminated.\n\nSOURCE\nSGAMP.pdf, Table I and Fig. 5, panels (b) and (d), from fig8.png. User-supplied manuscript.\n\nTwo selected panels from the same original figure are shown as a direct comparison. Full numerical uncertainties appear in backup A1."
+  },
+  {
+    "slide": 11,
+    "hidden": false,
+    "texts": [
+      "Ablations link each module to its effect",
+      "11",
+      "−35.8 pp",
+      "+86.7%",
+      "−8.1 pp"
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 65 seconds\n\nSPEAKING SCRIPT\nThe three ablation panels focus on the metric most directly related to each component. On the left, removing CoP gating reduces planar stance from 85.4 to 49.6 percent, a loss of 35.8 percentage points. In the middle, removing phase conditioning increases spectral energy from 1.65 to 3.08 times ten to the minus three, an increase of 86.7 percent. On the right, fixing the style weight reduces rough-terrain survival from 38.6 to 30.5 percent, a loss of 8.1 points. The full method also has the best push survival in the complete table. This gives each design choice a measurable role. The ablations test removal of individual modules, but they do not fully characterize all possible interactions or hyperparameter sensitivities.\n\nSOURCE\nSGAMP.pdf, Table I ablation configurations. User-supplied manuscript.\n\nSpectral energy units in the middle panel: ×10^-3. The G3 rough survival is taken from Table I (0.305), not the conflicting results paragraph (0.352). Changes compare each ablation with full SG-AMP."
+  },
+  {
+    "slide": 12,
+    "hidden": false,
+    "texts": [
+      "Gate activity increases in difficult conditions",
+      "12",
+      "Stance fraction",
+      "with g(mₜ) < 0.8",
+      "More frequent",
+      "style attenuation",
+      "under stress",
+      "This pattern supports the intended reward-regulation mechanism."
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 25 seconds\n\nSPEAKING SCRIPT\nThe gate’s observed behavior is consistent with the proposed mechanism. The fraction of stance with a gate below 0.8 rises from 8.4 percent on flat ground to 35.6 percent under pushes and 44.2 percent on rough terrain. Thus, difficult conditions trigger more frequent style attenuation. These values describe gate activity, not failure rates.\n\nSOURCE\nSGAMP.pdf, Section IV-C, Gate behavior under stress. User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 13,
+    "hidden": false,
+    "texts": [
+      "Conclusions and remaining questions",
+      "13",
+      "Contact-aware reward modulation",
+      "improves the tested AMP controller",
+      "73.6% push survival",
+      "85.4% planar stance",
+      "33.5% lower spectral energy than AMP",
+      "Evidence: one biped, simulation only",
+      "Next: hardware transfer and terrain perception"
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 25 seconds\n\nSPEAKING SCRIPT\nSG-AMP regulates motion imitation using contact stability and gait phase. The experiments support improved robustness, flatter contact, and reduced jitter on the tested biped. The evidence remains simulation-only, and hardware transfer and terrain perception are the next steps. Thank you for your attention. I welcome your questions.\n\nSOURCE\nSGAMP.pdf, Conclusion and Table I. User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 14,
+    "hidden": true,
+    "texts": [
+      "A1  Baselines: five-seed mean ± SD",
+      "A1",
+      "Method",
+      "Push",
+      "survival",
+      "Rough",
+      "survival",
+      "Spectral",
+      "×10⁻³",
+      "Planar",
+      "stance",
+      "Pure RL",
+      "0.435",
+      "±0.038",
+      "0.245",
+      "±0.032",
+      "4.52",
+      "±0.28",
+      "54.2%",
+      "±3.6 pp",
+      "AMP",
+      "0.462",
+      "±0.041",
+      "0.218",
+      "±0.035",
+      "2.48",
+      "±0.16",
+      "46.8%",
+      "±4.2 pp",
+      "SG-AMP",
+      "0.736",
+      "±0.032",
+      "0.386",
+      "±0.035",
+      "1.65",
+      "±0.12",
+      "85.4%",
+      "±2.1 pp",
+      "MuJoCo zero-shot evaluation. Standard deviation across 5 seeds."
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 0 seconds\n\nSPEAKING SCRIPT\nBackup for questions. Survival values are proportions. Planar stance standard deviations are in percentage points.\n\nSOURCE\nSGAMP.pdf, Table I. User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 15,
+    "hidden": true,
+    "texts": [
+      "A2  Ablations: five-seed mean ± SD",
+      "A2",
+      "Configuration",
+      "Push",
+      "survival",
+      "Rough",
+      "survival",
+      "Spectral",
+      "×10⁻³",
+      "Planar",
+      "stance",
+      "Without G1",
+      "0.512",
+      "±0.036",
+      "0.258",
+      "±0.034",
+      "1.92",
+      "±0.14",
+      "49.6%",
+      "±3.9 pp",
+      "Without G2",
+      "0.648",
+      "±0.035",
+      "0.334",
+      "±0.038",
+      "3.08",
+      "±0.21",
+      "81.2%",
+      "±2.6 pp",
+      "Without G3",
+      "0.615",
+      "±0.042",
+      "0.305",
+      "±0.039",
+      "1.85",
+      "±0.15",
+      "76.8%",
+      "±3.2 pp",
+      "Full SG-AMP",
+      "0.736",
+      "±0.032",
+      "0.386",
+      "±0.035",
+      "1.65",
+      "±0.12",
+      "85.4%",
+      "±2.1 pp"
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 0 seconds\n\nSPEAKING SCRIPT\nBackup for questions. G1 sets g to one, G2 removes phase conditioning, and G3 fixes lambda to its maximum.\n\nSOURCE\nSGAMP.pdf, Table I and Section IV-B. User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 16,
+    "hidden": true,
+    "texts": [
+      "A3  Training loop and signal definitions",
+      "A3",
+      "1",
+      "Collect policy rollouts and contact signals.",
+      "2",
+      "Update phase, CoP margin, gate, and EMA.",
+      "3",
+      "Compute task reward and gated AMP reward.",
+      "4",
+      "Train D on reference and policy transitions.",
+      "5",
+      "Update the policy with PPO."
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 0 seconds\n\nSPEAKING SCRIPT\nBackup for questions. Observation: base orientation and angular velocity, joint position and velocity, and previous action. Action: joint PD targets. The gait clock uses commanded frequency with heel-strike alignment. Contact threshold: 1 N. Each sole is 0.27 by 0.10 m with six contact elements.\n\nSOURCE\nSGAMP.pdf, Section III-A–E and Algorithm 1. User-supplied manuscript.\n\n"
+  },
+  {
+    "slide": 17,
+    "hidden": true,
+    "texts": [
+      "A4  Scope, assumptions, and discussion",
+      "A4",
+      "Generalization",
+      "One biped and two physics backends.",
+      "No hardware evidence in this manuscript.",
+      "Stability signal",
+      "CoP margin modulates training reward.",
+      "It provides no formal fall-prevention guarantee.",
+      "Reproducibility",
+      "Exact reference-data usage and CoP",
+      "reconstruction need further specification."
+    ],
+    "math": [],
+    "notes": "SUGGESTED TIME: 0 seconds\n\nSPEAKING SCRIPT\nBackup for questions. The paper gives a contact-element CoP equation but implementation notes mention per-foot net forces and reconstructed foot corners. Clarify simulator-specific CoP reconstruction. The manuscript also states a 50 Hz controller with a 0.005 s step without distinguishing simulation and control steps. Reference data are described as retargeted MoCap with privileged-expert trajectories as a fallback, but the exact dataset and fallback use are not fully specified. The CoP is a force-weighted convex combination of contact positions; if it and the support hull use identical positive-force contact points, a negative margin needs a more precise geometric convention. Do not claim those details are experimentally resolved.\n\nSOURCE\nSGAMP.pdf, Implementation notes, Section IV-A and Conclusion. User-supplied manuscript.\n\n"
+  }
+]

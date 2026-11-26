@@ -1,0 +1,41 @@
+{
+  "checkpoint_sha256": "d3fa8b14ea7131a828342fb87411e7859f355300fca1ee4ed540be605d106e06",
+  "response_manifest_sha256": "75670f6b1729cb0b9eb9420950e089cba6c677ca0dcd236a5060ccdc05bf1302",
+  "formal_results": false,
+  "response_test_accessed": false,
+  "interpretation": "CPU pair labels; diagnostic until backend consistency is established",
+  "splits": {
+    "fit": {
+      "valid": true,
+      "blocks": 400,
+      "q_rmse_rad": {
+        "8": 0.0246817733191657,
+        "32": 0.05253704471690472
+      },
+      "response_rmse": {
+        "4": 89.755859325554,
+        "8": 71.04118329978334
+      },
+      "zero_response_rmse": {
+        "4": 89.85832522749172,
+        "8": 71.15465494503424
+      }
+    },
+    "cal": {
+      "valid": true,
+      "blocks": 116,
+      "q_rmse_rad": {
+        "8": 0.01569968187934674,
+        "32": 0.041067695168047855
+      },
+      "response_rmse": {
+        "4": 15.142934506822451,
+        "8": 73.73960349804392
+      },
+      "zero_response_rmse": {
+        "4": 15.651357542263288,
+        "8": 73.89330385486116
+      }
+    }
+  }
+}

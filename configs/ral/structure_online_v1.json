@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "status": "online_structure_development_only",
+  "implementation": "PartyMimic Z01 local fork",
+  "training": {
+    "iterations": 1000,
+    "num_envs": 1024,
+    "buffer_steps": 500,
+    "warmup_steps": 64,
+    "pi_batch": 512,
+    "wm_batch": 256,
+    "wm_batches": 5,
+    "horizon": 32,
+    "wm_window": 8,
+    "wm_mirror": 0,
+    "lr_decay_ret": 0,
+    "lr_decay_by": 0,
+    "joint_velocity_penalty": 0.5,
+    "joint_velocity_margin": 0.9,
+    "v_gcons_n": 1024,
+    "ckpt_every": 250,
+    "log_every": 25,
+    "interface": "joint",
+    "response_weight": 0.0,
+    "friction_speed": 0.01,
+    "response_horizon": 8,
+    "response_loss": "mse",
+    "response_huber_delta": 1.0,
+    "wm_amp": "none",
+    "amp": "bf16",
+    "wm_fit_source": "online",
+    "paired_initialization": true,
+    "utd": 0.4,
+    "lr": 0.0004
+  },
+  "window_candidates": {
+    "short": 4,
+    "long": 8
+  },
+  "purpose": "Paired online A+/B control retention; no automatic C and no superiority claim.",
+  "training_seeds": [
+    2,
+    4
+  ],
+  "groups": [
+    "A+",
+    "B"
+  ],
+  "screening": {
+    "baseline_completion_min": 0.7,
+    "matched_completion_drop_max": 0.05,
+    "matched_median_duration_ratio_min": 0.9,
+    "repeat_completion_spread_max": 0.03,
+    "note": "Operational readiness only: A+ is control, B is candidate. Require both seeds, repeated final EMA evaluations and complete provenance. C additionally requires validated response data and a separately implemented hybrid objective."
+  },
+  "assignments": {
+    "5080": 2,
+    "4090": 4
+  },
+  "evaluation": {
+    "repeats": 2,
+    "seed": 0,
+    "clips": 163,
+    "final_iteration": 1000,
+    "record_group": "B",
+    "locked_response_test_access": false
+  },
+  "expected_environment_transitions": 2625536
+}

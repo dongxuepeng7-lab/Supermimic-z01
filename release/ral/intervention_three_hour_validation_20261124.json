@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-24",
+  "status": "validated",
+  "formal_results": false,
+  "smoke_only": true,
+  "full_three_hour_jobs_started": false,
+  "unit_tests_passed": 6,
+  "unit_test_file": "tests/test_ral_intervention.py",
+  "gpu": "RTX3090",
+  "training": [
+    {
+      "variant": "Aplus",
+      "policy_updates": 6,
+      "wm_updates": 12,
+      "env_transitions": 632,
+      "friction_speed": 0.01,
+      "retention_sha256": "89355c70a104d6f1ac3275480c5ad081210000aae89bf02b4170c13b29581275"
+    },
+    {
+      "variant": "B_ref",
+      "policy_updates": 6,
+      "wm_updates": 12,
+      "env_transitions": 632,
+      "friction_speed": 0.01,
+      "retention_sha256": "39559f8c3c19abad81f9d7525db809cd13f573a66f5dc616fb6a03d8bdb91f6f"
+    },
+    {
+      "variant": "B_v005",
+      "policy_updates": 6,
+      "wm_updates": 12,
+      "env_transitions": 632,
+      "friction_speed": 0.05,
+      "retention_sha256": "4ed0df8dc7a604cd8e9b2553320c79be00a7b4d75b6bb5cbd05fcffc567ea63e"
+    }
+  ],
+  "paired_initial_WM_actor_critic": true,
+  "full_library_evaluations": 6,
+  "backend_smoke": [
+    {
+      "block_id": "dance1_subject3__seg002:2:490",
+      "response_repeat_failed_cells": 0,
+      "gpu_value_max_abs": 5.7220458984375e-06,
+      "original_native_failed": true,
+      "cpu_replay_max_abs": 0.0,
+      "initial_transfer_max_abs": 5.985368556338244e-08
+    },
+    {
+      "block_id": "fightAndSports1_subject4__seg000:2:523",
+      "response_repeat_failed_cells": 0,
+      "gpu_value_max_abs": 0.0,
+      "original_native_failed": true,
+      "cpu_replay_max_abs": 0.0,
+      "initial_transfer_max_abs": 8.212040247812524e-08
+    }
+  ],
+  "new_direction_cpu_replay_checked": true,
+  "original_negative_cases_retained": true,
+  "old_source_assets_protocols_unchanged": true,
+  "locked_response_test_access": false,
+  "production_protocol_sha256": "259729ef94f03a152119406cb963ce0f84c5594af4feb8e087267ea5936eff8c",
+  "scope": "Tiny6-update training verifies code/archives, not performance. Two-block original/repeated/new-direction replay verifies numerics/IO, not backend equivalence. Final backend transfer check additionally preserves original1e-5 input threshold."
+}

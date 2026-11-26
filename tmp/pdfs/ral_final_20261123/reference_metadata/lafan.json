@@ -1,0 +1,600 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        11,
+        20
+      ]
+    ],
+    "date-time": "2026-11-20T19:45:21Z",
+    "timestamp": 1795203921905,
+    "version": "4.10.3"
+  },
+  "reference-count": 60,
+  "publisher": "Association for Computing Machinery (ACM)",
+  "issue": "4",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2020,
+            8,
+            12
+          ]
+        ],
+        "date-time": "2020-08-12T00:00:00Z",
+        "timestamp": 1597190400000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://www.acm.org/publications/policies/copyright_policy#Background"
+    }
+  ],
+  "funder": [
+    {
+      "DOI": "10.13039/501100002790",
+      "name": "Natural Sciences and Engineering Research Council of Canada",
+      "doi-asserted-by": "publisher",
+      "id": [
+        {
+          "id": "10.13039/501100002790",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [
+      "dl.acm.org"
+    ],
+    "crossmark-restriction": true
+  },
+  "short-container-title": [
+    "ACM Trans. Graph."
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2020,
+        8,
+        31
+      ]
+    ]
+  },
+  "abstract": "<jats:p>\n                    In this work we present a novel, robust transition generation technique that can serve as a new tool for 3D animators, based on adversarial recurrent neural networks. The system synthesises high-quality motions that use temporally-sparse keyframes as animation constraints. This is reminiscent of the job of\n                    <jats:italic toggle=\"yes\">in-betweening</jats:italic>\n                    in traditional animation pipelines, in which an animator draws motion frames between provided keyframes. We first show that a state-of-the-art motion prediction model cannot be easily converted into a robust transition generator when only adding conditioning information about future keyframes. To solve this problem, we then propose two novel additive embedding modifiers that are applied at each timestep to latent representations encoded inside the network's architecture. One modifier is a\n                    <jats:italic toggle=\"yes\">time-to-arrival embedding</jats:italic>\n                    that allows variations of the transition length with a single model. The other is a\n                    <jats:italic toggle=\"yes\">scheduled target noise</jats:italic>\n                    vector that allows the system to be robust to target distortions and to sample different transitions given fixed keyframes. To qualitatively evaluate our method, we present a custom MotionBuilder plugin that uses our trained model to perform in-betweening in production scenarios. To quantitatively evaluate performance on transitions and generalizations to longer time horizons, we present well-defined in-betweening benchmarks on a subset of the widely used Human3.6M dataset and on LaFAN1, a novel high quality motion capture dataset that is more appropriate for transition generation. We are releasing this new dataset along with this work, with accompanying code for reproducing our baseline results.\n                  </jats:p>",
+  "DOI": "10.1145/3386569.3392480",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2020,
+        8,
+        12
+      ]
+    ],
+    "date-time": "2020-08-12T07:44:27Z",
+    "timestamp": 1597218267000
+  },
+  "update-policy": "https://doi.org/10.1145/crossmark-policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 282,
+  "title": [
+    "Robust motion in-betweening"
+  ],
+  "prefix": "10.1145",
+  "volume": "39",
+  "author": [
+    {
+      "given": "Félix G.",
+      "family": "Harvey",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Polytechnique Montreal, Canada"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Mike",
+      "family": "Yurick",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Ubisoft Montreal, Canada"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Derek",
+      "family": "Nowrouzezahrai",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "McGill University, Canada"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Christopher",
+      "family": "Pal",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Polytechnique Montreal, Canada"
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    }
+  ],
+  "member": "320",
+  "published-online": {
+    "date-parts": [
+      [
+        2020,
+        8,
+        12
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "e_1_2_2_1_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/566570.566606"
+    },
+    {
+      "key": "e_1_2_2_2_1",
+      "volume-title": "Model-based Adversarial Imitation Learning. arXiv preprint arXiv:1612.02179",
+      "author": "Baram Nir",
+      "year": "2016",
+      "unstructured": "Nir Baram, Oron Anschel, and Shie Mannor. 2016. Model-based Adversarial Imitation Learning. arXiv preprint arXiv:1612.02179 (2016)."
+    },
+    {
+      "key": "e_1_2_2_3_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/CVPRW.2018.00191"
+    },
+    {
+      "key": "e_1_2_2_4_1",
+      "volume-title": "Proceedings of the 2008 ACM SIGGRAPH/Eurographics Symposium on Computer Animation. Eurographics Association, 117--126",
+      "author": "Beaudoin Philippe",
+      "unstructured": "Philippe Beaudoin, Stelian Coros, Michiel van de Panne, and Pierre Poulin. 2008. Motion-motif graphs. In Proceedings of the 2008 ACM SIGGRAPH/Eurographics Symposium on Computer Animation. Eurographics Association, 117--126."
+    },
+    {
+      "key": "e_1_2_2_5_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3355089.3356536"
+    },
+    {
+      "key": "e_1_2_2_6_1",
+      "volume-title": "Proc. of Nucl.ai",
+      "author": "Büttner Michael",
+      "year": "2015",
+      "unstructured": "Michael Büttner and Simon Clavet. 2015. Motion Matching - The Road to Next Gen Animation. In Proc. of Nucl.ai 2015. https://www.youtube.com/watch?v=z_wpgHFSWss&t=658s"
+    },
+    {
+      "key": "e_1_2_2_7_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1186822.1073248"
+    },
+    {
+      "key": "e_1_2_2_8_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1276377.1276387"
+    },
+    {
+      "key": "e_1_2_2_9_1",
+      "volume-title": "2019 IEEE Winter Conference on Applications of Computer Vision (WACV). IEEE, 1423--1432",
+      "author": "Adeli Ehsan",
+      "year": "2019",
+      "unstructured": "Hsu-kuang Chiu, Ehsan Adeli, Borui Wang, De-An Huang, and Juan Carlos Niebles. 2019. Action-agnostic human pose forecasting. In 2019 IEEE Winter Conference on Applications of Computer Vision (WACV). IEEE, 1423--1432."
+    },
+    {
+      "key": "e_1_2_2_10_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3306346.3322938"
+    },
+    {
+      "key": "e_1_2_2_11_1",
+      "volume-title": "SIGGRAPH 96 (siggraph 96 ed.)",
+      "author": "Cohen Michael",
+      "unstructured": "Michael Cohen, Brian Guenter, Bobby Bodenheimer, and Charles Rose. 1996. Efficient Generation of Motion Transitions Using Spacetime Constraints. In SIGGRAPH 96 (siggraph 96 ed.). Association for Computing Machinery, Inc. https://www.microsoft.com/en-us/research/publication/efficient-generation-of-motion-transitions-using-spacetime-constraints/"
+    },
+    {
+      "key": "e_1_2_2_12_1",
+      "volume-title": "ACM Transactions on Graphics (TOG)",
+      "author": "Coros Stelian",
+      "unstructured": "Stelian Coros, Philippe Beaudoin, and Michiel van de Panne. 2009. Robust task-based control policies for physics-based characters. In ACM Transactions on Graphics (TOG), Vol. 28. ACM, 170."
+    },
+    {
+      "key": "e_1_2_2_13_1",
+      "volume-title": "A Learned Representation For Artistic Style. ICLR",
+      "author": "Dumoulin Vincent",
+      "year": "2017",
+      "unstructured": "Vincent Dumoulin, Jonathon Shlens, and Manjunath Kudlur. 2017. A Learned Representation For Artistic Style. ICLR (2017). https://arxiv.org/abs/1610.07629"
+    },
+    {
+      "key": "e_1_2_2_14_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5555/2919332.2919834"
+    },
+    {
+      "key": "e_1_2_2_15_1",
+      "volume-title": "Learning Human Motion Models for Long-term Predictions. arXiv preprint arXiv:1704.02827",
+      "author": "Ghosh Partha",
+      "year": "2017",
+      "unstructured": "Partha Ghosh, Jie Song, Emre Aksan, and Otmar Hilliges. 2017. Learning Human Motion Models for Long-term Predictions. arXiv preprint arXiv:1704.02827 (2017)."
+    },
+    {
+      "key": "e_1_2_2_16_1",
+      "unstructured": "Ian Goodfellow Jean Pouget-Abadie Mehdi Mirza Bing Xu David Warde-Farley Sherjil Ozair Aaron Courville and Yoshua Bengio. 2014. Generative adversarial nets. In Advances in neural information processing systems. 2672--2680."
+    },
+    {
+      "key": "e_1_2_2_17_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/CVPR.2019.01239"
+    },
+    {
+      "key": "e_1_2_2_18_1",
+      "volume-title": "ACM transactions on graphics (TOG)",
+      "author": "Grochow Keith",
+      "unstructured": "Keith Grochow, Steven L Martin, Aaron Hertzmann, and Zoran Popović. 2004. Style-based inverse kinematics. In ACM transactions on graphics (TOG), Vol. 23. ACM, 522--531."
+    },
+    {
+      "key": "e_1_2_2_19_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-3-030-01225-0_48"
+    },
+    {
+      "key": "e_1_2_2_20_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Félix G Harvey and Christopher Pal. 2018. Recurrent transition networks for character locomotion. In SIGGRAPH Asia 2018 Technical Briefs. ACM 4.",
+      "DOI": "10.1145/3283254.3283277"
+    },
+    {
+      "key": "e_1_2_2_21_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICCV.2019.00723"
+    },
+    {
+      "key": "e_1_2_2_22_1",
+      "unstructured": "Jonathan Ho and Stefano Ermon. 2016. Generative adversarial imitation learning. In Advances in Neural Information Processing Systems. 4565--4573."
+    },
+    {
+      "key": "e_1_2_2_23_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3197517.3201302"
+    },
+    {
+      "key": "e_1_2_2_24_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3072959.3073663"
+    },
+    {
+      "key": "e_1_2_2_25_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2897824.2925975"
+    },
+    {
+      "key": "e_1_2_2_26_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Daniel Holden Jun Saito Taku Komura and Thomas Joyce. 2015. Learning motion manifolds with convolutional autoencoders. In SIGGRAPH Asia 2015 Technical Briefs. ACM 18.",
+      "DOI": "10.1145/2820903.2820918"
+    },
+    {
+      "key": "e_1_2_2_27_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/CVPR.2016.573"
+    },
+    {
+      "key": "e_1_2_2_28_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1401132.1401202"
+    },
+    {
+      "key": "e_1_2_2_29_1",
+      "volume-title": "Jessica K Hodgins, and Nancy S Pollard.",
+      "author": "Lee Jehee",
+      "year": "2002",
+      "unstructured": "Jehee Lee, Jinxiang Chai, Paul SA Reitsma, Jessica K Hodgins, and Nancy S Pollard. 2002. Interactive control of avatars animated with human motion data. In ACM Transactions on Graphics (ToG), Vol. 21. ACM, 491--500."
+    },
+    {
+      "key": "e_1_2_2_30_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.gmod.2005.03.004"
+    },
+    {
+      "key": "e_1_2_2_31_1",
+      "unstructured": "Kyungho Lee Seyoung Lee and Jehee Lee. 2018. Interactive character animation by learning multi-objective control. In SIGGRAPH Asia 2018 Technical Papers. ACM 180."
+    },
+    {
+      "key": "e_1_2_2_32_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1882262.1866160"
+    },
+    {
+      "key": "e_1_2_2_33_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/CVPR.2014.171"
+    },
+    {
+      "key": "e_1_2_2_34_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2185520.2185524"
+    },
+    {
+      "key": "e_1_2_2_35_1",
+      "volume-title": "Auto-Conditioned LSTM Network for Extended Complex Human Motion Synthesis. arXiv preprint arXiv:1707.05363",
+      "author": "Li Zimo",
+      "year": "2017",
+      "unstructured": "Zimo Li, Yi Zhou, Shuangjiu Xiao, Chong He, and Hao Li. 2017. Auto-Conditioned LSTM Network for Extended Complex Human Motion Synthesis. arXiv preprint arXiv:1707.05363 (2017)."
+    },
+    {
+      "key": "e_1_2_2_36_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3072959.3083723"
+    },
+    {
+      "key": "e_1_2_2_37_1",
+      "volume-title": "Towards Natural and Accurate Future Motion Prediction of Humans and Animals. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR).",
+      "author": "Liu Zhenguang",
+      "year": "2019",
+      "unstructured": "Zhenguang Liu, Shuang Wu, Shuyuan Jin, Qi Liu, Shijian Lu, Roger Zimmermann, and Li Cheng. 2019. Towards Natural and Accurate Future Motion Prediction of Humans and Animals. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)."
+    },
+    {
+      "key": "e_1_2_2_38_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICCV.2017.304"
+    },
+    {
+      "key": "e_1_2_2_39_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/CVPR.2017.497"
+    },
+    {
+      "key": "e_1_2_2_40_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2366145.2366172"
+    },
+    {
+      "key": "e_1_2_2_41_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1640443.1640452"
+    },
+    {
+      "key": "e_1_2_2_42_1",
+      "volume-title": "PLU: The Piecewise Linear Unit Activation Function. arXiv preprint arXiv:1809.09534",
+      "author": "Nicolae Andrei",
+      "year": "2018",
+      "unstructured": "Andrei Nicolae. 2018. PLU: The Piecewise Linear Unit Activation Function. arXiv preprint arXiv:1809.09534 (2018)."
+    },
+    {
+      "key": "e_1_2_2_43_1",
+      "volume-title": "International Journal of Computer Vision",
+      "author": "Pavllo Dario",
+      "year": "2019",
+      "unstructured": "Dario Pavllo, Christoph Feichtenhofer, Michael Auli, and David Grangier. 2019. Modeling Human Motion with Quaternion-Based Neural Networks. International Journal of Computer Vision (2019), 1--18."
+    },
+    {
+      "key": "e_1_2_2_44_1",
+      "volume-title": "DeepMimic: Example-Guided Deep Reinforcement Learning of Physics-Based Character Skills. ACM Transactions on Graphics (Proc. SIGGRAPH 2018 -",
+      "author": "Peng Xue Bin",
+      "unstructured": "Xue Bin Peng, Pieter Abbeel, Sergey Levine, and Michiel van de Panne. 2018. DeepMimic: Example-Guided Deep Reinforcement Learning of Physics-Based Character Skills. ACM Transactions on Graphics (Proc. SIGGRAPH 2018 - to appear) 37, 4 (2018)."
+    },
+    {
+      "key": "e_1_2_2_45_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3072959.3073602"
+    },
+    {
+      "key": "e_1_2_2_46_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1609/aaai.v32i1.11671"
+    },
+    {
+      "key": "e_1_2_2_47_1",
+      "volume-title": "On the Convergence of Adam and Beyond. In International Conference on Learning Representations. https://openreview.net/forum?id=ryQu7f-RZ",
+      "author": "Reddi Sashank J.",
+      "year": "2018",
+      "unstructured": "Sashank J. Reddi, Satyen Kale, and Sanjiv Kumar. 2018. On the Convergence of Adam and Beyond. In International Conference on Learning Representations. https://openreview.net/forum?id=ryQu7f-RZ"
+    },
+    {
+      "key": "e_1_2_2_48_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1275808.1276510"
+    },
+    {
+      "key": "e_1_2_2_49_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3355089.3356505"
+    },
+    {
+      "key": "e_1_2_2_50_1",
+      "volume-title": "Long-term human motion prediction by modeling motion context and enhancing motion dynamic. arXiv preprint arXiv:1805.02513",
+      "author": "Tang Yongyi",
+      "year": "2018",
+      "unstructured": "Yongyi Tang, Lin Ma, Wei Liu, and Weishi Zheng. 2018. Long-term human motion prediction by modeling motion context and enhancing motion dynamic. arXiv preprint arXiv:1805.02513 (2018)."
+    },
+    {
+      "key": "e_1_2_2_51_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1966394.1966397"
+    },
+    {
+      "key": "e_1_2_2_52_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Graham W Taylor Geoffrey E Hinton and Sam T Roweis. 2007. Modeling human motion using binary latent variables. In Advances in neural information processing systems. 1345--1352.",
+      "DOI": "10.7551/mitpress/7503.003.0173"
+    },
+    {
+      "key": "e_1_2_2_53_1",
+      "volume-title": "Near-optimal character animation with continuous control. ACM Transactions on Graphics (tog) 26, 3",
+      "author": "Treuille Adrien",
+      "year": "2007",
+      "unstructured": "Adrien Treuille, Yongjoon Lee, and Zoran Popović. 2007. Near-optimal character animation with continuous control. ACM Transactions on Graphics (tog) 26, 3 (2007), 7."
+    },
+    {
+      "key": "e_1_2_2_54_1",
+      "unstructured": "Ashish Vaswani Noam Shazeer Niki Parmar Jakob Uszkoreit Llion Jones Aidan N Gomez Łukasz Kaiser and Illia Polosukhin. 2017. Attention is all you need. In Advances in neural information processing systems. 5998--6008."
+    },
+    {
+      "key": "e_1_2_2_55_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TPAMI.2007.1167"
+    },
+    {
+      "key": "e_1_2_2_56_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/54852.378507"
+    },
+    {
+      "key": "e_1_2_2_57_1",
+      "volume-title": "Computer Graphics Forum",
+      "author": "Ye Yuting",
+      "unstructured": "Yuting Ye and C Karen Liu. 2010. Synthesis of responsive motion using a dynamic model. In Computer Graphics Forum, Vol. 29. Wiley Online Library, 555--562."
+    },
+    {
+      "key": "e_1_2_2_58_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1275808.1276509"
+    },
+    {
+      "key": "e_1_2_2_59_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3197517.3201366"
+    },
+    {
+      "key": "e_1_2_2_60_1",
+      "volume-title": "Proceedings of the 11th Annual International Conference on Motion, Interaction, and Games. ACM, 10",
+      "author": "Zhang Xinyi",
+      "unstructured": "Xinyi Zhang and Michiel van de Panne. 2018. Data-driven autocompletion for keyframe animation. In Proceedings of the 11th Annual International Conference on Motion, Interaction, and Games. ACM, 10."
+    }
+  ],
+  "container-title": [
+    "ACM Transactions on Graphics"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://dl.acm.org/doi/10.1145/3386569.3392480",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://dl.acm.org/doi/pdf/10.1145/3386569.3392480",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        6,
+        25
+      ]
+    ],
+    "date-time": "2025-06-25T01:37:32Z",
+    "timestamp": 1750815452000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://dl.acm.org/doi/10.1145/3386569.3392480"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2020,
+        8,
+        12
+      ]
+    ]
+  },
+  "references-count": 60,
+  "journal-issue": {
+    "issue": "4",
+    "published-print": {
+      "date-parts": [
+        [
+          2020,
+          8,
+          31
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "10.1145/3386569.3392480"
+  ],
+  "URL": "https://doi.org/10.1145/3386569.3392480",
+  "relation": {},
+  "ISSN": [
+    "0730-0301",
+    "1557-7368"
+  ],
+  "issn-type": [
+    {
+      "value": "0730-0301",
+      "type": "print"
+    },
+    {
+      "value": "1557-7368",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2020,
+        8,
+        12
+      ]
+    ]
+  },
+  "assertion": [
+    {
+      "value": "2020-08-12",
+      "order": 3,
+      "name": "published",
+      "label": "Published",
+      "group": {
+        "name": "publication_history",
+        "label": "Publication History"
+      }
+    }
+  ]
+}

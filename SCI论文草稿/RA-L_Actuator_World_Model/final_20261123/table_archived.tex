@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering\small
+\caption{\lang{Archived joint replay, one record per joint/condition. O/I: original/identified parameters. All three errors improve on seven records; the adverse left-ankle-roll result is retained. These records do not evaluate a learned whole-body policy.}{归档关节回放，每个关节／条件只有一条记录。O/I 分别表示原始／辨识参数。七条记录的三项误差均改善；保留左踝侧摆的不利结果。这些记录不评估学习到的全身策略。}}
+\label{tab:archived}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llrrrrrr@{}}\toprule
+\lang{Joint}{关节}&\lang{Scale / period (s)}{幅度系数／周期(s)}&\multicolumn{2}{c}{\lang{Angle (mrad)}{角度(mrad)}}&\multicolumn{2}{c}{\lang{Speed (rad/s)}{速度(rad/s)}}&\multicolumn{2}{c}{\lang{Torque (N\,m)}{力矩(N\,m)}}\\
+&&O&I&O&I&O&I\\\midrule
+\lang{L knee}{左膝}&0.3 / 2&7.400&3.680&0.0886&0.0781&1.823&0.806\\
+\lang{R knee}{右膝}&0.3 / 2&7.196&5.498&0.0757&0.0670&1.715&0.892\\
+\lang{L hip pitch}{左髋俯仰}&0.3 / 2&10.217&7.205&0.1136&0.0956&3.356&1.764\\
+\lang{R hip pitch}{右髋俯仰}&0.3 / 2&8.733&6.694&0.0747&0.0602&2.738&1.743\\
+\lang{L hip roll}{左髋侧摆}&0.3 / 3&13.861&3.192&0.0307&0.0253&2.844&0.751\\
+\lang{R hip yaw}{右髋偏航}$^{\dagger}$&0.1 / 2&1.363&1.112&0.0331&0.0322&0.445&0.424\\
+\lang{R ankle pitch}{右踝俯仰}$^{\dagger}$&0.3 / 3&4.415&2.141&0.0582&0.0564&0.486&0.462\\
+\lang{L ankle roll}{左踝侧摆}&0.3 / 2&7.764&9.116&0.1586&0.1729&0.587&0.686\\
+\bottomrule\end{tabular}
+\par\vspace{3pt}\parbox{0.96\textwidth}{\footnotesize\lang{$^{\dagger}$Frozen joint-specific candidates; other rows use archived rounded sets. Metrics are full-record post-warm-up RMSE, retaining transients, with a 0.5-ms maximum integration step and 2-ms scoring interval. Hardware raw fitting sessions are unavailable for independent re-identification.}{$^{\dagger}$采用冻结的关节专用候选参数，其余行采用归档舍入参数。指标为预热后整条记录的RMSE，保留瞬态，最大积分步长为0.5 ms，评分间隔为2 ms。尚无原始实机拟合会话可用于独立重新辨识。}}
+\end{table*}
